@@ -1,0 +1,307 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Enter store details
+        </h1>
+        <ol class="breadcrumb">
+            <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+            <li class="active">Enter store details</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" ng-show="init_loaded">
+            <div class="col-md-12">
+                <ol class="breadcrumb tool_box">
+                    <li><b>Store actions</b></li>
+                    <li><a ui-sref="store-list">Store list</a></li>
+                    <li class="active"><a ui-sref="store-create" ui-sref-opts="{reload: true, notify: true}">Add new store</a></li>
+                </ol>
+                <!-- general form elements -->
+                <div class="box overhidden top_box">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Save</button>
+                        <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box no-border overhidden" style="min-height: 400px">
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="row form-group" ng-class="{'has-error': store_error.name.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Name <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.name" type="text" class="form-control" placeholder="name">
+                                        <span class="control-label" for="inputError" ng-show="store_error.name.length != 0" ng-repeat="error in store_error.name">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.store_number.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Store number <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.store_number" type="text" class="form-control" placeholder="store number">
+                                        <span class="control-label" for="inputError" ng-show="store_error.store_number.length != 0" ng-repeat="error in store_error.store_number">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': store_error.contact_name.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Area Manager <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.contact_name" type="text" class="form-control" placeholder="contact name">
+                                        <span class="control-label" for="inputError" ng-show="store_error.contact_name.length != 0" ng-repeat="error in store_error.contact_name">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.franchisee_name.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Franchisee name <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.franchisee_name" type="text" class="form-control" placeholder="franchisee name">
+                                        <span class="control-label" for="inputError" ng-show="store_error.franchisee_name.length != 0" ng-repeat="error in store_error.franchisee_name">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.tier_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="" >Tier <span class="required">*</span></label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select chosen class="form-control" ng-model="store.tier_id" ng-options="item.id as item.name for item in tiers" data-placeholder="Choose tier ...">
+                                        </select>
+                                        <span class="control-label" for="inputError" ng-show="store_error.tier_id.length != 0" ng-repeat="error in store_error.tier_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.email.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Email</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.email" type="text" class="form-control" placeholder="email">
+                                        <span class="control-label" for="inputError" ng-show="store_error.email.length != 0" ng-repeat="error in store_error.email">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.phone.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Phone</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.phone" type="text" class="form-control" placeholder="phone">
+                                        <span class="control-label" for="inputError" ng-show="store_error.phone.length != 0" ng-repeat="error in store_error.phone">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group none" ng-class="{'has-error': store_error.fax.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Fax</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.fax" type="text" class="form-control" placeholder="fax">
+                                        <span class="control-label" for="inputError" ng-show="store_error.fax.length != 0" ng-repeat="error in store_error.fax">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.image_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Image</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <file-uploader-single option-style="'image'" file-id="store.image_id" model-id="store.id" field-id="'image_id'"></file-uploader-single>
+                                        <span class="control-label" for="inputError" ng-show="store_error.image_id.length != 0" ng-repeat="error in store_error.image_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
+                                <div class="row form-group" ng-class="{'has-error': store_error.open_date.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="">Open date</label> </br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.open_date" type="text" class="form-control datepicker" placeholder="open date">
+                                        <span class="control-label" for="inputError" ng-show="store_error.open_date.length != 0" ng-repeat="error in store_error.open_date">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': store_error.address1.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="">Address</label> </br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.address1" type="text" class="form-control" placeholder="address 1">
+                                        <span class="control-label" for="inputError" ng-show="store_error.address1.length != 0" ng-repeat="error in store_error.address1">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group none" ng-class="{'has-error': store_error.address2.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="">Address 2</label> </br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.address2" type="text" class="form-control" placeholder="address 2">
+                                        <span class="control-label" for="inputError" ng-show="store_error.address2.length != 0" ng-repeat="error in store_error.address2">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.city.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="">City</label> </br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.city" type="text" class="form-control" placeholder="city">
+                                        <span class="control-label" for="inputError" ng-show="store_error.city.length != 0" ng-repeat="error in store_error.city">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.zipcode.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="">Zip code <br/> Postal code</label> </br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.zipcode" type="text" class="form-control" placeholder="zip code / postal code">
+                                        <span class="control-label" for="inputError" ng-show="store_error.zipcode.length != 0" ng-repeat="error in store_error.zipcode">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.state_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="" >State / Province</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select chosen class="form-control" required ng-model="store.state_id" ng-options="item.id as item.state_short for item in states" data-placeholder="Choose a state ...">
+                                            <option value="">---</option>
+                                        </select>
+                                        <span class="control-label" for="inputError" ng-show="store_error.state_id.length != 0" ng-repeat="error in store_error.state_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': store_error.country.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="" >Country</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="store.country" type="text" class="form-control" placeholder="country">
+                                        <span class="control-label" for="inputError" ng-show="store_error.country.length != 0" ng-repeat="error in store_error.country">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': store_error.layout_file_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Layout file</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <file-uploader-single option-style="'full'" file-id="store.layout_file_id" model-id="store.id" field-id="'layout_file_id'"></file-uploader-single>
+                                        <span class="control-label" for="inputError" ng-show="store_error.layout_file_id.length != 0" ng-repeat="error in store_error.layout_file_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': store_error.layout_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Layout</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <file-uploader-single option-style="'image'" file-id="store.layout_id" model-id="store.id" field-id="'layout_id'"></file-uploader-single>
+                                        <span class="control-label" for="inputError" ng-show="store_error.layout_id.length != 0" ng-repeat="error in store_error.layout_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="box no-border" style="min-height: 100px">
+                    <div class="box-header">
+                        <h3 class="box-title">Store information card</h3>
+                    </div>
+                    <div class="box-body overhidden" id="store_card">
+                        ID: {{store.id}}
+                        <br />Name: {{store.name}}
+                        <br />Email: {{store.email}}
+                        <br />Phone: {{store.phone}}
+                        <br />Address 1: {{store.address1}}
+                        <br />Address 2: {{store.address2}}
+                        <br />City: {{store.city}}
+                        <br />State/Province: {{store.state_name}}
+                        <br />Zipcode/Postal Code: {{store.zipcode}}
+                    </div>
+                    <div class="box-footer">
+                        <button class="btn btn-info" type="button" clip-copy="getStoreCard()" clip-click="copyToClipboard()">Copy to clipboard</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="box no-border" style="min-height: 100px">
+                    <div class="box-header">
+                        <h3 class="box-title">Store documents</h3>
+                    </div>
+                    <div class="box-body overhidden">
+                      <i>Available only on update</i>
+                        <!--<file-uploader file-ids="store.tmp_file_ids" model-id="store.id"></file-uploader>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

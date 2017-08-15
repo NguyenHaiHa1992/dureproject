@@ -1,0 +1,235 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Enter vendor details
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter vendor details</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+          <li><b>Vendor actions</b></li>
+          <li><a ui-sref="vendor-list">Vendor list</a></li>
+          <li class="active"><a ui-sref="vendor-create" ui-sref-opts="{reload: true, notify: true}">Add new vendor</a></li>
+        </ol>
+        <!-- general form elements -->
+        <div class="box overhidden top_box">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Create</button>
+            <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Update</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="box no-border" style="min-height: 400px">
+          <div class="box-body">
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <!-- form start -->
+              <form role="form">
+                <div class="row form-group" ng-class="{'has-error': vendor_error.name.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Name <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.name" type="text" class="form-control" placeholder="name">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.name.length!=0" ng-repeat="error in vendor_error.name">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.contact_name.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Contact name <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.contact_name" type="text" class="form-control" placeholder="contact name">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.contact_name.length!=0" ng-repeat="error in vendor_error.contact_name">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.company_name.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Company name <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.company_name" type="text" class="form-control" placeholder="company name">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.company_name.length!=0" ng-repeat="error in vendor_error.company_name">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.email.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Email</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.email" type="text" class="form-control" placeholder="email">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.email.length!=0" ng-repeat="error in vendor_error.email">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.phone.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Phone</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.phone" type="text" class="form-control" placeholder="phone">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.phone.length!=0" ng-repeat="error in vendor_error.phone">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.fax.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Fax</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.fax" type="text" class="form-control" placeholder="fax">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.fax.length!=0" ng-repeat="error in vendor_error.fax">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.tmp_cat_ids.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="" >Category</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <select multiple chosen class="form-control" ng-model="vendor.tmp_cat_ids" ng-options="item.id as item.name for item in vendor_categories" data-placeholder="Choose categories ...">
+                      <option value="">---</option>
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="vendor_error.tmp_cat_ids.length!=0" ng-repeat="error in vendor_error.tmp_cat_ids">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!--/.col (left) -->
+            <div class="col-md-6">
+              <!-- general form elements disabled -->
+              <form role="form">
+                <div class="row form-group" ng-class="{'has-error': vendor_error.address1.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">Address 1</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.address1" type="text" class="form-control" placeholder="address 1">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.address1.length!=0" ng-repeat="error in vendor_error.address1">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.address2.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">Address 2</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.address2" type="text" class="form-control" placeholder="address 2">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.address2.length!=0" ng-repeat="error in vendor_error.address2">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.city.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">City</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.city" type="text" class="form-control" placeholder="city">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.city.length!=0" ng-repeat="error in vendor_error.city">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.zipcode.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">Zip code <br/> Postal code</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.zipcode" type="text" class="form-control" placeholder="zip code / postal code">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.zipcode.length!=0" ng-repeat="error in vendor_error.zipcode">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.state_id.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="" >State / Province</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <select chosen class="form-control" required ng-model="vendor.state_id" ng-options="item.id as item.state_short for item in states" data-placeholder="Choose a state ...">
+                      <option value="">---</option>
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="vendor_error.state_id.length!=0" ng-repeat="error in vendor_error.state_id">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group" ng-class="{'has-error': vendor_error.country.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="" >Country</label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="vendor.country" type="text" class="form-control" placeholder="country">
+                    <span class="control-label" for="inputError" ng-show="vendor_error.country.length!=0" ng-repeat="error in vendor_error.country">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="box no-border" style="min-height: 100px">
+          <div class="box-header">
+            <h3 class="box-title">Vendor information card</h3>
+          </div>
+          <div class="box-body overhidden" id="vendor_card">
+            ID: {{vendor.id}}
+            <br />Name: {{vendor.name}} 
+            <br />Email: {{vendor.email}} 
+            <br />Phone: {{vendor.phone}} 
+            <br />Address 1: {{vendor.address1}} 
+            <br />Address 2: {{vendor.address2}}
+            <br />City: {{vendor.city}}
+            <br />State/Province: {{vendor.state_name}} 
+            <br />Zipcode/Postal Code: {{vendor.zipcode}}
+          </div>
+          <div class="box-footer">
+            <button class="btn btn-info" type="button" clip-copy="getVendorCard()" clip-click="copyToClipboard()">Copy to clipboard</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="box no-border" style="min-height: 100px">
+          <div class="box-header">
+            <h3 class="box-title">Vendor documents</h3>
+          </div>
+          <div class="box-body overhidden">
+            <file-uploader file-ids="vendor.tmp_file_ids" model-id="vendor.id"></file-uploader>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

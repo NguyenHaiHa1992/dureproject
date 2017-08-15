@@ -1,0 +1,171 @@
+%PDF-1.3
+1 0 obj
+<< /Type /Catalog
+/Outlines 2 0 R
+/Pages 3 0 R >>
+endobj
+2 0 obj
+<< /Type /Outlines /Count 0 >>
+endobj
+3 0 obj
+<< /Type /Pages
+/Kids [6 0 R
+]
+/Count 1
+/Resources <<
+/ProcSet 4 0 R
+/Font << 
+/F1 8 0 R
+/F2 9 0 R
+>>
+>>
+/MediaBox [0.000 0.000 841.000 595.000]
+ >>
+endobj
+4 0 obj
+[/PDF /Text ]
+endobj
+5 0 obj
+<<
+/Creator (DOMPDF)
+/CreationDate (D:20170112153612+01'00')
+/ModDate (D:20170112153612+01'00')
+>>
+endobj
+6 0 obj
+<< /Type /Page
+/Parent 3 0 R
+/Annots [ 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R ]
+/Contents 7 0 R
+>>
+endobj
+7 0 obj
+<< /Filter /FlateDecode
+/Length 791 >>
+stream
+xœ–ÉNã@†ïyŠ'8Ğô¾Ù%Ä&MÀ!Â&‘ÄÈ,³<<ÕWÚbC.)üWõWİõwzœyg }^÷8ÃÏ_Àá®nñ¬§8S5V3i8ÌÀ8&ƒ§Àú«tÿ_³Ò ®
+hÏ„:Î9¤ÏrÜÛ€²Ì	ÆH¦°Ô ƒ#B2ƒ{€ëÍóbë'p8ø´vc‰3X\ÓXtZÜSqÏ™ÖfQœóIñı"Ë“òÍ,‹>Úæ’ª¬: Rl‡à	(ò¾¤/nJ“gøÄ÷\á²½ÂZæµoéïşè9åŸÖ.7KâÁldúB›¥ÃoF´ô¹?ùûı>SZj´‚aÖkt“¿Ô,XYcŒG6f…kÁ9-îFÏ“bşm$JMHZsŒZ©	0ËSÜ5‘Œ6¸*Õ‚ô#ŸgEùm JL@Æk¦­[¨¹üxÁ¦ÓåQñ=Y3)Š$.…­°.~m3…ƒüé®œ<®µÁ”úá”C»Xsƒ+ÇFô»c[§(ĞâØpÌ)™è>]Né½‰Ó£N¡?´:½X˜Pá½¯2í«h7zË‚T	j4F«x'k%$VvÀVWÁV6Î–ùWr]oûGÛ»­|õŞóPe' )‰”„t·"EêŒ7OÅ+!‡CèŸï^ÂÑÕîÙaçe¢¼LH£õ¯;III¤¤ì ¥ŒH)R'­ó±Äêc*ùüF'}k¥Œ+“J§³)Ñ¼”ëÎJ¹œÎJÙ5Õ¶œÏ*R§TÈãb	üù%ÑŒÿ§ìO²vöFw0M§;pñš—pg¼ÚòÎ‹×—PÒœ³ñIÎ½—ùC^Şl>İlµ:^[Æ»¤uÑ÷­ïRRëHÙ5ìÕU¹œö*Òwi%VÏ{9™?Ï°K­–cz•N]e¤$HRv@ÒõI©xËõIJŠÔÛc¹e:.nåÉ:•ã6â©‚âĞ86 ?=Ş—£Y^;Q”kå‰êOÆóŸÅ4Ëé—É?í·×
+endstream
+endobj
+8 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F1
+/BaseFont /Times-Bold
+/Encoding /WinAnsiEncoding
+>>
+endobj
+9 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F2
+/BaseFont /Times-Roman
+/Encoding /WinAnsiEncoding
+>>
+endobj
+10 0 obj
+<< /Type /Annot
+/Subtype /Link
+/A 11 0 R
+/Border [0 0 0]
+/H /I
+/Rect [ 80.4448 551.0152 107.1088 562.8952 ]
+>>
+endobj
+11 0 obj
+<< /Type /Action
+/S /URI
+/URI (/server/index.php/api/fixture/exportExcel/ExportExcelColumn[_no]/1/ExportExcelColumn[code]/1/ExportExcelColumn[category_name]/1/ExportExcelColumn[size]/1/ExportExcelColumn[location]/1/ExportExcelColumn[vendor]/1/ExportExcelColumn[description]/1/category_id//code//store_id/17/related_name/STORE+026+KITCHENER-WESTMOUNT/ids/28/type/pdf/Fixture_sort/code)
+>>
+endobj
+12 0 obj
+<< /Type /Annot
+/Subtype /Link
+/A 13 0 R
+/Border [0 0 0]
+/H /I
+/Rect [ 270.8507 551.0152 291.5147 562.8952 ]
+>>
+endobj
+13 0 obj
+<< /Type /Action
+/S /URI
+/URI (/server/index.php/api/fixture/exportExcel/ExportExcelColumn[_no]/1/ExportExcelColumn[code]/1/ExportExcelColumn[category_name]/1/ExportExcelColumn[size]/1/ExportExcelColumn[location]/1/ExportExcelColumn[vendor]/1/ExportExcelColumn[description]/1/category_id//code//store_id/17/related_name/STORE+026+KITCHENER-WESTMOUNT/ids/28/type/pdf/Fixture_sort/size)
+>>
+endobj
+14 0 obj
+<< /Type /Annot
+/Subtype /Link
+/A 15 0 R
+/Border [0 0 0]
+/H /I
+/Rect [ 395.6174 551.0152 440.9534 562.8952 ]
+>>
+endobj
+15 0 obj
+<< /Type /Action
+/S /URI
+/URI (/server/index.php/api/fixture/exportExcel/ExportExcelColumn[_no]/1/ExportExcelColumn[code]/1/ExportExcelColumn[category_name]/1/ExportExcelColumn[size]/1/ExportExcelColumn[location]/1/ExportExcelColumn[vendor]/1/ExportExcelColumn[description]/1/category_id//code//store_id/17/related_name/STORE+026+KITCHENER-WESTMOUNT/ids/28/type/pdf/Fixture_sort/location)
+>>
+endobj
+16 0 obj
+<< /Type /Annot
+/Subtype /Link
+/A 17 0 R
+/Border [0 0 0]
+/H /I
+/Rect [ 545.8026 551.0152 584.4666 562.8952 ]
+>>
+endobj
+17 0 obj
+<< /Type /Action
+/S /URI
+/URI (/server/index.php/api/fixture/exportExcel/ExportExcelColumn[_no]/1/ExportExcelColumn[code]/1/ExportExcelColumn[category_name]/1/ExportExcelColumn[size]/1/ExportExcelColumn[location]/1/ExportExcelColumn[vendor]/1/ExportExcelColumn[description]/1/category_id//code//store_id/17/related_name/STORE+026+KITCHENER-WESTMOUNT/ids/28/type/pdf/Fixture_sort/vendor)
+>>
+endobj
+18 0 obj
+<< /Type /Annot
+/Subtype /Link
+/A 19 0 R
+/Border [0 0 0]
+/H /I
+/Rect [ 678.1146 551.0152 737.4426 562.8952 ]
+>>
+endobj
+19 0 obj
+<< /Type /Action
+/S /URI
+/URI (/server/index.php/api/fixture/exportExcel/ExportExcelColumn[_no]/1/ExportExcelColumn[code]/1/ExportExcelColumn[category_name]/1/ExportExcelColumn[size]/1/ExportExcelColumn[location]/1/ExportExcelColumn[vendor]/1/ExportExcelColumn[description]/1/category_id//code//store_id/17/related_name/STORE+026+KITCHENER-WESTMOUNT/ids/28/type/pdf/Fixture_sort/description)
+>>
+endobj
+xref
+0 20
+0000000000 65535 f 
+0000000008 00000 n 
+0000000073 00000 n 
+0000000119 00000 n 
+0000000283 00000 n 
+0000000312 00000 n 
+0000000426 00000 n 
+0000000536 00000 n 
+0000001399 00000 n 
+0000001507 00000 n 
+0000001616 00000 n 
+0000001743 00000 n 
+0000002147 00000 n 
+0000002275 00000 n 
+0000002679 00000 n 
+0000002807 00000 n 
+0000003215 00000 n 
+0000003343 00000 n 
+0000003749 00000 n 
+0000003877 00000 n 
+trailer
+<<
+/Size 20
+/Root 1 0 R
+/Info 5 0 R
+>>
+startxref
+4289
+%%EOF

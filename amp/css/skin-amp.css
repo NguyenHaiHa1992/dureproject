@@ -1,0 +1,165 @@
+/*
+ * Skin: AMP
+ * ----------
+ */
+.skin-amp .main-header{
+  background: url(../images/login_background.jpg);
+}
+.skin-amp .main-header .navbar {
+  background: none;
+}
+.skin-amp .main-header .navbar .nav > li > a {
+  color: #ffffff;
+}
+.skin-amp .main-header .navbar .nav > li > a:hover,
+.skin-amp .main-header .navbar .nav > li > a:active,
+.skin-amp .main-header .navbar .nav > li > a:focus,
+.skin-amp .main-header .navbar .nav .open > a,
+.skin-amp .main-header .navbar .nav .open > a:hover,
+.skin-amp .main-header .navbar .nav .open > a:focus {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f6f6f6;
+}
+.skin-amp .main-header .navbar .navbar-custom-menu > .nav {
+  margin-right: 10px;
+}
+.skin-amp .main-header .navbar .sidebar-toggle {
+  color: #ffffff;
+}
+.skin-amp .main-header .navbar .sidebar-toggle:hover {
+  color: #f6f6f6;
+  background: rgba(0, 0, 0, 0.1);
+}
+.skin-amp .main-header .navbar .sidebar-toggle {
+  color: #fff;
+  height: 50px;
+}
+.skin-amp .main-header .navbar .sidebar-toggle:hover {
+/*  background-color: #101323;*/
+    background-color: #121c67;
+}
+@media (max-width: 767px) {
+  .skin-amp .main-header .navbar .dropdown-menu li.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .skin-amp .main-header .navbar .dropdown-menu li a {
+    color: #fff;
+  }
+  .skin-amp .main-header .navbar .dropdown-menu li a:hover {
+    background: #101323;
+  }
+}
+.skin-amp .main-header .logo {
+  color: #ffffff;
+  border-bottom: 0px solid transparent;
+}
+.skin-amp .main-header .logo > a {
+  color: #ffffff;
+}
+.skin-amp .main-header .logo:hover {
+/*  background: #171A28;*/
+}
+.skin-amp .main-header li.user-header {
+/*  background-color: #3c8dbc;*/
+background: #26337b;
+}
+.skin-amp .content-header {
+  background: transparent;
+}
+.skin-amp .user-panel > .info,
+.skin-amp .user-panel > .info > a {
+  color: #fff;
+}
+.skin-amp .sidebar-menu > li.header {
+  color: #4b646f;
+  background: #1a2226;
+}
+.skin-amp .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+/*  margin-right: 1px;*/
+}
+.skin-amp .sidebar-menu > li > a:hover,
+.skin-amp .sidebar-menu > li.active > a {
+  color: #ffffff;
+/*  background: #1e282c;*/
+    background: #212c7e;
+/*  border-left-color: #3c8dbc;*/
+    border-left-color: #e55425;
+}
+.skin-amp .sidebar-menu > li > .treeview-menu {
+/*  margin: 0 1px;*/
+/*  background: #2c3b41;*/
+    background: #172271;
+}
+.skin-amp .wrapper,
+.skin-amp .main-sidebar,
+.skin-amp .left-side {
+/*  background: #222d32;*/
+  background: #FFF;
+}
+.skin-amp .sidebar a {
+/*  color: #b8c7ce;*/
+    color: #212c7e;
+}
+.skin-amp .sidebar a:hover {
+  text-decoration: none;
+}
+.skin-amp .treeview-menu > li > a {
+  color: #8aa4af;
+}
+.skin-amp .treeview-menu > li.active > a,
+.skin-amp .treeview-menu > li > a:hover {
+  color: #ffffff;
+}
+.skin-amp .sidebar-form {
+  width: 200px;
+  border-radius: 3px;
+  border: 1px solid #374850;
+  margin-top: 6px;
+}
+.skin-amp .sidebar-form input[type="text"],
+.skin-amp .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #101323;
+  border: 1px solid transparent;
+  height: 35px;
+  -webkit-transition: all 0.3s cubic-bezier(0.32, 1.25, 0.375, 1.15);
+  -o-transition: all 0.3s cubic-bezier(0.32, 1.25, 0.375, 1.15);
+  transition: all 0.3s cubic-bezier(0.32, 1.25, 0.375, 1.15);
+}
+.skin-amp .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 2px !important;
+}
+.skin-amp .sidebar-form input[type="text"]:focus,
+.skin-amp .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-amp .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-amp .sidebar-form .btn {
+  color: #999;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 2px !important;
+  border-bottom-right-radius: 2px !important;
+  border-bottom-left-radius: 0 !important;
+}
+.skin-amp.layout-top-nav .main-header > .logo {
+  background-color: #3c8dbc;
+  color: #ffffff;
+  border-bottom: 0px solid transparent;
+}
+.skin-amp.layout-top-nav .main-header > .logo > a {
+  color: #ffffff;
+}
+.skin-amp.layout-top-nav .main-header > .logo:hover {
+  background: #171A28;
+}
+.btn-tools .dropdown-menu{
+    min-width: 120px;
+}

@@ -1,0 +1,49 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      {{title}}
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Machine Schedule</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box top_box">
+          Number of machines: <b>{{machines.length}}</b>. Number of machines in  working status: <b>{{machine_number_working}}</b>
+        </div>
+        <div class="box no-border">
+          <div class="box-body pad overhidden">
+            <div class="form-group overhidden">
+              <div class="col-md-1">
+                <label>Filter date:</label>
+              </div>
+              <div class="col-md-2">
+                <input class="form-control datepicker col-md-2" type="text" ng-model="filter.date" />
+              </div>
+            </div>
+            <div class="fl" ng-repeat="machine in machines">
+              <button class="btn btn-primary margin_5 min-width-100 machine" ng-click="machineScheduleDetail($event, machine)" ng-disabled = "machine.is_jobs == false" >{{machine.name}}
+              </button>
+            </div>
+          </div><!-- /.box -->
+        </div>
+
+        <div class="box no-border">
+          <div class="box-body">
+            <highchart id="chart1" config="chartConfig"></highchart>
+          </div>
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->

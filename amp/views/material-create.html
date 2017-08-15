@@ -1,0 +1,968 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1 id="h1">
+      Enter Material Details
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter Material Details</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+          <li><b>Material actions</b></li>
+          <li><a ui-sref="material-list">Material list</a></li>
+          <li class="active"><a ui-sref="material-create" ui-sref-opts="{reload: true, notify: true}">Add new material</a></li>
+        </ol>
+        <!-- general form elements -->
+        <div class="box 1overhidden top_box">
+          <div class="col-md-6">
+            <form role="form">
+              <div class="form-group margin-5">
+                <div class="col-md-3 text-right">
+                  <label for="" >Search Material Code</label></br>
+                </div>
+                <div class="col-md-3 row">
+                  <input ampautocomplete ng-model="search_material_id" type="text" class="form-control" placeholder="" id="Search_Material_id" data-source="/material/getAllMaterialCode" ui-option="'materials'" ui-id="'id'" ui-name="'material_code'" search-field="'material_code'" ui-modellabel="''">
+
+        				<!-- 	<input auto-complete ui-item="'material_code'" ui-object="material" ng-model="search_material_code" type="text" class="form-control" placeholder="search code"> -->
+        					<span style="font-size: 12px">- OR - <a ng-click="advancedSearch()" class="advanced_search"><i>Advanced Search</i></a></span>
+                </div>
+              </div>
+            </form>
+
+            <button type="button" ng-click="unlock()" class="btn btn-primary pull-right margin-5" ng-show="is_readonly">Unlock</button>
+            <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Create</button>
+            <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update && !is_readonly">Update</button>
+          </div>
+          <div class="col-md-6" ng-show="is_update">
+            <a ng-show="is_update" ui-sref="history-list({class:'Material',id: material.id})" class="btn btn-primary pull-right margin-5">Material history</a>
+            <button type="button" ng-click="checkIn()" class="btn btn-primary pull-right margin-5">
+              <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Check-in Item
+            </button>
+            <button type="button" ng-click="checkOut()" class="btn btn-primary pull-right margin-5">
+              <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Check-out Item
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- left column -->
+      <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="box no-border">
+          <!-- form start -->
+          <form role="form">
+            <div class="box-body">
+              <div class="row form-group" ng-class="{'has-error': material_error.material_code_id.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Material Code</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ampautocomplete ng-disabled="is_readonly" ng-model="material.material_code_id" type="text" class="form-control" placeholder="" id="Material_material_code_id" data-source="/materialCode/getAll" ui-option="'material_codes'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="material.material_code">
+
+                  <span class="control-label" for="inputError" ng-show="material_error.material_code_id.length!=0" ng-repeat="error in material_error.material_code_id">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group" ng-class="{'has-error': material_error.category_id.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Type</label></br>
+                </div>
+                <div class="col-md-9">
+                  <select ng-disabled="is_readonly" class="form-control" required ng-model="material.category_id" ng-options="item.id as item.name for item in material_categories">
+                    <option value="">Select type</option>
+                  </select>
+                  <span class="control-label" for="inputError" ng-show="material_error.category_id.length!=0" ng-repeat="error in material_error.category_id">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group" ng-class="{'has-error': material_error.uol_id.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Enter inches/feet</label></br>
+                </div>
+                <div class="col-md-9">
+                  <select ng-disabled="is_readonly" class="form-control" required ng-model="material.uol_id" ng-options="item.id as item.name for item in uols">
+                    <option value="">Select</option>
+                  </select>
+                  <span class="control-label" for="inputError" ng-show="material_error.uol_id.length!=0" ng-repeat="error in material_error.uol_id">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group" ng-class="{'has-error': material_error.am_designation.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >AM Designation</label></br>
+                </div>
+                <div class="col-md-9">
+                  <select ng-disabled="is_readonly" class="form-control" required ng-model="material.am_designation" ng-options="item for item in am_designation_options">
+                    <option value="">Select Designation</option>
+                  </select>
+                  <span class="control-label" for="inputError" ng-show="material_error.am_designation.length!=0" ng-repeat="error in material_error.am_designation">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div ng-show="is_update" class="row form-group" ng-class="{'has-error': material_error.designation_id.length!=0}" style="display: none">
+                <div class="col-md-3 text-right">
+                  <label for="" >Designation ID</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.designation_id" type="text" class="form-control" placeholder="designation Id">
+                  <span class="control-label" for="inputError" ng-show="material_error.designation_id.length!=0" ng-repeat="error in material_error.designation_id">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group" ng-class="{'has-error': material_error.arr_location_ids.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label>Locations</label></br>
+                </div>
+                <div class="col-md-9">
+                  <select ng-disabled="is_readonly" multiple chosen class="form-control chosen-select" ng-model="material.arr_location_ids" ng-options="item.id as item.name for item in locations" data-placeholder="Rack | Row | Box" id="Material_location_ids">
+                  </select>
+                  <span class="control-label" for="inputError" ng-show="material_error.arr_location_ids.length!=0" ng-repeat="error in material_error.arr_location_ids">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group shape_selection" ng-class="{'has-error': material_error.shape_id.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Shape</label></br>
+                </div>
+                <div class="col-md-9">
+                  <div ng-repeat="item in shapes" class="col-md-3 no-padding">
+                    <input ng-disabled="is_readonly" type="radio" ng-model="material.shape_id" ng-change="changeShape()" value="{{item.id}}" id="material_shape_id_{{item.id}}"> 
+                    <label for="material_shape_id_{{item.id}}"><img ng-src="{{item.image_src}}" alt="{{item.name}}"/></label>
+                  </div>
+
+                  <span class="control-label" for="inputError" ng-show="material_error.shape_id.length!=0" ng-repeat="error in material_error.shape_id" style="display: block; clear: both;">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+
+                  <div class="clear"></div>
+                  <hr />
+                  <div class="col-md-3 text-right">
+                    <label for="" >Shape sizes</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="col-md-6" ng-repeat="(label, size) in material.sizes" style="padding: 0 5px;">
+                      <div class="input-group input-sm">
+                        <span class="input-group-addon">{{label}}</span>
+                        <input ng-disabled="is_readonly" ng-model="size" ng-change="updateSize(label,size)" type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-show="" class="row form-group" ng-class="{'has-error': material_error.sizes.length!=0}"></div>
+
+              <div class="row form-group" ng-class="{'has-error': material_error.optimum_inventory.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Optimum Inventory</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.optimum_inventory" type="text" class="form-control" placeholder="optimum inventory">
+                  <span class="control-label" for="inputError" ng-show="material_error.optimum_inventory.length!=0" ng-repeat="error in material_error.optimum_inventory">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group" ng-class="{'has-error': material_error.note.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Note</label></br>
+                </div>
+                <div class="col-md-9">
+                  <textarea ck-editor ng-model="material.note" ck-readonly="is_readonly" id="material_note"></textarea>
+
+                  <span class="control-label" for="inputError" ng-show="material_error.note.length!=0" ng-repeat="error in material_error.note">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Un used now -->
+              <div class="row form-group none" ng-class="{'has-error': material_error.inches.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Inches</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.inches" type="text" class="form-control" placeholder="inches">
+                  <span class="control-label" for="inputError" ng-show="material_error.inches.length!=0" ng-repeat="error in material_error.inches">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group none" ng-class="{'has-error': material_error.quantity.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Qty</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.quantity" type="text" class="form-control" placeholder="quantity">
+                  <span class="control-label" for="inputError" ng-show="material_error.quantity.length!=0" ng-repeat="error in material_error.quantity">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group none" ng-class="{'has-error': material_error.total_lbs.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Total LBS</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.total_lbs" type="text" class="form-control" placeholder="total Lbs">
+                  <span class="control-label" for="inputError" ng-show="material_error.total_lbs.length!=0" ng-repeat="error in material_error.total_lbs">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group none" ng-class="{'has-error': material_error.cost_lbs.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Cost/Lb</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.cost_lbs" type="text" class="form-control" placeholder="cost/lb">
+                  <span class="control-label" for="inputError" ng-show="material_error.cost_lbs.length!=0" ng-repeat="error in material_error.cost_lbs">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row form-group none" ng-class="{'has-error': material_error.cost_inch.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="" >Cost/Inch</label></br>
+                </div>
+                <div class="col-md-9">
+                  <input ng-disabled="is_readonly" ng-model="material.cost_inch" type="text" class="form-control" placeholder="cost/inch">
+                  <span class="control-label" for="inputError" ng-show="material_error.cost_inch.length!=0" ng-repeat="error in material_error.cost_inch">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+              <!-- Un used now -->
+
+            </div>
+            <!-- /.box-body -->
+          </form>
+        </div>
+        <!-- /.box -->
+      </div>
+      <!--/.col (left) -->
+
+      <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="box no-border">
+          <!-- form start -->
+          <form role="form">
+            <div ng-show="is_update" class="box-body">
+              <div class="row form-group" ng-class="{'has-error': material_error.stock_in_hand.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="">Stock in hand</label></br>
+                </div>
+                <div class="col-md-9">
+                  <b class="text-green">{{material.stock_in_hand}}</b>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="is_update" class="box-body">
+              <div class="row form-group" ng-class="{'has-error': material_error.quantity.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="">Total Quantity</label></br>
+                </div>
+                <div class="col-md-9">
+                  <b class="text-green">{{material.quantity}}</b>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="box no-border">
+          <div class="box-body">
+            <div class="row form-group" ng-class="">
+              <div class="col-md-12">
+                <label for="" > Heatnumbers & designations</label></br>
+              </div>
+              <div class="col-md-12">
+                <table id="heatnumbers" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+                  <thead>
+                    <tr role="row">
+                      <th width="18%">Heatnumber</th>
+                      <th width="18%">Designation</th>
+                      <th width="10%">Qty</th>
+                      <th width="10%">Length</th>
+                      <th width="29%">Detail</th>
+                      <th width="10%">Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                    <tr class="even" ng-repeat="heatnumber in material.heatnumbers">
+                      <td class="text-right">{{!heatnumber.is_edit ? heatnumber.heatnumber:""}} 
+                        <input value="{{heatnumber.id}}" ng-model="heatnumber.heatnumber" type="hidden">
+                        <input value="{{heatnumber.heatnumber}}" ng-show="heatnumber.is_edit" ng-model="heatnumber.heatnumber" type="text" class="form-control input-sm" placeholder="heatnumber">
+                      </td>
+                      <td class="text-right">{{!heatnumber.is_edit ? heatnumber.designation : ""}} 
+                        <input value="{{heatnumber.designation}}" ng-show="heatnumber.is_edit && !heatnumber.is_new" ng-model="heatnumber.designation" type="text" class="form-control input-sm" placeholder="designation">
+                      </td>
+                      <td class="text-right">{{heatnumber.quantity}}</td>
+                      <td class="text-right">{{heatnumber.total_length}}</td>
+                      <td class="text-center">
+                        <table class="table dataTable table-sm" aria-describedby="heatnumber_quantity_detail_view_info">
+                          <thead>
+                            <tr role="row">
+                              <th width="30%">Len.</th>
+                              <th width="30%">Qty</th>
+                              <th width="40%"> </th>
+                            </tr>
+                          </thead>
+                          <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                            <tr class="even" ng-repeat="item in heatnumber.quantity_detail">
+                              <td class="text-right">
+                                {{item.length}}
+                              </td>
+                              <td class="text-right">
+                                {{item.quantity}}
+                              </td>
+                              <td class="text-right">
+                                <button type="button" ng-click="QuickCheckIn(heatnumber, item.length, item.quantity)" class="btn btn-xs btn-icon pull-right" title="Check In">
+                                  <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" ng-click="QuickCheckOut(heatnumber, item.length, item.quantity)" class="btn btn-xs btn-icon pull-right" title="Check Out">
+                                  <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" ng-show="is_update" ng-click="getHeatnumberDetailInfo(heatnumber)" class="btn btn-xs btn-icon pull-right" title="Show detail">
+                          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info
+                        </button>
+                        <button ng-disabled="is_readonly" ng-hide="heatnumber.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editHeatnumber(heatnumber)">
+                          <span class="glyphicon glyphicon-edit"></span> Edit 
+                        </button>
+                        <button ng-show="heatnumber.is_edit && is_update" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveHeatnumber(heatnumber)">
+                          <span class="glyphicon glyphicon-save"></span> Save 
+                        </button>
+                        <button ng-disabled="is_readonly" ng-show="heatnumber.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="cancelEditHeatnumber(heatnumber)">
+                          <span class="glyphicon glyphicon-edit"></span> Cancel 
+                        </button>
+                        <button ng-disabled="is_readonly" ng-hide="heatnumber.is_edit" type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeHeatnumber(heatnumber, $index)" style="display: none">
+                          <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <button type="button" class="btn btn-danger btn-xs" ng-click="addHeatnumber()" ng-disabled="is_readonly">
+                  <span class="glyphicon glyphicon-plus"></span> Add more
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- right column -->
+
+      <div class="col-md-12" ng-show="is_update" >
+        <!-- general form elements -->
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Check In/Out History</h3>
+          </div>
+          <!-- form start -->
+          <form role="form">
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                <thead>
+                  <tr role="row">
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Details</th>
+                    <th>Employee</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+
+                <tfoot>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Details</th>
+                    <th>Employee</th>
+                    <th>Note</th>
+                  </tr>
+                </tfoot>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                  
+                  <tr class="even {{item.type_label}}" ng-repeat="item in in_out_materials">
+                    <td><a href="" ng-click="viewDetailInOutMaterial(item)">{{item.received_date}}</a></td>
+                    <td class=" ">{{item.type_label}}</td>
+                    <td class=" ">{{item.quantity}}</td>
+                    <td class=" ">
+
+                      <table class="table table-sm table-bordered" aria-describedby="viewQuantity_info">
+                        <thead>
+                          <tr role="row">
+                            <th width="30%">Heatnumber</th>
+                            <th width="10%">Qty</th>
+                            <th width="60%">Detail</th>
+                          </tr>
+                        </thead>
+                        <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                          <tr class="even" ng-repeat="heatnumber in item.heatnumbers">
+                            <td class="text-right">
+                              {{heatnumber.heatnumber}} 
+                            </td>
+                            <td class="text-right">
+                              {{heatnumber.quantity}}
+                            </td>
+                            <td class="text-right">
+                              <table class="table table-sm table-bordered" aria-describedby="viewQuantityDetail_info">
+                                <thead>
+                                  <tr role="row">
+                                    <th width="30%">Length</th>
+                                    <th width="30%">Qty</th>
+                                    <th width="40%">Location</th>
+                                  </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                                  <tr class="even" ng-repeat="heatnumber_detail in heatnumber.quantity_detail">
+                                    <td class="text-right">
+                                      {{heatnumber_detail.length}} 
+                                    </td>
+                                    <td class="text-right">
+                                      {{heatnumber_detail.quantity}}
+                                    </td>
+                                    <td class="text-right">
+                                      {{heatnumber_detail.location}}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td class=" ">{{item.employee}}</td>
+                    <td class=" ">
+                      <div ng-bind-html="renderHtml(item.note)"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- right column -->
+
+      <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+
+<div class="modal" id="checkInModal" tabindex="-1" role="dialog" aria-labelledby="checkInModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 1100px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Check-in for Material "{{material.material_code}}"</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="col-md-6">
+          <div class="row form-group" ng-class="{'has-error': check_in_material_error.vendor_id.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Vendor <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input ampautocomplete ng-disabled="check_in_material.is_readonly" ng-model="check_in_material.vendor_id" type="text" class="form-control" placeholder="" id="Check_in_material_vendor_id" data-source="/vendor/getAll" ui-option="'vendors'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="check_in_material.vendor.name">
+
+              <span class="control-label" for="inputError" ng-show="check_in_material_error.vendor_id.length!=0" ng-repeat="error in check_in_material_error.vendor_id">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row form-group" ng-class="{'has-error': check_in_material_error.received_by.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Received by <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input ampautocomplete ng-disabled="check_in_material.is_readonly" ng-model="check_in_material.received_by" type="text" class="form-control" placeholder="" id="Check_in_material_received_by" data-source="/employee/getAll" ui-option="'employees'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="check_in_material.employee.name">
+
+              <span class="control-label" for="inputError" ng-show="check_in_material_error.received_by.length!=0" ng-repeat="error in check_in_material_error.received_by">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row form-group" ng-class="{'has-error': check_in_material_error.received_date.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Date Received <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input type="text" ng-model="check_in_material.received_date" class="form-control datepicker" required ng-disabled="check_in_material.is_readonly" />
+              <span class="control-label" for="inputError" ng-show="check_in_material_error.received_date.length!=0" ng-repeat="error in check_in_material_error.received_date">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-4 text-right">
+              <label>Mill Cert.</label>
+            </div>
+            <div class="col-md-8">
+              <file-uploader-single option-style="'full'" file-id="check_in_material.mill_cert_file_id" model-id="check_in_material.id" ng-disabled="check_in_material.is_readonly"></file-uploader-single>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-4 text-right">
+              <label>Mat Scribed & Tagged </label>
+            </div>
+            <div class="col-md-8">
+              <input type="checkbox" ng-model="check_in_material.scribed_tagged" ng-disabled="check_in_material.is_readonly"/>
+              <span class="control-label" for="inputError" ng-show="check_in_material_error.scribed_tagged.length!=0" ng-repeat="error in check_in_material_error.scribed_tagged">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row form-group" ng-class="{'has-error': check_in_material_error.total_inch.length > 0}">
+          <div class="col-md-2 text-right">
+            <label>Total inches <span class="required">*</span></label>
+          </div>
+          <div class="col-md-4">
+            <input type="text" ng-model="check_in_material.total_inch" class="form-control" disabled=""/>
+            <span class="control-label" for="inputError" ng-show="check_in_material_error.total_inch.length!=0" ng-repeat="error in check_in_material_error.total_inch">
+            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+            </span>
+          </div>
+        </div>
+
+        <div class="row form-group" ng-class="{'has-error': check_in_material_error.quantity.length > 0}">
+          <div class="col-md-2 text-right">
+            <label>Quantity <span class="required">*</span></label>
+          </div>
+          <div class="col-md-4">
+            <input type="number" ng-model="check_in_material.quantity" class="form-control" required ng-change="watchQuantity_In()" disabled="" />
+            <span class="control-label" for="inputError" ng-show="check_in_material_error.quantity.length!=0" ng-repeat="error in check_in_material_error.quantity">
+            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+            </span>
+          </div>
+        </div>
+
+
+        <div class="row form-group" ng-class="{'has-error': check_in_material_error.heatnumber_ids.length > 0}">
+          <div class="col-md-2 text-right">
+            <label>Heat Number | Designation<span class="required">*</span></label>
+          </div>
+          <div class="col-md-10">
+            <select ng-disabled="check_in_material.is_readonly || check_in_material.is_quick_check_in" multiple chosen class="chosen_select form-control" ng-model="check_in_material.heatnumber_ids" ng-options="item.id as item.heatnumber + ' | ' + item.designation for item in material.heatnumbers" ng-change="checkInUpdateHeatnumbers(check_in_material)" data-placeholder=""></select>
+          </div>
+          <div class="col-md-12">
+            <table id="heatnumbers" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+              <thead>
+                <tr role="row">
+                  <th width="10%">Heatnumber</th>
+                  <th width="10%">Designation</th>
+                  <th width="10%">Total Length</th>
+                  <th width="10%">Total Qty</th>
+                  <th width="50%">Quantity Detail</th>
+                  <th width="10%">Info</th>
+                </tr>
+              </thead>
+              <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                <tr class="even" ng-repeat="heatnumber in check_in_material.heatnumbers">
+                  <td class="text-right">
+                    {{heatnumber.heatnumber}}
+                  </td>
+                  <td class="text-right">
+                    {{heatnumber.designation}} 
+                  </td>
+                  <td class="text-right">
+                    <input type="text" ng-model="heatnumber.length" class="form-control input-sm" disabled />
+                  </td>
+                  <td class="text-right">
+                    <input type="number" ng-model="heatnumber.quantity" class="form-control input-sm" required ng-change="watchHeatnumberQuantity_In()" disabled="" />
+                  </td>
+                  <td class="text-right">
+                    <table id="heatnumber_quantity_detail" class="table dataTable" aria-describedby="heatnumber_quantity_detail_info">
+                      <thead>
+                        <tr role="row">
+                          <th width="45%">Location</th>
+                          <th width="25%">Length</th>
+                          <th width="25%">Quantity</th>
+                          <th width="5%"> </th>
+                        </tr>
+                      </thead>
+                      <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                        <tr class="even" ng-repeat="item in heatnumber.quantity_detail">
+                          <td class="text-left">
+                            <select class="form-control input-sm" ng-model="item.location_id" ng-options="item.id as item.name for item in locations" required ng-disabled="check_in_material.is_readonly || check_in_material.is_quick_check_in_popup">
+                              <option style="display:none" value="">Select Location</option>
+                            </select>
+                          </td>
+                          <td class="text-right">
+                            <input type="text" ng-model="item.length" class="form-control input-sm" required ng-disabled="check_in_material.is_readonly || check_in_material.is_quick_check_in" ng-change="watchHeatnumberQuantityDetail_In(heatnumber)"/>
+                          </td>
+                          <td class="text-right">
+                            <input type="number" ng-model="item.quantity" class="form-control input-sm" required ng-disabled="check_in_material.is_readonly" ng-change="watchHeatnumberQuantityDetail_In(heatnumber)" />
+                          </td>
+                          <td class="text-right">
+                            <button type="button" ng-click="removeQuantityDetail_In(heatnumber, $index)" class="btn btn-icon btn-sm" title="remove item" ng-hide="check_in_material.is_readonly">
+                              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="input-group col-md-6 pull-right" ng-hide="check_in_material.is_readonly">
+                      <button type="button" ng-click="addQuantityDetail(heatnumber.quantity_detail)" class="btn btn-icon btn-sm no-padding" title="Add new">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add
+                      </button>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <button type="button" ng-show="is_update" ng-click="getHeatnumberDetailInfo(heatnumber)" class="btn btn-xs btn-icon pull-right" title="Show detail">
+                      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-12">
+            <label>Note</label>
+          </div>
+          <div class="col-md-12">
+            <textarea ck-editor ng-model="check_in_material.note" ck-readonly="check_in_material.is_readonly"></textarea>
+            <span class="control-label" for="inputError" ng-show="check_in_material_error.note.length!=0" ng-repeat="error in check_in_material_error.note">
+            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <a href="" ng-click="seeMaterialPrice()" target="_blank" class="pull-left"><i>See Material Price</i></a>
+        <button type="button" class="btn btn-primary" ng-click="submitCheckIn()" ng-hide="check_in_material.is_readonly">Check In</button>
+      </div>
+    </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="checkOutModal" tabindex="-1" role="dialog" aria-labelledby="checkOutModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 1100px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Check-out for Material "{{material.material_code}}"</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="col-md-6">
+          <div class="row form-group" ng-class="{'has-error': check_out_material_error.received_by.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Pulled out by <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input ampautocomplete ng-disabled="check_out_material.is_readonly" ng-model="check_out_material.received_by" type="text" class="form-control" placeholder="" id="Check_out_material_received_by" data-source="/employee/getAll" ui-option="'employees'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="check_out_material.employee.name">
+
+              <span class="control-label" for="inputError" ng-show="check_out_material_error.received_by.length!=0" ng-repeat="error in check_out_material_error.received_by">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row form-group" ng-class="{'has-error': check_out_material_error.received_date.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Date <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input type="text" ng-model="check_out_material.received_date" class="form-control datepicker" required ng-disabled="check_out_material.is_readonly" />
+              <span class="control-label" for="inputError" ng-show="check_out_material_error.received_date.length!=0" ng-repeat="error in check_out_material_error.received_date">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row form-group" ng-class="{'has-error': check_out_material_error.job_order_id.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Job Order <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input ampautocomplete ng-disabled="check_out_material.is_readonly" ng-model="check_out_material.job_order_id" type="text" class="form-control" placeholder="" id="Check_out_material_job_order_id" data-source="/jobOrder/getAll" ui-option="'job_orders'" ui-id="'id'" ui-name="'jo_code'" search-field="'jo_code'" ui-modellabel="check_out_material.job_order.jo_code">
+
+              <span class="control-label" for="inputError" ng-show="check_out_material_error.job_order_id.length!=0" ng-repeat="error in check_out_material_error.job_order_id">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row form-group" ng-class="{'has-error': check_out_material_error.part_id.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Part # <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input ampautocomplete ng-disabled="check_out_material.is_readonly" ng-model="check_out_material.part_id" type="text" class="form-control" placeholder="" id="Check_out_material_part_id" data-source="/part/getAll" ui-option="'parts'" ui-id="'id'" ui-name="'part_code'" search-field="'part_code'" ui-modellabel="check_out_material.part.part_code">
+
+              <span class="control-label" for="inputError" ng-show="check_out_material_error.part_id.length!=0" ng-repeat="error in check_out_material_error.part_id">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="col-md-6">
+          <div class="row form-group" ng-class="{'has-error': check_out_material_error.total_inch.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Total inches <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input type="text" ng-model="check_out_material.total_inch" class="form-control" disabled=""/>
+              <span class="control-label" for="inputError" ng-show="check_out_material_error.total_inch.length!=0" ng-repeat="error in check_out_material_error.total_inch">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row form-group" ng-class="{'has-error': check_out_material.quantity.length > 0}">
+            <div class="col-md-4 text-right">
+              <label>Quantity <span class="required">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <input type="number" ng-model="check_out_material.quantity" class="form-control" required ng-change="watchQuantity_Out()" disabled="" />
+              <span class="control-label" for="inputError" ng-show="check_out_material.quantity.length!=0" ng-repeat="error in check_out_material_error.quantity">
+              <i class="fa fa-times-circle-o"></i> Error: {{error}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="row form-group" ng-class="{'has-error': check_out_material_error.heatnumber_ids.length > 0}">
+          <div class="col-md-2 text-right">
+            <label>Heat Number | Designation<span class="required">*</span></label>
+          </div>
+          <div class="col-md-10">
+            <select ng-disabled="check_out_material.is_readonly || check_out_material.is_quick_check_out" multiple chosen class="chosen_select form-control" ng-model="check_out_material.heatnumber_ids" ng-options="item.id as item.heatnumber + ' | ' + item.designation for item in material.heatnumbers" ng-change="checkOutUpdateHeatnumbers(check_out_material)" data-placeholder=""></select>
+          </div>
+          <div class="col-md-12">
+            <table id="heatnumbers" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+              <thead>
+                <tr role="row">
+                  <th width="10%">Heatnumber</th>
+                  <th width="10%">Designation</th>
+                  <th width="10%">Total Length</th>
+                  <th width="10%">Total Qty</th>
+                  <th width="50%">Quantity Detail</th>
+                  <th width="10%">Info</th>
+                </tr>
+              </thead>
+              <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                <tr class="even" ng-repeat="heatnumber in check_out_material.heatnumbers">
+                  <td class="text-right">
+                    {{heatnumber.heatnumber}}
+                  </td>
+                  <td class="text-right">
+                    {{heatnumber.designation}} 
+                  </td>
+                  <td class="text-right">
+                    <input type="text" ng-model="heatnumber.length" class="form-control input-sm" disabled />
+                  </td>
+                  <td class="text-right">
+                    <input type="number" ng-model="heatnumber.quantity" class="form-control input-sm" required ng-change="watchHeatnumberQuantity_Out()" disabled />
+                  </td>
+                  <td class="text-right">
+                    <table id="heatnumber_quantity_detail_out" class="table dataTable" aria-describedby="heatnumber_quantity_detail_out_info">
+                      <thead>
+                        <tr role="row">
+                          <th width="45%">Location</th>
+                          <th width="25%">Length</th>
+                          <th width="25%">Quantity</th>
+                          <th width="5%"> </th>
+                        </tr>
+                      </thead>
+                      <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                        <tr class="even" ng-repeat="item in heatnumber.quantity_detail">
+                          <td class="text-left">
+                            <select class="form-control input-sm" ng-model="item.location_id" ng-options="id as getLocationAttrById(id, 'name') for id in material.arr_location_ids" required ng-disabled="check_out_material.is_readonly || check_out_material.is_quick_check_out_popup">
+                              <option style="display:none" value="">Select Location</option>
+                            </select>
+                          </td>
+                          <td class="text-right">
+                            <select class="form-control input-sm" required ng-model="item.length" ng-options="l for l in heatnumber.list_length" ng-change="watchHeatnumberQuantityDetail_Out(heatnumber)" ng-disabled="check_out_material.is_readonly || check_out_material.is_quick_check_out">
+                              <option style="display:none" value="">Select Length</option>
+                            </select>
+                          </td>
+                          <td class="text-right">
+                            <input type="number" ng-model="item.quantity" class="form-control input-sm" required ng-disabled="check_out_material.is_readonly" ng-change="watchHeatnumberQuantityDetail_Out(heatnumber)" />
+                          </td>
+                          <td class="text-right">
+                            <button type="button" ng-click="removeQuantityDetail_Out(heatnumber, $index)" class="btn btn-icon btn-sm" title="remove item" ng-hide="check_out_material.is_quick_check_out">
+                              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="input-group col-md-6 pull-right" ng-hide="check_in_material.is_readonly">
+                      <button type="button" ng-click="addQuantityDetail(heatnumber.quantity_detail)" class="btn btn-icon btn-sm no-padding" title="Add new">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add
+                      </button>
+                    </div>
+
+                  </td>
+                  <td class="text-right">
+                    <button type="button" ng-show="is_update" ng-click="getHeatnumberDetailInfo(heatnumber)" class="btn btn-xs btn-icon pull-right" title="Show detail">
+                      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-12">
+            <label>Note</label>
+          </div>
+          <div class="col-md-12">
+            <textarea ck-editor ng-model="check_out_material.note" ck-readonly="check_out_material.is_readonly"></textarea>
+
+            <span class="control-label" for="inputError" ng-show="check_out_material_error.note.length!=0" ng-repeat="error in check_out_material_error.note">
+            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="submitCheckOut()" ng-hide="check_out_material.is_readonly" >Check Out</button>
+      </div>
+    </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="heatnumberDetailModal" tabindex="-1" role="dialog" aria-labelledby="heatnumberDetailModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 700px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">"{{selected_heatnumber.heatnumber}} | {{selected_heatnumber.designation}}" details</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="form-group">
+          <table id="relatedMachines" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+            <thead>
+              <tr role="row">
+                <th width="30%">Location</th>
+                <th width="70%">Detail</th>
+              </tr>
+            </thead>
+            <tbody role="alert" aria-live="polite" aria-relevant="all">          
+              <tr class="even" ng-repeat="detail in selected_heatnumber.detail_information">
+                <td class="text-left">
+                  {{detail.location_name}}
+                </td>
+                <td class="text-right">
+                  <table class="table table-sm table-bordered" aria-describedby="viewQuantityDetail_info">
+                    <thead>
+                      <tr role="row">
+                        <th width="30%">Length</th>
+                        <th width="30%">Qty</th>
+                        <th width="40%"> </th>
+                      </tr>
+                    </thead>
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                      <tr class="even" ng-repeat="item in detail.quantity_detail">
+                        <td class="text-right">
+                          {{item.length}} 
+                        </td>
+                        <td class="text-right">
+                          {{item.quantity}}
+                        </td>
+                        <td class="text-right">
+                          <button type="button" ng-click="QuickCheckInFromPopup(selected_heatnumber, item.length, item.quantity, detail.location_id)" class="btn btn-xs btn-icon pull-right" title="Check In">
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                          </button>
+                          <button type="button" ng-click="QuickCheckOutFromPopup(selected_heatnumber, item.length, item.quantity, detail.location_id)" class="btn btn-xs btn-icon pull-right" title="Check Out">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+.datepicker-dropdown{
+  z-index: 10000 !important;
+}
+#heatnumber_quantity_detail, #heatnumber_quantity_detail_out{
+  padding: 0;
+  margin-top: 0px !important;
+}
+#heatnumber_quantity_detail td, #heatnumber_quantity_detail th,
+#heatnumber_quantity_detail_out td, #heatnumber_quantity_detail_out th{
+  padding: 2px;
+}
+</style>

@@ -1,0 +1,572 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Enter ORDER Details
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter order details</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+          <li><b>Order actions</b></li>
+          <li><a ui-sref="purchase-order-list">Order list</a></li>
+          <li class="active"><a ui-sref="purchase-order-create" ui-sref-opts="{reload: true, notify: true}">Add new Order</a></li>
+        </ol>
+
+        <!-- general form elements -->
+        <div class="box top_box" style="min-height: 62px">
+          <div class="col-md-6">
+            <form role="form">
+              <div class="form-group margin-5" ng-class="{'has-error': purchase_order_error.po_code.length!=0}">
+                <div class="col-md-3 text-right">
+                  <label for="">Search ORDER #</label>
+                </div>
+                <div class="col-md-3">
+                  <input ampautocomplete ng-model="search_purchase_order_id" type="text" class="form-control" placeholder="" id="Search_Purchase_Order_id" data-source="/purchaseOrder/getAllPurchaseOrderCode" ui-option="'purchase_orders'" ui-id="'id'" ui-name="'po_code'" search-field="'po_code'" ui-modellabel="''">
+
+                  <!--<input auto-complete ui-item ="'po_code'" ui-object="purchase_order" ng-model="search_po_code" type="text" class="form-control" placeholder="po code"> -->
+                </div>
+              </div>
+            </form>
+
+            <button type="button" ng-click="create()" class="btn btn-primary pull-right" ng-show="is_create">Create</button>
+            <button type="button" ng-click="update()" class="btn btn-primary pull-right" ng-show="is_update">Update</button>
+
+          </div>
+          <div class="col-md-6" ng-show="is_update">
+            <div class="margin-5 pull-right">
+              <a ui-sref="history-list({class:'PurchaseOrder',id: purchase_order.id})" class="btn btn-primary pull-right" style="margin-left: 15px">Order history</a>
+
+              <a class="btn btn-primary" style="cursor:pointer" ng-click="preview('')" ng-hide="is_revised">Preview Order</a> &nbsp; &nbsp;
+              <a class="btn btn-primary" style="cursor:pointer" ng-click="preview('revise')" ng-show="is_revised">Preview Revised Order</a>
+
+              <a style="cursor:pointer" class="btn btn-primary" ui-sref="email-send({type: 'order', id: purchase_order.id, option: ''})" ng-hide="is_revised">Send Order</a> &nbsp; &nbsp;
+              <a style="cursor:pointer" class="btn btn-primary" ui-sref="email-send({type: 'order', id: purchase_order.id, option: 'revise'})" ng-show="is_revised">Send Revised Order</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- left column -->
+
+      <div class="col-md-4">
+        <div class="box no-border">
+          <!-- form start -->
+          <form role="form">
+            <div class="box-header">
+              <h3 class="box-title">ORDER info</h3>
+            </div>
+            <div class="box-body">
+              <form role="form">
+                <div class="row form-group">
+                  <div class="col-md-4 text-right">
+                    <label>ORDER code <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input ng-model="purchase_order.po_code" type="text" class="form-control" placeholder="po code">
+                    <span class="control-label" for="inputError" ng-show="purchase_order_error.po_code.length!=0" ng-repeat="error in purchase_order_error.po_code">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-4 text-right">
+                    <label>Delivery Date <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input ng-model="purchase_order.delivery_date" type="text" class="form-control datepicker" placeholder="delivery date">
+                    <span class="control-label" for="inputError" ng-show="purchase_order_error.delivery_date.length!=0" ng-repeat="error in purchase_order_error.delivery_date">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-4 text-right">
+                    <label>Entered Date <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input ng-model="purchase_order.entered_date" type="text" class="form-control datepicker" placeholder="entered date">
+                    <span class="control-label" for="inputError" ng-show="purchase_order_error.entered_date.length!=0" ng-repeat="error in purchase_order_error.entered_date">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-4 text-right">
+                    <label>Customer ORDER #</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input ng-model="purchase_order.customer_po" type="text" class="form-control" placeholder="customer ORDER #">
+                    <span class="control-label" for="inputError" ng-show="purchase_order_error.customer_po.length!=0" ng-repeat="error in purchase_order_error.customer_po">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-4 text-right">
+                    <label>Tax</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input ng-model="purchase_order.tax" type="text" class="form-control" placeholder="customer ORDER #">
+                    <span class="control-label" for="inputError" ng-show="purchase_order_error.tax.length!=0" ng-repeat="error in purchase_order_error.tax">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-4 text-right">
+                    <label for="">Category <span class="required">*</span></label></br>
+                  </div>
+                  <div class="col-md-8">
+                    <select class="form-control" required ng-model="purchase_order.category" ng-options="item.id as item.label for item in purchase_order_categories" data-placeholder="Choose a category ...">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-12 text-right">
+                    <label>Order Details</label>
+                  </div>
+                  <div class="col-md-12">
+                    <textarea ck-editor ng-model="purchase_order.note" id="purchase_order_note"></textarea>
+                    <span class="control-label" for="inputError" ng-show="purchase_order_error.note.length!=0" ng-repeat="error in purchase_order_error.note">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="box no-border">
+          <!-- form start -->
+          <form role="form">
+            <div class="box-header">
+              <h3 class="box-title">Shipping address</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row form-group" ng-class="{'has-error': purchase_order_error.client_id.length!=0}">
+                <div class="col-md-4 text-right">
+                  <label for=""  >Client name <span class="required">*</span></label> </br>
+                </div>
+                <div class="col-md-8">
+                  <input auto-complete ui-item ="'client_name'" ui-object="purchase_order.client" ng-model="purchase_order.client.name" type="text" class="form-control" placeholder="client name">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.client_id.length!=0" ng-repeat="error in purchase_order_error.client_id">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label for="" >Shipping address <span class="required">*</span></label> </br>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.shipping_address" type="text" class="form-control" placeholder="shipping address">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.shipping_address.length!=0" ng-repeat="error in purchase_order_error.shipping_address">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+              <div class="row form-group" >
+                <div class="col-md-4 text-right">
+                  <label for=""  >Country <span class="required">*</span></label> </br>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.country" type="text" class="form-control" placeholder="country" disabled="">
+                </div>
+              </div>
+              <div class="row form-group" ng-class="{'has-error': purchase_order_error.ship_via.length!=0}">
+                <div class="col-md-4 text-right">
+                  <label for=""  >Ship via <span class="required">*</span></label> </br>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.ship_via" type="text" class="form-control" placeholder="ship via">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.ship_via.length!=0" ng-repeat="error in purchase_order_error.ship_via">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+              <div class="row form-group" ng-class="{'has-error': purchase_order_error.order_date.length!=0}">
+                <div class="col-md-4 text-right">
+                  <label for=""  >Order date <span class="required">*</span></label> </br>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.order_date" type="text" class="form-control datepicker" placeholder="order date">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.order_date.length!=0" ng-repeat="error in purchase_order_error.order_date">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->              
+          </form>
+        </div>
+        <!-- /.box -->
+      </div>
+      <!--/.col (left) -->
+
+      <!-- right column -->
+      <div class="col-md-4">
+        <!-- general form elements disabled -->
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Contact details</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form role="form">
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Company name</label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.company_name" type="text" class="form-control" placeholder="company name" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Contact name</label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.contact_name" type="text" class="form-control" placeholder="contact name" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Address 1</label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.address1" type="text" class="form-control" placeholder="address" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Address 2</label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.address2" type="text" class="form-control" placeholder="address" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Email <span class="required">*</span></label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.email" type="text" class="form-control" placeholder="email id" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Phone <span class="required">*</span></label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.phone" type="text" class="form-control" placeholder="phone" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4 text-right">
+                  <label>Fax</label>
+                </div>
+                <div class="col-md-8">
+                  <input ng-model="purchase_order.client.fax" type="text" class="form-control" placeholder="fax" disabled="">
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+
+      <div class="col-md-6">
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Documents related to Order</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+            <file-uploader disabled="is_readonly" file-ids="purchase_order.tmp_file_ids" model-id="purchase_order.id"></file-uploader>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12" id="purchase_order_detail_grid">
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">List Parts</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+            <form role="form">
+              <div class="row form-group">
+                <div class="detail_item text-center" style="width:4%;">
+                  <label>&nbsp;</label>
+                </div>
+                <div class="detail_item text-center" style="width:4%">
+                  <label>Item #</label>
+                </div>
+                <div class="detail_item text-center" style="width:4%">
+                  <label>Qty</label>
+                </div>
+                <div class="detail_item text-center" style="width:4%">
+                  <label>UoM</label>
+                </div>
+                <div class="detail_item text-center" style="width:10%">
+                  <label>Part #</label>
+                </div>
+                <div class="detail_item text-center" style="width: 15%;">
+                  <label>Description</label>
+                </div>
+                <div class="detail_item text-center" style="width: 5%;">
+                  <label>Revision</label>
+                </div>
+                <div class="detail_item text-center" style="width: 5%;">
+                  <label>Drawing</label>
+                </div>
+                <div class="detail_item text-center" style="width: 5%;">
+                  <label>Discount</label>
+                </div>
+                <div class="detail_item text-center" style="width:8%; max-width: 8%">
+                  <label>Client Price</label>
+                </div>
+                <div class="detail_item text-center" style="width:8%; max-width: 8%">
+                  <label>Revised Price</label>
+                </div>
+                <div class="detail_item text-center" style="width:8%; max-width: 8%">
+                  <label>Delivery Date</label>
+                </div>
+                <div class="detail_item text-center" style="width:8%; max-width: 8%">
+                  <label>Revised Delivery Date</label>
+                </div>
+                <div class="detail_item text-center" style="width:8%">
+                  <label>Material</label>
+                </div>
+              </div>
+              <div class="row form-group purchase_order_detail_item" ng-repeat="purchase_order_detail in purchase_order.purchase_order_details track by $index" ng-init="key= $index">
+                <div class="detail_item text-center" style="width:4%;" >
+                  <button type="button" class="btn btn-danger btn-xs" ng-click="deletePurchaseOrderDetail(key)"><span class="glyphicon glyphicon-trash"></span></button>
+                </div>
+                <div class="detail_item text-center" style="width:4%" >
+                  <input ng-model="purchase_order_detail.item_number" type="text" class="form-control" placeholder="#">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].item_number.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].item_number">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:4%">
+                  <input ng-model="purchase_order_detail.quantity" ng-change="updateExistingPrice(purchase_order_detail)" type="text" class="form-control" placeholder="qty">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].quantity.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].quantity">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:4%;" >
+                  <!-- <input ng-model="purchase_order_detail.part.uom_name" type="text" class="form-control" placeholder="uom" disabled=""> -->
+                  <input value="each" type="text" class="form-control" disabled="">
+                </div>
+                <div class="detail_item" style="width:10%">
+                  <div class="input-group">
+                    <input auto-complete ui-item = "'part_code'" ui-other="purchase_order_detail.part_id" ui-other1="purchase_order_detail.existing_price" ui-object="purchase_order_detail.part" ng-model="purchase_order_detail.part.part_code" type="text" class="form-control" placeholder="part number">
+                    <span class="input-group-addon" style="padding-left: 0; padding-right: 0;" ng-show="purchase_order_detail.part_id != ''">
+                      <button class="btn-icon popover_item" data-trigger="hover" role="button" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-content="{{purchase_order_detail.part.table_info}}">
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].part_id.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].part_id">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:15%;" >
+                  <input ng-model="purchase_order_detail.part.description" type="text" class="form-control" placeholder="description" disabled=""> 
+                </div>
+                <div class="detail_item" style="width:5%;" >
+                  <input ng-model="purchase_order_detail.part.revision" type="text" class="form-control" placeholder="revision" disabled="">
+                </div>
+                <div class="detail_item" style="width: 5%; min-height: 30px" >
+                  <file-uploader-single disabled="true" file-id="purchase_order_detail.part.drawing_file_id" model-id="purchase_order_detail.part.id"></file-uploader-single>
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].drawing_id.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].drawing_id">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:5%;" >
+                  <input ng-model="purchase_order_detail.discount" type="text" class="form-control" placeholder="discount">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].discount.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].discount">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:8%" >
+                  <div class="input-group">
+                    <span class="input-group-addon no-border" style="padding-left: 0; padding-right: 0;"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></span> 
+                    <b><input ng-model="purchase_order_detail.price" type="text" class="form-control price" placeholder="price" ng-class="{'wrong_price': purchase_order_detail.existing_price != purchase_order_detail.price}"></b>
+                    <span class="input-group-addon" style="padding-left: 0; padding-right: 0;" ng-show="purchase_order_detail.part_id != ''">
+                      <button class="btn-icon popover_item" data-trigger="hover" role="button" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-content="{{purchase_order_detail.part.table_price}}">
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                      </button>
+                    </span>
+
+                  </div>
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].price.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].price">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:8%">
+                  <div class="input-group">
+                    <span class="input-group-addon no-border" style="padding-left: 0; padding-right: 0;"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></span> 
+                    <b><input ng-model="purchase_order_detail.revised_price" type="text" class="form-control revised_price" placeholder="price" ng-change="revisedPurchaseOrder(purchase_order_detail.revised_price)"></b>
+                  </div>
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].revised_price.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].revised_price">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+
+                <div class="detail_item"  style="width:8%">
+                  <input ng-model="purchase_order_detail.delivery_date" type="text" class="form-control datepicker" placeholder="delivery date" disabled="">
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].delivery_date.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].delivery_date">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item"  style="width:8%">
+                  <b><input ng-model="purchase_order_detail.revised_date" type="text" class="form-control datepicker revised_date" placeholder="revised date" ng-change="revisedPurchaseOrder(purchase_order_detail.revised_date)"></b>
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_details[key].revised_date.length!=0" ng-repeat="error in purchase_order_error.purchase_order_details[key].revised_date">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:8%">
+                  <input ng-model="purchase_order_detail.part.material_code" type="text" class="form-control" placeholder="material" disabled="">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-1 text-center" >
+                  <button type="button" class="btn btn-default" ng-click="addPurchaseOrderDetail()">+</button>
+                  <button type="button" class="btn btn-default" ng-click="subtractPurchaseOrderDetail()">-</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" id="purchase_order_item_grid">
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Other Items</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+            <form role="form">
+              <div class="form-group">
+                <div class="detail_item text-center" style="width:10%;">
+                  <label>&nbsp;</label>
+                </div>
+                <div class="detail_item text-center" style="width:30%">
+                  <label>Item name</label>
+                </div>
+                <div class="detail_item text-center" style="width:20%">
+                  <label>Qty</label>
+                </div>
+                <div class="detail_item text-center" style="width:20%">
+                  <label>Price</label>
+                </div>
+                <div class="detail_item text-center" style="width:20%">
+                  <label>Total</label>
+                </div>
+              </div>
+              <div class="form-group purchase_order_detail_item" ng-repeat="purchase_order_item in purchase_order.purchase_order_items track by $index" ng-init="key= $index">
+                <div class="detail_item text-center" style="width:10%;" >
+                  <button type="button" class="btn btn-danger btn-xs" ng-click="deletePurchaseOrderItem(key)"><span class="glyphicon glyphicon-trash"></span></button>
+                </div>
+                <div class="detail_item text-center" style="width:30%" >
+                  <input ng-model="purchase_order_item.id" type="hidden">
+                  <input ng-model="purchase_order_item.item_name" type="text" class="form-control" placeholder="#" required>
+                  <span class="control-label" for="inputError" ng-show="purchase_order_error.purchase_order_items[key].name.length!=0" ng-repeat="error in purchase_order_error.purchase_order_items[key].name">
+                  <i class="fa fa-times-circle-o"></i> Error: {{error}}</br>
+                  </span>
+                </div>
+                <div class="detail_item" style="width:20%">
+                  <input ng-model="purchase_order_item.quantity" type="text" class="form-control" placeholder="quantity" required>
+                </div>
+                <div class="detail_item" style="width:20%">
+                  <input ng-model="purchase_order_item.price" type="text" class="form-control" placeholder="price" required>
+                </div>
+                <div class="detail_item" style="width:20%">
+                  {{purchase_order_item.quantity*purchase_order_item.price | currency}}
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-6" >
+                  <div class="form-inline">
+                    <select class="form-control" required ng-model="selected_item" ng-options="item.id as item.name for item in existed_items">
+                      <option value="">Select Item</option>
+                    </select>
+                    <button type="button" class="btn btn-default" ng-click="addExistedPurchaseOrderItem(selected_item)">Select Item</button>
+                  </div>
+                </div>
+                <div class="col-md-6" >
+                  <button type="button" class="btn btn-default" ng-click="addNewPurchaseOrderItem()">Add new Item</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Internal AMP comment</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+            <textarea ck-editor ng-model="purchase_order.comment" id="purchase_order_comment"></textarea>
+            <span class="control-label" for="inputError" ng-show="purchase_order_error.comment.length!=0" ng-repeat="error in purchase_order_error.comment">
+            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+
+<div class="modal" id="previewOrderModal" tabindex="-1" role="dialog" aria-labelledby="previewOrderModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{order_preview.title}}</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div ng-bind-html="renderHtml(order_preview.content)"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary pull-right" ng-click="downloadPdf(order_preview.content)">Download PDF</button>
+      </div>
+    </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+<style>
+#purchase_order_detail_grid .price{
+  color: blue;
+}
+#purchase_order_detail_grid .price.wrong_price{
+  color: red;
+}
+</style>

@@ -1,0 +1,236 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Users Database
+        </h1>
+        <ol class="breadcrumb">
+            <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+            <li class="active">User list</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb tool_box">
+                    <li><b>User actions</b></li>
+                    <li class="active"><a ui-sref="user-list">User list</a></li>
+                </ol>
+                <div class="box">
+                    <div class="box-body">
+                        <div class="search_box">
+                            <form role="form">
+                                <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_user.name" type="text" class="form-control" placeholder="search name..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_user.email" type="text" class="form-control" placeholder="search email..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button type="button" ng-click="search()" class="btn btn-primary">Search</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="button" class="btn btn-danger pull-right" ng-click="createUser()">
+                                            <span class="glyphicon glyphicon-plus"></span> Add more
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div class="row">
+                                <div class="col-xs-6"></div>
+                                <div class="col-xs-3 pull-right">
+                                    <div id="example1_length" class="dataTables_length">
+                                        <label>records per page
+                                            <select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>No</th>
+                                        <th ng-class="{sorting: sort.attribute != 'name', sorting_asc: sort.attribute == 'name' && sort.type == 'ASC', sorting_desc: sort.attribute == 'name' && sort.type == 'DESC'}" ng-click="sort('name')"rowspan="1" colspan="1">Name</th>
+                                        <th ng-class="{sorting: sort.attribute != 'email', sorting_asc: sort.attribute == 'email' && sort.type == 'ASC', sorting_desc: sort.attribute == 'email' && sort.type == 'DESC'}" ng-click="sort('email')"rowspan="1" colspan="1">Email</th>
+                                        <th ng-class="{sorting: sort.attribute != 'status', sorting_asc: sort.attribute == 'status' && sort.type == 'ASC', sorting_desc: sort.attribute == 'status' && sort.type == 'DESC'}" ng-click="sort('status')"rowspan="1" colspan="1" class="text-center">Status</th>
+                                        <th ng-class="{sorting: sort.attribute != 'role', sorting_asc: sort.attribute == 'role' && sort.type == 'ASC', sorting_desc: sort.attribute == 'role' && sort.type == 'DESC'}" ng-click="sort('role')"rowspan="1" colspan="1">Role</th>
+                                        <th class="text-center">Reset Password</th>
+                                    </tr>
+                                </thead>
+
+                                <tfoot>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">No</th>
+                                        <th rowspan="1" colspan="1">Name</th>
+                                        <th rowspan="1" colspan="1">Email</th>
+                                        <th rowspan="1" colspan="1" class="text-center">Status</th>
+                                        <th rowspan="1" colspan="1">Role</th>
+                                        <th rowspan="1" colspan="1" class="text-center">Reset Password</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="user in users">
+                                        <td>{{$index + 1}}</td>
+                                        <td class=" sorting_1">{{user.name}}</td>
+                                        <td class=" "><a href="" ng-click="viewDetail(user)">{{user.email}}</a></td>
+                                        <td class=" text-center">
+                                            <a href ng-click="changeStatus(user)">
+                                                <span class="glyphicon" ng-class="(user.status==1)?'glyphicon-ok':'glyphicon - ban - circle'"></span>
+                                            </a>
+                                        </td>
+                                        <td class=" ">
+                                            <span ng-repeat="role in user.role" class="user_role">{{role}}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href ng-click="showResetPasswordModal(user)"><span class="glyphicon glyphicon-refresh"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="dataTables_info" id="example2_info">
+                                        Showing {{start_user}} to {{end_user}} of {{totalresults}} entries
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" ng-show="pages.length > 1">
+                                    <div class="dataTables_paginate paging_bootstrap">
+                                        <ul class="pagination">
+                                            <li class="prev" ng-class="{disabled: currentPage == 1}">
+                                                <a href="" ng-click="selectPage(currentPage - 1)">← Previous</a>
+                                            </li>
+                                            <li ng-repeat="page in pages" ng-class="{active: page == currentPage}" >
+                                                <a href="" ng-click="selectPage(page)">{{page}}</a>
+                                            </li>
+                                            <li class="next" ng-class="{disabled: currentPage == pages.length}">
+                                                <a href="" ng-click="selectPage(currentPage + 1)">Next → </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+<div class="modal" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 902px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" ng-hide="edit_user.is_update">Create User</h4>
+                <h4 class="modal-title" ng-show="edit_user.is_update">Update User info</h4>
+            </div>
+            <div class="modal-body overhidden">
+                <div class="col-md-6">
+                    <div class="row form-group" ng-class="{'has-error': edit_user_error.name.length != 0}">
+                        <div class="col-md-4 text-right">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input ng-model="edit_user.name" type="text" class="form-control" placeholder="name">
+                            <span class="control-label" for="inputError" ng-show="edit_user_error.name.length != 0" ng-repeat="error in edit_user_error.name">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': edit_user_error.email.length != 0}">
+                        <div class="col-md-4 text-right">
+                            <label>Email <span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input ng-model="edit_user.email" type="email" class="form-control" placeholder="email">
+                            <span class="control-label" for="inputError" ng-show="edit_user_error.email.length != 0" ng-repeat="error in edit_user_error.email">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': edit_user_error.status.length != 0}">
+                        <div class="col-md-4 text-right">
+                            <label>Active status</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input ng-checked="edit_user.status" ng-model="edit_user.status" type="checkbox" placeholder="status">
+                            <span class="control-label" for="inputError" ng-show="edit_user_error.status.length != 0" ng-repeat="error in edit_user_error.status">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row form-group" ng-class="{'has-error': edit_user_error.role.length != 0}">
+                        <div class="col-md-4 text-right">
+                            <label>Role</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select multiple class="form-control" ng-model="edit_user.role" ng-options="item.id as item.name for item in list_role"></select>
+                            <span class="control-label" for="inputError" ng-show="edit_user_error.role.length != 0" ng-repeat="error in edit_user_error.role">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-hide="edit_user.is_update" ng-click="editUser(edit_user)">Create user</button>
+                <button type="button" class="btn btn-primary" ng-show="edit_user.is_update" ng-click="editUser(edit_user)">Update user info</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+</div>
+
+<div class="modal" id="userResetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="userResetPasswordModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reset password</h4>
+            </div>
+            <div class="modal-body overhidden">
+                <div class="form-group">
+                    <div class="col-md-3 text-right">
+                        <label>New password</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input ng-model="edit_user.password" type="text" class="form-control" placeholder="password">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-danger pull-left" ng-click="generatePassword(edit_user)">Auto generate</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="resetPasswordUser(edit_user)">Reset password</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+</div>
+<style>
+    .user_role{
+        margin-right: 5px;
+    }
+    .user_role:after{
+        content: ", ";
+    }
+    .user_role:last-child:after{
+        content: "";
+    }
+</style>

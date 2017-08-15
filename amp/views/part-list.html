@@ -1,0 +1,475 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>
+			Parts Database
+		</h1>
+		<ol class="breadcrumb">
+			<li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+			<li class="active">Part list</li>
+		</ol>
+	</section>
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<ol class="breadcrumb tool_box">
+					<li><b>Part actions</b></li>
+					<li class="active"><a ui-sref="part-list">Part list</a></li>
+					<li><a ui-sref="part-create">Add new part</a></li>
+				</ol>
+				<div class="box">
+					<div class="box-header none">
+						<h3 class="box-title"> </h3>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+						<div class="search_box">
+							<form role="form">
+								<div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+									<div class="col-xs-1">
+										<input ng-model="search_part.part_code" type="text" class="form-control" placeholder="part code..." ng-enter="search()">
+									</div>
+									<div class="col-xs-2">
+										<input ng-model="search_part.description" type="text" class="form-control" placeholder="description...">
+									</div>
+									<div class="col-xs-2">
+										<select class="form-control" required ng-model="search_part.category_id" ng-options="item.id as item.name for item in part_categories">
+											<option value="">Select category</option>
+										</select>
+									</div>
+									<div class="col-xs-2">
+                						<input ampautocomplete ng-disabled="is_readonly" ng-model="search_part.client_id" type="text" class="form-control" placeholder="Select Customer" id="Search_part_client_id" data-source="/client/getAll" ui-option="'clients'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="search_part.client.name">
+									</div>
+									<div class="col-xs-2">
+										<button type="button" ng-click="search()" class="btn btn-primary">Search</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+							<div class="row">
+								<div class="col-xs-6"></div>
+								<div class="col-xs-3 pull-right">
+									<div id="example1_length" class="dataTables_length">
+										<label>records per page
+											<select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select> 
+										</label>
+									</div>
+								</div>
+							</div>
+							<table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+								<thead>
+									<tr role="row">
+										<th ng-class="{sorting: sort.attribute!='part_code', sorting_asc: sort.attribute=='part_code'&&sort.type=='ASC', sorting_desc: sort.attribute=='part_code'&&sort.type=='DESC'}" ng-click="sort('part_code')" rowspan="1" colspan="1">Part #</th>
+										<th ng-class="{sorting: sort.attribute!='category_id', sorting_asc: sort.attribute=='category_id'&&sort.type=='ASC', sorting_desc: sort.attribute=='category_id'&&sort.type=='DESC'}" ng-click="sort('category_id')" rowspan="1" colspan="1">Category</th>
+										<th>Description</th>
+										<th ng-class="{sorting: sort.attribute!='price', sorting_asc: sort.attribute=='price'&&sort.type=='ASC', sorting_desc: sort.attribute=='price'&&sort.type=='DESC'}" ng-click="sort('price')" rowspan="1" colspan="1">Price($)</th>
+										<th rowspan="1" colspan="1">Stock in hand</th>
+										<th ng-class="{sorting: sort.attribute!='optimum_inventory', sorting_asc: sort.attribute=='optimum_inventory'&&sort.type=='ASC', sorting_desc: sort.attribute=='optimum_inventory'&&sort.type=='DESC'}" ng-click="sort('optimum_inventory')"rowspan="1" colspan="1">Optimum inventory</th>
+										<th ng-class="{sorting: sort.attribute!='material_id', sorting_asc: sort.attribute=='material_id'&&sort.type=='ASC', sorting_desc: sort.attribute=='material_id'&&sort.type=='DESC'}" ng-click="sort('material_id')" rowspan="1" colspan="1">Material</th>
+										<th ng-class="{sorting: sort.attribute!='bar_length_pc', sorting_asc: sort.attribute=='bar_length_pc'&&sort.type=='ASC', sorting_desc: sort.attribute=='bar_length_pc'&&sort.type=='DESC'}" ng-click="sort('bar_length_pc')" rowspan="1" colspan="1">Bar Length/PC</th>
+										<th rowspan="1" colspan="1">Actions</th>
+									</tr>
+								</thead>
+
+								<tfoot>
+									<tr>
+										<th rowspan="1" colspan="1">Part #</th>
+										<th rowspan="1" colspan="1">Category</th>
+										<th rowspan="1" colspan="1">Description</th>
+										<th rowspan="1" colspan="1">Price($)</th>
+										<th rowspan="1" colspan="1">Stock in hand</th>
+										<th rowspan="1" colspan="1">Optimum inventory</th>
+										<th rowspan="1" colspan="1">Material</th>
+										<th rowspan="1" colspan="1">Bar Length/PC</th>
+										<th rowspan="1" colspan="1">Actions</th>
+									</tr>
+								</tfoot>
+								<tbody role="alert" aria-live="polite" aria-relevant="all">
+									<tr class="even" ng-repeat="part in parts">
+										<td class=" sorting_1"><a ui-sref="part-detail({'id':part.id})">{{part.part_code}}</a></td>
+										<td class=" ">{{part.category_name}}</td>
+										<td class=" ">{{part.description}}</td>
+										<td class=" ">{{part.price}}</td>
+										<td class=" ">{{part.quantity}}</td>
+										<td class=" ">{{part.optimum_inventory}}</td>
+										<td class=" ">{{part.material_code}}</td>
+										<td class=" ">{{part.bar_length_pc}}</td>
+										<td>
+											<button type="button" ng-click="checkIn(part)" class="btn btn-icon btn-sm" title="Check-in Item">
+												<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Check in
+											</button>
+											<button type="button" ng-click="checkOut(part)" class="btn btn-icon btn-sm" title="Check-out Item">
+												<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Check out
+											</button>
+											<button type="button" ng-click="viewQuantity(part)" class="btn btn-icon btn-sm" title="View quantity">
+												<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Quantity
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="dataTables_info" id="example2_info">
+										Showing {{start_part}} to {{end_part}} of {{totalresults}} entries
+									</div>
+								</div>
+								<div class="col-xs-6" ng-show="pages.length>1">
+									<div class="dataTables_paginate paging_bootstrap">
+										<ul class="pagination">
+											<li class="prev" ng-class="{disabled: currentPage==1}">
+												<a href="" ng-click="selectPage(currentPage-1)">← Previous</a>
+											</li>
+											<li ng-repeat="page in pages" ng-class="{active: page==currentPage}" >
+												<a href="" ng-click="selectPage(page)">{{page}}</a>
+											</li>
+											<li class="next" ng-class="{disabled: currentPage==pages.length}">
+												<a href="" ng-click="selectPage(currentPage+1)">Next → </a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!-- /.box-body -->
+			</div>
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+
+<div class="modal" id="checkInModal" tabindex="-1" role="dialog" aria-labelledby="checkInModalLabel" aria-hidden="true" >
+	<div class="modal-dialog" style="width: 1200px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Check-in for Part "{{selected_part.part_code}}"</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-6">
+					<div class="row form-group" ng-class="{'has-error': check_in_part_error.received_by.length > 0}">
+						<div class="col-md-4 text-right">
+							<label>Received By <span class="required">*</span></label>
+						</div>
+						<div class="col-md-8">
+							<input ampautocomplete ng-disabled="check_in_part.is_readonly" ng-model="check_in_part.received_by" type="text" class="form-control" placeholder="" id="Check_in_part_received_by" data-source="/employee/getAll" ui-option="'employees'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="check_in_part.employee.name">
+							<span class="control-label" for="inputError" ng-show="check_in_part_error.received_by.length!=0" ng-repeat="error in check_in_part_error.received_by">
+								<i class="fa fa-times-circle-o"></i> Error: {{error}}
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="row form-group" ng-class="{'has-error': check_in_part_error.received_date.length > 0}">
+						<div class="col-md-4 text-right">
+							<label>Date Received <span class="required">*</span></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" ng-model="check_in_part.received_date" class="form-control datepicker" required is-open="focus_1" ng-focus="focus_1=true" />
+							<span class="control-label" for="inputError" ng-show="check_in_part_error.received_date.length!=0" ng-repeat="error in check_in_part_error.received_date">
+								<i class="fa fa-times-circle-o"></i> Error: {{error}}
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row form-group" ng-class="{'has-error': check_in_part_error.heatnumber_ids.length > 0}">
+					<div class="col-md-2 text-right">
+						<label>Heat Number | Designation<span class="required">*</span></label>
+					</div>
+					<div class="col-md-10">
+						<select ng-disabled="check_in_part.is_readonly" multiple chosen class="chosen_select form-control" ng-model="check_in_part.heatnumber_ids" ng-options="item.id as item.heatnumber + ' | ' + item.drawing for item in selected_part.heatnumbers" ng-change="checkInUpdateHeatnumbers(check_in_part)" data-placeholder=""></select>
+					</div>
+					<div class="col-md-12">
+		                <table id="heatnumbers" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+		                  	<thead>
+			                    <tr role="row">
+			                    	<th width="10%">Heatnumber</th>
+			                    	<th width="10%">Drawing</th>
+			                    	<th width="10%">Quantity</th>
+			                    	<th>Detail</th>
+			                    </tr>
+							</thead>
+							<tbody role="alert" aria-live="polite" aria-relevant="all">          
+			                  	<tr class="even" ng-repeat="heatnumber in check_in_part.heatnumbers">
+			                  		<td class="text-right">
+			                  			{{heatnumber.heatnumber}}
+			                  		</td>
+			                  		<td class="text-right">
+			                  			{{heatnumber.drawing}} 
+			                  		</td>
+			                  		<td class="text-right">
+			                  			<input type="number" ng-model="heatnumber.quantity" class="form-control input-sm" disabled="" />
+			                  		</td>
+			                  		<td>
+			                  			<div class="form-group col-md-4" ng-repeat="item in heatnumber.quantity_details" >
+			                  				<div class="input-group">
+												<select class="form-control input-sm" ng-model="item.location_id" ng-options="item.id as item.name for item in locations" ng-change="changeHeatnumberLocationId(heatnumber, item, $index)" required>
+													<option style="display:none" value="">Select Location</option>
+												</select>
+												<div class="input-group-addon" style="border: none; padding: 0">
+													<input type="number" class="form-control input-sm" placeholder="0" ng-model="item.quantity" ng-change="changeHeatnumberLocationQty(heatnumber, item)" ng-disabled="check_in_part.is_readonly" style="width: 50px">
+												</div>
+												<button class="btn btn-icon btn-sm btn-quick" ng-click="removeHeatnumerQuantityDetail(heatnumber, $index)" ng-hide="check_in_part.is_readonly"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+			                  				</div>
+			                  			</div>
+			                  			<div class="form-group col-md-4 pull-right">
+					                        <div class="input-group">
+					                          <button class="btn btn-sm btn-icon no-padding" ng-click="addQuantityDetail(heatnumber)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add </button>
+					                        </div>
+			                  			</div>
+			                  		</td>
+			                  	</tr>
+							</tbody>
+		                </table>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-12">
+						<label>Note</label>
+					</div>
+					<div class="col-md-12">
+						<textarea ck-editor ng-model="check_in_part.note"></textarea>
+						<span class="control-label" for="inputError" ng-show="check_in_part_error.note.length!=0" ng-repeat="error in check_in_part_error.note">
+							<i class="fa fa-times-circle-o"></i> Error: {{error}}
+						</span>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="submitCheckIn()">Check In</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div>
+</div>
+
+<div class="modal" id="checkOutModal" tabindex="-1" role="dialog" aria-labelledby="checkOutModalLabel" aria-hidden="true" >
+	<div class="modal-dialog" style="width: 1200px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Check-out for Part "{{selected_part.part_code}}"</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-6">
+			        <div class="row form-group" ng-class="{'has-error': check_out_part_error.purchase_order_id.length > 0}">
+			            <div class="col-md-4 text-right">
+			              <label>Purchase Order <span class="required">*</span></label>
+			            </div>
+			            <div class="col-md-8">
+			              <input ampautocomplete ng-disabled="check_out_part.is_readonly" ng-model="check_out_part.purchase_order_id" type="text" class="form-control" placeholder="" id="Check_out_part_purchase_order_id" data-source="/purchaseOrder/getAllPurchaseOrderCode" ui-option="'purchase_orders'" ui-id="'id'" ui-name="'po_code'" search-field="'po_code'" ui-modellabel="check_out_part.purchase_order.po_code">
+
+			              <span class="control-label" for="inputError" ng-show="check_out_part_error.purchase_order_id.length!=0" ng-repeat="error in check_out_part_error.purchase_order_id">
+			                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+			              </span>
+			            </div>
+			        </div>
+				</div>
+				<div class="col-md-6">
+					<div class="row form-group" ng-class="{'has-error': check_out_part_error.received_by.length > 0}">
+						<div class="col-md-4 text-right">
+							<label>Pulled out by<span class="required">*</span></label>
+						</div>
+						<div class="col-md-8">
+							<input ampautocomplete ng-disabled="check_out_part.is_readonly" ng-model="check_out_part.received_by" type="text" class="form-control" placeholder="" id="Check_out_part_received_by" data-source="/employee/getAll" ui-option="'employees'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="check_out_part.employee.name">
+
+							<span class="control-label" for="inputError" ng-show="check_out_part_error.received_by.length!=0" ng-repeat="error in check_out_part_error.received_by">
+								<i class="fa fa-times-circle-o"></i> Error: {{error}}
+							</span>
+						</div>
+					</div>
+
+					<div class="row form-group" ng-class="{'has-error': check_out_part_error.received_date.length > 0}">
+						<div class="col-md-4 text-right">
+							<label>Date <span class="required">*</span></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" ng-model="check_out_part.received_date" class="form-control datepicker" required is-open="focus_2" ng-focus="focus_2=true" />
+							<span class="control-label" for="inputError" ng-show="check_out_part_error.received_date.length!=0" ng-repeat="error in check_out_part_error.received_date">
+								<i class="fa fa-times-circle-o"></i> Error: {{error}}
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row form-group" ng-class="{'has-error': check_out_part_error.heatnumber_ids.length > 0}">
+					<div class="col-md-2 text-right">
+						<label>Heat Number | Designation<span class="required">*</span></label>
+					</div>
+					<div class="col-md-10">
+						<select ng-disabled="check_out_part.is_readonly" multiple chosen class="chosen_select form-control" ng-model="check_out_part.heatnumber_ids" ng-options="item.id as item.heatnumber + ' | ' + item.drawing for item in selected_part.heatnumbers" ng-change="checkOutUpdateHeatnumbers(check_out_part)" data-placeholder=""></select>
+					</div>
+					<div class="col-md-12">
+		                <table id="heatnumbers" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+		                  	<thead>
+			                    <tr role="row">
+									<th width="10%">Heatnumber</th>
+									<th width="10%">Drawing</th>
+									<th width="10%">Quantity</th>
+									<th>Detail</th>
+									<th width="10%">Info</th>
+			                    </tr>
+							</thead>
+							<tbody role="alert" aria-live="polite" aria-relevant="all">          
+								<tr class="even" ng-repeat="heatnumber in check_out_part.heatnumbers">
+									<td class="text-right">
+										{{heatnumber.heatnumber}}
+									</td>
+									<td class="text-right">
+										{{heatnumber.drawing}} 
+									</td>
+									<td class="text-right">
+										<input type="number" ng-model="heatnumber.quantity" class="form-control input-sm" required disabled="" />
+									</td>
+									<td>
+										<div class="form-group col-md-4" ng-repeat="item in heatnumber.quantity_details" >
+											<div class="input-group">
+												<select class="form-control input-sm" ng-model="item.location_id" ng-options="id as getLocationAttrById(id, 'name') for id in selected_part.arr_location_ids" ng-change="changeHeatnumberLocationId(heatnumber, item, $index)" required>
+											  		<option style="display:none" value="">Select Location</option>
+												</select>
+												<div class="input-group-addon" style="border: none; padding: 0">
+											  		<input type="number" class="form-control input-sm" placeholder="0" ng-model="item.quantity" ng-change="changeHeatnumberLocationQty(heatnumber, item)" ng-disabled="check_in_part.is_readonly" style="width: 50px">
+												</div>
+												<button class="btn btn-icon btn-sm btn-quick" ng-click="removeHeatnumerQuantityDetail(heatnumber, $index)" ng-hide="check_in_part.is_readonly"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+											</div>
+										</div>
+										<div class="form-group col-md-4 pull-right">
+											<div class="input-group">
+					                        	<button class="btn btn-sm btn-icon no-padding" ng-click="addQuantityDetail(heatnumber)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add </button>
+											</div>
+										</div>
+									</td>
+					                <td class="text-right">
+					                    <button type="button" ng-show="is_update" ng-click="getHeatnumberDetailInfo(heatnumber)" class="btn btn-xs btn-icon pull-right" title="Show detail">
+					                      	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info
+					                    </button>
+					                 </td>
+								</tr>
+							</tbody>
+		                </table>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-12">
+						<label>Note</label>
+					</div>
+					<div class="col-md-12">
+						<textarea ck-editor ng-model="check_out_part.note"></textarea>
+						<span class="control-label" for="inputError" ng-show="check_out_part_error.note.length!=0" ng-repeat="error in check_out_part_error.note">
+							<i class="fa fa-times-circle-o"></i> Error: {{error}}
+						</span>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="submitCheckOut()">Check Out</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div>
+</div>
+
+<div class="modal" id="viewQuantityModal" tabindex="-1" role="dialog" aria-labelledby="viewQuantityModalLabel" aria-hidden="true" >
+	<div class="modal-dialog" style="width: 500px">
+		<div class="modal-content overhidden">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">View quantity for Part "{{selected_part.part_code}}"</h4>
+			</div>
+			<div class="modal-body">
+
+                <table id="viewQuantity" class="table table-bordered table-hover dataTable" aria-describedby="viewQuantity_info">
+                  <thead>
+                    <tr role="row">
+                      <th width="40%">Heatnumber</th>
+                      <th width="40%">Drawing</th>
+                      <th width="20%">Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                    <tr class="even" ng-repeat="heatnumber in selected_part.heatnumbers">
+                      <td class="text-right">
+                      	{{heatnumber.heatnumber}} 
+                      </td>
+                      <td class="text-right">
+                      	{{heatnumber.drawing}}
+                      </td>
+                      <td class="text-right">
+                      	{{heatnumber.quantity}}
+                      </td>
+                    </tr>
+                    <tr class="odd" >
+                    	<td class="text-center" colspan="2"><b>Total quantity</b></td>
+                    	<td class="text-right"><b>{{selected_part.quantity}}</b></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+			</div>
+		</div><!-- /.modal-content -->
+	</div>
+</div>
+
+<div class="modal" id="heatnumberDetailModal" tabindex="-1" role="dialog" aria-labelledby="heatnumberDetailModalLabel" aria-hidden="true" >
+	<div class="modal-dialog" style="width: 700px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">"{{selected_heatnumber.heatnumber}} | {{selected_heatnumber.designation}}" details</h4>
+			</div>
+			<div class="modal-body overhidden">
+				<div class="form-group">
+					<table id="relatedMachines" class="table table-bordered table-hover dataTable" aria-describedby="heatnumbers_info">
+						<thead>
+							<tr role="row">
+								<th width="30%">Location</th>
+								<th width="30%">Quantity</th>
+								<th width="40%">Detail</th>
+							</tr>
+						</thead>
+						<tbody role="alert" aria-live="polite" aria-relevant="all">          
+							<tr class="even" ng-repeat="detail in selected_heatnumber.detail_information">
+								<td class="text-left">
+									{{detail.location_name}}
+								</td>
+								<td class="text-right">
+									{{detail.quantity}}
+								</td>
+								<td class="text-right none">
+									<button type="button" ng-click="QuickCheckInFromPopup(selected_heatnumber, detail.quantity, detail.location_id)" class="btn btn-xs btn-icon pull-right" title="Check In">
+										<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+									</button>
+									<button type="button" ng-click="QuickCheckOutFromPopup(selected_heatnumber, detail.quantity, detail.location_id)" class="btn btn-xs btn-icon pull-right" title="Check Out">
+										<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	.datepicker-dropdown{
+		z-index: 10000 !important;
+	}
+</style>

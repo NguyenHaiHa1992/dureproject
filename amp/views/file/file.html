@@ -1,0 +1,138 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="search-box">
+    <form action="" method="post" class="search-form">
+        <div class="col-md-6 padding-0">
+            <select class="width-25">
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+            </select>
+            <select class="width-25">
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+            </select>
+            <select class="width-25">
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+            </select>
+            <select class="width-25">
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+                <option>123</option>
+            </select>
+        </div>
+        <div class="col-md-6 padding-0">
+            <div class="col-xs-10">
+                <div class="input-stylized pull-right wrapper-suggest">
+                    <span class="glyphicon glyphicon-search background-color-2"></span>
+                    <input type="text">
+                    <div class="suggest-box">
+                        <ul class="list-unstyled">
+                            <li><a href="#">abc</a> </li>
+                            <li><a href="#">abc</a> </li>
+                            <li><a href="#">abc</a> </li>
+                            <li><a href="#">abc</a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2 padding-0">
+                <button type="submit" class="pull-right background-color-2"> Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+</div><!--end .search-box-->
+<div class="sub-action">
+    <div class="col-sm-6 padding-0">
+        <div class="action-with-list pull-left">
+            <ul class="list-unstyled">
+                <li><input  type="checkbox" class="check-all"/></li>
+                <li><a href="javascript:void(0)" class="refresh"><span class="glyphicon glyphicon-refresh"></span> </a> </li>
+                <li><a href="javascript:void(0)" class="delete"><span class="glyphicon glyphicon-trash"></span> </a> </li>
+            </ul>
+        </div><!--end .action-with-list-->
+        <div class="index-static-gallery">
+            <span class="all-quantity"> Tất cả ({{files.length}}) </span>
+            <span class="image-quantity"> Hình ảnh ({{(files | filter: {type:'image'}).length}}) </span>
+            <span class="attach-quantity"> Tài liệu ({{(files | filter: {type:'document'}).length}}) </span>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 padding-0" id="post">
+	<div class="col-md-9 padding-0">
+		<div id="uploader">
+			<input type="file" nv-file-select uploader="uploader" multiple/><br/>
+	        <ul>
+	            <li ng-repeat="item in uploader.queue">
+	                Name: <span ng-bind="item.file.name"></span> | <span>{{ item.file.size/1024/1024|number:2 }} MB</span><br/>
+	                <button ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">upload</button>
+	            </li>
+	        </ul>
+	        <div class="progress">
+				<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }" style="width: 0%;"> &nbsp;</div>
+			</div>
+	        <button ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">Upload All</button>
+		</div>
+	    <div class="gallery default-skin" id="choices">
+	        <ul class="list-unstyled">
+	            <li data-ng-repeat="file in files">
+	                <img data-ng-click = showDetail(file) class="img-responsive" src="{{file.thumb}}" alt = "{{file.name}}" title = "{{file.name}}">
+	                <button type="button" class="choose" data-ng-click = addToSelect(file)></button>
+	            </li>
+	        </ul>
+	    </div>
+	</div>
+	<div class="col-md-3 padding-0">
+	    <div id="attachment-box">
+	        <div class="title-box">
+	            Attachment detail
+	        </div>
+	        <div class="content-box">
+	            <div class="file-attach">
+	                <div class="image pull-left">
+	                    <img src="{{currentFile.thumb}}" alt="{{currentFile.name}}" title="{{currentFile.name}}" class="img-responsive">
+	                </div>
+	                <div class="info-file">
+	                    <div class="name">{{currentFile.name}}</div>
+	                    <div class="filename">{{currentFile.filename}}</div>
+	                    <div class="created_at">{{currentFile.created_time | date:'dd-MM-yyyy'}}</div>
+	                    <div class="size">1366x768</div>
+	                    <a href="" class="edit" data-ng-click = "edit_current_file = !edit_current_file">{{(!edit_current_file)?"Edit Image":"Cancel"}}</a>
+	                    <a href="" class="del">Delete</a>
+	                </div>
+	
+	            </div>
+	            <div class="description-detail" ng-show = "edit_current_file">
+	                <div class="form-group">
+	                    <label for="inputTitle" class="col-xs-4 control-label">Name</label>
+	                    <div class="col-xs-8">
+	                        <input type="text" class="form-control" id="inputTitle" value="{{currentFile.name}}" />
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="inputCaption" class="col-xs-4 control-label">Filename</label>
+	                    <div class="col-xs-8">
+	                        <input type="text" class="form-control" id="inputCaption" value="{{currentFile.filename}}" />
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="inputDescription" class="col-xs-4 control-label">Description</label>
+	                    <div class="col-xs-8">
+	                        <textarea type="text" class="form-control" id="inputDescription" rows="5">{{currentFile.description}}</textarea>
+	                    </div>
+	                </div>
+					<button type="button" class="insert pull-right">Save</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>

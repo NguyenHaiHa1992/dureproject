@@ -1,0 +1,52 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Detail a machine
+      </h1>
+      <ol class="breadcrumb">
+        <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+        <li class="active">Enter machine details</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- general form elements disabled -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Machine details</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+              <form role="form">
+                
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                  	<label>Name</label>
+                  </div>
+                  <div class="col-md-9">
+                  		<input ng-model="machine.name" type="text" class="form-control" placeholder="Name">
+                  		<span class="control-label" for="inputError" ng-show="machine_error.name.length!=0" ng-repeat="error in machine_error.name">
+                  			<i class="fa fa-times-circle-o"></i> Error: {{error}}
+                  		</span>
+                  	</div>
+                </div>
+              </form>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" ng-click="update()" class="btn btn-primary">Update</button>
+              </div>
+          </div><!-- /.box -->
+        </div><!--/.col (right) -->
+      </div>   <!-- /.row -->
+    </section><!-- /.content -->
+  </div>

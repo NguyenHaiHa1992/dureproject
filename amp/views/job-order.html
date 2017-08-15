@@ -1,0 +1,301 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Job Order
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Job Order</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+            <li><b>JO actions</b></li>
+            <li><a ui-sref="purchase-order-summary({id: job_order.purchase_order_id})">Order Summary</a></li>
+            <li class="active"><a>Job Order</a></li>
+        </ol>
+
+        <!-- general form elements -->
+        <div class="box overhidden top_box">
+          <div class="col-md-6">
+            <form role="form">
+              <div class="form-group margin-5" ng-class="{'has-error': job_order_error.jo_code.length > 0}">
+                <div class="col-md-3 text-right">
+                  <label for="">Job Order #</label>
+                </div>
+                <div class="col-md-3">
+                  <b><input class="form-control" type="text" ng-model="job_order.jo_code"/></b>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-primary pull-right margin-5" ng-click="">
+              <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+            </button>
+          </div>
+        </div>
+
+        <!-- general form elements -->
+        <div class="box no-border">
+          <div class="box-header" ng-show="job_order.job_order_details.length > 1">
+            <h3 class="box-title">Job Order Summary - Part to make</h3>
+            <button class="btn btn-primary pull-right margin-5" ng-click="nextPart()" ng-disabled="current_index + 1 == job_order.job_order_details.length">
+              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Next Part
+            </button>
+            &nbsp;
+            <button class="btn btn-primary pull-right margin-5" ng-click="prevPart()" ng-disabled="current_index == 0">
+              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Prev Part
+            </button>
+          </div>
+          <div class="box-header" ng-show="job_order.job_order_details.length > 0">
+            <h3 class="box-title">Job Order Summary - JO in group</h3>
+            <a class="btn btn-primary pull-right margin-5" ui-sref="job-order({id: next_job_order_id})" ng-disabled="next_job_order_id == ''">
+              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Next ({{next_job_order_count}})
+            </a>
+            &nbsp;
+            <a class="btn btn-primary pull-right margin-5" ui-sref="job-order({id: previous_job_order_id})" ng-disabled="previous_job_order_id == ''">
+              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Prev ({{previous_job_order_count}})
+            </a>
+          </div>
+          <div class="box-body">
+            <!-- form start -->
+            <form role="form">
+              <div class="form-group">
+                <table id="order_details" class="table table-bordered table-hover dataTable" aria-describedby="order_details_info">
+                  <thead>
+                    <tr role="row">
+                      <th width="2%"></th>
+                      <th width="8%">Part #</th>
+                      <th width="5%">Category</th>
+                      <th width="10%">Description</th>
+                      <th width="6%">Material</th>
+                      <th width="6%" class="text-right">Bar length</th>
+                      <th width="10%" class="text-right">Slug length</th>
+                      <th width="10%" class="text-right">Qty. to Manufacture</th>
+                    </tr>
+                  </thead>
+                  <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                    <tr class="even">
+                      <td class="text-right">{{current_index + 1}}</td>
+                      <td>{{current_job_order_detail.part.part_code}}</td>
+                      <td>{{current_job_order_detail.part.category_name}}</td>
+                      <td>{{current_job_order_detail.part.description}}</td>
+                      <td>{{current_job_order_detail.part.material_code}}</td>
+                      <td class="text-right">{{current_job_order_detail.part.bar_length_pc}}</td>
+                      <td class="text-right">{{current_job_order_detail.part.slug_length}}</td>
+                      <td class="text-right">{{current_job_order_detail.quantity_manufacture}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>           
+            </form>
+          </div><!-- /.box-body -->
+
+          <div class="box-header">
+            <h3 class="box-title">Material Information</h3>
+          </div>
+          <div class="box-body" style="width: 50%">
+            <!-- form start -->
+            <form role="form">
+              <div class="form-group">
+                <table id="order_details" class="table table-bordered table-hover dataTable" aria-describedby="order_details_info">
+                  <thead>
+                    <tr role="row">
+                      <th width="15%">Date</th>
+                      <th width="15%">Material #</th>
+                      <th width="20%" class="text-right">In Stock Material</th>
+                      <th width="10%">Shape</th>
+                      <th width="10%">Size</th>
+                    </tr>
+                  </thead>
+                  <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                    <tr class="even">
+                      <td>{{job_order.current_time}}</td>
+                      <td>{{current_job_order_detail.material.material_code}}</td>
+                      <td class="text-right">{{current_job_order_detail.material.stock_in_hand}}</td>
+                      <td>{{current_job_order_detail.material.shape_id}}</td>
+                      <td>
+                        <div ng-repeat="(label, size) in current_job_order_detail.material.sizes">
+                          <label style="width: 30px">{{label}}</label>: {{size}}
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>           
+            </form>
+          </div><!-- /.box-body -->
+
+          <div class="box-header">
+            <h3 class="box-title">Job Material Drew</h3>
+          </div>
+          <div class="box-body overhidden">
+            <div class="col-md-4">
+              <!-- form start -->
+              <form role="form">
+                <div class="row form-group">
+                  <table id="order_details" class="table table-bordered table-hover dataTable" aria-describedby="order_details_info">
+                    <thead>
+                      <tr role="row">
+                        <th width="10%">Date</th>
+                        <th width="10%" class="text-right">Qty to Drew</th>
+                        <th width="10%" class="text-right">Returned</th>
+                      </tr>
+                    </thead>
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                      <tr class="even">
+                        <td>
+                          <input class="form-control datepicker input-sm" type="text" ng-model="current_job_order_detail.drew_date" />
+                        </td>
+                        <td class="text-right">
+                          <input class="form-control input-sm text-right" type="text" ng-model="current_job_order_detail.quantity_drew" />
+                        </td>
+                        <td class="text-right">
+                          <input class="form-control input-sm text-right" type="text" ng-model="current_job_order_detail.returned" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>           
+              </form>
+            </div>
+
+            <div class="col-md-2">
+              <button class="btn btn-primary" ng-click="" style="margin: 6px 0 0 15px">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Check in/out Material
+              </button>
+            </div>              
+          </div><!-- /.box-body --> 
+
+          <div class="box-header">
+            <h3 class="box-title">Machine Department Production information</h3>
+          </div>
+          <div class="box-body overhidden" id="machines">
+            <small ng-show="current_job_order_detail.machines.length==0">It does not have any machine!</small>
+            <!-- form start -->
+            <div class="machine_item" ng-repeat="machine in current_job_order_detail.machines">
+              <!-- general form elements -->
+              <div class="box no-border collapsed-box">
+                <div class="box-header">
+                  <h3 class="box-title">{{machine.name}}</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <table id="order_details" class="table table-bordered table-hover dataTable" aria-describedby="order_details_info">
+                    <thead>
+                      <tr role="row" style="font-size: 90%">
+                        <th width="10%">Operation</th>
+                        <th width="7%">Date</th>
+                        <th width="6%">Scheduled<br/> hours</th>
+                        <th width="6%">Actual<br/> hours</th>
+                        <th width="4%">Variance</th>
+                        <th width="6%">Employee</th>
+                        <th width="5%">Good</th>
+                        <th width="5%">Scrap</th>
+                        <th width="5%">Heat #</th>
+                        <th width="6%">Design.</th>
+                        <th width="5%">Setup<br/> time</th>
+                        <th width="5%">Cleanup<br/> time</th>
+                        <th width="6%">Total time</th>
+                        <th width="6%">Problems</th>
+                        <!-- <th width="6%">Status</th> -->
+                        <th width="11%"> </th>
+                      </tr>
+                    </thead>
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+                      <tr class="even" ng-repeat="schedule in machine.schedules track by $index">
+                        <td>
+                          <select class="form-control input-sm" ng-model="schedule.operation_id" ng-options="item.id as item.name group by item.category.name for item in operations"></select>
+                        </td>
+                        <td>
+                          <input class="form-control datepicker input-sm" type="text" ng-model="schedule.start_date" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.scheduled_hour" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.actual_hour" />
+                        </td>
+                        <td>
+                          {{schedule.actual_hour - schedule.scheduled_hour}}
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.employee" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="number" ng-model="schedule.quantity_good" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="number" ng-model="schedule.quantity_scarp" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.heat_code" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.designation" />
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.setup_time"/>
+                        </td>
+                        <td>
+                          <input class="form-control input-sm" type="text" ng-model="schedule.cleanup_time"/>
+                        </td>
+                        <td>
+                          <input class="form-control input-sm text-right" type="text" value="{{getSum(schedule.setup_time, schedule.cleanup_time)}}" disabled="" />
+                        </td>
+                        <td>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" ng-model="schedule.has_problem" value="0">No
+                            </label>
+                            &nbsp; &nbsp; 
+                            <label>
+                              <input type="radio" ng-model="schedule.has_problem" value="1">Yes
+                            </label>
+                          </div>
+                        </td>
+                        <!-- <td>
+                          {{schedule.status_label}}
+                        </td> -->
+                        <td>
+                          <button class="btn btn-primary btn-sm" ng-click="updateMachineSchedule(schedule, machine, current_job_order_detail,$event)">{{(schedule.id == undefined)?'Add':'Update'}}</button> 
+                           <button class="btn btn-primary btn-sm" ng-show="schedule.id != undefined" ng-click="deleteMachineSchedule($index, schedule, machine, current_job_order_detail,$event)">Delete</button> 
+                          <!-- <button ng-show="schedule.status == 1" class="btn btn-primary btn-sm" ng-click="releaseMachineSchedule(schedule, machine, current_job_order_detail)">Release</button> -->
+                          <!-- <button ng-show="schedule.status == '0'" class="btn btn-primary btn-sm" ng-click="restartMachineSchedule(schedule, machine, current_job_order_detail)">Restart</button> -->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-primary btn-sm" ng-click="addMachineSchedule(machine, current_job_order_detail,$event)">Add Schedule</button> 
+                </div><!-- /.box-body -->   
+              </div><!-- /.box -->
+            </div><!--/.col (right) -->
+
+            <div class="input-group input-group-sm col-md-2">
+              <select class="form-control" ng-model="current_job_order_detail.new_machine" ng-options="item.id as item.name for item in machines"></select>
+              <span class="input-group-btn">
+                <button class="btn btn-primary" ng-click="addMachine( current_job_order_detail.new_machine, current_job_order_detail,$event)">Add Machine</button> 
+              </span>
+            </div>
+          </div><!-- /.box-body --> 
+
+        </div><!-- /.box -->
+
+      </div><!--/.col (right) -->
+    </div>   <!-- /.row -->
+  </section><!-- /.content -->
+</div>

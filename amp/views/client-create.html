@@ -1,0 +1,248 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Enter client details
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter client details</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+          <li><b>Client actions</b></li>
+          <li><a ui-sref="client-list">Client list</a></li>
+          <li class="active"><a ui-sref="client-create" ui-sref-opts="{reload: true, notify: true}">Add new client</a></li>
+        </ol>
+        <!-- general form elements -->
+        <div class="box overhidden top_box">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Create</button>
+            <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Update</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="box no-border" style="min-height: 400px">
+          <div class="box-body">
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <!-- form start -->
+              <form role="form">
+                <div class="row form-group" ng-class="{'has-error': client_error.name.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Name <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.name" type="text" class="form-control" placeholder="name">
+                    <span class="control-label" for="inputError" ng-show="client_error.name.length!=0" ng-repeat="error in client_error.name">
+                     <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                   </span>
+                 </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.contact_name.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Contact name <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.contact_name" type="text" class="form-control" placeholder="contact name">
+                    <span class="control-label" for="inputError" ng-show="client_error.contact_name.length!=0" ng-repeat="error in client_error.contact_name">
+                     <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                   </span>
+                 </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.company_name.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Company name <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.company_name" type="text" class="form-control" placeholder="company name">
+                    <span class="control-label" for="inputError" ng-show="client_error.company_name.length!=0" ng-repeat="error in client_error.company_name">
+                     <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                   </span>
+                 </div>
+                </div>
+
+               <div class="row form-group" ng-class="{'has-error': client_error.email.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Email</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.email" type="text" class="form-control" placeholder="email">
+                    <span class="control-label" for="inputError" ng-show="client_error.email.length!=0" ng-repeat="error in client_error.email">
+                      <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.phone.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Phone</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.phone" type="text" class="form-control" placeholder="phone">
+                    <span class="control-label" for="inputError" ng-show="client_error.phone.length!=0" ng-repeat="error in client_error.phone">
+                      <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.fax.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label>Fax</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.fax" type="text" class="form-control" placeholder="fax">
+                    <span class="control-label" for="inputError" ng-show="client_error.fax.length!=0" ng-repeat="error in client_error.fax">
+                      <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.category_ids.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="" >Category</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <select multiple chosen class="form-control" ng-model="client.category_ids" ng-options="item.id as item.name for item in client_categories" data-placeholder="Choose categories ...">
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="client_error.category_ids.length!=0" ng-repeat="error in client_error.category_ids">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+              </form>
+            </div><!--/.col (left) -->
+            <div class="col-md-6">
+              <!-- general form elements disabled -->
+              <form role="form">
+
+                <div class="row form-group" ng-class="{'has-error': client_error.address1.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">Address 1</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.address1" type="text" class="form-control" placeholder="address 1">
+                    <span class="control-label" for="inputError" ng-show="client_error.address1.length!=0" ng-repeat="error in client_error.address1">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.address2.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">Address 2</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.address2" type="text" class="form-control" placeholder="address 2">
+                    <span class="control-label" for="inputError" ng-show="client_error.address2.length!=0" ng-repeat="error in client_error.address2">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.city.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">City</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.city" type="text" class="form-control" placeholder="city">
+                    <span class="control-label" for="inputError" ng-show="client_error.city.length!=0" ng-repeat="error in client_error.city">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.zipcode.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="">Zip code <br/> Postal code</label> </br>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.zipcode" type="text" class="form-control" placeholder="zip code / postal code">
+                    <span class="control-label" for="inputError" ng-show="client_error.zipcode.length!=0" ng-repeat="error in client_error.zipcode">
+                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.state_id.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="" >State / Province</label></br>
+                  </div>
+                  <div class="col-md-9">
+                    <select chosen class="form-control" required ng-model="client.state_id" ng-options="item.id as item.state_short for item in states" data-placeholder="Choose a state ...">
+                      <option value="">---</option>
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="client_error.state_id.length!=0" ng-repeat="error in client_error.state_id">
+                      <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group" ng-class="{'has-error': client_error.country.length!=0}">
+                  <div class="col-md-3 text-right">
+                    <label for="" >Country</label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-model="client.country" type="text" class="form-control" placeholder="country">
+                    <span class="control-label" for="inputError" ng-show="client_error.country.length!=0" ng-repeat="error in client_error.country">
+                      <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="box no-border" style="min-height: 100px">
+          <div class="box-header">
+            <h3 class="box-title">Client information card</h3>
+          </div>
+          <div class="box-body overhidden" id="client_card">
+            ID: {{client.id}}
+            <br />Name: {{client.name}} 
+            <br />Email: {{client.email}} 
+            <br />Phone: {{client.phone}} 
+            <br />Address 1: {{client.address1}} 
+            <br />Address 2: {{client.address2}}
+            <br />City: {{client.city}}
+            <br />State/Province: {{client.state_name}} 
+            <br />Zipcode/Postal Code: {{client.zipcode}}
+          </div>
+          <div class="box-footer">
+            <button class="btn btn-info" type="button" clip-copy="getClientCard()" clip-click="copyToClipboard()">Copy to clipboard</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="box no-border" style="min-height: 100px">
+          <div class="box-header">
+            <h3 class="box-title">Client documents</h3>
+          </div>
+          <div class="box-body overhidden">
+            <file-uploader file-ids="client.tmp_file_ids" model-id="client.id"></file-uploader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

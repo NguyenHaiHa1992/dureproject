@@ -1,0 +1,1 @@
+[31-Jul-2014 01:49:56] PHP Fatal error:  Using $this when not in object context in /home/phuongba/public_html/themes/dev/views/role/index.php on line 15

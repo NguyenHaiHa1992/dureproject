@@ -1,0 +1,80 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Email Template List
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Email Template List</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+            <li><b>Email Template actions</b></li>
+            <li class="active"><a ui-sref="email-template-list" ui-sref-opts="{reload: true, notify: true}">Email Template list</a></li>
+        </ol>
+        <!-- general form elements -->
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Email Templates</h3>
+          </div>
+          <div class="box-body">
+            <!-- form start -->
+            <form role="form">
+              <div class="form-group">
+                <table id="email_templates" class="table table-bordered table-hover dataTable" aria-describedby="email_templates_info">
+                  <thead>
+                    <tr role="row">
+                      <th width="3%">#</th>
+                      <th width="15%">Description</th>
+                      <th width="22%">Subject</th>
+                      <th width="45%">Message</th>
+                      <th width="10%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                    <tr class="even" ng-repeat="email_template in email_templates">
+                      <td class="sorting_1">{{$index + 1}}</td>
+                      <td>{{email_template.description}} 
+                      </td>
+                      <td>{{!email_template.is_edit ? email_template.subject: ""}} 
+                        <input value="{{email_template.subject}}" ng-show="email_template.is_edit" ng-model="email_template.subject" type="text" class="form-control input-sm" placeholder="subject">
+                      </td>
+                      <td>
+                        <div ng-hide="email_template.is_edit" ng-bind-html="renderHtml(email_template.content_html)"></div>
+                        <textarea ng-show="email_template.is_edit" ng-model="email_template.content" type="text" class="form-control input-sm" placeholder="content" style="min-height: 100px">{{email_template.content}}</textarea>
+                      </td>
+                      <td>
+                        <button ng-hide="email_template.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editEmailTemplate(email_template)">
+                          <span class="glyphicon glyphicon-edit"></span> Edit 
+                        </button>
+                        <button ng-show="email_template.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveEmailTemplate(email_template, $index)">
+                          <span class="glyphicon glyphicon-save"></span> Save 
+                        </button>
+                        <button ng-show="email_template.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="cancelEditEmailTemplate(email_template)">
+                          <span class="glyphicon glyphicon-ban-circle"></span> Cancel 
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button type="button" class="btn btn-danger btn-xs none" ng-click="addEmailTemplate()">
+                  <span class="glyphicon glyphicon-plus"></span> Add more
+                </button>
+              </div>           
+            </form>
+          </div><!-- /.box-body -->   
+        </div><!-- /.box -->
+      </div><!--/.col (right) -->
+    </div>   <!-- /.row -->
+  </section><!-- /.content -->
+</div>

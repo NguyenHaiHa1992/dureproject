@@ -1,0 +1,171 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Create Material Price
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter Material Price details</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+            <li><b>Material Price actions</b></li>
+            <li><a ui-sref="material-price-list" ui-sref-opts="{reload: true, notify: true}">Material Price list</a></li>
+            <li class="active"><a ui-sref="material-price-create" ui-sref-opts="{reload: true, notify: true}">Create Material Price</a></li>
+        </ol>
+        <!-- general form elements disabled -->
+       <div class="box overhidden top_box">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <button type="button" ng-click="unlock()" class="btn btn-primary pull-right margin-5" ng-show="is_readonly">Unlock</button>
+            <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Create</button>
+            <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update && !is_readonly">Update</button>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="box no-border">
+            <form role="form">
+              <div class="box-body">
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>Date</label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-disabled="is_readonly" type="text" ng-model="material_price.date" class="form-control datepicker" required />
+                    <span class="control-label" for="inputError" ng-show="material_price_error.date.length!=0" ng-repeat="error in material_price_error.date">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>Material Code</label>
+                  </div>
+                  <div class="col-md-9">
+                    <select ng-disabled="is_readonly" class="form-control" required ng-model="material_price.material_id" ng-options="item.id as item.material_code for item in materials" ng-change="changeMaterial()">
+                        <option value="">Choose Material</option>
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="material_price_error.material_id.length!=0" ng-repeat="error in material_price_error.material_id">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div ng-show="material_price.material_id !=''">
+                  <div class="row form-group">
+                    <div class="col-md-3 text-right">
+                      <label>Material Shape</label>
+                    </div>
+                    <div class="col-md-9">
+                      {{material_price.material.shape}}
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-md-3 text-right">
+                      <label>Material Size</label>
+                    </div>
+                    <div class="col-md-9">
+                      <span class="form-group" ng-repeat="(label, size) in material_price.material.sizes" style="padding: 0 5px;">
+                        {{label}} : {{size}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>Vendor</label>
+                  </div>
+                  <div class="col-md-9">
+                    <select ng-disabled="is_readonly" class="form-control" required ng-model="material_price.vendor_id" ng-options="item.id as item.name for item in vendors">
+                        <option value="">Choose Vendor</option>
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="material_price_error.vendor_id.length!=0" ng-repeat="error in material_price_error.vendor_id">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </div><!-- /.box -->
+
+        <div class="col-md-6">
+          <div class="box no-border">
+            <form role="form">
+              <div class="box-body">
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>Total inches</label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-disabled="is_readonly" type="text" ng-model="material_price.total_inch" class="form-control" ng-change="changeTotalInch()" required/>
+                    <span class="control-label" for="inputError" ng-show="material_price_error.total_inch.length!=0" ng-repeat="error in material_price_error.total_inch">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>$/inch</label>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">$</span>
+                      <input ng-disabled="is_readonly" type="text" ng-model="material_price.price_per_inch" class="form-control" ng-change="changePricePerInch()" required />
+                    </div>
+
+                    <span class="control-label" for="inputError" ng-show="material_price_error.price_per_inch.length!=0" ng-repeat="error in material_price_error.price_per_inch">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>Weight</label>
+                  </div>
+                  <div class="col-md-9">
+                    <input ng-disabled="is_readonly" type="text" ng-model="material_price.weight" class="form-control" ng-change="changeWeight()" required />
+                    <span class="control-label" for="inputError" ng-show="material_price_error.weight.length!=0" ng-repeat="error in material_price_error.weight">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-3 text-right">
+                    <label>$/LBS</label>
+                  </div>
+                  <div class="col-md-9">
+                    {{material_price.price_per_lbs | currency:"$":2}}
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">$</span>
+                      <input ng-disabled="is_readonly" type="text" ng-model="material_price.price_per_lbs" class="form-control" ng-change="changePricePerLbs()" required />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </div><!-- /.box -->
+
+      </div><!--/.col (right) -->
+    </div>   <!-- /.row -->
+  </section><!-- /.content -->
+</div>

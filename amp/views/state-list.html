@@ -1,0 +1,94 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>
+			States Database
+		</h1>
+		<ol class="breadcrumb">
+			<li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+			<li class="active">State list</li>
+		</ol>
+	</section>
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+		        <ol class="breadcrumb tool_box">
+		          <li><b>State actions</b></li>
+		          <li class="active"><a ui-sref="state-list">State list</a></li>
+		          <li><a ui-sref="state-create">Add new state</a></li>
+		        </ol>
+				<div class="box">
+					<div class="box-body">
+						<div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+							<div class="row">
+								<div class="col-xs-6"></div>
+								<div class="col-xs-3 pull-right">
+									<div id="example1_length" class="dataTables_length">
+										<label>records per page
+											<select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select> 
+										</label>
+									</div>
+								</div>
+							</div>
+							<table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+								<thead>
+									<tr role="row">
+										<th ng-class="{sorting: sort.attribute!='state_short', sorting_asc: sort.attribute=='state_short'&&sort.type=='ASC', sorting_desc: sort.attribute=='state_short'&&sort.type=='DESC'}" ng-click="sort('state_short')" rowspan="1" colspan="1">State short</th>
+										<th ng-class="{sorting: sort.attribute!='state_full', sorting_asc: sort.attribute=='state_full'&&sort.type=='ASC', sorting_desc: sort.attribute=='state_full'&&sort.type=='DESC'}" ng-click="sort('state_full')" rowspan="1" colspan="1">State full</th>
+										<th ng-class="{sorting: sort.attribute!='country_short', sorting_asc: sort.attribute=='country_short'&&sort.type=='ASC', sorting_desc: sort.attribute=='country_short'&&sort.type=='DESC'}" ng-click="sort('country_short')" rowspan="1" colspan="1">Country short</th>
+										<th ng-class="{sorting: sort.attribute!='country_full', sorting_asc: sort.attribute=='country_full'&&sort.type=='ASC', sorting_desc: sort.attribute=='country_full'&&sort.type=='DESC'}" ng-click="sort('country_full')"rowspan="1" colspan="1">Country full</th>
+									</tr>
+								</thead>
+
+								<tfoot>
+									<tr>
+										<th rowspan="1" colspan="1">State short</th>
+										<th rowspan="1" colspan="1">State full</th>
+										<th rowspan="1" colspan="1">Country short</th>
+										<th rowspan="1" colspan="1">Country full</th>
+									</tr>
+								</tfoot>
+								<tbody role="alert" aria-live="polite" aria-relevant="all">
+									<tr class="even" ng-repeat="state in states">
+										<td class=" sorting_1"><a href="" ng-click="viewDetai(state.id)">{{state.state_short}}</a></td>
+										<td class=" ">{{state.state_full}}</td>
+										<td class=" ">{{state.country_short}}</td>
+										<td class=" ">{{state.country_full}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="dataTables_info" id="example2_info">
+										Showing {{start_state}} to {{end_state}} of {{totalresults}} entries
+									</div>
+								</div>
+								<div class="col-xs-6" ng-show="pages.length>1">
+									<div class="dataTables_paginate paging_bootstrap">
+										<ul class="pagination">
+											<li class="prev" ng-class="{disabled: currentPage==1}">
+												<a href="" ng-click="selectPage(currentPage-1)">← Previous</a>
+											</li>
+											<li ng-repeat="page in pages" ng-class="{active: page==currentPage}" >
+												<a href="" ng-click="selectPage(page)">{{page}}</a>
+											</li>
+											<li class="next" ng-class="{disabled: currentPage==pages.length}">
+												<a href="" ng-click="selectPage(currentPage+1)">Next → </a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!-- /.box-body -->
+				</div>
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</section><!-- /.content -->
+  </div><!-- /.content-wrapper -->

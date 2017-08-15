@@ -1,0 +1,79 @@
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="treeview" ui-sref="home">
+                <a ui-sref="home">HOMEPAGE</a>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <span>STORES</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu" style="display: none;">
+                    <li>
+                        <a ui-sref="store-list"><i class="fa fa-circle-o"></i> Store DB</a>
+                    </li>
+                    <li ng-show="root.is_superadmin">
+                        <a ui-sref="store-create"><i class="fa fa-circle-o"></i> Add/Edit Store</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <span>SIGNAGE</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a ui-sref="signage-list">
+                            <i class="fa fa-circle-o"></i>
+                            <span>Signage DB</span>
+                        </a>
+                    </li>
+                    <li ng-show="root.is_superadmin">
+                        <a ui-sref="signage-create">
+                            <i class="fa fa-circle-o"></i>
+                            <span>Add/Edit Signage</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <span>FIXTURES</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a ui-sref="fixture-list">
+                            <i class="fa fa-circle-o"></i>
+                            <span>Fixture DB</span>
+                        </a>
+                    </li>
+                    <li ng-show="root.is_superadmin">
+                        <a ui-sref="fixture-create">
+                            <i class="fa fa-circle-o"></i>
+                            <span>Add/Edit Fixture</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview" ng-show="root.is_superadmin">
+                <a href="#">
+                    <span>DOCUMENTS</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a ui-sref="file-list"><i class="fa fa-circle-o"></i> Document DB</a></li>
+                </ul>
+            </li>
+
+            <li ng-show="root.is_superadmin" class="treeview" ui-sref="setting">
+                <a ui-sref="setting">SETTINGS</a>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

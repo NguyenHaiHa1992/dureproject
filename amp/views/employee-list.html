@@ -1,0 +1,114 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Employee List
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Employee List</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb tool_box">
+            <li><b>Employee actions</b></li>
+            <li class="active"><a ui-sref="employee-list" ui-sref-opts="{reload: true, notify: true}">Employee list</a></li>
+        </ol>
+        <!-- general form elements -->
+        <div class="box no-border">
+          <div class="box-header">
+            <h3 class="box-title">Employees</h3>
+          </div>
+          <div class="box-body">
+            <div class="search_box">
+              <form role="form">
+                <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                  <div class="col-xs-2">
+                    <input ng-model="search_employee.name" type="text" class="form-control" placeholder="search name..." ng-enter="search()">
+                  </div>
+                  <div class="col-xs-2">
+                    <button type="button" ng-click="search()" class="btn btn-primary">Search</button>
+                  </div>
+                  <div class="col-xs-8">
+                    <button class="btn btn-danger pull-right" ng-click="addEmployee()">Add new</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- form start -->
+            <form role="form">
+              <div class="form-group">
+                <table id="employees" class="table table-bordered table-hover dataTable" aria-describedby="employees_info">
+                  <thead>
+                    <tr role="row">
+                      <th width="15%">No</th>
+                      <th width="45%">Name</th>
+                      <th width="40%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr role="row">
+                      <th width="15%">No</th>
+                      <th width="45%">Name</th>
+                      <th width="40%">Actions</th>
+                    </tr>
+                  </tfoot>
+                  <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                    <tr class="even" ng-repeat="employee in employees">
+                      <td class="sorting_1">{{$index + 1}}</td>
+                      <td>{{!employee.is_edit ? employee.name: ""}} 
+                        <input value="{{employee.name}}" ng-show="employee.is_edit" ng-model="employee.name" type="text" class="form-control input-sm" placeholder="name">
+                      </td>
+                      <td>
+                        <button ng-hide="employee.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editEmployee(employee)">
+                          <span class="glyphicon glyphicon-edit"></span> Edit 
+                        </button>
+                        <button ng-show="employee.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveEmployee(employee)">
+                          <span class="glyphicon glyphicon-save"></span> Save 
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeEmployee(employee, $index)">
+                          <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <div class="dataTables_info" id="example2_info">
+                      Showing {{start_employee}} to {{end_employee}} of {{totalresults}} entries
+                    </div>
+                  </div>
+                  <div class="col-xs-6" ng-show="pages.length>1">
+                    <div class="dataTables_paginate paging_bootstrap">
+                      <ul class="pagination">
+                        <li class="prev" ng-class="{disabled: currentPage==1}">
+                          <a href="" ng-click="selectPage(currentPage-1)">← Previous</a>
+                        </li>
+                        <li ng-repeat="page in pages" ng-class="{active: page==currentPage}" >
+                          <a href="" ng-click="selectPage(page)">{{page}}</a>
+                        </li>
+                        <li class="next" ng-class="{disabled: currentPage==pages.length}">
+                          <a href="" ng-click="selectPage(currentPage+1)">Next → </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>           
+            </form>
+          </div><!-- /.box-body -->   
+        </div><!-- /.box -->
+      </div><!--/.col (right) -->
+    </div>   <!-- /.row -->
+  </section><!-- /.content -->
+</div>

@@ -1,0 +1,218 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Inventory Tracking Dashboard
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Part category list</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box top_box">
+          Number of categories: <b>{{part_categories.length}}</b>. Number of categories in  warning status: <b>{{part_category_number_warning}}</b>
+        </div>
+        <div class="box no-border">
+          <div class="box-body pad overhidden">
+            <div class="fl" ng-repeat="part_category in part_categories">
+              <button class="btn btn-success margin_5 min-width-100" ng-click="partCategoryClick($event, part_category.id)" ng-class="{'btn-warning':part_category.is_enough_inventory=='false'}">{{part_category.name}}
+              </button>
+            </div>
+          </div><!-- /.box -->
+        </div>
+      </div><!-- /.col -->
+    </div>
+    <div class="row" ng-show="part_category.length>0">
+      <div class="col-md-12">
+        <div class="box no-border view_box">
+          <div class="box-header">
+            Parts Inventory Status of "{{selected_part_category}}". <br />
+            Number of parts: <b>{{part_category.length}}</b>. Number of parts in  warning status: <b>{{part_number_warning}}</b>
+          </div>
+          <div class="box-body pad overhidden">
+            <div class="box_filter">
+                <div class="input-group margin-5" style="width: 200px">
+                  <span class="input-group-addon">Filter</span>
+                  <input ng-model="filter.part_code" class="form-control" placeholder="Part #">
+                </div>
+            </div>
+            <div class="list_part">
+              <div class="fl" ng-repeat="part in part_category | filter:filter:strict">
+                <button class="btn btn-success margin_5 min-width-100" ng-click="viewDetail(part)" ng-class="{'btn-warning':part.is_enough_inventory==false}">{{part.part_code}}</button>
+              </div>
+            </div>
+          </div><!-- /.box -->
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+
+<div class="modal" id="partViewModal" tabindex="-1" role="dialog" aria-labelledby="partViewModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 902px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">View Part Details</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="col-md-5" style="border-right: 1px solid #f4f4f4">
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Part code</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.part_code}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Description</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.description}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Design</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.design}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Optimum Inv</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.optimum_inventory}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Stock in hand</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.inventory_on_hand}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Location</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.location}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="border-right: 1px solid #f4f4f4; height: 100%; max-height: 100%;">
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Material Code</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.material_code}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Bars Length/ PC (inches)</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.part_code}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Bars Needed</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.bars_needed}}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-5 text-right">
+              <label>Slug Length (inches)</label>
+            </div>
+            <div class="col-md-7">
+              {{view_part.slug_length}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" style="padding-left: 30px; height: 100%; max-height: 100%;">
+          <div class="row form-group">
+            <div ng-bind-html="renderHtml(view_part.table_price)" id="price_range"></div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="box no-border">
+            <div class="box-header">
+              <h3 class="box-title">Heatnumbers & Designations</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+              <div class="row form-group" ng-class="">
+                <div class="col-md-12">
+                  <table id="heatnumbers" class="table table-bordered table-hover dataTable table-sm" aria-describedby="heatnumbers_info">
+                    <thead>
+                      <tr role="row">
+                        <th width="32%">Heatnumber</th>
+                        <th width="30%">Designation</th>
+                        <th width="15%">Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">          
+                      <tr class="even" ng-repeat="heatnumber in view_part.heatnumbers">
+                        <td class="text-right">
+                          {{heatnumber.heatnumber}} 
+                        </td>
+                        <td class="text-right">
+                          {{heatnumber.drawing}} 
+                        </td>
+                        <td class="text-right">
+                          {{heatnumber.quantity}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+<style>
+#price_range table{
+  border-collapse: collapse;
+}
+#price_range table, td, th{
+  border: 1px solid #F2F2F2;
+  padding: 5px;
+}
+</style>

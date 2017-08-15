@@ -1,0 +1,129 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Enter graphic details
+        </h1>
+        <ol class="breadcrumb">
+            <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+            <li class="active">Enter graphic details</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" ng-show="init_loaded">
+            <div class="col-md-12">
+                <ol class="breadcrumb tool_box">
+                    <li><b>Graphic actions</b></li>
+                    <li><a ui-sref="graphic-list">Graphic list</a></li>
+                    <li class="active"><a ui-sref="graphic-create" ui-sref-opts="{reload: true, notify: true}">Add new graphic</a></li>
+                </ol>
+                <!-- general form elements -->
+                <div class="box overhidden top_box">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Create</button>
+                        <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Update</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box no-border" style="overflow: auto;">
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="row form-group" ng-class="{'has-error': graphic_error.code.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Code <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="graphic.code" type="text" class="form-control" placeholder="code">
+                                        <span class="control-label" for="inputError" ng-show="graphic_error.code.length != 0" ng-repeat="error in graphic_error.code">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': graphic_error.category_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label for="" >Category <span class="required">*</span></label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select chosen class="form-control" ng-model="graphic.category_id" ng-options="item.id as item.name for item in graphic_categories" data-placeholder="Choose category ...">
+                                        </select>
+                                        <span class="control-label" for="inputError" ng-show="graphic_error.category_id.length != 0" ng-repeat="error in graphic_error.category_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': graphic_error.price.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Price</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="graphic.price" type="text" class="form-control" placeholder="price">
+                                        <span class="control-label" for="inputError" ng-show="graphic_error.price.length != 0" ng-repeat="error in graphic_error.price">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': graphic_error.description.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Description<span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea ng-model="graphic.description" type="text" class="form-control" placeholder="description"></textarea>
+                                        <span class="control-label" for="inputError" ng-show="graphic_error.description.length != 0" ng-repeat="error in graphic_error.description">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': graphic_error.image_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Image</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <file-uploader-single option-style="'image'" file-id="graphic.image_id" model-id="graphic.id"></file-uploader-single>
+                                        <span class="control-label" for="inputError" ng-show="graphic_error.image_id.length != 0" ng-repeat="error in graphic_error.image_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box no-border" style="min-height: 100px">
+                    <div class="box-header">
+                        <h3 class="box-title">Graphic documents</h3>
+                    </div>
+                    <div class="box-body overhidden">
+                      <i>Available only on update</i>
+                        <!-- <file-uploader file-ids="graphic.tmp_file_ids" model-id="graphic.id"></file-uploader> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,365 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 948px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Settings
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Settings</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row" id="setting_wrapper">
+      <!-- left column -->
+      
+        <div class="col-md-8 setting_item">
+            <!-- general form elements -->
+            <div class="box no-border collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Fixture categories</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body col-md-7 background-color-white">
+                    <h4 class="box-title">Specific categories</h4>
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="form-group">
+                            <table id="fixture_categories" class="table table-bordered table-hover dataTable" aria-describedby="fixture_categories_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="10%">No #</th>
+                                        <th width="35%">Name</th>
+                                        <th width="30">General category</th>
+                                        <th width="25%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="category in fixture_categories">
+                                        <td class="sorting_1">{{$index + 1}}</td>
+                                        <td>{{!category.is_edit ? category.name: ""}}
+                                            <input value="{{category.name}}" ng-show="category.is_edit" ng-model="category.name" type="text" class="form-control input-sm" placeholder="name">
+                                        </td>
+                                        <td>{{!category.is_edit ? category.general_name: ""}}
+                                            <select ng-show="category.is_edit" class="form-control" ng-model="category.general_id" ng-options="item.id as item.name for item in fixture_general_categories" data-placeholder="Choose category ...">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button ng-hide="category.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editFixtureCategory(category)">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button ng-show="category.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveFixtureCategory(category)">
+                                                <span class="glyphicon glyphicon-save"></span> Save
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeFixtureCategory(category, $index)">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="addFixtureCategory()">
+                                <span class="glyphicon glyphicon-plus"></span> Add more
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.box-body -->
+                <div class="box-body col-md-5 background-color-white" >
+                    <h4 class="box-title">General categories</h4>
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="form-group">
+                            <table id="fixture_categories" class="table table-bordered table-hover dataTable" aria-describedby="fixture_categories_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="15%">No #</th>
+                                        <th width="45%">Name</th>
+                                        <th width="40%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="category in fixture_general_categories">
+                                        <td class="sorting_1">{{$index + 1}}</td>
+                                        <td>{{!category.is_edit ? category.name: ""}}
+                                            <input value="{{category.name}}" ng-show="category.is_edit" ng-model="category.name" type="text" class="form-control input-sm" placeholder="name"></td>
+                                        <td>
+                                            <button ng-hide="category.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editFixtureCategory(category)">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button ng-show="category.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveFixtureGeneralCategory(category)">
+                                                <span class="glyphicon glyphicon-save"></span> Save
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeGeneralCategory(category, $index, 'fixture')">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="addFixtureGeneralCategory()">
+                                <span class="glyphicon glyphicon-plus"></span> Add more
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!--/.col (right) -->
+        
+        <div class="col-md-4 setting_item">
+            <!-- general form elements -->
+            <div class="box no-border collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Tier</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="form-group">
+                            <table id="tiers" class="table table-bordered table-hover dataTable" aria-describedby="tiers_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="15%">No #</th>
+                                        <th width="45%">Name</th>
+                                        <th width="40%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="tier in tiers">
+                                        <td class="sorting_1">{{$index + 1}}</td>
+                                        <td>{{!tier.is_edit ? tier.name: ""}}
+                                            <input value="{{tier.name}}" ng-show="tier.is_edit" ng-model="tier.name" type="text" class="form-control input-sm" placeholder="name">
+                                        </td>
+                                        <td>
+                                            <button ng-hide="tier.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editTier(tier)">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button ng-show="tier.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveTier(tier)">
+                                                <span class="glyphicon glyphicon-save"></span> Save
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeTier(tier, $index)">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="addTier()">
+                                <span class="glyphicon glyphicon-plus"></span> Add more
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!--/.col (right) -->
+
+        <div class="col-md-8 setting_item">
+            <!-- general form elements -->
+            <div class="box no-border collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Signage categories</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body col-md-7 background-color-white">
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="form-group">
+                            <table id="signage_categories" class="table table-bordered table-hover dataTable" aria-describedby="signage_categories_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="10%">No #</th>
+                                        <th width="35%">Name</th>
+                                        <th width="30">General category</th>
+                                        <th width="25%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="category in signage_categories">
+                                        <td class="sorting_1">{{$index + 1}}</td>
+                                        <td>{{!category.is_edit ? category.name: ""}}
+                                            <input value="{{category.name}}" ng-show="category.is_edit" ng-model="category.name" type="text" class="form-control input-sm" placeholder="name">
+                                        </td>
+                                        <td>{{!category.is_edit ? category.general_name: ""}}
+                                            <select ng-show="category.is_edit" class="form-control" ng-model="category.general_id" ng-options="item.id as item.name for item in signage_general_categories" data-placeholder="Choose category ...">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button ng-hide="category.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editSignageCategory(category)">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button ng-show="category.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveSignageCategory(category)">
+                                                <span class="glyphicon glyphicon-save"></span> Save
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeSignageCategory(category, $index)">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="addSignageCategory()">
+                                <span class="glyphicon glyphicon-plus"></span> Add more
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.box-body -->
+                <div class="box-body col-md-5 background-color-white" >
+                    <h4 class="box-title">General categories</h4>
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="form-group">
+                            <table id="fixture_categories" class="table table-bordered table-hover dataTable" aria-describedby="fixture_categories_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="15%">No #</th>
+                                        <th width="45%">Name</th>
+                                        <th width="40%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="category in signage_general_categories">
+                                        <td class="sorting_1">{{$index + 1}}</td>
+                                        <td>{{!category.is_edit ? category.name: ""}}
+                                            <input value="{{category.name}}" ng-show="category.is_edit" ng-model="category.name" type="text" class="form-control input-sm" placeholder="name"></td>
+                                        <td>
+                                            <button ng-hide="category.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editFixtureCategory(category)">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button ng-show="category.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveSignageGeneralCategory(category)">
+                                                <span class="glyphicon glyphicon-save"></span> Save
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeGeneralCategory(category, $index, 'signage')">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="addSignageGeneralCategory()">
+                                <span class="glyphicon glyphicon-plus"></span> Add more
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.box-body -->
+                
+            </div><!-- /.box -->
+        </div><!--/.col (right) -->
+        
+        <div class="col-md-4 setting_item">
+            <!-- general form elements -->
+            <div class="box no-border collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">File categories</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="form-group">
+                            <table id="file_categories" class="table table-bordered table-hover dataTable" aria-describedby="file_categories_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="15%">No #</th>
+                                        <th width="30%">Name</th>
+                                        <th width="15%">Code</th>
+                                        <th width="40%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="even" ng-repeat="category in file_categories">
+                                        <td class="sorting_1">{{$index + 1}}</td>
+                                        <td>{{!category.is_edit ? category.name: ""}}
+                                            <input value="{{category.name}}" ng-show="category.is_edit" ng-model="category.name" type="text" class="form-control input-sm" placeholder="name">
+                                        </td>
+                                        <td>{{!category.is_edit ? category.code: ""}}
+                                            <input value="{{category.code}}" ng-show="category.is_edit" ng-model="category.code" type="text" class="form-control input-sm" placeholder="name">
+                                        </td>
+                                        <td>
+                                            <button ng-hide="category.is_edit" type="button" class="btn btn-success btn-xs btn-icon" ng-click="editFileCategory(category)">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button ng-show="category.is_edit" type="button" class="btn btn-info btn-xs btn-icon" ng-click="saveFileCategory(category)">
+                                                <span class="glyphicon glyphicon-save"></span> Save
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeFileCategory(category, $index)">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="addFileCategory()">
+                                <span class="glyphicon glyphicon-plus"></span> Add more
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!--/.col (right) -->
+        
+      <div class="col-md-4 setting_item">
+        <!-- general form elements -->
+        <div class="box no-border collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">Other settings</h3>
+            <div class="box-tools pull-right">
+              <button class="btn btn-xs" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="form-group">
+              <a class="btn btn-primary none" ui-sref="state-list">State setting</a> &nbsp; &nbsp;
+              <a class="btn btn-primary" ui-sref="email-template-list">Email template setting</a>
+            </div>
+
+            <form class="form-inline hidden">
+              <div class="form-group">
+                <label>System Tax</label>
+                <input value="{{tax}}" id="Setting_tax" ng-model="tax" type="text" class="form-control input-sm" placeholder="tax"> %
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" ng-click="setTax()" style="margin-left: 10px;">Update</button>
+              </div>
+            </form>
+
+            <form class="form-inline">
+              <div class="form-group">
+                <label>System Email</label>
+                <input value="{{system_email}}" id="Setting_system_email" ng-model="system_email" type="text" class="form-control input-sm" placeholder="system email">
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" ng-click="setSystemEmail()" style="margin-left: 10px;">Update</button>
+              </div>
+            </form>
+
+            <form class="form-inline hidden">
+              <div>
+                <label>System Emails CC</label><i>comma-separated emails</i><br />
+                <textarea id="Setting_system_email_cc" ng-model="system_email_cc" type="text" class="form-control input-sm" placeholder="system email" style="width:100%; height: 50px;">{{system_email_cc}}</textarea>
+              </div>
+              <div>
+                <button class="btn btn-primary" ng-click="setSystemEmailCc()" style="margin-left: 10px;">Update</button>
+              </div>
+            </form>
+
+          </div><!-- /.box-body -->
+        </div><!-- /.box -->
+      </div><!--/.col (right) -->
+
+    </div>   <!-- /.row -->
+  </section><!-- /.content -->
+</div>

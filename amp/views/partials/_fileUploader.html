@@ -1,0 +1,278 @@
+<form role="form">
+    <div class="search_box">
+        <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+            <div class="col-xs-3">
+                <select class="form-control" ng-model="search_form.cat_id" ng-options="item.id as item.name for item in file_categories" ng-enter="searchFile()" placeholder="search category...">
+                    <option value="">[Select category]</option>
+                </select>
+            </div>
+            <div class="col-xs-3" ng-show="root.is_superadmin">
+                <select class="form-control" ng-model="search_form.restricted" ng-options="item.id as item.name for item in restricted_list" ng-enter="searchFile()" placeholder="search restricted...">
+                    <option value="">[Select restricted]</option>
+                </select>
+            </div>
+            <div class="col-xs-3">
+                <input ng-model="search_form.name" type="text" class="form-control" placeholder="search name..." ng-enter="searchFile()">
+            </div>
+            <div class="col-xs-3">
+                <button type="button" ng-click="searchFile()" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-6 pull-right">
+                <button ng-show="sendemail" class="btn btn-xs btn-primary pull-right" ng-click="emailDocuments()" ng-disabled="selected_document_ids.length == 0"><span class="glyphicon glyphicon-envelope"></span> Email documents</button>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-xs-6 pull-right">
+            <div id="example2_length" class="dataTables_length">
+                <label>records per page
+                    <select ng-model="search_form.limitnum" ng-options="item.value as item.name for item in filePages.itemsByPages"></select>
+                </label>
+            </div>
+        </div>
+        <div class="col-xs-3 pull-right">
+            <button type="button" ng-click="showListDocument()" class="btn btn-info pull-right">Add document</button>
+        </div>
+    </div>
+  <div class="row form-group" ng-class="{'has-error': part_error.material_id.length!=0}">
+    <div class="col-md-12">
+        <div class="col-xs-3">
+            <input ng-hide="disabled" type="file" nv-file-select uploader="uploader" multiple/>
+        </div>
+<!--      <input ng-hide="disabled" type="file" nv-file-select uploader="uploader" multiple/><br/>-->
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="15%">Thumbnail</th>  
+            <th width="20%">Name</th>
+            <th ng-show="root.is_superadmin" width="10%">Restricted</th>
+            <th width="20%">Category</th>
+            <th width="10%" ng-show="uploader.isHTML5">Size</th>
+            <th width="15%" ng-show="uploader.isHTML5 && !disabled">Progress</th>
+            <th align="center" ng-hide="disabled">Actions</th>
+            <th align="center" ng-show="sendemail"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="file in files track by $index" class="files">
+            <td>
+                <img class="thumbnail" style="width: 40px; height: 40px" src="{{file.thumbnail}}" />
+            </td>
+            <td><strong>
+                    <a ng-show="file.extension != 'jpg' && file.extension != 'png' && file.extension != 'jpeg'" 
+                        target=_blank href="{{file.download_link}}" class="uploaded_file">{{ file.filename | characters:30 :true }}.{{file.extension}}</a>
+                    <a ng-show="file.extension == 'jpg' || file.extension == 'png' || file.extension == 'jpeg'"  
+                       target=_blank href="{{file.absolute_url}}" class="uploaded_file">{{ file.filename | characters:30 :true }}.{{file.extension}}</a>
+                    <!--<a target=_blank href="{{file.absolute_url}}" class="uploaded_file">{{ file.filename | characters:30 :true }}.{{file.extension}}</a>-->
+                </strong></td>
+            <td ng-show="root.is_superadmin">{{file.restricted_label}}</td>
+            <td>{{file.cat_name}}</td>
+            <td ng-show="uploader.isHTML5" nowrap>{{ file.filesize/1024/1024|number:2 }} MB</td>
+            <td ng-show="uploader.isHTML5 && !disabled">
+                <div class="progress" style="margin-bottom: 0;">
+                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                </div>
+            </td>
+            <td nowrap ng-hide="disabled">
+                <button ng-disabled="disabled" type="button" class="btn btn-danger btn-xs btn-icon" ng-click="remove(file)">
+                    <span class="glyphicon glyphicon-trash"></span> Remove
+                </button>
+            </td>
+            <th align="center" ng-show="sendemail">
+                <input type="checkbox" ng-checked="selectedDocuments.indexOf(file.id) > -1" ng-click="toggleSelection(file.id)" />
+            </th>
+          </tr>
+          <tr ng-hide="disabled">
+            <td colspan="6">&nbsp;</td>
+          </tr>
+          <tr ng-hide="disabled" ng-repeat="item in uploader.queue">
+              <td>
+              </td>
+            <td><strong>{{ item.file.name | characters:30 :true }}</strong></td>
+            <td>
+                <input type="checkbox" ng-model="file_restricteds[$index]" />
+            </td>
+            <td>
+                <select class="form-control" ng-model="file_cat_ids[$index]" ng-options="cat.id as cat.name for cat in file_categories" required>
+                  <option value="">Choose category</option>
+                </select>
+            </td>
+            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+            <td ng-show="uploader.isHTML5 && !disabled">
+                <div class="progress" style="margin-bottom: 0;">
+                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                </div>
+            </td>
+            <td ng-hide="disabled">
+                <button type="button" class="btn btn-info btn-xs btn-icon" ng-click="uploadItem(item, $index);" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+                <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="item.remove()">
+                    <span class="glyphicon glyphicon-trash"></span> Remove
+                </button>
+            </td>
+            <td ng-show="sendemail">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+        <div class="row">
+<!--            <div class="col-xs-6">
+                <div class="dataTables_info" id="example2_info">
+                    Showing {{start_document}} to {{end_document}} of {{totalresults}} entries
+                </div>
+            </div>-->
+            <div class="col-xs-6" ng-show="filePages.pages.length > 1">
+                <div class="dataTables_paginate paging_bootstrap">
+                    <ul class="pagination">
+                        <li class="prev" ng-class="{disabled: filePages.currentPage == 1}">
+                            <a href="" ng-click="filePages.selectPage(filePages.currentPage - 1)">← Previous</a>
+                        </li>
+                        <li ng-repeat="page in filePages.pages" ng-class="{active: page == filePages.currentPage}" >
+                            <a href="" ng-click="filePages.selectPage(page)">{{page}}</a>
+                        </li>
+                        <li class="next" ng-class="{disabled: filePages.currentPage == filePages.pages.length}">
+                            <a href="" ng-click="filePages.selectPage(filePages.currentPage + 1)">Next → </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="quick_bar overhidden hidden" ng-hide="disabled">
+    <div class="col-xs-4">
+      <label>Quick select category</label>
+    </div>
+    <div class="col-xs-4">
+      <select class="form-control" ng-model="file_category" ng-options="cat.id as cat.name for cat in file_categories" required ng-change="changeFileCategory(file_category)">
+        <option value=""></option>
+      </select>
+    </div>
+    <div class="col-xs-4">
+      <button type="button" class="btn btn-primary" ng-click="uploader.uploadAll()" ng-disabled="!file_category || !uploader.getNotUploadedItems().length">
+        <span class="glyphicon glyphicon-upload"></span> Upload All
+      </button>
+    </div>
+  </div>
+  
+  <div class="modal" id="listDocumentModal" tabindex="-1" role="dialog" aria-labelledby="listFixtureModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">List documents</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="form-group">
+                  <div class="search_box">
+                      <!--<form role="form">-->
+                          <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                            <div class="col-xs-3">
+                              <select class="form-control" ng-model="search_document.cat_id" ng-options="item.id as item.name for item in file_categories" ng-enter="search()" placeholder="search category...">
+                                <option value="">[Select category]</option>
+                              </select>
+                            </div>
+                            <div class="col-xs-3" ng-show="root.is_superadmin">
+                              <select class="form-control" ng-model="search_document.restricted" ng-options="item.id as item.name for item in restricted_list" ng-enter="search()" placeholder="search restricted...">
+                                <option value="">[Select restricted]</option>
+                              </select>
+                            </div>
+                              <div class="col-xs-3">
+                                  <input ng-model="search_document.filename" type="text" class="form-control" placeholder="search name..." ng-enter="search()">
+                              </div>
+                              <div class="col-xs-2">
+                                  <button type="button" ng-click="search()" class="btn btn-primary">Search</button>
+                              </div>
+                          </div>
+                      <!--</form>-->
+                  </div>
+                  <div id="example3_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                      <div class="row">
+                          <div class="col-xs-6"></div>
+                          <div class="col-xs-6 pull-right">
+                              <div id="example2_length" class="dataTables_length">
+                                  <label>records per page
+                                      <select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="table-scroll">
+                          <table id="example2" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th ng-class="{sorting: sort.attribute != 'filename', sorting_asc: sort.attribute == 'filename' && sort.type == 'ASC', sorting_desc: sort.attribute == 'filename' && sort.type == 'DESC'}" ng-click="sort('filename')" rowspan="1" colspan="1">Name</th>
+                                    <th ng-class="{sorting: sort.attribute != 'restricted', sorting_asc: sort.attribute == 'restricted' && sort.type == 'ASC', sorting_desc: sort.attribute == 'restricted' && sort.type == 'DESC'}" ng-click="sort('restricted')" rowspan="1" colspan="1" ng-show="root.is_superadmin">Restricted</th>
+                                    <th ng-class="{sorting: sort.attribute != 'cat_id', sorting_asc: sort.attribute == 'cat_id' && sort.type == 'ASC', sorting_desc: sort.attribute == 'cat_id' && sort.type == 'DESC'}" ng-click="sort('cat_id')" rowspan="1" colspan="1">Category</th>
+                                    <th rowspan="1" colspan="1">Size</th>
+                                    <th>Size</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th rowspan="1" colspan="1">Name</th>
+                                    <th rowspan="1" colspan="1" ng-show="root.is_superadmin">Restricted</th>
+                                    <th rowspan="1" colspan="1">Category</th>
+                                    <th rowspan="1" colspan="1">Size</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="even" ng-repeat="item in documents">
+                                    <td>{{$index + 1}}</td>
+                                    <td class=" sorting_1">{{item.filename}}.{{item.extension}}</td>
+                                    <td class=" " ng-show="root.is_superadmin">{{item.restricted_label}}</td>
+                                    <td class=" ">{{item.cat_name}}</td>
+                                    <td class=" ">{{item.filesize_label}}</td>
+                                    <td>
+                                      <button type="button" class="btn btn-icon btn-xs btn-info" ng-click="addRelatedDocument(item)" ng-show="!checkRelatedDocument(item)">
+                                        <span class="glyphicon glyphicon-plus"></span> Add
+                                      </button>
+                                      <span ng-show="checkRelatedDocument(item)">Added</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <div class="dataTables_info" id="example2_info">
+                                  Showing {{start_document}} to {{end_document}} of {{totalresults}} entries
+                              </div>
+                          </div>
+                          <div class="col-xs-6" ng-show="pages.length > 1">
+                              <div class="dataTables_paginate paging_bootstrap">
+                                  <ul class="pagination">
+                                      <li class="prev" ng-class="{disabled: currentPage == 1}">
+                                          <a href="" ng-click="selectPage(currentPage - 1)">← Previous</a>
+                                      </li>
+                                      <li ng-repeat="page in pages" ng-class="{active: page == currentPage}" >
+                                          <a href="" ng-click="selectPage(page)">{{page}}</a>
+                                      </li>
+                                      <li class="next" ng-class="{disabled: currentPage == pages.length}">
+                                          <a href="" ng-click="selectPage(currentPage + 1)">Next → </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+</form>

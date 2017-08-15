@@ -1,0 +1,48 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div id="dashboard-wrapper">
+    <div class="content-wrapper home" id="dashboard">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div id="logo"></div>
+        <h1> INTERIOR SIGNAGE AND GRAPHIC DATA BASE <span>2017</span> </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container">
+            <div class="button_outer">
+                <label class="hidden">Stores</label>
+                <a ui-sref="store-list" class="btn btn-primary btn-lg">STORE DATABASE</a>
+                <a ui-sref="store-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT STORE</a>
+            </div>
+            <div class="button_outer">
+                <label class="hidden">Signage</label>
+                <a ui-sref="signage-list" class="btn btn-primary btn-lg">SIGNAGE DATABASE</a>
+                <a ui-sref="signage-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT SIGNAGE</a>
+            </div>
+            <div class="button_outer">
+                <label class="hidden">Fixtures</label>
+                <a ui-sref="fixture-list" class="btn btn-primary btn-lg">FIXTURES DATABASE</a>
+                <a ui-sref="fixture-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT FIXTURE</a>
+            </div>
+            <div class="button_outer">
+                <label class="hidden">Others</label>
+                <a ui-sref="user-list" class="btn btn-info btn-sm" ng-show="root.is_superadmin">Users</a>
+                <a ui-sref="store-signage" class="btn btn-info btn-sm" >Reports</a>
+                <a ui-sref="file-list" class="btn btn-info btn-sm">Documents</a>
+            </div>
+        </div>
+        <div id="setting_control">
+            <a ui-sref="setting" ng-show="root.is_superadmin"><i class="icon_setting pull-right"></i></a>
+        </div>
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+</div>

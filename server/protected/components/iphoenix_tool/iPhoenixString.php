@@ -1,0 +1,104 @@
+<?php
+class iPhoenixString {
+	static function remove_vietnamese_accents($str)
+		{
+	    $accents_arr=array(
+	        "à","á","ạ","ả","ã","â","ầ","ấ","ậ","ẩ","ẫ","ă",
+	        "ằ","ắ","ặ","ẳ","ẵ","è","é","ẹ","ẻ","ẽ","ê","ề",
+	        "ế","ệ","ể","ễ",
+	        "ì","í","ị","ỉ","ĩ",
+	        "ò","ó","ọ","ỏ","õ","ô","ồ","ố","ộ","ổ","ỗ","ơ",
+	        "ờ","ớ","ợ","ở","ỡ",
+	        "ù","ú","ụ","ủ","ũ","ư","ừ","ứ","ự","ử","ữ",
+	        "ỳ","ý","ỵ","ỷ","ỹ",
+	        "đ",
+	        "À","Á","Ạ","Ả","Ã","Â","Ầ","Ấ","Ậ","Ẩ","Ẫ","Ă",
+	        "Ằ","Ắ","Ặ","Ẳ","Ẵ",
+	        "È","É","Ẹ","Ẻ","Ẽ","Ê","Ề","Ế","Ệ","Ể","Ễ",
+	        "Ì","Í","Ị","Ỉ","Ĩ",
+	        "Ò","Ó","Ọ","Ỏ","Õ","Ô","Ồ","Ố","Ộ","Ổ","Ỗ","Ơ",
+	        "Ờ","Ớ","Ợ","Ở","Ỡ",
+	        "Ù","Ú","Ụ","Ủ","Ũ","Ư","Ừ","Ứ","Ự","Ử","Ữ",
+	        "Ỳ","Ý","Ỵ","Ỷ","Ỹ",
+	        "Đ"
+	    );
+	 
+	    $no_accents_arr=array(
+	        "a","a","a","a","a","a","a","a","a","a","a",
+	        "a","a","a","a","a","a",
+	        "e","e","e","e","e","e","e","e","e","e","e",
+	        "i","i","i","i","i",
+	        "o","o","o","o","o","o","o","o","o","o","o","o",
+	        "o","o","o","o","o",
+	        "u","u","u","u","u","u","u","u","u","u","u",
+	        "y","y","y","y","y",
+	        "d",
+	        "A","A","A","A","A","A","A","A","A","A","A","A",
+	        "A","A","A","A","A",
+	        "E","E","E","E","E","E","E","E","E","E","E",
+	        "I","I","I","I","I",
+	        "O","O","O","O","O","O","O","O","O","O","O","O",
+	        "O","O","O","O","O",
+	        "U","U","U","U","U","U","U","U","U","U","U",
+	        "Y","Y","Y","Y","Y",
+	        "D"
+	    );
+	 
+	    return str_replace($accents_arr,$no_accents_arr,$str);
+		}
+	static function convertTitle($str){
+		$str=self::remove_vietnamese_accents($str);
+		$str=self::replaceWhitespace($str);	
+		return str_replace(' ','-',$str);
+	}
+	static function createIntrotext($string,$count){
+		$tmp=strip_tags($string);
+		$tmp=html_entity_decode ($tmp, ENT_NOQUOTES ,'UTF-8');	
+		$tmp=self::replaceWhitespace($tmp);	
+		$list_word=explode(" ",$tmp);
+		$list_intro_word=array();
+		if(sizeof($list_word)>$count){
+			$list_intro_word=array_slice($list_word, 0, $count);
+			$list_intro_word[]="...";
+			$result=implode(" ",$list_intro_word);
+		}
+		else 
+			$result=$tmp;
+		return $result;
+	}
+	static function replaceWhitespace($str) {
+	  $result = $str;
+	  foreach (array("  ", "\t", "\n", "\r", " \t",  " \r",  " \n",
+	    "\t\t", "\t ", "\t\r", "\t\n",
+	    "\r\r", "\r ", "\r\t", "\r\n",
+	    "\n\n", "\n ", "\n\t", "\n\r",
+	  ) as $replacement) {
+	    $result = str_replace($replacement, " ", $result);
+	  }
+	 return $str !== $result ? self::replaceWhitespace($result) : $result;
+	}
+	  
+	static function createAlias($string){
+		$tmp=self::convertTitle(self::remove_vietnamese_accents($string));
+		$alias=preg_replace("/[^A-Za-z0-9-]/","",$tmp);
+		$alias=preg_replace('/-{2,}/','-',$alias); // Remove multy dash
+		return strtolower($alias);
+	}
+
+	static function str_rsplit($str, $sz)
+	{
+	    // splits a string "starting" at the end, so any left over (small chunk) is at the beginning of the array.    
+	    if ( !$sz ) { return false; }
+	    if ( $sz > 0 ) { return array_reverse(str_split($str,$sz)); }    // normal split
+	    
+	    $l = strlen($str);
+	    $sz = min(-$sz,$l);
+	    $mod = $l % $sz;
+	    
+	    if ( !$mod ) { return array_reverse(str_split($str,$sz)); }    // even/max-length split
+	
+	    // split
+	    return array_reverse(array_merge(array(substr($str,0,$mod)), str_split(substr($str,$mod),$sz)));
+	}
+}
+?>

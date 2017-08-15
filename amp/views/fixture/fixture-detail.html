@@ -1,0 +1,949 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Enter fixture details
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter fixture details</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="row" ng-show="init_loaded">
+        <div class="col-md-12">
+          <ol class="breadcrumb tool_box">
+            <li><b>Fixture actions</b></li>
+            <li><a ui-sref="fixture-list">Fixture list</a></li>
+            <li class="active"><a ui-sref="fixture-create" ui-sref-opts="{reload: true, notify: true}">Add new fixture</a></li>
+          </ol>
+          <!-- general form elements -->
+          <div class="box overhidden top_box">
+            <div class="col-md-7">
+              <button type="button" ng-click="delete()" class="btn btn-primary pull-right margin-5">Delete</button>
+              <a ui-sref="fixture-view({'id':fixture.id})" class="btn btn-success pull-right margin-5">View</a>
+              <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Save</button>
+            </div>
+            <div class="col-md-5">
+              <button type="button" ng-click="copyFixture()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Copy</button>
+                <button type="button" ng-click="exportPdf()" class="btn btn-success pull-right margin-5"><i class="fa fa-file-pdf-o"></i> Export Pdf</button>
+                <button type="button" ng-click="exportExcel()" class="btn btn-primary pull-right margin-5"><i class="fa fa-file-excel-o"></i> Export Excel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="box no-border" style="overflow: auto;">
+                <div class="box-header">
+                    <h3 class="box-title">Fixture Information</h3>
+<!--                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                    </div>-->
+                </div>
+                <div class="box-body overhidden">
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.code.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Code <span class="required">*</span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input ng-model="fixture.code" type="text" class="form-control" placeholder="code">
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.code.length != 0" ng-repeat="error in fixture_error.code">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.category_id.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label for="" >Category <span class="required">*</span></label></br>
+                                </div>
+                                <div class="col-md-9">
+                                    <select chosen class="form-control" ng-model="fixture.category_id" ng-options="item.id as item.name for item in fixture_categories" data-placeholder="Choose category ...">
+                                    </select>
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.category_id.length != 0" ng-repeat="error in fixture_error.category_id">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group none" ng-class="{'has-error': fixture_error.price.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Price</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input ng-model="fixture.price" type="text" class="form-control" placeholder="price">
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.price.length != 0" ng-repeat="error in fixture_error.price">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.size.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Size </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input ng-model="fixture.size" type="text" class="form-control" placeholder="size">
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.size.length != 0" ng-repeat="error in fixture_error.size">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.location.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Location </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input ng-model="fixture.location" type="text" class="form-control" placeholder="location">
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.location.length != 0" ng-repeat="error in fixture_error.location">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.vendor.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Vendor </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input ng-model="fixture.vendor" type="text" class="form-control" placeholder="vendor">
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.vendor.length != 0" ng-repeat="error in fixture_error.vendor">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.description.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Description<span class="required">*</span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea ng-model="fixture.description" type="text" class="form-control" placeholder="description"></textarea>
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.description.length != 0" ng-repeat="error in fixture_error.description">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!--/.col (left) -->
+                    <div class="col-md-6">
+                        <form role="form">
+                            <div class="row form-group" ng-class="{'has-error': fixture_error.image_id.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Image</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <file-uploader-single option-style="'image'" file-id="fixture.image_id" model-id="fixture.id" field-id="'image_id'"></file-uploader-single>
+                                    <span class="control-label" for="inputError" ng-show="fixture_error.image_id.length != 0" ng-repeat="error in fixture_error.image_id">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box no-border collapsed-box" style="overflow: auto;">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Fixture signage</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body">
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <!-- form start -->
+                        <form role="form" class="hidden">
+                          <label>Related fixtures</label> <button class="btn btn-icon btn-xs btn-info pull-right" ng-click="showListFixture()"><span class="glyphicon glyphicon-plus"></span> Add Fixture</button>
+                          <table id="example3" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th rowspan="1" colspan="1">Code</th>
+                                    <th rowspan="1" colspan="1">Category</th>
+                                    <th rowspan="1" colspan="1">Location</th>
+                                    <th rowspan="1" colspan="1">Description</th>
+                                    <th rowspan="1" colspan="1"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="even" ng-repeat="related_item in fixture.related_fixtures">
+                                    <td>{{$index + 1}}</td>
+                                    <td class=" sorting_1"><a target=_blank ui-sref="fixture-detail({'id':related_item.id})">{{related_item.code}}</a></td>
+                                    <td class=" ">{{related_item.category_name}}</td>
+                                    <td class=" ">{{related_item.location}}</td>
+                                    <td class=" ">{{related_item.short_description}}</td>
+                                    <td class=" ">
+                                      <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeRelatedFixture(related_item, $index)">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                      </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        </form>
+                        <form role="form">
+                          <label class="hidden">Related signage</label>
+                          <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                                <div class="col-xs-3">
+                                    <button ng-click="showListSignage()" class="btn btn-info pull-right">Add signage</button>
+                                </div>
+                                <div class="col-xs-6 pull-right">
+                                    <div class="btn-group pull-right"> 
+                                        <button type="button" class="btn btn-primary" ng-click="exportExcelListSignage()"><i class="fa fa-file-excel-o"></i> Excel</button> 
+                                        <button type="button" class="btn btn-success" ng-click="exportExcelListSignage('pdf')"><i class="fa fa-file-pdf-o"></i> Pdf</button> 
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                            <span class="caret"></span> 
+                                            <span class="sr-only">Toggle Dropdown</span> 
+                                        </button> 
+                                        <ul class="dropdown-menu"> 
+                                            <form id="export-excel-signage-column">
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[_no]" data-column="_no" value="1" checked /> # 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[img__image_id]" data-column="img__image_id" value="1" checked /> Specification Image 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[img__example_image]" data-column="img__example_image" value="1" checked /> Example Image 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[code]" data-column="code" value="1" checked /> Code 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[category_name]" data-column="category_name" value="1" checked /> Category 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[location]" data-column="location" value="1" checked /> Location 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[description]" data-column="description" value="1" checked /> Description 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[size]" data-column="size" value="1" checked /> Size 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[material]" data-column="material" value="1" checked /> Material 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[vendor]" data-column="vendor" value="1" checked /> Vendor 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[mounting]" data-column="mounting" value="1" checked /> Mounting 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportExcelSignageColumn[language]" data-column="language" value="1" checked /> Language 
+                                                </li>
+                                            </form>
+                                        </ul> 
+                                    </div>
+                                </div>
+                            </div>
+                          <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                                <div class="col-xs-3">
+                                    <select class="form-control" ng-model="fsPagination.getParams.category_id" ng-options="item.id as item.name for item in fsPagination.categories" ng-enter="fsPagination.getSignages()" placeholder="search category...">
+                                        <option value="">[Select category]</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-3">
+                                    <input ng-model="fsPagination.getParams.code" type="text" class="form-control" placeholder="search code..." ng-enter="fsPagination.getSignages()">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div id="search_fixture_final" style="display: none" 
+                                         data-category_id=""
+                                         data-code=""></div>
+                                    <button type="button" ng-click="fsPagination.getSignages()" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                          <!--<button class="btn btn-icon btn-xs btn-info pull-right" ng-click="showListFixture()"><span class="glyphicon glyphicon-plus"></span> Add Fixture</button>-->
+                          <div class="row">
+                                <div class="col-xs-6"></div>
+                                <div class="col-xs-6 pull-right">
+                                    <div id="example1_length" class="dataTables_length">
+                                        <label>records per page
+                                            <select ng-model="fsPagination.fsByPage" ng-options="item.value as item.name for item in itemsByPages"></select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                          <!--<button class="btn btn-icon btn-xs btn-info pull-right" ng-click="showListSignage()"><span class="glyphicon glyphicon-plus"></span> Add Signage</button>-->
+                          <table id="example4" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th>Specification Image</th>
+                                    <th>Example Image</th>
+                                    <th rowspan="1" colspan="1">Code</th>
+                                    <th rowspan="1" colspan="1">Category</th>
+                                    <th rowspan="1" colspan="1">Location</th>
+                                    <th rowspan="1" colspan="1">Description</th>
+                                    <th rowspan="1" colspan="1">Actions</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="even" ng-repeat="related_item in fixture.related_signages">
+                                    <td>{{$index + 1}}</td>
+                                    <td>
+                                        <img class="thumbnail" style="width: 80px; height: 80px" src="{{related_item.image_id_url}}" />
+                                    </td>
+                                    <td>
+                                        <img class="thumbnail" style="width: 80px; height: 80px" src="{{related_item.example_image_url}}" />
+                                    </td>
+                                    <td class=" sorting_1"><a target=_blank ui-sref="signage-detail({'id':related_item.id})">{{related_item.code}}</a></td>
+                                    <td class=" ">{{related_item.category_name}}</td>
+                                    <td class=" ">{{related_item.location}}</td>
+                                    <td class=" ">{{related_item.short_description}}</td>
+<!--                                    <td class=" ">
+                                      <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeRelatedSignage(related_item, $index)">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                      </button>
+                                    </td>-->
+                                    <td class="text-center btn-tools">
+                                        <div class="btn-group dropdown">
+                                            <a href="#" data-toggle="dropdown" class="btn">
+                                                <i class="fa fa-th"></i>
+                                            </a>
+                                            <ul class="dropdown-menu no-angle pull-right right">
+                                                <li>
+                                                    <a target="_blank" class="text-blue" ui-sref="signage-view({'id':related_item.id})"><i class="fa fa-eye"></i> View</a>
+                                                </li>
+                                                <li ng-show="root.is_superadmin" class="hidden">
+                                                    <a class="text-green" href="#" ng-click=""><i class="fa fa-pencil-square"></i> Edit</a>
+                                                </li>
+                                                <li ng-show="root.is_superadmin">
+                                                    <a class="text-yellow" href="#" ng-click="removeRelatedSignage(related_item, $index)"><i class="fa fa-trash-o"></i> Delete</a>
+                                                </li>
+                                                <li ng-show="root.is_superadmin">
+                                                    <a class="text-yellow" href="#" ng-click="copySignage(related_item)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
+                                                </li>
+                                                <li>
+                                                    <a class="text-blue" href="javascript:void(0)" ng-click="exportPdfItemSignage(related_item)"><i class="fa fa-file-pdf-o"></i> Export Pdf</a>
+                                                </li>
+                                                <li>
+                                                    <a class="text-red" href="javascript:void(0)" ng-click="exportExcelItemSignage(related_item)"><i class="fa fa-file-excel-o"></i> Export Excel</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="selectedSignages[]" ng-click="toggleSignageSelection(related_item.id)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                          <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="dataTables_info" id="example2_info">
+                                        Showing {{fsPagination.start}} to {{fsPagination.end}} of {{fsPagination.totalresults}} entries
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" ng-show="fsPagination.pages.length > 1">
+                                    <div class="dataTables_paginate paging_bootstrap">
+                                        <ul class="pagination">
+                                            <li class="prev" ng-class="{disabled: fsPagination.currentPage == 1}">
+                                                <a href="" ng-click="fsPagination.selectPage(fsPagination.currentPage - 1)">← Previous</a>
+                                            </li>
+                                            <li ng-repeat="page in fsPagination.pages" ng-class="{active: page == fsPagination.currentPage}" >
+                                                <a href="" ng-click="fsPagination.selectPage(page)">{{page}}</a>
+                                            </li>
+                                            <li class="next" ng-class="{disabled: fsPagination.currentPage == fsPagination.pages.length}">
+                                                <a href="" ng-click="fsPagination.selectPage(fsPagination.currentPage + 1)">Next → </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!--/.col (left) -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box no-border collapsed-box" style="overflow: auto;">
+                <div class="box-header">
+                    <h3 class="box-title">Photos and documents</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body overhidden">
+                    <file-uploader file-ids="fixture.tmp_file_ids" model-id="fixture.id" sendemail="true" email-files = "email.documents"></file-uploader>
+                </div>
+            </div>
+        </div>
+          
+        <div class="col-md-12">
+            <div class="box no-border collapsed-box" style="overflow: auto;">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Fixture stores</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body">
+                    <div class="search_box">
+                        <div role="form">
+                            <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                              <div class="col-xs-2">
+                                <select class="form-control" ng-model="search_store.tier_id" ng-options="item.id as item.name for item in tiers" ng-enter="search()" placeholder="search tier...">
+                                  <option value="">[Select tier]</option>
+                                </select>
+                              </div>
+                                <div class="col-xs-2">
+                                    <input ng-model="search_store.name" type="text" class="form-control" placeholder="search number..." ng-enter="searchStore()">
+                                </div>
+                                <div class="col-xs-2">
+                                    <input ng-model="search_store.country" type="text" class="form-control" placeholder="search country..." ng-enter="searchStore()">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div id="search_store_final" style="display: none" 
+                                        data-tier_id=""
+                                        data-name=""
+                                        data-country=""></div>
+                                    <button type="button" ng-click="searchStore()" class="btn btn-primary">Search</button>
+                                    <a ng-show="root.is_superadmin" href="#" ng-click="store_form.addStore()" class="btn btn-primary pull-right">Add new store</a> 
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="btn-group pull-right"> 
+                                        <button type="button" class="btn btn-primary" ng-click="exportExcelListStore()"><i class="fa fa-file-excel-o"></i> Excel</button> 
+                                        <button type="button" class="btn btn-success" ng-click="exportExcelListStore('pdf')"><i class="fa fa-file-pdf-o"></i> Pdf</button> 
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                            <span class="caret"></span> 
+                                            <span class="sr-only">Toggle Dropdown</span> 
+                                        </button> 
+                                        <ul class="dropdown-menu"> 
+                                            <form id="export-store-excel-column">
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[_no]" data-column="_no" value="1" checked /> # 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[img__image_id]" data-column="img__image_id" value="1" checked /> Image 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[name]" data-column="name" value="1" checked /> Name 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[store_number]" data-column="store_number" value="1" checked /> Store Number 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[tier_name]" data-column="tier_name" value="1" checked /> Tier 
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[contact_name]" data-column="contact_name" value="1" checked /> Area Manager
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[franchisee_name]" data-column="franchisee_name" value="1" checked /> Franchisee Name
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[address1]" data-column="address1" value="1" checked /> Store Address
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[country]" data-column="country" value="1" checked /> Country
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[state_name]" value="1" checked /> State / Province
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[city]" value="1" checked /> City
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[email]" data-column="email" value="1" checked /> Email
+                                                </li>
+                                                <li style="padding:0 15px">
+                                                    <input type="checkbox" name="ExportStoreExcelColumn[phone]" data-column="phone" value="1" checked /> Phone
+                                                </li>
+                                            </form>
+                                        </ul> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6"></div>
+                                <div class="col-xs-6 pull-right">
+                                    <div id="example1_length" class="dataTables_length">
+                                        <label>records per page
+                                            <select ng-model="storePagination.fsByPage" ng-options="item.value as item.name for item in itemsByPages"></select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <form role="form">
+                          <table id="example4" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th rowspan="1" colspan="1">Name</th>
+                                    <th rowspan="1" colspan="1">Tier</th>
+                                    <th rowspan="1" colspan="1">Store address</th>
+                                    <th rowspan="1" colspan="1">Franchisee Name</th>
+                                    <th rowspan="1" colspan="1">Country</th>
+                                    <th rowspan="1" colspan="1">State/Province</th>
+                                    <th rowspan="1" colspan="1">City</th>
+                                    <th rowspan="1" colspan="1">Email</th>
+                                    <th rowspan="1" colspan="1">Phone</th>
+                                    <th>Actions</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="even" ng-repeat="related_store in fixture.related_stores">
+                                    <td>{{$index + 1}}</td>
+                                    <td>
+                                        <img class="thumbnail" style="width: 40px; height: 40px" src="{{related_store.image_id_url}}" />
+                                    </td>
+                                    <td class=" sorting_1"><a target=_blank ui-sref="store-view({'id':related_store.id})">{{related_store.name}}</a></td>
+                                    <td class=" ">{{related_store.tier_name}}</td>
+                                    <td class=" ">{{related_store.address1}}</td>
+                                    <td class=" ">{{related_store.franchisee_name}}</td>
+                                    <td class=" ">{{related_store.country}}</td>
+                                    <td class=" ">{{related_store.state_name}}</td>
+                                    <td class=" ">{{related_store.city}}</td>
+                                    <td class=" ">{{related_store.email}}</td>
+                                    <td class=" ">{{related_store.phone}}</td>
+                                    <td class="text-center btn-tools">
+                                        <div class="btn-group dropdown">
+                                            <a href="#" data-toggle="dropdown" class="btn">
+                                                <i class="fa fa-th"></i>
+                                            </a>
+                                            <ul class="dropdown-menu no-angle pull-right right">
+                                                <li>
+                                                    <a target="_blank" class="text-blue" ui-sref="store-view({'id':related_store.id})"><i class="fa fa-eye"></i> View</a>
+                                                </li>
+                                                <li ng-show="root.is_superadmin">
+                                                    <a class="text-green" href="#" ng-click="updateRelatedStore(related_store)"><i class="fa fa-pencil-square"></i> Edit</a>
+                                                </li>
+                                                <li ng-show="root.is_superadmin">
+                                                    <a class="text-yellow" href="#" ng-click="removeStoreSignage(related_store.store_fixture_id)"><i class="fa fa-trash-o"></i> Delete</a>
+                                                </li>
+                                                <li ng-show="root.is_superadmin">
+                                                    <a class="text-yellow" href="#" ng-click="copyStore(related_store)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
+                                                </li>
+                                                <li>
+                                                    <a class="text-blue" href="javascript:void(0)" ng-click="exportPdfItemStore(related_store)"><i class="fa fa-file-pdf-o"></i> Export Pdf</a>
+                                                </li>
+                                                <li>
+                                                    <a class="text-red" href="javascript:void(0)" ng-click="exportExcelItemStore(related_store)"><i class="fa fa-file-excel-o"></i> Export Excel</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="selectedSignages[]" ng-click="toggleStoreSelection(related_store.id)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="dataTables_info" id="example2_info">
+                                        Showing {{storePagination.start}} to {{storePagination.end}} of {{storePagination.totalresults}} entries
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" ng-show="storePagination.pages.length > 1">
+                                    <div class="dataTables_paginate paging_bootstrap">
+                                        <ul class="pagination">
+                                            <li class="prev" ng-class="{disabled: storePagination.currentPage == 1}">
+                                                <a href="" ng-click="storePagination.selectPage(storePagination.currentPage - 1)">← Previous</a>
+                                            </li>
+                                            <li ng-repeat="page in storePagination.pages" ng-class="{active: page == storePagination.currentPage}" >
+                                                <a href="" ng-click="storePagination.selectPage(page)">{{page}}</a>
+                                            </li>
+                                            <li class="next" ng-class="{disabled: storePagination.currentPage == storePagination.pages.length}">
+                                                <a href="" ng-click="storePagination.selectPage(storePagination.currentPage + 1)">Next → </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!--/.col (left) -->
+                </div>
+            </div>
+        </div>
+          
+        <div class="col-md-12">
+            <div class="box no-border collapsed-box" style="overflow: auto;">
+                <div class="box-header">
+                    <h3 class="box-title">Notes</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body overhidden">
+                    <div class="form-group" ng-class="{'has-error': fixture_error.note.length != 0}">
+                        <textarea ck-editor ng-model="fixture.note" id="fixture_note"></textarea>
+                        <span class="control-label" for="inputError" ng-show="fixture_error.note.length != 0" ng-repeat="error in fixture_error.note">
+                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <p class="text-dark-blue text-center">Please click on + to expand section</p>
+        </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="listFixtureModal" tabindex="-1" role="dialog" aria-labelledby="listFixtureModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">List fixtures</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="form-group">
+                  <div class="search_box">
+                      <form role="form">
+                          <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                            <div class="col-xs-5">
+                              <select class="form-control" ng-model="search_fixture.category_id" ng-options="item.id as item.name for item in fixture_categories" ng-enter="search()" placeholder="search category...">
+                                <option value="">[Select category]</option>
+                              </select>
+                            </div>
+                              <div class="col-xs-5">
+                                  <input ng-model="search_fixture.code" type="text" class="form-control" placeholder="search code..." ng-enter="search()">
+                              </div>
+                              <div class="col-xs-2">
+                                  <button type="button" ng-click="search()" class="btn btn-primary">Search</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                  <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                      <div class="row">
+                          <div class="col-xs-6"></div>
+                          <div class="col-xs-6 pull-right">
+                              <div id="example1_length" class="dataTables_length">
+                                  <label>records per page
+                                      <select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="table-scroll">
+                          <table id="example2" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th ng-class="{sorting: sort.attribute != 'code', sorting_asc: sort.attribute == 'code' && sort.type == 'ASC', sorting_desc: sort.attribute == 'code' && sort.type == 'DESC'}" ng-click="sort('code')" rowspan="1" colspan="1">Code</th>
+                                    <th ng-class="{sorting: sort.attribute != 'category_id', sorting_asc: sort.attribute == 'category_id' && sort.type == 'ASC', sorting_desc: sort.attribute == 'category_id' && sort.type == 'DESC'}" ng-click="sort('category_id')" rowspan="1" colspan="1">Category</th>
+                                    <th ng-class="{sorting: sort.attribute != 'price', sorting_asc: sort.attribute == 'price' && sort.type == 'ASC', sorting_desc: sort.attribute == 'price' && sort.type == 'DESC'}" ng-click="sort('price')" rowspan="1" colspan="1">Price</th>
+                                    <th rowspan="1" colspan="1">Description</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th rowspan="1" colspan="1">Code</th>
+                                    <th rowspan="1" colspan="1">Category</th>
+                                    <th rowspan="1" colspan="1">Price</th>
+                                    <th rowspan="1" colspan="1">Description</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="even" ng-repeat="item in fixtures">
+                                    <td>{{$index + 1}}</td>
+                                    <td class=" sorting_1"><a ui-sref="fixture-detail({'id':item.id})">{{item.code}}</a></td>
+                                    <td class=" ">{{item.category_name}}</td>
+                                    <td class=" ">{{item.price}}</td>
+                                    <td class=" ">{{item.short_description}}</td>
+                                    <td>
+                                      <button class="btn btn-icon btn-xs btn-info" ng-click="addRelatedFixture(item)" ng-show="!checkRelatedFixture(item) && item.id != fixture.id">
+                                        <span class="glyphicon glyphicon-plus"></span> Add
+                                      </button>
+                                      <span ng-show="checkRelatedFixture(item) && item.id != fixture.id">Added</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <div class="dataTables_info" id="example2_info">
+                                  Showing {{start_fixture}} to {{end_fixture}} of {{totalresults}} entries
+                              </div>
+                          </div>
+                          <div class="col-xs-6" ng-show="pages.length > 1">
+                              <div class="dataTables_paginate paging_bootstrap">
+                                  <ul class="pagination">
+                                      <li class="prev" ng-class="{disabled: currentPage == 1}">
+                                          <a href="" ng-click="selectPage(currentPage - 1)">← Previous</a>
+                                      </li>
+                                      <li ng-repeat="page in pages" ng-class="{active: page == currentPage}" >
+                                          <a href="" ng-click="selectPage(page)">{{page}}</a>
+                                      </li>
+                                      <li class="next" ng-class="{disabled: currentPage == pages.length}">
+                                          <a href="" ng-click="selectPage(currentPage + 1)">Next → </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="listSignageModal" tabindex="-1" role="dialog" aria-labelledby="listSignageModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="width: 1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">List signages</h4>
+      </div>
+      <div class="modal-body overhidden">
+        <div class="form-group">
+
+                  <div class="search_box">
+                      <form role="form">
+                          <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                            <div class="col-xs-5">
+                              <select class="form-control" ng-model="search_signage.category_id" ng-options="item.id as item.name for item in signage_categories" ng-enter="search()" placeholder="search category...">
+                                <option value="">[Select category]</option>
+                              </select>
+                            </div>
+                              <div class="col-xs-5">
+                                  <input ng-model="search_signage.code" type="text" class="form-control" placeholder="search code..." ng-enter="search()">
+                              </div>
+                              <div class="col-xs-2">
+                                  <button type="button" ng-click="search()" class="btn btn-primary">Search</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                  <div id="example3_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                      <div class="row">
+                          <div class="col-xs-6"></div>
+                          <div class="col-xs-6 pull-right">
+                              <div id="example2_length" class="dataTables_length">
+                                  <label>records per page
+                                      <select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="table-scroll">
+                          <table id="example2" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th ng-class="{sorting: sort.attribute != 'code', sorting_asc: sort.attribute == 'code' && sort.type == 'ASC', sorting_desc: sort.attribute == 'code' && sort.type == 'DESC'}" ng-click="sort('code')" rowspan="1" colspan="1">Code</th>
+                                    <th ng-class="{sorting: sort.attribute != 'category_id', sorting_asc: sort.attribute == 'category_id' && sort.type == 'ASC', sorting_desc: sort.attribute == 'category_id' && sort.type == 'DESC'}" ng-click="sort('category_id')" rowspan="1" colspan="1">Category</th>
+                                    <th ng-class="{sorting: sort.attribute != 'price', sorting_asc: sort.attribute == 'price' && sort.type == 'ASC', sorting_desc: sort.attribute == 'price' && sort.type == 'DESC'}" ng-click="sort('price')" rowspan="1" colspan="1">Price</th>
+                                    <th rowspan="1" colspan="1">Description</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th rowspan="1" colspan="1">Code</th>
+                                    <th rowspan="1" colspan="1">Category</th>
+                                    <th rowspan="1" colspan="1">Price</th>
+                                    <th rowspan="1" colspan="1">Description</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="even" ng-repeat="item in signages">
+                                    <td>{{$index + 1}}</td>
+                                    <td class=" sorting_1"><a ui-sref="signage-detail({'id':item.id})">{{item.code}}</a></td>
+                                    <td class=" ">{{item.category_name}}</td>
+                                    <td class=" ">{{item.price}}</td>
+                                    <td class=" ">{{item.short_description}}</td>
+                                    <td>
+                                      <button class="btn btn-icon btn-xs btn-info" ng-click="addRelatedSignage(item)" ng-show="!checkRelatedSignage(item)">
+                                        <span class="glyphicon glyphicon-plus"></span> Add
+                                      </button>
+                                      <span ng-show="checkRelatedSignage(item)">Added</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <div class="dataTables_info" id="example2_info">
+                                  Showing {{start_signage}} to {{end_signage}} of {{totalresults}} entries
+                              </div>
+                          </div>
+                          <div class="col-xs-6" ng-show="pages.length > 1">
+                              <div class="dataTables_paginate paging_bootstrap">
+                                  <ul class="pagination">
+                                      <li class="prev" ng-class="{disabled: currentPage == 1}">
+                                          <a href="" ng-click="selectPage(currentPage - 1)">← Previous</a>
+                                      </li>
+                                      <li ng-repeat="page in pages" ng-class="{active: page == currentPage}" >
+                                          <a href="" ng-click="selectPage(page)">{{page}}</a>
+                                      </li>
+                                      <li class="next" ng-class="{disabled: currentPage == pages.length}">
+                                          <a href="" ng-click="selectPage(currentPage + 1)">Next → </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{email_title}}</h4>
+            </div>
+            <div class="modal-body overhidden">
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>From</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.from" disabled="" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>To</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.to" />
+                        <span class="small">emails separated by comma</span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>Subject</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.subject" />
+                    </div>
+                </div>
+                <hr />
+                <label>Message</label>
+                <textarea class="form-control" ng-model="email.content" style="height: 200px" ></textarea>
+                <hr />
+                <a target="_blank" title="attachment" href="{{document.absolute_url}}" class="email_attachment" ng-repeat="document in email.documents">
+                    <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+                    {{document.filename}}.{{document.extension}}</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="sendEmail()">Send Email</button>
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<div class="modal" id="formStoreModal" tabindex="-1" role="dialog" aria-labelledby="formStoreModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add store to Fixture</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <form role="form">
+
+                        <div class="row form-group" ng-class="{'has-error': store_form.store_error.store_id.length != 0 && store_form.store_error.store_id != undefined}">
+                            <div class="col-md-3 text-right">
+                                <label for="">Store</label> </br>
+                            </div>
+                            <div class="col-md-9">
+                                <input ampautocomplete ng-model="store_form.store.store_id" type="text" class="form-control" placeholder="" id="Search_Store_id" data-source="/store/getAll" ui-option="'stores'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="store_form.store.name">
+                                <span class="control-label" for="inputError" ng-show="store_form.store_error.store_id.length != 0 && store_form.store_error.store_id != undefined" ng-repeat="error in store_form.store_error.store_id">
+                                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="hidden row form-group" ng-class="{'has-error': store_form.store_error.code.length != 0 && store_form.store_error.code != undefined}">
+                            <div class="col-md-3 text-right">
+                                <label for="">Code detail</label> </br>
+                            </div>
+                            <div class="col-md-9">
+                                <input ng-model="store_form.store.code" type="text" class="form-control" placeholder="unique code">
+                                <span class="control-label" for="inputError" ng-show="store_form.store_error.code.length != 0 && store_form.store_error.code != undefined" ng-repeat="error in store_form.store_error.code">
+                                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row form-group" ng-class="{'has-error': store_form.store_error.note.length != 0 && store_form.store_error.note != undefined}">
+                            <div class="col-md-3 text-right">
+                                <label for="">Note</label> </br>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea ng-model="store_form.store.note" type="text" class="form-control" placeholder="note something"></textarea>
+                                <span class="control-label" for="inputError" ng-show="store_form.store_error.note.length != 0 && store_form.store_error.note != undefined" ng-repeat="error in store_form.store_signage_error.note">
+                                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" ng-click="store_form.saveStoreSignage()">Submit</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+</div>
