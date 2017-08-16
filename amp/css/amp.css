@@ -577,15 +577,15 @@ header .logo span{
     color: #263ec3;
 }
 .skin-amp .btn-info {
-    background-color: #26327a;
-    border: 1px solid #0a1767;
+    background-color: #9f9fa0;
+    border: 1px solid #848487;
 }
 .skin-amp .btn-info:hover,
 .skin-amp .btn-info:focus,
 .skin-amp .btn-info.active,
 .skin-amp .btn-info.hover{
-    background-color: #1b2565;
-    border: 1px solid #161f5d;
+    background-color: #9f9fa0;
+    border: 1px solid #848487;
 }
 
 #dashboard{
@@ -656,4 +656,7 @@ header .logo span{
 }
 #wrapper .chosen-container-single .chosen-single div b {
     background-position: 0 5px;
+}
+.btn-black{
+    background-color: #4d4d4f !important; 
 }

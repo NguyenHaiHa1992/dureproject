@@ -344,7 +344,30 @@ angular.module('app', [
                     }]
                 }
             })
-
+            /*
+             * @author tunghus1993@gmail.com
+             * add customer
+             */
+            .state('customer-list',{
+                url: '/user-list',
+                views: {
+                    "lazyLoadView": {
+                        controller: 'CustomerListController', // This view will use AppCtrl loaded below in the resolve
+                        templateUrl: 'amp/views/customer/customer-list.html'
+                    }
+                },
+                resolve: {// Any property in resolve should return a promise and is executed before the view is loaded
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            // you can lazy load files for an existing module
+                            return $ocLazyLoad.load({files: [
+                                    'amp/js/config/app.js',
+                                    'amp/js/config/constant.js',
+                                    'amp/js/controllers/customer/CustomerListController.js',
+                                ]});
+                        }]
+                }
+            })
+    
             .state('user-list', {
                 url: '/user-list',
                 views: {

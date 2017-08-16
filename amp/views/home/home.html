@@ -20,24 +20,25 @@
         <div class="container">
             <div class="button_outer">
                 <label class="hidden">Stores</label>
-                <a ui-sref="store-list" class="btn btn-primary btn-lg">STORE DATABASE</a>
-                <a ui-sref="store-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT STORE</a>
+                <a ui-sref="#" class="btn btn-primary btn-lg btn-black">PROJECT DATABASE</a>
+                <!--<a ui-sref="store-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT PROJECT</a>-->
             </div>
             <div class="button_outer">
                 <label class="hidden">Signage</label>
-                <a ui-sref="signage-list" class="btn btn-primary btn-lg">SIGNAGE DATABASE</a>
-                <a ui-sref="signage-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT SIGNAGE</a>
+                <a ui-sref="#" class="btn btn-primary btn-lg btn-black">ADD NEW PROJECT</a>
+                <!--<a ui-sref="signage-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT SIGNAGE</a>-->
             </div>
-            <div class="button_outer">
+<!--            <div class="button_outer">
                 <label class="hidden">Fixtures</label>
                 <a ui-sref="fixture-list" class="btn btn-primary btn-lg">FIXTURES DATABASE</a>
                 <a ui-sref="fixture-create" class="hidden btn btn-primary btn-lg" ng-show="root.is_superadmin">ADD/EDIT FIXTURE</a>
-            </div>
+            </div>-->
             <div class="button_outer">
                 <label class="hidden">Others</label>
                 <a ui-sref="user-list" class="btn btn-info btn-sm" ng-show="root.is_superadmin">Users</a>
                 <a ui-sref="store-signage" class="btn btn-info btn-sm" >Reports</a>
                 <a ui-sref="file-list" class="btn btn-info btn-sm">Documents</a>
+                <a ui-sref="customer-list" class="btn btn-info btn-sm">Customers</a>
             </div>
         </div>
         <div id="setting_control">
