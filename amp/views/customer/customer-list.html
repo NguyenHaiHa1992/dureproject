@@ -200,10 +200,10 @@
                                                         <a class="text-green" ui-sref="customer-detail({'id':customer.id})"><i class="fa fa-pencil-square"></i> Edit</a>
                                                     </li>
                                                     <li ng-show="root.is_superadmin">
-                                                        <a class="text-yellow" href="#" ng-click="deleteStore(customer.id)"><i class="fa fa-trash-o"></i> Delete</a>
+                                                        <a class="text-yellow" href="#" ng-click="deleteCustomer(customer.id)"><i class="fa fa-trash-o"></i> Delete</a>
                                                     </li>
                                                     <li ng-show="root.is_superadmin">
-                                                        <a class="text-yellow" href="#" ng-click="copyStore(customer.id)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
+                                                        <a class="text-yellow" href="#" ng-click="copyCustomer(customer.id)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
                                                     </li>
 <!--                                                    <li>
                                                         <a class="text-blue" href="javascript:void(0)" ng-click="exportPdfItem(customer.id)"><i class="fa fa-file-pdf-o"></i> Export Pdf</a>

@@ -18,11 +18,11 @@
  * @property integer $status
  * @property integer $created_time
  * @property integer $updated_time
+ * @property integer $in_trash
  */
 class Customer extends CActiveRecord
 {
         public $tmp_file_ids;
-        
 	/**
 	 * @return string the associated database table name
 	 */
@@ -39,13 +39,13 @@ class Customer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('document_id, status, created_time, updated_time', 'numerical', 'integerOnly'=>true),
+			array('document_id, status, created_time, updated_time, in_trash', 'numerical', 'integerOnly'=>true),
 			array('ship_oa, bill_oa, fax', 'length', 'max'=>255),
 			array('phone', 'length', 'max'=>50),
 			array('ship_to, ship_address, bill_to, bill_address, note', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, ship_to, ship_oa, ship_address, bill_to, bill_oa, bill_address, phone, fax, document_id, note, status, created_time, updated_time', 'safe', 'on'=>'search'),
+			array('id, ship_to, ship_oa, ship_address, bill_to, bill_oa, bill_address, phone, fax, document_id, note, status, created_time, updated_time, in_trash', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -80,6 +80,7 @@ class Customer extends CActiveRecord
 			'status' => 'Status',
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
+			'in_trash' => 'In Trash',
 		);
 	}
 
@@ -115,6 +116,7 @@ class Customer extends CActiveRecord
 		$criteria->compare('status',$this->status);
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
+		$criteria->compare('in_trash',$this->in_trash);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
