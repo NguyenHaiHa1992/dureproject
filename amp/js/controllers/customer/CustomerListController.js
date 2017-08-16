@@ -39,18 +39,18 @@ angular.module('app').controller('CustomerListController', ['$scope', '$timeout'
             name: '',
             email: '',
             created: '',
-            tier_id: '',
-            city: '',
-            signage_id: '',
-            fixture_id: ''
+//            tier_id: '',
+//            city: '',
+//            signage_id: '',
+//            fixture_id: ''
         };
         $scope.copy_search_customer = {
             name: '',
             email: '',
-            tier_id: '',
-            city: '',
-            signage_id: '',
-            fixture_id: ''
+//            tier_id: '',
+//            city: '',
+//            signage_id: '',
+//            fixture_id: ''
         };
         var post_information = {
             'limitstart': 0,
@@ -87,22 +87,6 @@ angular.module('app').controller('CustomerListController', ['$scope', '$timeout'
         };
         $scope.getCustomers(post_information);
 
-        $scope.getTiers = function (post_information) {
-            $http.post(BASE_URL + '/tier/getAll', [])
-            .success(function (data) {
-                if (data.success) {
-                    $scope.tiers = data.tiers;
-                }
-                else {
-                    swal('Can not get tier list', '', 'error');
-                }
-            })
-            .error(function (data, status, headers, config) {
-                $state.go('404');
-            });
-        };
-        $scope.getTiers(post_information);
-
         $scope.selectPage = function (page) {
             $scope.currentPage = page;
             var post_information = {
@@ -111,11 +95,11 @@ angular.module('app').controller('CustomerListController', ['$scope', '$timeout'
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_customer.id,
-                'name': $scope.search_customer.name,
-                'tier_id': $scope.search_customer.tier_id,
-                'email': $scope.search_customer.email,
-                'created': $scope.search_customer.created,
-                'city': $scope.search_customer.city,
+//                'name': $scope.search_customer.name,
+//                'tier_id': $scope.search_customer.tier_id,
+//                'email': $scope.search_customer.email,
+//                'created': $scope.search_customer.created,
+//                'city': $scope.search_customer.city,
             };
             $scope.getCustomers(post_information);
         };
@@ -131,11 +115,11 @@ angular.module('app').controller('CustomerListController', ['$scope', '$timeout'
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_customer.id,
-                'name': $scope.search_customer.name,
-                'tier_id': $scope.search_customer.tier_id,
-                'email': $scope.search_customer.email,
+//                'name': $scope.search_customer.name,
+//                'tier_id': $scope.search_customer.tier_id,
+//                'email': $scope.search_customer.email,
                 'created': $scope.search_customer.created,
-                'city': $scope.search_customer.city,
+//                'city': $scope.search_customer.city,
             };
             if ($scope.itemsByPage_change_number > 1)
                 $scope.getCustomers(post_information);
@@ -150,11 +134,11 @@ angular.module('app').controller('CustomerListController', ['$scope', '$timeout'
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_customer.id,
-                'name': $scope.search_customer.name,
-                'tier_id': $scope.search_customer.tier_id,
-                'email': $scope.search_customer.email,
+//                'name': $scope.search_customer.name,
+//                'tier_id': $scope.search_customer.tier_id,
+//                'email': $scope.search_customer.email,
                 'created': $scope.search_customer.created,
-                'city': $scope.search_customer.city,
+//                'city': $scope.search_customer.city,
             };
             if ($scope.search_change_number > 1)
                 $scope.getCustomers(post_information);
@@ -176,29 +160,33 @@ angular.module('app').controller('CustomerListController', ['$scope', '$timeout'
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_customer.id,
-                'name': $scope.search_customer.name,
-                'tier_id': $scope.search_customer.tier_id,
-                'email': $scope.search_customer.email,
+//                'name': $scope.search_customer.name,
+//                'tier_id': $scope.search_customer.tier_id,
+//                'email': $scope.search_customer.email,
                 'created': $scope.search_customer.created,
-                'city': $scope.search_customer.city,
+//                'city': $scope.search_customer.city,
             };
             $scope.getCustomers(post_information);
         };
 
         $scope.search = function () {
-            post_information.tier_id = $scope.search_customer.tier_id;
-            post_information.name = $scope.search_customer.name;
-            post_information.email = $scope.search_customer.email;
-            post_information.city = $scope.search_customer.city;
-            post_information.signage_id = $scope.search_customer.signage_id;
-            post_information.fixture_id = $scope.search_customer.fixture_id;
+            post_information.ship_to = $scope.search_customer.ship_to;
+            post_information.ship_oa = $scope.search_customer.ship_oa;
+            post_information.ship_address = $scope.search_customer.ship_address;
+            post_information.bill_to = $scope.search_customer.bill_to;
+            post_information.bill_oa = $scope.search_customer.bill_oa;
+            post_information.bill_address = $scope.search_customer.bill_address;
+            post_information.phone = $scope.search_customer.phone;
+            post_information.fax = $scope.search_customer.fax;
             
-            $scope.copy_search_customer.tier_id = $scope.search_customer.tier_id;
-            $scope.copy_search_customer.name = $scope.search_customer.name;
-            $scope.copy_search_customer.email = $scope.search_customer.email;
-            $scope.copy_search_customer.city = $scope.search_customer.city;
-            $scope.copy_search_customer.signage_id = $scope.search_customer.signage_id;
-            $scope.copy_search_customer.fixture_id = $scope.search_customer.fixture_id;
+            $scope.copy_search_customer.ship_to = $scope.search_customer.ship_to;
+            $scope.copy_search_customer.ship_oa = $scope.search_customer.ship_oa;
+            $scope.copy_search_customer.ship_address = $scope.search_customer.ship_address;
+            $scope.copy_search_customer.bill_to = $scope.search_customer.bill_to;
+            $scope.copy_search_customer.bill_oa = $scope.search_customer.bill_oa;
+            $scope.copy_search_customer.bill_address = $scope.search_customer.bill_address;
+            post_information.phone = $scope.search_customer.phone;
+            post_information.fax = $scope.search_customer.fax;
             $scope.getCustomers(post_information);
         }
 

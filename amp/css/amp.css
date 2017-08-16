@@ -232,6 +232,9 @@ html, body{
     text-align: center;
     font-weight: normal;
 }
+#dashboard .button_outer:last-child{
+    float: right;
+}
 #dashboard .button_outer label{
     display: block;
 }

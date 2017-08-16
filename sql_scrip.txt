@@ -24,3 +24,6 @@ CREATE TABLE `tbl_customer` (
 -- ----------------------------
 -- Records of tbl_customer
 -- ----------------------------
+
+-- add column in_trash
+ALTER TABLE `tbl_customer` ADD COLUMN `in_trash` INT DEFAULT 0

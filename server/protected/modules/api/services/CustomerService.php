@@ -45,30 +45,47 @@ class CustomerService extends iPhoenixService {
         $sql_order_by = '';
         $sql_order_by = 'ORDER BY tbl_customer.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
 
-        if(isset($data['signage_id']) && $data['signage_id']){
-            $sql = "SELECT tbl_customer.*, tbl_customer_signage.signage_quantity, tbl_customer_signage.id customer_signage_id FROM tbl_customer ";
-        }
-        else{
-            $sql = "SELECT tbl_customer.* FROM tbl_customer ";
-        }
-        
+//        if(isset($data['signage_id']) && $data['signage_id']){
+//            $sql = "SELECT tbl_customer.*, tbl_customer_signage.signage_quantity, tbl_customer_signage.id customer_signage_id FROM tbl_customer ";
+//        }
+//        else{
+//            $sql = "SELECT tbl_customer.* FROM tbl_customer ";
+//        }
+        $sql = "SELECT tbl_customer.* FROM tbl_customer ";
         if(isset($data['signage_id']) && $data['signage_id']){
             $sql = $sql . " INNER JOIN tbl_customer_signage ON tbl_customer.id = tbl_customer_signage.customer_id AND tbl_customer_signage.signage_id = ".$data['signage_id'];
         }
         $sql = $sql . " Where 1 ";
 
-        if (isset($data['name']) && $data['name'] != '') {
-            $sql = $sql . "And tbl_customer.name LIKE '%" . $data['name'] . "%' ";
+        if (isset($data['ship_to']) && $data['ship_to'] != '') {
+            $sql = $sql . "And tbl_customer.ship_to LIKE '%" . $data['ship_to'] . "%' ";
         }
-        if (isset($data['email']) && $data['email'] != '') {
-            $sql = $sql . "And tbl_customer.email LIKE '%" . $data['email'] . "%' ";
+        if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
+            $sql = $sql . "And tbl_customer.ship_oa LIKE '%" . $data['ship_oa'] . "%' ";
         }
-        if (isset($data['city']) && $data['city'] != '') {
-            $sql = $sql . "And tbl_customer.city LIKE '%" . $data['city'] . "%' ";
+        if (isset($data['ship_address']) && $data['ship_address'] != '') {
+            $sql = $sql . "And tbl_customer.ship_address LIKE '%" . $data['ship_address'] . "%' ";
         }
-        if (isset($data['country']) && $data['country'] != '') {
-            $sql = $sql . "And tbl_customer.country LIKE '%" . $data['country'] . "%' ";
+        if (isset($data['bill_to']) && $data['bill_to'] != '') {
+            $sql = $sql . "And tbl_customer.bill_to LIKE '%" . $data['bill_to'] . "%' ";
         }
+        
+        if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
+            $sql = $sql . "And tbl_customer.bill_oa LIKE '%" . $data['bill_oa'] . "%' ";
+        }
+        
+        if (isset($data['bill_address']) && $data['bill_address'] != '') {
+            $sql = $sql . "And tbl_customer.bill_address LIKE '%" . $data['bill_address'] . "%' ";
+        }
+        
+        if (isset($data['phone']) && $data['phone'] != '') {
+            $sql = $sql . "And tbl_customer.phone LIKE '%" . $data['phone'] . "%' ";
+        }
+        
+        if (isset($data['fax']) && $data['fax'] != '') {
+            $sql = $sql . "And tbl_customer.fax LIKE '%" . $data['fax'] . "%' ";
+        }
+        $sql = $sql . "And tbl_customer.in_trash = 0 ";
         $sql = $sql . $sql_order_by;
         $sql = $sql . " Limit " . $data['limitstart'] . ", " . $data['limitnum'];
 //        $customers = Customer::model()->findAllBySql($sql);
@@ -78,15 +95,32 @@ class CustomerService extends iPhoenixService {
         if(isset($data['signage_id']) && $data['signage_id']){
             $criteria->join = "INNER JOIN tbl_customer_signage ON t.id = tbl_customer_signage.customer_id AND tbl_customer_signage.signage_id = ".$data['signage_id'];
         }
-        if (isset($data['name']) && $data['name'] != '') {
-            $criteria->compare('name', $data['name'], true);
+        if (isset($data['ship_to']) && $data['ship_to'] != '') {
+            $criteria->compare('ship_to', $data['ship_to'], true);
         }
-        if (isset($data['email']) && $data['email'] != '') {
-            $criteria->compare('email', $data['email'], true);
+        if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
+            $criteria->compare('ship_oa', $data['ship_oa'], true);
         }
-        if (isset($data['city']) && $data['city'] != '') {
-            $criteria->compare('city', $data['city'], true);
+        if (isset($data['ship_address']) && $data['ship_address'] != '') {
+            $criteria->compare('ship_address', $data['ship_address'], true);
         }
+        
+        if (isset($data['bill_to']) && $data['bill_to'] != '') {
+            $criteria->compare('bill_to', $data['bill_to'], true);
+        }
+        if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
+            $criteria->compare('bill_oa', $data['bill_oa'], true);
+        }
+        if (isset($data['bill_address']) && $data['bill_address'] != '') {
+            $criteria->compare('bill_address', $data['bill_address'], true);
+        }
+        if (isset($data['phone']) && $data['phone'] != '') {
+            $criteria->compare('phone', $data['phone'], true);
+        }
+        if (isset($data['fax']) && $data['fax'] != '') {
+            $criteria->compare('fax', $data['fax'], true);
+        }
+        $criteria->compare('t.in_trash', 0);
         $total = Customer::model()->count($criteria);
 
         if ($customers != null) {
@@ -239,6 +273,7 @@ class CustomerService extends iPhoenixService {
             $result['success'] = false;
             return $result;
         }
+        $customer->in_trash = 1;
         if($customer->save()){
             $result['success'] = true;
         }
@@ -276,8 +311,6 @@ class CustomerService extends iPhoenixService {
         else{
             $result = $customer->attributes;
         }
-        $result['state_name'] =  isset($customer->state) ? $customer->state->state_short : "N/A";
-        $result['tier_name'] =  isset($customer->tier) ? $customer->tier->name : "N/A";
         $result['tmp_file_ids'] = $customer->tmp_file_ids;
 //        if($isRelated){
 //            $result['customer_signages'] = $customer->getListSignage();
@@ -304,7 +337,7 @@ class CustomerService extends iPhoenixService {
         }
         $customer = new Customer();
         $customer->attributes = $customerCopy->attributes;
-        $customer->name = time()."_".CustomEnum::COPY_CODE.$customerCopy->name;
+//        $customer->name = time()."_".CustomEnum::COPY_CODE.$customerCopy->name;
         $customer = CustomerService::beforeSave($customer);
         if ($customer->validate()) {
             $customer->save();
@@ -314,11 +347,11 @@ class CustomerService extends iPhoenixService {
             $result['customer'] = $new_customer['customer'];
             
             // create CustomerSignage
-            self::copyRelate('CustomerSignage', 'customer_id', $customerCopy->id, $customer->id);
+//            self::copyRelate('CustomerSignage', 'customer_id', $customerCopy->id, $customer->id);
             // create CustomerFixture
-            self::copyRelate('CustomerFixture', 'customer_id', $customerCopy->id, $customer->id);
+//            self::copyRelate('CustomerFixture', 'customer_id', $customerCopy->id, $customer->id);
             // create CustomerFile
-            self::copyRelate('CustomerFile', 'customer_id', $customerCopy->id, $customer->id);
+//            self::copyRelate('CustomerFile', 'customer_id', $customerCopy->id, $customer->id);
         } else {
             $empty_customer_error = CustomerService::getEmptyCustomerError();
             $result['customer_error'] = $empty_customer_error['customer_error'];

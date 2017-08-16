@@ -18,6 +18,7 @@
  * @property integer $status
  * @property integer $created_time
  * @property integer $updated_time
+ * @property integer $in_trash
  */
 class Customer extends CActiveRecord
 {
@@ -89,6 +90,7 @@ class Customer extends CActiveRecord
 			'status' => 'Status',
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
+			'in_trash' => 'In Trash',
 		);
 	}
 
@@ -124,6 +126,7 @@ class Customer extends CActiveRecord
 		$criteria->compare('status',$this->status);
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
+		$criteria->compare('in_trash',$this->in_trash);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
