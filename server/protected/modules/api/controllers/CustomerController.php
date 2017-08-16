@@ -168,10 +168,10 @@ class CustomerController extends Controller {
                 $criteria->compare('email', $_GET['email'], true);
             }
             if(isset($_GET['signage_id']) && $_GET['signage_id'] != ''){
-                $criteria->join = 'INNER JOIN tbl_store_signage AS ss ON t.id = ss.store_id AND ss.signage_id = '.$_GET['signage_id'];
+                $criteria->join = 'INNER JOIN tbl_customer_signage AS ss ON t.id = ss.customer_id AND ss.signage_id = '.$_GET['signage_id'];
             }
             if(isset($_GET['fixture_id']) && $_GET['fixture_id'] != ''){
-                $criteria->join = 'INNER JOIN tbl_store_fixture AS sf ON t.id = sf.store_id AND sf.fixture_id = '.$_GET['fixture_id'];
+                $criteria->join = 'INNER JOIN tbl_customer_fixture AS sf ON t.id = sf.customer_id AND sf.fixture_id = '.$_GET['fixture_id'];
             }
         }
         $criteria->compare('t.in_trash', 0);
@@ -202,11 +202,11 @@ class CustomerController extends Controller {
     }
     
     public static function actionExportPdf($id){
-        $store = Customer::model()->findByPk($id);
+        $customer = Customer::model()->findByPk($id);
 
-        if(isset($store)){
-            $store_name_converted = preg_replace('/\s+/', '_', $store->name);
-            $pdf_file = 'STORE_'.$store_name_converted.'_'.date('Ymd', $store->created_time).'_'.$store->id;
+        if(isset($customer)){
+            $customer_name_converted = preg_replace('/\s+/', '_', $customer->name);
+            $pdf_file = 'STORE_'.$customer_name_converted.'_'.date('Ymd', $customer->created_time).'_'.$customer->id;
             $check_file = $pdf_file;
             $i = 1;
             while (file_exists(Yii::getPathOfAlias('webroot').'/data/pdf/'.$check_file.'.pdf')) {
@@ -217,8 +217,8 @@ class CustomerController extends Controller {
             $pdf_file = $check_file;
 
             // Create content
-            $content = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot').'/protected/modules/api/views/email/_store_pdf_template.php', array(
-                'store' => $store,
+            $content = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot').'/protected/modules/api/views/email/_customer_pdf_template.php', array(
+                'customer' => $customer,
             ),true, true);
             
             // Create pdf
@@ -253,8 +253,8 @@ class CustomerController extends Controller {
     }
     
     public function actionExportExcelItem($id){
-        $store = Customer::model()->findByPk($id);
-        if(!$store){
+        $customer = Customer::model()->findByPk($id);
+        if(!$customer){
             $this->returnJson([
                 'success' => false,
                 'message' => 'Customer is not found',
@@ -265,7 +265,7 @@ class CustomerController extends Controller {
         
         $columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         $model = [];
-        $nameFile = 'Export_Customer_'.$store->name;
+        $nameFile = 'Export_Customer_'.$customer->name;
         $model[] = new CustomerPdfItem("", $nameFile, "", "");
 //        $model[] = new CustomerPdfItem("image||file:///F:/setup/xampp/htdocs/pmassetmanager/server/data/images/logo.png","","","");
         $newObjectPdfItem = new CustomerPdfItem();
@@ -274,22 +274,22 @@ class CustomerController extends Controller {
         $newObjectPdfItem->setObjectInfo($model, $objectAttributes);
         
         // Customer's signage 
-        $relatedSignages = $store->getListSignage();
+        $relatedSignages = $customer->getListSignage();
         $newObjectPdfItem->setRelatedSignages($model, $relatedSignages, "Customer's signages");
         
         // Customer's fixture 
-        $relatedFixtures = $store->getListFixture();
+        $relatedFixtures = $customer->getListFixture();
         $newObjectPdfItem->setRelatedFixtures($model, $relatedFixtures, "Customer's fixtures");
         
-        // store document
-        $storeTmpFileIds = $store->tmp_file_ids;
-        $documentsTmp = FileService::getFilesByIds(['ids' => $storeTmpFileIds]);
+        // customer document
+        $customerTmpFileIds = $customer->tmp_file_ids;
+        $documentsTmp = FileService::getFilesByIds(['ids' => $customerTmpFileIds]);
         $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isset($documentsTmp['files'])
                 ? $documentsTmp['files'] : array();
         $newObjectPdfItem->setDocuments($model, $documents, "Customer's documents");
         
-        // store note
-        $note = $store->note;
+        // customer note
+        $note = $customer->note;
         if($note){
             $newObjectPdfItem->setSmt($model, "Note", $note, "Customer's note");
         }
@@ -315,14 +315,14 @@ class CustomerController extends Controller {
 
     public function actionImportObject(){
             $data= CustomerService::data();
-            $result= ObjectCommonService::importObject($data, "Customer", "store_number", "Customer", "CustomerService");
+            $result= ObjectCommonService::importObject($data, "Customer", "customer_number", "Customer", "CustomerService");
             $this->returnJson($result);
     }
 
     public function actionTestpdf(){
-        $store = Customer::model()->findByPk(44);
-        $content = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot').'/protected/modules/api/views/email/_store_pdf_template.php', array(
-            'store' => $store,
+        $customer = Customer::model()->findByPk(44);
+        $content = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot').'/protected/modules/api/views/email/_customer_pdf_template.php', array(
+            'customer' => $customer,
         ),true, true);
 
         // Create pdf
@@ -352,11 +352,11 @@ class CustomerController extends Controller {
     }
     
     public function actionShowhtml($id){
-        $store = Customer::model()->findByPk($id);
+        $customer = Customer::model()->findByPk($id);
 
-        if(isset($store)){
-            $store_name_converted = preg_replace('/\s+/', '_', $store->name);
-            $pdf_file = 'STORE_'.$store_name_converted.'_'.date('Ymd', $store->created_time).'_'.$store->id;
+        if(isset($customer)){
+            $customer_name_converted = preg_replace('/\s+/', '_', $customer->name);
+            $pdf_file = 'STORE_'.$customer_name_converted.'_'.date('Ymd', $customer->created_time).'_'.$customer->id;
             $check_file = $pdf_file;
             $i = 1;
             while (file_exists(Yii::getPathOfAlias('webroot').'/data/pdf/'.$check_file.'.pdf')) {
@@ -367,8 +367,8 @@ class CustomerController extends Controller {
             $pdf_file = $check_file;
 
             // Create content
-            $content = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot').'/protected/modules/api/views/email/_store_pdf_template.php', array(
-                'store' => $store,
+            $content = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot').'/protected/modules/api/views/email/_customer_pdf_template.php', array(
+                'customer' => $customer,
             ),true, true);
             
             // Create pdf

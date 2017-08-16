@@ -34,26 +34,35 @@
                                       </select>
                                     </div>-->
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.name" type="text" class="form-control" placeholder="search name..." ng-enter="search()">
+                                        <input ng-model="search_customer.ship_to" type="text" class="form-control" placeholder="search ship to..." ng-enter="search()">
                                     </div>
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.city" type="text" class="form-control" placeholder="search city..." ng-enter="search()">
-                                    </div>
-                                    <div class="col-xs-2 none">
-                                        <input ng-model="search_customer.email" type="text" class="form-control" placeholder="search email..." ng-enter="search()">
+                                        <input ng-model="search_customer.ship_address" type="text" class="form-control" placeholder="search ship address..." ng-enter="search()">
                                     </div>
                                     <div class="col-xs-2">
-                                      <!--<select class="form-control" ng-model="search_customer.signage_id" ng-options="item.id as item.code for item in related_signages" ng-enter="search()" placeholder="search signage...">
+                                        <input ng-model="search_customer.bill_to" type="text" class="form-control" placeholder="search bill to..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_customer.bill_address" type="text" class="form-control" placeholder="search bill address..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_customer.phone" type="text" class="form-control" placeholder="search phone..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_customer.fax" type="text" class="form-control" placeholder="search fax..." ng-enter="search()">
+                                    </div>
+<!--                                    <div class="col-xs-2">
+                                      <select class="form-control" ng-model="search_customer.signage_id" ng-options="item.id as item.code for item in related_signages" ng-enter="search()" placeholder="search signage...">
                                         <option value="">[Select signage]</option>
-                                      </select>-->
+                                      </select>
                                       <input ampautocomplete ng-model="search_customer.signage_id" type="text" class="form-control" placeholder="search signage ..." id="Search_Signage_id" data-source="/signage/getAll" ui-option="'signages'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="'Related signage'">
-                                    </div>
-                                    <div class="col-xs-2">
-                                      <!--<select class="form-control" ng-model="search_customer.fixture_id" ng-options="item.id as item.code for item in related_fixtures" ng-enter="search()" placeholder="search fixture...">
+                                    </div>-->
+<!--                                    <div class="col-xs-2">
+                                      <select class="form-control" ng-model="search_customer.fixture_id" ng-options="item.id as item.code for item in related_fixtures" ng-enter="search()" placeholder="search fixture...">
                                         <option value="">[Select fixture]</option>
-                                      </select>-->
+                                      </select>
                                       <input ampautocomplete ng-model="search_customer.fixture_id" type="text" class="form-control" placeholder="search fixture ..." id="Search_Fixture_id" data-source="/fixture/getAll" ui-option="'fixtures'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="'Related fixtures'">
-                                    </div>
+                                    </div>-->
                                     <div class="col-xs-2">
                                         <button type="button" ng-click="search()" class="btn btn-primary pull-right">Search</button>
                                         <button title="Reset search form" type="button" ng-click="resetSearch()" class="btn btn-icon btn-default pull-right"><i class="fa fa-refresh"></i></button>
@@ -67,10 +76,10 @@
                                         <input ng-model="uploaded_file" type="file" file-model="uploaded_file" style="display: inline; width: 150px;">-->
                                         <!--<a href="/server/data/sample/import_customer_db_sample.xls" download target="_blank">Get sample file</a>-->
                                     </div>
-                                    <div class="col-xs-6">
+<!--                                    <div class="col-xs-6">
                                         <div class="btn-group pull-right"> 
-<!--                                            <button type="button" class="btn btn-primary" ng-click="exportExcel()"><i class="fa fa-file-excel-o"></i> Excel</button> 
-                                            <button type="button" class="btn btn-success" ng-click="exportPdf()"><i class="fa fa-file-pdf-o"></i> Pdf</button> -->
+                                            <button type="button" class="btn btn-primary" ng-click="exportExcel()"><i class="fa fa-file-excel-o"></i> Excel</button> 
+                                            <button type="button" class="btn btn-success" ng-click="exportPdf()"><i class="fa fa-file-pdf-o"></i> Pdf</button> 
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                                 <span class="caret"></span> 
                                                 <span class="sr-only">Toggle Dropdown</span> 
@@ -119,7 +128,7 @@
                                                 </form>
                                             </ul> 
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -139,18 +148,14 @@
                                 <thead>
                                     <tr role="row">
                                         <th>#</th>
-                                        <th>Image</th>
-                                        <th ng-class="{sorting: sort.attribute != 'name', sorting_asc: sort.attribute == 'name' && sort.type == 'ASC', sorting_desc: sort.attribute == 'name' && sort.type == 'DESC'}" ng-click="sort('name')" rowspan="1" colspan="1">Name</th>
-                                        <th ng-class="{sorting: sort.attribute != 'customer_number', sorting_asc: sort.attribute == 'customer_number' && sort.type == 'ASC', sorting_desc: sort.attribute == 'customer_number' && sort.type == 'DESC'}" ng-click="sort('customer_number')" rowspan="1" colspan="1">Store Number</th>
-                                        <th>Tier</th>
-                                        <th ng-class="{sorting: sort.attribute != 'contact_name', sorting_asc: sort.attribute == 'contact_name' && sort.type == 'ASC', sorting_desc: sort.attribute == 'contact_name' && sort.type == 'DESC'}" ng-click="sort('contact_name')" rowspan="1" colspan="1">Area Manager</th>
-                                        <th ng-class="{sorting: sort.attribute != 'franchisee_name', sorting_asc: sort.attribute == 'franchisee_name' && sort.type == 'ASC', sorting_desc: sort.attribute == 'franchisee_name' && sort.type == 'DESC'}" ng-click="sort('franchisee_name')" rowspan="1" colspan="1">Franchisee Name</th>
-                                        <th ng-class="{sorting: sort.attribute != 'address1', sorting_asc: sort.attribute == 'address1' && sort.type == 'ASC', sorting_desc: sort.attribute == 'address1' && sort.type == 'DESC'}" ng-click="sort('address1')" rowspan="1" colspan="1">Store Address</th>
-                                        <th ng-class="{sorting: sort.attribute != 'country', sorting_asc: sort.attribute == 'country' && sort.type == 'ASC', sorting_desc: sort.attribute == 'country' && sort.type == 'DESC'}" ng-click="sort('country')" rowspan="1" colspan="1">Country</th>
-                                        <th>State/Province</th>
-                                        <th ng-class="{sorting: sort.attribute != 'city', sorting_asc: sort.attribute == 'city' && sort.type == 'ASC', sorting_desc: sort.attribute == 'city' && sort.type == 'DESC'}" ng-click="sort('city')"rowspan="1" colspan="1">City</th>
-                                        <th ng-class="{sorting: sort.attribute != 'email', sorting_asc: sort.attribute == 'email' && sort.type == 'ASC', sorting_desc: sort.attribute == 'email' && sort.type == 'DESC'}" ng-click="sort('email')"rowspan="1" colspan="1">Email</th>
-                                        <th ng-class="{sorting: sort.attribute != 'phone', sorting_asc: sort.attribute == 'phone' && sort.type == 'ASC', sorting_desc: sort.attribute == 'phone' && sort.type == 'DESC'}" ng-click="sort('phone')" rowspan="1" colspan="1">Phone</th>
+                                        <th ng-class="{sorting: sort.attribute != 'ship_to', sorting_asc: sort.attribute == 'ship_to' && sort.type == 'ASC', sorting_desc: sort.attribute == 'ship_to' && sort.type == 'DESC'}" ng-click="sort('ship_to')" rowspan="1" colspan="1">Ship-To Name</th>
+                                        <th ng-class="{sorting: sort.attribute != 'ship_oa', sorting_asc: sort.attribute == 'ship_oa' && sort.type == 'ASC', sorting_desc: sort.attribute == 'ship_oa' && sort.type == 'DESC'}" ng-click="sort('ship_oa')" rowspan="1" colspan="1">Ship-To O/A</th>
+                                        <th ng-class="{sorting: sort.attribute != 'ship_address', sorting_asc: sort.attribute == 'ship_address' && sort.type == 'ASC', sorting_desc: sort.attribute == 'ship_address' && sort.type == 'DESC'}" ng-click="sort('ship_address')" rowspan="1" colspan="1">Ship-To Address</th>
+                                        <th ng-class="{sorting: sort.attribute != 'bill_to', sorting_asc: sort.attribute == 'bill_to' && sort.type == 'ASC', sorting_desc: sort.attribute == 'bill_to' && sort.type == 'DESC'}" ng-click="sort('bill_to')" rowspan="1" colspan="1">Bill-To Name</th>
+                                        <th ng-class="{sorting: sort.attribute != 'bill_oa', sorting_asc: sort.attribute == 'bill_oa' && sort.type == 'ASC', sorting_desc: sort.attribute == 'bill_oa' && sort.type == 'DESC'}" ng-click="sort('bill_oa')" rowspan="1" colspan="1">Bill-To O/A</th>
+                                        <th ng-class="{sorting: sort.attribute != 'bill_address', sorting_asc: sort.attribute == 'bill_address' && sort.type == 'ASC', sorting_desc: sort.attribute == 'bill_address' && sort.type == 'DESC'}" ng-click="sort('bill_address')" rowspan="1" colspan="1">Bill-To Address</th>
+                                        <th ng-class="{sorting: sort.attribute != 'phone', sorting_asc: sort.attribute == 'phone' && sort.type == 'ASC', sorting_desc: sort.attribute == 'phone' && sort.type == 'DESC'}" ng-click="sort('phone')"rowspan="1" colspan="1">Phone</th>
+                                        <th ng-class="{sorting: sort.attribute != 'fax', sorting_asc: sort.attribute == 'fax' && sort.type == 'ASC', sorting_desc: sort.attribute == 'fax' && sort.type == 'DESC'}" ng-click="sort('fax')"rowspan="1" colspan="1">Fax</th>
                                         <th class="text-center">Tools</th>
                                         <th></th>
                                     </tr>
@@ -159,18 +164,14 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th rowspan="1" colspan="1">Image</th>
-                                        <th rowspan="1" colspan="1">Name</th>
-                                        <th rowspan="1" colspan="1">Store Number</th>
-                                        <th rowspan="1" colspan="1">Tier</th>
-                                        <th rowspan="1" colspan="1">Area Manager</th>
-                                        <th rowspan="1" colspan="1">Franchisee Name</th>
-                                        <th rowspan="1" colspan="1">Store Address</th>
-                                        <th rowspan="1" colspan="1">Country</th>
-                                        <th rowspan="1" colspan="1">State/Province</th>
-                                        <th rowspan="1" colspan="1">City</th>
-                                        <th rowspan="1" colspan="1">Email</th>
+                                        <th rowspan="1" colspan="1">Ship-To Name</th>
+                                        <th rowspan="1" colspan="1">Ship-To O/A</th>
+                                        <th rowspan="1" colspan="1">Ship Address</th>
+                                        <th rowspan="1" colspan="1">Bill To Name</th>
+                                        <th rowspan="1" colspan="1">Bill To O/A</th>
+                                        <th rowspan="1" colspan="1">Address</th>
                                         <th rowspan="1" colspan="1">Phone</th>
+                                        <th rowspan="1" colspan="1">Fax</th>
                                         <th class="text-center">Tools</th>
                                         <th></th>
                                     </tr>
@@ -178,20 +179,14 @@
                                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                                     <tr class="even" ng-repeat="customer in customers">
                                         <td>{{$index + 1}}</td>
-                                        <td>
-                                            <img class="thumbnail" style="width: 80px; height: 80px" src="{{customer.image_id_url}}" />
-                                        </td>
-                                        <td class=" sorting_1"><a ui-sref="customer-view({'id':customer.id})">{{customer.name}}</a></td>
-										<td class=" ">{{customer.customer_number}}</td>
-                                        <td class=" ">{{customer.tier_name}}</td>
-                                        <td class=" ">{{customer.contact_name}}</td>
-                                        <td class=" ">{{customer.franchisee_name}}</td>
-                                        <td class=" ">{{customer.address1}}</td>
-                                        <td class=" ">{{customer.country}}</td>
-                                        <td class=" ">{{customer.state_name}}</td>
-                                        <td class=" ">{{customer.city}}</td>
-                                        <td class=" ">{{customer.email}}</td>
+                                        <td class=" sorting_1"><a ui-sref="customer-view({'id':customer.id})">{{customer.ship_to}}</a></td>
+					<td class=" ">{{customer.ship_oa}}</td>
+                                        <td class=" ">{{customer.ship_address}}</td>
+                                        <td class=" ">{{customer.bill_to}}</td>
+                                        <td class=" ">{{customer.bill_oa}}</td>
+                                        <td class=" ">{{customer.bill_address}}</td>
                                         <td class=" ">{{customer.phone}}</td>
+                                        <td class=" ">{{customer.fax}}</td>
                                         <td class="text-center btn-tools">
                                             <div class="btn-group dropdown">
                                                 <a href="#" data-toggle="dropdown" class="btn">
@@ -210,12 +205,12 @@
                                                     <li ng-show="root.is_superadmin">
                                                         <a class="text-yellow" href="#" ng-click="copyStore(customer.id)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
                                                     </li>
-                                                    <li>
+<!--                                                    <li>
                                                         <a class="text-blue" href="javascript:void(0)" ng-click="exportPdfItem(customer.id)"><i class="fa fa-file-pdf-o"></i> Export Pdf</a>
                                                     </li>
                                                     <li>
                                                         <a class="text-red" href="javascript:void(0)" ng-click="exportExcelItem(customer.id)"><i class="fa fa-file-excel-o"></i> Export Excel</a>
-                                                    </li>
+                                                    </li>-->
                                                 </ul>
                                             </div>
                                         </td>
@@ -256,7 +251,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<div class="modal" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailModalLabel" aria-hidden="true" >
+<!--<div class="modal" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width: 700px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -301,6 +296,6 @@
                 <button type="button" class="btn btn-primary" ng-click="sendEmail()">Send Email</button>
                 <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
+        </div> /.modal-content 
     </div>
-</div>
+</div>-->

@@ -45,13 +45,13 @@ class CustomerService extends iPhoenixService {
         $sql_order_by = '';
         $sql_order_by = 'ORDER BY tbl_customer.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
 
-        if(isset($data['signage_id']) && $data['signage_id']){
-            $sql = "SELECT tbl_customer.*, tbl_customer_signage.signage_quantity, tbl_customer_signage.id customer_signage_id FROM tbl_customer ";
-        }
-        else{
-            $sql = "SELECT tbl_customer.* FROM tbl_customer ";
-        }
-        
+//        if(isset($data['signage_id']) && $data['signage_id']){
+//            $sql = "SELECT tbl_customer.*, tbl_customer_signage.signage_quantity, tbl_customer_signage.id customer_signage_id FROM tbl_customer ";
+//        }
+//        else{
+//            $sql = "SELECT tbl_customer.* FROM tbl_customer ";
+//        }
+        $sql = "SELECT tbl_customer.* FROM tbl_customer ";
         if(isset($data['signage_id']) && $data['signage_id']){
             $sql = $sql . " INNER JOIN tbl_customer_signage ON tbl_customer.id = tbl_customer_signage.customer_id AND tbl_customer_signage.signage_id = ".$data['signage_id'];
         }
@@ -281,20 +281,8 @@ class CustomerService extends iPhoenixService {
         else{
             $result = $customer->attributes;
         }
-        $result['state_name'] =  isset($customer->state) ? $customer->state->state_short : "N/A";
-        $result['tier_name'] =  isset($customer->tier) ? $customer->tier->name : "N/A";
         $result['tmp_file_ids'] = $customer->tmp_file_ids;
-        if($isRelated){
-            $result['customer_signages'] = $customer->getListSignage();
-            $result['customer_fixtures'] = $customer->getListFixture();
-        }
         
-        if($customer->open_date){
-            $result['open_date'] = date('Y-m-d', $customer->open_date);
-        }
-        $result['image_id_url'] = $customer->image && $customer->image->getThumbUrl(80, 80, false)
-                ? "server/".$customer->image->getThumbUrl(80, 80, false)
-                : "server/".CustomEnum::IMAGE_NOT_AVAILABLE;
         return $result;
     }
     
