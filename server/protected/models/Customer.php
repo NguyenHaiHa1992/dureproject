@@ -21,6 +21,16 @@
  */
 class Customer extends CActiveRecord
 {
+    const STATUS_DEFAULT = 0;
+    const STATUS_LIVE = 1;
+    const STATUS_ARCHIVED = 2;
+    const STATUS_DEPRECATED = 3;
+    const STATUS_YES = 1;
+    const STATUS_NO = 0;
+    const LANGUAGE_ENGLISH = "en";
+    const LANGUAGE_FRENCH = "fr";
+    
+    public $tmp_file_ids;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,29 +44,30 @@ class Customer extends CActiveRecord
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('document_id, status, created_time, updated_time', 'numerical', 'integerOnly'=>true),
-			array('ship_oa, bill_oa, fax', 'length', 'max'=>255),
-			array('phone', 'length', 'max'=>50),
-			array('ship_to, ship_address, bill_to, bill_address, note', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, ship_to, ship_oa, ship_address, bill_to, bill_oa, bill_address, phone, fax, document_id, note, status, created_time, updated_time', 'safe', 'on'=>'search'),
-		);
+            // NOTE: you should only define rules for those attributes that
+            // will receive user inputs.
+            return array(
+                array('ship_to, ship_address, bill_to, bill_address, phone', 'required'),
+                array('document_id, status, created_time, updated_time', 'numerical', 'integerOnly'=>true),
+                array('ship_oa, bill_oa, fax', 'length', 'max'=>255),
+                array('phone', 'length', 'max'=>50),
+                array('tmp_file_ids, ship_to, ship_address, bill_to, bill_address, note', 'safe'),
+                // The following rule is used by search().
+                // @todo Please remove those attributes that should not be searched.
+                array('id, ship_to, ship_oa, ship_address, bill_to, bill_oa, bill_address, phone, fax, document_id, note, status, created_time, updated_time', 'safe', 'on'=>'search'),
+            );
 	}
 
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+	public function relations() {
+            // NOTE: you may need to adjust the relation name and the related
+            // class name for the relations automatically generated below.
+            return array(
+                'files' => array(self::MANY_MANY, 'File', 'tbl_customer_file(customer_id, file_id)'),
+            );
+        }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -129,4 +140,86 @@ class Customer extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    protected function afterFind() {
+        $list = $this->files;
+
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        $this->tmp_file_ids = implode(',', $result);
+
+        return parent::afterFind();
+    }
+    
+    protected function afterSave() {
+        $new_list_file_ids = explode(',', $this->tmp_file_ids);
+        foreach ($new_list_file_ids as $file_id) {
+            $criteria = new CDbCriteria();
+            $criteria->compare('customer_id', $this->id);
+            $criteria->compare('file_id', $file_id);
+            $document_file = CustomerFile::model()->find($criteria);
+            if (!isset($document_file)) {
+                $document_file = new CustomerFile();
+                $document_file->customer_id = $this->id;
+                $document_file->file_id = $file_id;
+                $document_file->save();
+            }
+        }
+        $list_current_file_ids = $this->list_current_file_ids;
+        foreach ($list_current_file_ids as $file_id) {
+            if (!in_array($file_id, $new_list_file_ids)) {
+                $criteria = new CDbCriteria();
+                $criteria->compare('customer_id', $this->id);
+                $criteria->compare('file_id', $file_id);
+                CustomerFile::model()->deleteAll($criteria);
+            }
+        }
+
+        parent::afterSave();
+    }
+    
+    protected function afterDelete() {
+        parent::afterDelete();
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('customer_id =' . $this->id);
+        CustomerFile::model()->deleteAll($criteria);
+    }
+
+    public function getList_current_file_ids() {
+        $list = $this->files;
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        return $result;
+    }
+    
+    public function getStatusLabel(){
+        $labels = [
+            self::STATUS_DEFAULT => '',
+            self::STATUS_LIVE => 'live',
+            self::STATUS_ARCHIVED => 'archived',
+            self::STATUS_DEPRECATED => 'deprecated',
+        ];
+        
+        return $labels[$this->status];
+    }
+    
+    public function getLanguageLabel(){
+        $labels = [
+            self::LANGUAGE_ENGLISH => 'English',
+            self::LANGUAGE_FRENCH => 'French',
+        ];
+        return $labels[$this->language];
+    }
+    
+    public function getLanguages(){
+        return [
+            (object)['id' => self::LANGUAGE_ENGLISH, 'name' => 'English'],
+            (object)['id' => self::LANGUAGE_FRENCH, 'name' => 'French']
+        ];
+    }
 }

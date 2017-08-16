@@ -54,7 +54,7 @@
 
                                 <div class="row form-group" ng-class="{'has-error': customer_error.ship_oa.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>O/A<span class="required"></span></label>
+                                        <label>O/A (if applicable)<span class="required"></span></label>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.ship_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
@@ -66,7 +66,7 @@
                                 
                                 <div class="row form-group" ng-class="{'has-error': customer_error.ship_address.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Ship Address<span class="required"></span></label>
+                                        <label>Address<span class="required"></span></label>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.ship_address" type="text" class="form-control" placeholder="Ship Address">
@@ -75,10 +75,16 @@
                                         </span>
                                     </div>
                                 </div>
-
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': customer_error.bill_to.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Bill To<span class="required">*</span></label>
+                                        <label>Bill-To (Full Legal Company Name)
+                                            <!--<span class="required">*</span>-->
+                                        </label>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.bill_to" type="text" class="form-control" placeholder="Bill-To (Full Legal Company Name)">
@@ -90,7 +96,7 @@
 
                                 <div class="row form-group" ng-class="{'has-error': customer_error.bill_oa.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Bill OA</label></br>
+                                        <label>O/A (if applicable)</label></br>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.bill_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
@@ -102,7 +108,7 @@
 
                                 <div class="row form-group" ng-class="{'has-error': customer_error.bill_address.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Bill Address</label></br>
+                                        <label>Address</label></br>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.bill_address" type="text" class="form-control" placeholder="Bill Address">
@@ -112,7 +118,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row form-group none" ng-class="{'has-error': customer_error.phone.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': customer_error.phone.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Phone</label></br>
                                     </div>
@@ -123,150 +129,25 @@
                                         </span>
                                     </div>
                                 </div>
-
-<!--                                <div class="row form-group" ng-class="{'has-error': customer_error.image_id.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Image</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <file-uploader-single option-style="'image'" file-id="customer.image_id" model-id="customer.id" field-id="'image_id'"></file-uploader-single>
-                                        <span class="control-label" for="inputError" ng-show="customer_error.image_id.length != 0" ng-repeat="error in customer_error.image_id">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>-->
-                            </form>
-                        </div><!--/.col (left) -->
-                        <div class="col-md-6">
-                            <!-- general form elements disabled -->
-                            <form role="form">
-                                <div class="row form-group" ng-class="{'has-error': customer_error.address1.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label for="">Address</label> </br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.address1" type="text" class="form-control" placeholder="address 1">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.address1.length != 0" ng-repeat="error in customer_error.address1">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group none" ng-class="{'has-error': customer_error.address2.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label for="">Address 2</label> </br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.address2" type="text" class="form-control" placeholder="address 2">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.address2.length != 0" ng-repeat="error in customer_error.address2">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.city.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label for="">City</label> </br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.city" type="text" class="form-control" placeholder="city">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.city.length != 0" ng-repeat="error in customer_error.city">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.zipcode.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label for="">Zip code <br/> Postal code</label> </br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.zipcode" type="text" class="form-control" placeholder="zip code / postal code">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.zipcode.length != 0" ng-repeat="error in customer_error.zipcode">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.state_id.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label for="" >State / Province</label></br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <select chosen class="form-control" required ng-model="customer.state_id" ng-options="item.id as item.state_short for item in states" data-placeholder="Choose a state ...">
-                                            <option value="">---</option>
-                                        </select>
-                                        <span class="control-label" for="inputError" ng-show="customer_error.state_id.length != 0" ng-repeat="error in customer_error.state_id">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.country.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label for="" >Country</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.country" type="text" class="form-control" placeholder="country">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.country.length != 0" ng-repeat="error in customer_error.country">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': customer_error.layout_file_id.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': customer_error.fax.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Layout file</label>
-                                    </div>
-                                    <div class="col-md-9">  
-                                        <file-uploader-single option-style="'full'" file-id="customer.layout_file_id" model-id="customer.id" field-id="'layout_file_id'"></file-uploader-single>
-                                        <span class="control-label" for="inputError" ng-show="customer_error.layout_file_id.length != 0" ng-repeat="error in customer_error.layout_file_id">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <div class="row form-group" ng-class="{'has-error': customer_error.layout_id.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Layout</label>
+                                        <label>Fax</label></br>
                                     </div>
                                     <div class="col-md-9">
-                                        <file-uploader-single option-style="'image'" file-id="customer.layout_id" model-id="customer.id" field-id="'layout_id'"></file-uploader-single>
-                                        <span class="control-label" for="inputError" ng-show="customer_error.layout_id.length != 0" ng-repeat="error in customer_error.layout_id">
+                                        <input ng-model="customer.fax" type="text" class="form-control" placeholder="Fax">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.fax.length != 0" ng-repeat="error in customer_error.fax">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-6">
-                <div class="box no-border" style="min-height: 100px">
-                    <div class="box-header">
-                        <h3 class="box-title">Customer information card</h3>
-                    </div>
-                    <div class="box-body overhidden" id="customer_card">
-                        ID: {{customer.id}}
-                        <br />Name: {{customer.name}}
-                        <br />Email: {{customer.email}}
-                        <br />Phone: {{customer.phone}}
-                        <br />Address 1: {{customer.address1}}
-                        <br />Address 2: {{customer.address2}}
-                        <br />City: {{customer.city}}
-                        <br />State/Province: {{customer.state_name}}
-                        <br />Zipcode/Postal Code: {{customer.zipcode}}
-                    </div>
-                    <div class="box-footer">
-                        <button class="btn btn-info" type="button" clip-copy="getCustomerCard()" clip-click="copyToClipboard()">Copy to clipboard</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="box no-border" style="min-height: 100px">
                     <div class="box-header">
                         <h3 class="box-title">Customer documents</h3>

@@ -367,6 +367,44 @@ angular.module('app', [
                         }]
                 }
             })
+            .state('customer-detail', {
+                url: '/customer-detail/:id',
+                views: {
+                    "lazyLoadView": {
+                        controller: 'CustomerDetailController', // This view will use AppCtrl loaded below in the resolve
+                        templateUrl: 'amp/views/customer/customer-detail.html'
+                    }
+                },
+                resolve: {// Any property in resolve should return a promise and is executed before the view is loaded
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load({files: [
+                            'amp/js/config/app.js',
+                            'amp/js/config/constant.js',
+                            'amp/js/controllers/customer/CustomerDetailController.js'
+                        ]});
+                    }]
+                }
+            })
+            .state('customer-view', {
+                url: '/customer-view/:id',
+                views: {
+                    "lazyLoadView": {
+                        controller: 'CustomerViewController', // This view will use AppCtrl loaded below in the resolve
+                        templateUrl: 'amp/views/customer/customer-view.html'
+                    }
+                },
+                resolve: {// Any property in resolve should return a promise and is executed before the view is loaded
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load({files: [
+                            'amp/js/config/app.js',
+                            'amp/js/config/constant.js',
+                            'amp/js/controllers/customer/CustomerViewController.js',
+                        ]});
+                    }]
+                }
+            })
             /*
              * @author tunghus1993@gmail.com
              * create customer

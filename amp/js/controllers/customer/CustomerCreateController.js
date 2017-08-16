@@ -20,8 +20,6 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $scope.customer_empty= data.customer_empty;
                 $scope.customer_error= data.customer_error;
                 $scope.customer_error_empty= data.customer_error_empty;
-                $scope.states= data.states;
-                $scope.tiers= data.tiers;
 
                 $scope.is_update= data.is_update;
                 $scope.is_create= data.is_create;
@@ -88,20 +86,6 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         .error(function(data, status, headers, config) {
             $state.go('404');
         });
-    };
-
-    $scope.getCustomerCard = function() {
-        // Create card
-        $scope.customer.card = 'ID: ' + $scope.customer.id +
-                            '\Name: ' + $scope.customer.name +
-                            '\nEmail: ' + $scope.customer.email +
-                            '\nPhone: ' + $scope.customer.phone +
-                            '\nAddress 1: ' + $scope.customer.address1 +
-                            '\nAddress 2: ' + $scope.customer.address2 +
-                            '\nCity: ' + $scope.customer.city +
-                            '\nState/Province: ' + $scope.customer.state_name +
-                            '\nZipcode/Postal Code: ' + $scope.customer.zipcode;
-        return $scope.customer.card;
     };
 
     $scope.copyToClipboard = function () {

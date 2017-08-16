@@ -128,7 +128,6 @@ class CustomerService extends iPhoenixService {
         $result['customer_error'][$attr] = [];
       }
       $result['customer_error']['tmp_file_ids'] = [];
-      $result['customer_error']['state_name'] = [];
 
       $result['success'] = true;
       return $result;
@@ -206,7 +205,6 @@ class CustomerService extends iPhoenixService {
         $result = array();
         $customer = Customer::model()->findByPk((int) $data['id']);
         $customer->attributes = $data;
-
         $customer = CustomerService::beforeSave($customer);
         if ($customer->validate()) {
             $customer->save();
@@ -251,13 +249,10 @@ class CustomerService extends iPhoenixService {
         if ($customer->isNewRecord) {
             $customer->status = 1;
             $customer->created_time = time();
-            $customer->created_by = Yii::app()->user->id;
+//            $customer->created_by = Yii::app()->user->id;
         }
         else{
             $customer->updated_time = time();
-        }
-        if($customer->open_date && strtotime($customer->open_date)){
-            $customer->open_date = strtotime($customer->open_date.' 00:00:00');
         }
         return $customer;
     }
@@ -284,17 +279,17 @@ class CustomerService extends iPhoenixService {
         $result['state_name'] =  isset($customer->state) ? $customer->state->state_short : "N/A";
         $result['tier_name'] =  isset($customer->tier) ? $customer->tier->name : "N/A";
         $result['tmp_file_ids'] = $customer->tmp_file_ids;
-        if($isRelated){
-            $result['customer_signages'] = $customer->getListSignage();
-            $result['customer_fixtures'] = $customer->getListFixture();
-        }
+//        if($isRelated){
+//            $result['customer_signages'] = $customer->getListSignage();
+//            $result['customer_fixtures'] = $customer->getListFixture();
+//        }
         
-        if($customer->open_date){
-            $result['open_date'] = date('Y-m-d', $customer->open_date);
-        }
-        $result['image_id_url'] = $customer->image && $customer->image->getThumbUrl(80, 80, false)
-                ? "server/".$customer->image->getThumbUrl(80, 80, false)
-                : "server/".CustomEnum::IMAGE_NOT_AVAILABLE;
+//        if($customer->open_date){
+//            $result['open_date'] = date('Y-m-d', $customer->open_date);
+//        }
+//        $result['image_id_url'] = $customer->image && $customer->image->getThumbUrl(80, 80, false)
+//                ? "server/".$customer->image->getThumbUrl(80, 80, false)
+//                : "server/".CustomEnum::IMAGE_NOT_AVAILABLE;
         return $result;
     }
     

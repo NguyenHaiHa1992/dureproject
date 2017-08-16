@@ -24,11 +24,12 @@ class CustomerController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions'=>array('create', 'update', 'delete', 'copy'),
+                'actions'=>array('delete', 'copy'),
                 'roles'=>array('Super Admin'),
             ),
             array('allow',
-                'actions'=>array('createInit', 'detailInit', 'getAll', 'getEmptyCustomer', 
+                'actions'=>array('create', 'update', 
+                    'createInit', 'detailInit', 'getAll', 'getEmptyCustomer', 
                     'getEmptyCustomerError', 'getCustomerById', 'exportExcel', 'exportPdf', 'exportExcelItem', 
                     'testpdf', 'importObject', 'downloadfile', 'showhtml', 'test'),
                 'users' => array('@'),

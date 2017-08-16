@@ -394,9 +394,9 @@ class FileService extends iPhoenixService {
                 $criteria->addCondition("filename LIKE '%".$data['name']."%'");
 //                $criteria->compare('filename', $data['name']);
             }
-            if (!Yii::app()->user->checkAccess('Super Admin')) {
-                $criteria->compare('restricted', 1);
-            }
+//            if (!Yii::app()->user->checkAccess('Super Admin')) {
+//                $criteria->compare('restricted', 1);
+//            }
 //            $criteria->order = "created_time DESC";
             $list_file = File::model()->findAll($criteria);
             $result['success'] = false;
@@ -543,6 +543,12 @@ class FileService extends iPhoenixService {
         elseif($data['related'] == "fixture_file"){
             $model = FixtureFile::model()->findByAttributes([
                 'fixture_id' => $data['model_id'],
+                'file_id' => $data['file_id']
+            ]);
+        }
+        elseif($data['related'] == "customer_file"){
+            $model = CustomerFile::model()->findByAttributes([
+                'customer_id' => $data['model_id'],
                 'file_id' => $data['file_id']
             ]);
         }

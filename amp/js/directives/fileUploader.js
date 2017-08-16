@@ -104,6 +104,9 @@ angular.module('app').directive('fileUploader',[ '$rootScope', '$http', '$state'
             else if(stateName === "fixture-detail"){
                 urlParams.related = "fixture_file";
             }
+            else if(stateName === "customer-detail"){
+                urlParams.related = "customer_file";
+            }
 //            $http.post(BASE_URL + '/file/deleteFileById', {id: item.id})
             $http.post(BASE_URL + '/file/deleterelated', urlParams)
               .success(function(data) {
