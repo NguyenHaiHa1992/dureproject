@@ -274,7 +274,7 @@ class CustomerService extends iPhoenixService {
             return $result;
         }
         $customer->in_trash = 1;
-        if($customer->save()){
+        if($customer->save(false)){
             $result['success'] = true;
         }
         return $result;
