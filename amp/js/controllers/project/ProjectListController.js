@@ -1,7 +1,7 @@
 angular.module('app').controller('ProjectListController', ['$scope', '$timeout', '$http', '$location', '$rootScope', 'BASE_URL', '$state', '$window',
     function ($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state, $window) {
 	$scope.root = $rootScope;
-        $scope.customers = [];
+        $scope.projects = [];
         $scope.itemsByPage = 10;
         $scope.itemsByPages = [
             {
@@ -27,14 +27,14 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         ];
         $scope.pages = [];
         $scope.currentPage = 1;
-        $scope.start_customer = 1;
-        $scope.end_customer = 1;
+        $scope.start_project = 1;
+        $scope.end_project = 1;
         $scope.totalresults = 0;
         $scope.sort = {
             attribute: 'created_time',
             type: 'DESC',
         };
-        $scope.search_customer = {
+        $scope.search_project = {
             id: '',
             name: '',
             email: '',
@@ -44,7 +44,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
 //            signage_id: '',
 //            fixture_id: ''
         };
-        $scope.copy_search_customer = {
+        $scope.copy_search_project = {
             name: '',
             email: '',
 //            tier_id: '',
@@ -60,20 +60,20 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         };
 
         $scope.getProjects = function (post_information) {
-            $http.post(BASE_URL + '/customer/getAll', post_information)
+            $http.post(BASE_URL + '/project/getAll', post_information)
             .success(function (data) {
                 if (data.success) {
                     $scope.totalresults = parseInt(data.totalresults);
-                    $scope.start_customer = data.start_customer;
-                    $scope.end_customer = data.end_customer;
+                    $scope.start_project = data.start_project;
+                    $scope.end_project = data.end_project;
                     $scope.pages = [];
                     for (var p = 0; p < Math.ceil(data.totalresults / $scope.itemsByPage); p++)
                         $scope.pages.push(p + 1);
                     //$scope.pages= Math.ceil(data.totalresults/$scope.itemsByPage);
-                    $scope.customers = [];
-                    $scope.customers = data.customers;
-                    // for(var i= 0; i< data.customers.length; i++)
-                    // $scope.customers.push(data.email_templates[i]);
+                    $scope.projects = [];
+                    $scope.projects = data.projects;
+                    // for(var i= 0; i< data.projects.length; i++)
+                    // $scope.projects.push(data.email_templates[i]);
                     
                     $scope.selectedDbIds = [];
                 }
@@ -94,12 +94,12 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'limitnum': $scope.itemsByPage,
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
-                'id': $scope.search_customer.id,
-//                'name': $scope.search_customer.name,
-//                'tier_id': $scope.search_customer.tier_id,
-//                'email': $scope.search_customer.email,
-//                'created': $scope.search_customer.created,
-//                'city': $scope.search_customer.city,
+                'id': $scope.search_project.id,
+//                'name': $scope.search_project.name,
+//                'tier_id': $scope.search_project.tier_id,
+//                'email': $scope.search_project.email,
+//                'created': $scope.search_project.created,
+//                'city': $scope.search_project.city,
             };
             $scope.getProjects(post_information);
         };
@@ -114,12 +114,12 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'limitnum': $scope.itemsByPage,
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
-                'id': $scope.search_customer.id,
-//                'name': $scope.search_customer.name,
-//                'tier_id': $scope.search_customer.tier_id,
-//                'email': $scope.search_customer.email,
-                'created': $scope.search_customer.created,
-//                'city': $scope.search_customer.city,
+                'id': $scope.search_project.id,
+//                'name': $scope.search_project.name,
+//                'tier_id': $scope.search_project.tier_id,
+//                'email': $scope.search_project.email,
+                'created': $scope.search_project.created,
+//                'city': $scope.search_project.city,
             };
             if ($scope.itemsByPage_change_number > 1)
                 $scope.getProjects(post_information);
@@ -133,12 +133,12 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'limitnum': $scope.itemsByPage,
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
-                'id': $scope.search_customer.id,
-//                'name': $scope.search_customer.name,
-//                'tier_id': $scope.search_customer.tier_id,
-//                'email': $scope.search_customer.email,
-                'created': $scope.search_customer.created,
-//                'city': $scope.search_customer.city,
+                'id': $scope.search_project.id,
+//                'name': $scope.search_project.name,
+//                'tier_id': $scope.search_project.tier_id,
+//                'email': $scope.search_project.email,
+                'created': $scope.search_project.created,
+//                'city': $scope.search_project.city,
             };
             if ($scope.search_change_number > 1)
                 $scope.getProjects(post_information);
@@ -159,45 +159,45 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'limitnum': $scope.itemsByPage,
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
-                'id': $scope.search_customer.id,
-//                'name': $scope.search_customer.name,
-//                'tier_id': $scope.search_customer.tier_id,
-//                'email': $scope.search_customer.email,
-                'created': $scope.search_customer.created,
-//                'city': $scope.search_customer.city,
+                'id': $scope.search_project.id,
+//                'name': $scope.search_project.name,
+//                'tier_id': $scope.search_project.tier_id,
+//                'email': $scope.search_project.email,
+                'created': $scope.search_project.created,
+//                'city': $scope.search_project.city,
             };
             $scope.getProjects(post_information);
         };
 
         $scope.search = function () {
-            post_information.ship_to = $scope.search_customer.ship_to;
-            post_information.ship_oa = $scope.search_customer.ship_oa;
-            post_information.ship_address = $scope.search_customer.ship_address;
-            post_information.bill_to = $scope.search_customer.bill_to;
-            post_information.bill_oa = $scope.search_customer.bill_oa;
-            post_information.bill_address = $scope.search_customer.bill_address;
-            post_information.phone = $scope.search_customer.phone;
-            post_information.fax = $scope.search_customer.fax;
+            post_information.ship_to = $scope.search_project.ship_to;
+            post_information.ship_oa = $scope.search_project.ship_oa;
+            post_information.ship_address = $scope.search_project.ship_address;
+            post_information.bill_to = $scope.search_project.bill_to;
+            post_information.bill_oa = $scope.search_project.bill_oa;
+            post_information.bill_address = $scope.search_project.bill_address;
+            post_information.phone = $scope.search_project.phone;
+            post_information.fax = $scope.search_project.fax;
             
-            $scope.copy_search_customer.ship_to = $scope.search_customer.ship_to;
-            $scope.copy_search_customer.ship_oa = $scope.search_customer.ship_oa;
-            $scope.copy_search_customer.ship_address = $scope.search_customer.ship_address;
-            $scope.copy_search_customer.bill_to = $scope.search_customer.bill_to;
-            $scope.copy_search_customer.bill_oa = $scope.search_customer.bill_oa;
-            $scope.copy_search_customer.bill_address = $scope.search_customer.bill_address;
-            post_information.phone = $scope.search_customer.phone;
-            post_information.fax = $scope.search_customer.fax;
+            $scope.copy_search_project.ship_to = $scope.search_project.ship_to;
+            $scope.copy_search_project.ship_oa = $scope.search_project.ship_oa;
+            $scope.copy_search_project.ship_address = $scope.search_project.ship_address;
+            $scope.copy_search_project.bill_to = $scope.search_project.bill_to;
+            $scope.copy_search_project.bill_oa = $scope.search_project.bill_oa;
+            $scope.copy_search_project.bill_address = $scope.search_project.bill_address;
+            post_information.phone = $scope.search_project.phone;
+            post_information.fax = $scope.search_project.fax;
             $scope.getProjects(post_information);
         }
 
         $scope.resetSearch = function(){
-            $scope.search_customer = {};
+            $scope.search_project = {};
             $scope.search();
         }
 
-        $scope.viewDetai = function (customer_id) {
-            $rootScope.view_detail_customer_id = customer_id;
-            $state.go('customer-create');
+        $scope.viewDetai = function (project_id) {
+            $rootScope.view_detail_project_id = project_id;
+            $state.go('project-create');
         };
         
         // Filter show hide colums
@@ -225,17 +225,17 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         });
         
         $scope.exportExcel = function(){
-            var search_information = '&tier_id=' + $scope.copy_search_customer.tier_id 
-                    + '&name=' + $scope.copy_search_customer.name 
-                    + '&city=' + $scope.copy_search_customer.city 
-                    + '&email=' + $scope.copy_search_customer.email
-                    + '&signage_id=' + $scope.copy_search_customer.signage_id
-                    + '&fixture_id=' + $scope.copy_search_customer.fixture_id;
+            var search_information = '&tier_id=' + $scope.copy_search_project.tier_id 
+                    + '&name=' + $scope.copy_search_project.name 
+                    + '&city=' + $scope.copy_search_project.city 
+                    + '&email=' + $scope.copy_search_project.email
+                    + '&signage_id=' + $scope.copy_search_project.signage_id
+                    + '&fixture_id=' + $scope.copy_search_project.fixture_id;
             var post_information = $('#export-excel-column').serialize() + search_information;
             if($scope.selectedDbIds.length){
                 post_information += "&ids="+$scope.selectedDbIds.toString();
             }
-            $http.get(BASE_URL + '/customer/exportExcel?' + post_information)
+            $http.get(BASE_URL + '/project/exportExcel?' + post_information)
             .success(function (data) {
                 if (data.success) {
                     swal({
@@ -273,18 +273,18 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         };
         
         $scope.exportPdf = function(){
-            var search_information = '&tier_id=' + $scope.copy_search_customer.tier_id 
-                    + '&name=' + $scope.copy_search_customer.name 
-                    + '&city=' + $scope.copy_search_customer.city 
-                    + '&email=' + $scope.copy_search_customer.email
-                    + '&signage_id=' + $scope.copy_search_customer.signage_id
-                    + '&fixture_id=' + $scope.copy_search_customer.fixture_id
+            var search_information = '&tier_id=' + $scope.copy_search_project.tier_id 
+                    + '&name=' + $scope.copy_search_project.name 
+                    + '&city=' + $scope.copy_search_project.city 
+                    + '&email=' + $scope.copy_search_project.email
+                    + '&signage_id=' + $scope.copy_search_project.signage_id
+                    + '&fixture_id=' + $scope.copy_search_project.fixture_id
                     + '&type=pdf';
             var post_information = $('#export-excel-column').serialize() + search_information;
             if($scope.selectedDbIds.length){
                 post_information += "&ids="+$scope.selectedDbIds.toString();
             }
-            $http.get(BASE_URL + '/customer/exportExcel?' + post_information)
+            $http.get(BASE_URL + '/project/exportExcel?' + post_information)
             .success(function (data) {
                 if (data.success) {
                     swal({
@@ -398,7 +398,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
             },
             function(){
                 var information_post = {'id': id};
-                $http.post(BASE_URL + '/customer/delete', information_post)
+                $http.post(BASE_URL + '/project/delete', information_post)
                 .success(function (data) {
                     if (data.success) {
                         swal(data.message, "", "success");
@@ -423,13 +423,13 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         };
         
         $scope.copyProject = function (id) {
-//            $rootScope.view_detail_customer_id = id;
-//            $rootScope.is_copy_customer = true;
-//            $state.go('customer-create');
-            $http.post(BASE_URL + '/customer/copy', {id: id})
+//            $rootScope.view_detail_project_id = id;
+//            $rootScope.is_copy_project = true;
+//            $state.go('project-create');
+            $http.post(BASE_URL + '/project/copy', {id: id})
             .success(function (data) {
                 if (data.success) {
-                    $state.go('customer-detail', {id: data.id});
+                    $state.go('project-detail', {id: data.id});
                 }
                 else {
                     $state.go('404');
@@ -441,8 +441,8 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         }
 		
         // Export PDF and Email
-        $scope.exportPdfItem = function(customerId){
-            $http.get(BASE_URL + '/customer/exportPdf?id=' + customerId)
+        $scope.exportPdfItem = function(projectId){
+            $http.get(BASE_URL + '/project/exportPdf?id=' + projectId)
             .success(function (data) {
                 if (data.success) {
                     swal({
@@ -480,8 +480,8 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         };
         
         // Export Excel and Email
-        $scope.exportExcelItem = function(customerId){
-            $http.get(BASE_URL + '/customer/exportExcelItem?id=' + customerId)
+        $scope.exportExcelItem = function(projectId){
+            $http.get(BASE_URL + '/project/exportExcelItem?id=' + projectId)
             .success(function (data) {
                 if (data.success) {
                     swal({
@@ -589,9 +589,9 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
             if (file) {
                 swal({
                     title: "Project DB Import Option",
-                    text: "<button class='email bg-green'><i class='fa fa-plus'></i> New customer</button> \n\
-                            <button class='download bg-blue'><i class='fa fa-edit'></i> Update customer</button>\n\
-                            <br><br><p>NOTE: Please use the sample file to list all customers you want to Add/Update with all info. \n\
+                    text: "<button class='email bg-green'><i class='fa fa-plus'></i> New project</button> \n\
+                            <button class='download bg-blue'><i class='fa fa-edit'></i> Update project</button>\n\
+                            <br><br><p>NOTE: Please use the sample file to list all projects you want to Add/Update with all info. \n\
                                 Please check the file carefully before importing since this action cannot be reversed.</p>",
                     type: "info",
                     showConfirmButton: false,
@@ -620,7 +620,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 var fd = new FormData();
                 fd.append('uploaded_file', file);
                 fd.append('option', option);
-                $http.post(BASE_URL + '/customer/importObject', fd, {
+                $http.post(BASE_URL + '/project/importObject', fd, {
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 })
@@ -648,14 +648,14 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         $scope.updateAfterImport = function(option, list_objects){
             if(option === "new"){
                 $.each(list_objects, function (i, v) {
-                    $scope.customers.unshift(v);
+                    $scope.projects.unshift(v);
                 });
             }
             else{
-                $.each($scope.customers, function (si, sv) {
+                $.each($scope.projects, function (si, sv) {
                     $.each(list_objects, function (di, dv) {
-                        if(sv.customer_number && sv.customer_number.toString() === dv.customer_number.toString()){
-                            $scope.customers[si] = dv;
+                        if(sv.project_number && sv.project_number.toString() === dv.project_number.toString()){
+                            $scope.projects[si] = dv;
                         }
                     });
                 });

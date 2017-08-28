@@ -21,8 +21,8 @@
             <div class="col-xs-12">
                 <ol class="breadcrumb tool_box">
                     <li><b>Project actions</b></li>
-                    <li class="active"><a ui-sref="customer-list">Project list</a></li>
-                    <li ng-show="root.is_superadmin"><a ui-sref="customer-create">Add new customer</a></li>
+                    <li class="active"><a ui-sref="project-list">Project list</a></li>
+                    <li ng-show="root.is_superadmin"><a ui-sref="project-create">Add new project</a></li>
                 </ol>
                 <div class="box">
                     <div class="box-body">
@@ -30,39 +30,39 @@
                             <div role="form">
                                 <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
 <!--                                    <div class="col-xs-2">
-                                      <select class="form-control" ng-model="search_customer.tier_id" ng-options="item.id as item.name for item in tiers" ng-enter="search()" placeholder="search tier...">
+                                      <select class="form-control" ng-model="search_project.tier_id" ng-options="item.id as item.name for item in tiers" ng-enter="search()" placeholder="search tier...">
                                         <option value="">[Select tier]</option>
                                       </select>
                                     </div>-->
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.ship_to" type="text" class="form-control" placeholder="search ship to..." ng-enter="search()">
+                                        <input ng-model="search_project.ship_to" type="text" class="form-control" placeholder="search ship to..." ng-enter="search()">
                                     </div>
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.ship_address" type="text" class="form-control" placeholder="search ship address..." ng-enter="search()">
+                                        <input ng-model="search_project.ship_address" type="text" class="form-control" placeholder="search ship address..." ng-enter="search()">
                                     </div>
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.bill_to" type="text" class="form-control" placeholder="search bill to..." ng-enter="search()">
+                                        <input ng-model="search_project.bill_to" type="text" class="form-control" placeholder="search bill to..." ng-enter="search()">
                                     </div>
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.bill_address" type="text" class="form-control" placeholder="search bill address..." ng-enter="search()">
+                                        <input ng-model="search_project.bill_address" type="text" class="form-control" placeholder="search bill address..." ng-enter="search()">
                                     </div>
                                     <div class="col-xs-2">
-                                        <input ng-model="search_customer.phone" type="text" class="form-control" placeholder="search phone..." ng-enter="search()">
+                                        <input ng-model="search_project.phone" type="text" class="form-control" placeholder="search phone..." ng-enter="search()">
                                     </div>
 <!--                                    <div class="col-xs-2">
-                                        <input ng-model="search_customer.fax" type="text" class="form-control" placeholder="search fax..." ng-enter="search()">
+                                        <input ng-model="search_project.fax" type="text" class="form-control" placeholder="search fax..." ng-enter="search()">
                                     </div>-->
 <!--                                    <div class="col-xs-2">
-                                      <select class="form-control" ng-model="search_customer.signage_id" ng-options="item.id as item.code for item in related_signages" ng-enter="search()" placeholder="search signage...">
+                                      <select class="form-control" ng-model="search_project.signage_id" ng-options="item.id as item.code for item in related_signages" ng-enter="search()" placeholder="search signage...">
                                         <option value="">[Select signage]</option>
                                       </select>
-                                      <input ampautocomplete ng-model="search_customer.signage_id" type="text" class="form-control" placeholder="search signage ..." id="Search_Signage_id" data-source="/signage/getAll" ui-option="'signages'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="'Related signage'">
+                                      <input ampautocomplete ng-model="search_project.signage_id" type="text" class="form-control" placeholder="search signage ..." id="Search_Signage_id" data-source="/signage/getAll" ui-option="'signages'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="'Related signage'">
                                     </div>-->
 <!--                                    <div class="col-xs-2">
-                                      <select class="form-control" ng-model="search_customer.fixture_id" ng-options="item.id as item.code for item in related_fixtures" ng-enter="search()" placeholder="search fixture...">
+                                      <select class="form-control" ng-model="search_project.fixture_id" ng-options="item.id as item.code for item in related_fixtures" ng-enter="search()" placeholder="search fixture...">
                                         <option value="">[Select fixture]</option>
                                       </select>
-                                      <input ampautocomplete ng-model="search_customer.fixture_id" type="text" class="form-control" placeholder="search fixture ..." id="Search_Fixture_id" data-source="/fixture/getAll" ui-option="'fixtures'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="'Related fixtures'">
+                                      <input ampautocomplete ng-model="search_project.fixture_id" type="text" class="form-control" placeholder="search fixture ..." id="Search_Fixture_id" data-source="/fixture/getAll" ui-option="'fixtures'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="'Related fixtures'">
                                     </div>-->
                                     <div class="col-xs-2">
                                         <button type="button" ng-click="search()" class="btn btn-primary pull-right">Search</button>
@@ -72,10 +72,10 @@
                                 <hr style="margin: 5px 0 10px 0;"/>
                                 <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
                                     <div class="col-xs-6">
-                                        <a ng-show="root.is_superadmin" ui-sref="customer-create" class="btn btn-primary pull-right">Add new customer</a> 
+                                        <a ng-show="root.is_superadmin" ui-sref="project-create" class="btn btn-primary pull-right">Add new project</a> 
 <!--                                        <button ng-disabled="!uploaded_file" class="btn btn-danger" ng-click="importObject()">Import Stores</button>
                                         <input ng-model="uploaded_file" type="file" file-model="uploaded_file" style="display: inline; width: 150px;">-->
-                                        <!--<a href="/server/data/sample/import_customer_db_sample.xls" download target="_blank">Get sample file</a>-->
+                                        <!--<a href="/server/data/sample/import_project_db_sample.xls" download target="_blank">Get sample file</a>-->
                                     </div>
 <!--                                    <div class="col-xs-6">
                                         <div class="btn-group pull-right"> 
@@ -97,7 +97,7 @@
                                                         <input type="checkbox" name="ExportExcelColumn[name]" value="1" checked /> Name 
                                                     </li>
                                                     <li style="padding:0 15px">
-                                                        <input type="checkbox" name="ExportExcelColumn[customer_number]" value="1" checked /> Store Number 
+                                                        <input type="checkbox" name="ExportExcelColumn[project_number]" value="1" checked /> Store Number 
                                                     </li>
                                                     <li style="padding:0 15px">
                                                         <input type="checkbox" name="ExportExcelColumn[tier_name]" value="1" checked /> Tier 
@@ -178,16 +178,16 @@
                                     </tr>
                                 </tfoot>
                                 <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                    <tr class="even" ng-repeat="customer in customers">
+                                    <tr class="even" ng-repeat="project in projects">
                                         <td>{{$index + 1}}</td>
-                                        <td class=" sorting_1"><a ui-sref="customer-view({'id':customer.id})">{{customer.ship_to}}</a></td>
-					<td class=" ">{{customer.ship_oa}}</td>
-                                        <td class=" ">{{customer.ship_address}}</td>
-                                        <td class=" ">{{customer.bill_to}}</td>
-                                        <td class=" ">{{customer.bill_oa}}</td>
-                                        <td class=" ">{{customer.bill_address}}</td>
-                                        <td class=" ">{{customer.phone}}</td>
-                                        <td class=" ">{{customer.fax}}</td>
+                                        <td class=" sorting_1"><a ui-sref="project-view({'id':project.id})">{{project.ship_to}}</a></td>
+					<td class=" ">{{project.ship_oa}}</td>
+                                        <td class=" ">{{project.ship_address}}</td>
+                                        <td class=" ">{{project.bill_to}}</td>
+                                        <td class=" ">{{project.bill_oa}}</td>
+                                        <td class=" ">{{project.bill_address}}</td>
+                                        <td class=" ">{{project.phone}}</td>
+                                        <td class=" ">{{project.fax}}</td>
                                         <td class="text-center btn-tools">
                                             <div class="btn-group dropdown">
                                                 <a href="#" data-toggle="dropdown" class="btn">
@@ -195,28 +195,28 @@
                                                 </a>
                                                 <ul class="dropdown-menu no-angle pull-right right">
                                                     <li>
-                                                        <a class="text-blue" ui-sref="customer-view({'id':customer.id})"><i class="fa fa-eye"></i> View</a>
+                                                        <a class="text-blue" ui-sref="project-view({'id':project.id})"><i class="fa fa-eye"></i> View</a>
                                                     </li>
                                                     <li ng-show="root.is_superadmin">
-                                                        <a class="text-green" ui-sref="customer-detail({'id':customer.id})"><i class="fa fa-pencil-square"></i> Edit</a>
+                                                        <a class="text-green" ui-sref="project-detail({'id':project.id})"><i class="fa fa-pencil-square"></i> Edit</a>
                                                     </li>
                                                     <li ng-show="root.is_superadmin">
-                                                        <a class="text-yellow" href="#" ng-click="deleteProject(customer.id)"><i class="fa fa-trash-o"></i> Delete</a>
+                                                        <a class="text-yellow" href="#" ng-click="deleteProject(project.id)"><i class="fa fa-trash-o"></i> Delete</a>
                                                     </li>
 <!--                                                    <li ng-show="root.is_superadmin">
-                                                        <a class="text-yellow" href="#" ng-click="copyProject(customer.id)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
+                                                        <a class="text-yellow" href="#" ng-click="copyProject(project.id)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
                                                     </li>-->
 <!--                                                    <li>
-                                                        <a class="text-blue" href="javascript:void(0)" ng-click="exportPdfItem(customer.id)"><i class="fa fa-file-pdf-o"></i> Export Pdf</a>
+                                                        <a class="text-blue" href="javascript:void(0)" ng-click="exportPdfItem(project.id)"><i class="fa fa-file-pdf-o"></i> Export Pdf</a>
                                                     </li>
                                                     <li>
-                                                        <a class="text-red" href="javascript:void(0)" ng-click="exportExcelItem(customer.id)"><i class="fa fa-file-excel-o"></i> Export Excel</a>
+                                                        <a class="text-red" href="javascript:void(0)" ng-click="exportExcelItem(project.id)"><i class="fa fa-file-excel-o"></i> Export Excel</a>
                                                     </li>-->
                                                 </ul>
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="selectedDbs[]" ng-click="toggleDbSelection(customer.id)" />
+                                            <input type="checkbox" name="selectedDbs[]" ng-click="toggleDbSelection(project.id)" />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -225,7 +225,7 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     <div class="dataTables_info" id="example2_info">
-                                        Showing {{start_customer}} to {{end_customer}} of {{totalresults}} entries
+                                        Showing {{start_project}} to {{end_project}} of {{totalresults}} entries
                                     </div>
                                 </div>
                                 <div class="col-xs-6" ng-show="pages.length > 1">
@@ -251,52 +251,3 @@
         </div><!-- /.row -->
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
-
-<!--<div class="modal" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" style="width: 700px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{email_title}}</h4>
-            </div>
-            <div class="modal-body overhidden">
-                <div class="row form-group">
-                    <div class="col-md-2">
-                        <label>From</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" ng-model="email.from" disabled="" />
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-2">
-                        <label>To</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" ng-model="email.to" />
-                        <span class="small">emails separated by comma</span>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-2">
-                        <label>Subject</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" ng-model="email.subject" />
-                    </div>
-                </div>
-                <hr />
-                <label>Message</label>
-                <textarea class="form-control" ng-model="email.content" style="height: 200px" ></textarea>
-                <hr />
-                <a target="_blank" title="attachment" href="{{document.absolute_url}}" class="email_attachment" ng-repeat="document in email.documents">
-                    <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
-                    {{document.filename}}.{{document.extension}}</a>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="sendEmail()">Send Email</button>
-                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
-            </div>
-        </div> /.modal-content 
-    </div>
-</div>-->
