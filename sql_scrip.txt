@@ -27,3 +27,25 @@ CREATE TABLE `tbl_customer` (
 
 -- add column in_trash
 ALTER TABLE `tbl_customer` ADD COLUMN `in_trash` INT DEFAULT 0
+
+-- add table tbl_project
+CREATE TABLE `tbl_project` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `date` int(11) DEFAULT NULL,
+  `primary_contact` varchar(50) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `project_number` varchar(50) DEFAULT NULL,
+  `volume` varchar(255) DEFAULT NULL,
+  `price_point` varchar(11) DEFAULT NULL,
+  `life_style` varchar(50) DEFAULT NULL,
+  `service` varchar(50) DEFAULT NULL,
+  `product_match` varchar(255) DEFAULT NULL,
+  `note` text,
+  `document_id` int(11) DEFAULT NULL,
+  `created_time` int(11) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_time` int(11) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
