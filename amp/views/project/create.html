@@ -1,0 +1,163 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Enter customer details
+        </h1>
+        <ol class="breadcrumb">
+            <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+            <li class="active">Enter customer details</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row" ng-show="init_loaded">
+            <div class="col-md-12">
+                <ol class="breadcrumb tool_box">
+                    <li><b>Customer actions</b></li>
+                    <li><a ui-sref="customer-list">Customer list</a></li>
+                    <li class="active"><a ui-sref="customer-create" ui-sref-opts="{reload: true, notify: true}">Add new customer</a></li>
+                </ol>
+                <!-- general form elements -->
+                <div class="box overhidden top_box">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <button type="button" ng-click="create()" class="btn btn-primary pull-right margin-5" ng-show="is_create">Save</button>
+                        <button type="button" ng-click="update()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box no-border overhidden" style="min-height: 400px">
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="row form-group" ng-class="{'has-error': customer_error.ship_to.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Ship-To Name <span class="required"></span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.ship_to" type="text" class="form-control" placeholder="Ship-To Name">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.ship_to.length != 0" ng-repeat="error in customer_error.ship_to">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': customer_error.ship_oa.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>O/A (if applicable)<span class="required"></span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.ship_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.ship_oa.length != 0" ng-repeat="error in customer_error.ship_oa">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': customer_error.ship_address.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Address<span class="required"></span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.ship_address" type="text" class="form-control" placeholder="Ship Address">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.ship_address.length != 0" ng-repeat="error in customer_error.ship_address">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
+                                <div class="row form-group" ng-class="{'has-error': customer_error.bill_to.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Bill-To (Full Legal Company Name)
+                                            <!--<span class="required">*</span>-->
+                                        </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.bill_to" type="text" class="form-control" placeholder="Bill-To (Full Legal Company Name)">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.bill_to.length != 0" ng-repeat="error in customer_error.bill_to">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': customer_error.bill_oa.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>O/A (if applicable)</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.bill_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.bill_oa.length != 0" ng-repeat="error in customer_error.bill_oa">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': customer_error.bill_address.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Address</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.bill_address" type="text" class="form-control" placeholder="Bill Address">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.bill_address.length != 0" ng-repeat="error in customer_error.bill_address">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': customer_error.phone.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Phone</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.phone" type="text" class="form-control" placeholder="Phone">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.phone.length != 0" ng-repeat="error in customer_error.phone">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': customer_error.fax.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Fax</label></br>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="customer.fax" type="text" class="form-control" placeholder="Fax">
+                                        <span class="control-label" for="inputError" ng-show="customer_error.fax.length != 0" ng-repeat="error in customer_error.fax">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="box no-border" style="min-height: 100px">
+                    <div class="box-header">
+                        <h3 class="box-title">Customer documents</h3>
+                    </div>
+                    <div class="box-body overhidden">
+                      <i>Available only on update</i>
+                        <!--<file-uploader file-ids="customer.tmp_file_ids" model-id="customer.id"></file-uploader>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

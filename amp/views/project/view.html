@@ -1,0 +1,220 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper" style="min-height: 648px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Enter customer details
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li class="active">Enter customer details</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="row" ng-show="init_loaded">
+        <div class="col-md-12">
+          <ol class="breadcrumb tool_box">
+            <li><b>Customer actions</b></li>
+            <li><a ui-sref="customer-list">Customer list</a></li>
+            <li class="active"><a ui-sref="customer-create" ui-sref-opts="{reload: true, notify: true}">Add new customer</a></li>
+          </ol>
+          <!-- general form elements -->
+          <div class="box overhidden top_box">
+            <div class="col-md-6">
+              <a ui-sref="customer-detail({'id':customer.id})" class="btn btn-primary pull-right margin-5">Edit</a>
+            </div>
+<!--            <div class="col-md-5">
+                <button type="button" ng-click="copyCustomer()" class="btn btn-primary pull-right margin-5" ng-show="is_update">Copy</button>
+                <button type="button" ng-click="exportPdf()" class="btn btn-success pull-right margin-5"><i class="fa fa-file-pdf-o"></i> Export Pdf</button>
+                <button type="button" ng-click="exportExcel()" class="btn btn-primary pull-right margin-5"><i class="fa fa-file-excel-o"></i> Export Excel</button>
+            </div>-->
+          </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="box no-border" style="overflow: auto;">
+                <div class="box-header">
+                    <h3 class="box-title">Customer Information</h3>
+<!--                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                    </div>-->
+                </div>
+                <div class="box-body overhidden">
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>Ship-To Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.ship_to}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>O/A (if applicable)</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.ship_oa}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>Address</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.ship_address}}</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!--/.col (left) -->
+                    <div class="col-md-6">
+                        <!-- general form elements disabled -->
+                        <form role="form">
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>Bill-To (Full Legal Company Name)</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.bill_to}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>O/A (if applicable)</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.bill_oa}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>Address</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.bill_address}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>Phone</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.phone}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3 text-right">
+                                    <label>Fax</label>
+                                </div>
+                                <div class="col-md-9">
+                                     <p>{{customer.fax}}</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box no-border collapsed-box" style="overflow: auto;">
+                <div class="box-header">
+                    <h3 class="box-title">Notes</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body overhidden">
+                    <div class="form-group">
+                        <textarea ck-readonly="true" ck-editor ng-model="customer.note" id="customer_note"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        <div class="col-md-6">
+            <div class="box no-border collapsed-box" style="overflow: auto;">
+                <div class="box-header">
+                    <h3 class="box-title">Photos and documents</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body overhidden">
+                    <file-uploader file-ids="customer.tmp_file_ids" model-id="customer.id" sendemail="true" email-files = "email.documents"></file-uploader>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <p class="text-dark-blue text-center">Please click on + to expand section</p>
+        </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{email_title}}</h4>
+            </div>
+            <div class="modal-body overhidden">
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>From</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.from" disabled="" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>To</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.to" />
+                        <span class="small">emails separated by comma</span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>Subject</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.subject" />
+                    </div>
+                </div>
+                <hr />
+                <label>Message</label>
+                <textarea class="form-control" ng-model="email.content" style="height: 200px" ></textarea>
+                <hr />
+                <a target="_blank" title="attachment" href="{{document.absolute_url}}" class="email_attachment" ng-repeat="document in email.documents">
+                    <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+                    {{document.filename}}.{{document.extension}}</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="sendEmail()">Send Email</button>
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
