@@ -663,3 +663,32 @@ header .logo span{
 .btn-black{
     background-color: #4d4d4f !important; 
 }
+
+.home-header{
+    font-size: 14;
+    color:#4d4d4f;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin: 30px;
+    font-size: 60px;
+}
+.home-title{
+    font-size:40px;
+    color: #4d4d4f;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin: 30px;
+}
+.home-tracker{
+    font-size: 45px;
+    color:red;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin: 30px;
+}

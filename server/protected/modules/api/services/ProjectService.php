@@ -112,12 +112,12 @@ class ProjectService extends iPhoenixService {
             $criteria->compare('phone', $data['phone'], true);
         }
         if (isset($data['fax']) && $data['fax'] != '') {
-            $criteria-> ('fax', $data['fax'], true);
+            $criteria->compare('fax', $data['fax'], true);
         }
-        $criteria->compare('t.in_trash', 0);
+//        $criteria->compare('t.in_trash', 0);
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
-        $criteria->limitnum = $data['limitnum'];
-        $criteria->limitstart = $data['limitstart'];
+//        $criteria->limitnum = $data['limitnum'];
+//        $criteria->limitstart = $data['limitstart'];
 
         // $total = Project::model()->count($criteria);
         $projects = Project::model()->findAll($criteria);

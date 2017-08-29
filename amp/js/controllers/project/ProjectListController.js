@@ -160,7 +160,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_project.id,
-                'created': $scope.search_project.created,,
+                'created': $scope.search_project.created,
             };
             $scope.getProjects(post_information);
         };
