@@ -39,18 +39,10 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
             name: '',
             email: '',
             created: '',
-//            tier_id: '',
-//            city: '',
-//            signage_id: '',
-//            fixture_id: ''
         };
         $scope.copy_search_project = {
             name: '',
             email: '',
-//            tier_id: '',
-//            city: '',
-//            signage_id: '',
-//            fixture_id: ''
         };
         var post_information = {
             'limitstart': 0,
@@ -58,6 +50,30 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
             'sort_attribute': $scope.sort.attribute,
             'sort_type': $scope.sort.type,
         };
+
+        //config attributes sortting
+        $scope.sorts = [
+            {
+                'attribute': 'primary_contact' ,
+                'label' : 'Primary Contact',
+            },
+            {
+                'attribute': 'customer_id' ,
+                'label' : 'Customer',
+            },
+            {
+                'attribute': 'project_number' ,
+                'label' : 'Project Number',
+            },
+            {
+                'attribute': 'volume' ,
+                'label' : 'Volume',
+            },
+            {
+                'attribute': 'service' ,
+                'label' : 'Service',
+            },
+        ];
 
         $scope.getProjects = function (post_information) {
             $http.post(BASE_URL + '/project/getAll', post_information)
@@ -69,11 +85,8 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                     $scope.pages = [];
                     for (var p = 0; p < Math.ceil(data.totalresults / $scope.itemsByPage); p++)
                         $scope.pages.push(p + 1);
-                    //$scope.pages= Math.ceil(data.totalresults/$scope.itemsByPage);
                     $scope.projects = [];
                     $scope.projects = data.projects;
-                    // for(var i= 0; i< data.projects.length; i++)
-                    // $scope.projects.push(data.email_templates[i]);
                     
                     $scope.selectedDbIds = [];
                 }
@@ -95,11 +108,6 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_project.id,
-//                'name': $scope.search_project.name,
-//                'tier_id': $scope.search_project.tier_id,
-//                'email': $scope.search_project.email,
-//                'created': $scope.search_project.created,
-//                'city': $scope.search_project.city,
             };
             $scope.getProjects(post_information);
         };
@@ -115,11 +123,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_project.id,
-//                'name': $scope.search_project.name,
-//                'tier_id': $scope.search_project.tier_id,
-//                'email': $scope.search_project.email,
                 'created': $scope.search_project.created,
-//                'city': $scope.search_project.city,
             };
             if ($scope.itemsByPage_change_number > 1)
                 $scope.getProjects(post_information);
@@ -134,11 +138,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_project.id,
-//                'name': $scope.search_project.name,
-//                'tier_id': $scope.search_project.tier_id,
-//                'email': $scope.search_project.email,
                 'created': $scope.search_project.created,
-//                'city': $scope.search_project.city,
             };
             if ($scope.search_change_number > 1)
                 $scope.getProjects(post_information);
@@ -160,11 +160,7 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'sort_attribute': $scope.sort.attribute,
                 'sort_type': $scope.sort.type,
                 'id': $scope.search_project.id,
-//                'name': $scope.search_project.name,
-//                'tier_id': $scope.search_project.tier_id,
-//                'email': $scope.search_project.email,
-                'created': $scope.search_project.created,
-//                'city': $scope.search_project.city,
+                'created': $scope.search_project.created,,
             };
             $scope.getProjects(post_information);
         };
@@ -423,9 +419,6 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         };
         
         $scope.copyProject = function (id) {
-//            $rootScope.view_detail_project_id = id;
-//            $rootScope.is_copy_project = true;
-//            $state.go('project-create');
             $http.post(BASE_URL + '/project/copy', {id: id})
             .success(function (data) {
                 if (data.success) {

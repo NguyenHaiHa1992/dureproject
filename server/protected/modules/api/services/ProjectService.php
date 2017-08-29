@@ -41,60 +41,54 @@ class ProjectService extends iPhoenixService {
             $data['sort_type'] = 'DESC';
         }
 
-        $sql = '';
-        $sql_order_by = '';
-        $sql_order_by = 'ORDER BY tbl_project.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
+        // $sql = '';
+        // // $sql_order_by = '';
+        // // $sql_order_by = 'ORDER BY tbl_project.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
 
-//        if(isset($data['signage_id']) && $data['signage_id']){
-//            $sql = "SELECT tbl_project.*, tbl_project_signage.signage_quantity, tbl_project_signage.id project_signage_id FROM tbl_project ";
-//        }
-//        else{
-//            $sql = "SELECT tbl_project.* FROM tbl_project ";
-//        }
-        $sql = "SELECT tbl_project.* FROM tbl_project ";
-        if(isset($data['signage_id']) && $data['signage_id']){
-            $sql = $sql . " INNER JOIN tbl_project_signage ON tbl_project.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
-        }
-        $sql = $sql . " Where 1 ";
+        // $sql = "SELECT tbl_project.* FROM tbl_project ";
+        // // if(isset($data['signage_id']) && $data['signage_id']){
+        // //     $sql = $sql . " INNER JOIN tbl_project_signage ON tbl_project.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
+        // // }
+        // $sql = $sql . " Where 1 ";
 
-        if (isset($data['ship_to']) && $data['ship_to'] != '') {
-            $sql = $sql . "And tbl_project.ship_to LIKE '%" . $data['ship_to'] . "%' ";
-        }
-        if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
-            $sql = $sql . "And tbl_project.ship_oa LIKE '%" . $data['ship_oa'] . "%' ";
-        }
-        if (isset($data['ship_address']) && $data['ship_address'] != '') {
-            $sql = $sql . "And tbl_project.ship_address LIKE '%" . $data['ship_address'] . "%' ";
-        }
-        if (isset($data['bill_to']) && $data['bill_to'] != '') {
-            $sql = $sql . "And tbl_project.bill_to LIKE '%" . $data['bill_to'] . "%' ";
-        }
+        // if (isset($data['ship_to']) && $data['ship_to'] != '') {
+        //     $sql = $sql . "And tbl_project.ship_to LIKE '%" . $data['ship_to'] . "%' ";
+        // }
+        // if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
+        //     $sql = $sql . "And tbl_project.ship_oa LIKE '%" . $data['ship_oa'] . "%' ";
+        // }
+        // if (isset($data['ship_address']) && $data['ship_address'] != '') {
+        //     $sql = $sql . "And tbl_project.ship_address LIKE '%" . $data['ship_address'] . "%' ";
+        // }
+        // if (isset($data['bill_to']) && $data['bill_to'] != '') {
+        //     $sql = $sql . "And tbl_project.bill_to LIKE '%" . $data['bill_to'] . "%' ";
+        // }
         
-        if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
-            $sql = $sql . "And tbl_project.bill_oa LIKE '%" . $data['bill_oa'] . "%' ";
-        }
+        // if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
+        //     $sql = $sql . "And tbl_project.bill_oa LIKE '%" . $data['bill_oa'] . "%' ";
+        // }
         
-        if (isset($data['bill_address']) && $data['bill_address'] != '') {
-            $sql = $sql . "And tbl_project.bill_address LIKE '%" . $data['bill_address'] . "%' ";
-        }
+        // if (isset($data['bill_address']) && $data['bill_address'] != '') {
+        //     $sql = $sql . "And tbl_project.bill_address LIKE '%" . $data['bill_address'] . "%' ";
+        // }
         
-        if (isset($data['phone']) && $data['phone'] != '') {
-            $sql = $sql . "And tbl_project.phone LIKE '%" . $data['phone'] . "%' ";
-        }
+        // if (isset($data['phone']) && $data['phone'] != '') {
+        //     $sql = $sql . "And tbl_project.phone LIKE '%" . $data['phone'] . "%' ";
+        // }
         
-        if (isset($data['fax']) && $data['fax'] != '') {
-            $sql = $sql . "And tbl_project.fax LIKE '%" . $data['fax'] . "%' ";
-        }
-        $sql = $sql . "And tbl_project.in_trash = 0 ";
-        $sql = $sql . $sql_order_by;
-        $sql = $sql . " Limit " . $data['limitstart'] . ", " . $data['limitnum'];
+        // if (isset($data['fax']) && $data['fax'] != '') {
+        //     $sql = $sql . "And tbl_project.fax LIKE '%" . $data['fax'] . "%' ";
+        // }
+        // $sql = $sql . "And tbl_project.in_trash = 0 ";
+        // $sql = $sql . $sql_order_by;
+        // $sql = $sql . " Limit " . $data['limitstart'] . ", " . $data['limitnum'];
 //        $projects = Project::model()->findAllBySql($sql);
-        $projects = Yii::app()->db->createCommand($sql)->queryAll();
+        // $projects = Yii::app()->db->createCommand($sql)->queryAll();
         
         $criteria = new CDbCriteria();
-        if(isset($data['signage_id']) && $data['signage_id']){
-            $criteria->join = "INNER JOIN tbl_project_signage ON t.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
-        }
+        // if(isset($data['signage_id']) && $data['signage_id']){
+        //     $criteria->join = "INNER JOIN tbl_project_signage ON t.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
+        // }
         if (isset($data['ship_to']) && $data['ship_to'] != '') {
             $criteria->compare('ship_to', $data['ship_to'], true);
         }
@@ -118,10 +112,16 @@ class ProjectService extends iPhoenixService {
             $criteria->compare('phone', $data['phone'], true);
         }
         if (isset($data['fax']) && $data['fax'] != '') {
-            $criteria->compare('fax', $data['fax'], true);
+            $criteria-> ('fax', $data['fax'], true);
         }
         $criteria->compare('t.in_trash', 0);
-        $total = Project::model()->count($criteria);
+        $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
+        $criteria->limitnum = $data['limitnum'];
+        $criteria->limitstart = $data['limitstart'];
+
+        // $total = Project::model()->count($criteria);
+        $projects = Project::model()->findAll($criteria);
+        $total = count($projects);
 
         if ($projects != null) {
             $result['success'] = true;
@@ -312,17 +312,6 @@ class ProjectService extends iPhoenixService {
             $result = $project->attributes;
         }
         $result['tmp_file_ids'] = $project->tmp_file_ids;
-//        if($isRelated){
-//            $result['project_signages'] = $project->getListSignage();
-//            $result['project_fixtures'] = $project->getListFixture();
-//        }
-        
-//        if($project->open_date){
-//            $result['open_date'] = date('Y-m-d', $project->open_date);
-//        }
-//        $result['image_id_url'] = $project->image && $project->image->getThumbUrl(80, 80, false)
-//                ? "server/".$project->image->getThumbUrl(80, 80, false)
-//                : "server/".CustomEnum::IMAGE_NOT_AVAILABLE;
         return $result;
     }
     
@@ -345,13 +334,6 @@ class ProjectService extends iPhoenixService {
             $result['id'] = $project->id;
             $new_project = self::getProjectById(array('id' => $project->id));
             $result['project'] = $new_project['project'];
-            
-            // create ProjectSignage
-//            self::copyRelate('ProjectSignage', 'project_id', $projectCopy->id, $project->id);
-            // create ProjectFixture
-//            self::copyRelate('ProjectFixture', 'project_id', $projectCopy->id, $project->id);
-            // create ProjectFile
-//            self::copyRelate('ProjectFile', 'project_id', $projectCopy->id, $project->id);
         } else {
             $empty_project_error = ProjectService::getEmptyProjectError();
             $result['project_error'] = $empty_project_error['project_error'];
