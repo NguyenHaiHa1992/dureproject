@@ -1,0 +1,173 @@
+<my-modal-process-po ui-id="search_purchase_order_id"></my-modal-process-po>
+<my-header ng-show="!is_amp_guest"></my-header>
+<my-sidebar ng-show="!is_amp_guest"></my-sidebar>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Project Database
+        </h1>
+        <ol class="breadcrumb">
+            <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+            <li class="active">Project list</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb tool_box">
+                    <li><b>Project actions</b></li>
+                    <li class="active"><a ui-sref="project-list">Project list</a></li>
+                    <li ng-show="root.is_superadmin"><a ui-sref="project-create">Add new project</a></li>
+                </ol>
+                <div class="box">
+                    <div class="box-body">
+                        <div class="search_box">
+                            <div role="form">
+                                <!-- div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                                    <div class="col-xs-2">
+                                      <select class="form-control" ng-model="search_project.category_id" ng-options="item.id as item.name for item in project_categories" ng-enter="search()" placeholder="search category...">
+                                        <option value="">[Select specific category]</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ampautocomplete ng-model="search_project.store_id" type="text" class="form-control" placeholder="search store ..." id="Search_Store_id" data-source="/store/getAll" ui-option="'stores'" ui-id="'id'" ui-name="'name'" search-field="'name'" ui-modellabel="''">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ampautocomplete ng-model="search_project.fixture_id" type="text" class="form-control" placeholder="search fixture ..." id="Search_Fixture_id" data-source="/fixture/getAll" ui-option="'fixtures'" ui-id="'id'" ui-name="'code'" search-field="'code'" ui-modellabel="''">
+                                    </div>
+                                </div> -->
+                                <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_project.primary_contact" type="text" class="form-control" placeholder="search primary contact..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <select class="form-control" ng-model="search_project.language" ng-options="item.id as item.name for item in customers" ng-enter="search()" placeholder="search language...">
+                                          <option value="">[Select customer]</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_project.project_number" type="text" class="form-control" placeholder="search project number..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_project.volume" type="text" class="form-control" placeholder="search volume..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input ng-model="search_project.service" type="text" class="form-control" placeholder="search service..." ng-enter="search()">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button type="button" ng-click="search()" class="btn btn-primary pull-right">Search</button>
+                                        <button title="Reset search form" type="button" ng-click="resetSearch()" class="btn btn-icon btn-default pull-right"><i class="fa fa-refresh"></i></button>
+                                    </div>
+                                </div>
+                                <hr style="margin: 5px 0 10px 0;"/>
+                                <div class="row form-group" style="min-height: 20px; margin-bottom: 0;">
+                                    <div class="col-xs-6">
+                                        <a ng-show="root.is_superadmin" ui-sref="project-create" class="btn btn-danger pull-right">Add new</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div class="row">
+                                <div class="col-xs-6"></div>
+                                <div class="col-xs-3 pull-right">
+                                    <div id="example1_length" class="dataTables_length">
+                                        <label>records per page
+                                            <select ng-model="itemsByPage" ng-options="item.value as item.name for item in itemsByPages"></select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-scroll">
+                                <table id="example2" class="table table-bordered table-hover table-condensed dataTable" aria-describedby="example2_info">
+                                  <thead>
+                                      <tr role="row">
+                                          <th>#</th>
+                                          <th ng-repeat="s in sorts" ng-class="{sorting: sort.attribute != s.label, sorting_asc: sort.attribute == s.label && sort.type == 'ASC', sorting_desc: sort.attribute == s.label && sort.type == 'DESC'}" ng-click="sort(s.label)" rowspan="1" colspan="1">{{s.label}}</th>
+                                          <th class="text-center">Tools</th>
+                                          <th></th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+
+                                  <tfoot>
+                                      <tr>
+                                          <th>#</th>
+                                          <th ng-repeat="s in sorts" rowspan="1" colspan="1">{{s.label}}</th>
+                                          <th class="text-center">Tools</th>
+                                          <th></th>
+                                          <th></th>
+                                      </tr>
+                                  </tfoot>
+                                  <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                      <tr class="even" ng-repeat="project in projects">
+                                          <td>{{$index + 1}}</td>
+                                          <td class=" sorting_1"><a ui-sref="project-view({'id':project.primary_contact})">{{project.primary_contact}}</a></td>
+                                          <td class=" ">{{project.customer_id}}</td>
+                                          <td class=" ">{{project.project_number}}</td>
+                                          <td class=" ">{{project.volume}}</td>
+                                          <td class=" ">{{project.service}}</td>
+                                          <td class="text-center">
+                                              <a class="text-blue" href="javascript:void(0)" ng-click="goRelatedStore(project.id)"><i class="fa fa-eye"></i></a>
+                                          </td>
+                                          <td class="text-center btn-tools">
+                                                <div class="btn-group dropdown">
+                                                    <a href="#" data-toggle="dropdown" class="btn">
+                                                        <i class="fa fa-th"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu no-angle pull-right right">
+                                                        <li>
+                                                            <a class="text-blue" ui-sref="project-view({'id':project.id})"><i class="fa fa-eye"></i> View</a>
+                                                        </li>
+                                                        <li ng-show="root.is_superadmin">
+                                                            <a class="text-green" ui-sref="project-detail({'id':project.id})"><i class="fa fa-pencil-square"></i> Edit</a>
+                                                        </li>
+                                                        <li ng-show="root.is_superadmin">
+                                                            <a class="text-yellow" href="#" ng-click="deleteproject(project.id)"><i class="fa fa-trash-o"></i> Delete</a>
+                                                        </li>
+                                                        <li ng-show="root.is_superadmin">
+                                                            <a class="text-yellow" href="#" ng-click="copyproject(project.id)"><i class="glyphicon glyphicon-copy"></i> Copy</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" name="selectedDbs[]" ng-click="toggleDbSelection(project.id)" />
+                                            </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="dataTables_info" id="example2_info">
+                                        Showing {{start_project}} to {{end_project}} of {{totalresults}} entries
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" ng-show="pages.length > 1">
+                                    <div class="dataTables_paginate paging_bootstrap">
+                                        <ul class="pagination">
+                                            <li class="prev" ng-class="{disabled: currentPage == 1}">
+                                                <a href="" ng-click="selectPage(currentPage - 1)">← Previous</a>
+                                            </li>
+                                            <li ng-repeat="page in pages" ng-class="{active: page == currentPage}" >
+                                                <a href="" ng-click="selectPage(page)">{{page}}</a>
+                                            </li>
+                                            <li class="next" ng-class="{disabled: currentPage == pages.length}">
+                                                <a href="" ng-click="selectPage(currentPage + 1)">Next → </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->

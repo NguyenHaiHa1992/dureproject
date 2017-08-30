@@ -688,7 +688,96 @@ angular.module('app', [
                     }]
                 }
             })
-            
+            /**
+             * @author tunghus1993@gmail.com
+             * add controller project-list
+             */
+            .state('project-list',{
+                url:'/project-list',
+                views:{
+                    "lazyLoadView":{
+                        controller:"ProjectListController",
+                        templateUrl:'amp/views/project/list.html'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load({files: [
+                            'amp/js/config/app.js',
+                            'amp/js/config/constant.js',
+                            'amp/js/controllers/project/ProjectListController.js'
+                        ]});
+                    }]
+                },
+            })
+            /**
+             * @author tunghus1993@gmail.com
+             * add controller project-view
+             */
+            .state('project-view',{
+                url:'/project-view',
+                views:{
+                    "lazyLoadView":{
+                        controller:"ProjectViewController",
+                        templateUrl:'amp/views/project/view.html'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load({files: [
+                            'amp/js/config/app.js',
+                            'amp/js/config/constant.js',
+                            'amp/js/controllers/project/ProjectViewController.js'
+                        ]});
+                    }]
+                },
+            })
+            /**
+             * @author tunghus1993@gmail.com
+             * add controller project-detail
+             */
+            .state('project-detail',{
+                url:'/project-detail',
+                views:{
+                    "lazyLoadView":{
+                        controller:"ProjectDetailController",
+                        templateUrl:'amp/views/project/detail.html'
+                    }
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load({files: [
+                            'amp/js/config/app.js',
+                            'amp/js/config/constant.js',
+                            'amp/js/controllers/project/ProjectDetailController.js'
+                        ]});
+                    }]
+                },
+            })
+
+            .state('project-create', {
+                url: '/project-create',
+                views: {
+                    lazyLoadView: {
+                        controller: 'ProjectCreateController', // This view will use AppCtrl loaded below in the resolve
+                        templateUrl: 'amp/views/project/create.html'
+                    }
+                },
+                resolve: {// Any property in resolve should return a promise and is executed before the view is loaded
+                    loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load({files: [
+                            'amp/js/config/app.js',
+                            'amp/js/config/constant.js',
+                            'amp/js/controllers/project/ProjectCreateController.js',
+                        ]});
+                    }]
+                }
+            })
+    
             .state('404', {
                 url: '/404',
                 views: {

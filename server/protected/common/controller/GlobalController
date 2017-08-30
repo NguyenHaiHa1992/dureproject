@@ -1,0 +1,110 @@
+<?php
+
+
+class GlobalController extends Controller
+{
+	private $service = null;
+	public function behaviors()
+    {
+        return array(
+            'eexcelview'=>array(
+                'class'=>'ext.eexcelview.EExcelBehavior',
+            ),
+        );
+    }
+
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+    public function getService(){
+    	$service = get_object_vars($this->service);
+    	return $service;
+    }
+
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules($access = array()) {
+    	$array = array(
+    		// default roles actions for super admin
+    		array(
+    			'allows',
+    			'actions' => array('delete' , 'copy'),
+    			'roles' 	=> array('Super Admin'),
+    		),
+    		array('allows',
+    			'actions' => array(
+    				'create' , 'update',
+    			),
+    			'users' => array('@'),
+    		),
+    		array('deny',
+    			'users' => array('*')
+    		),
+    	);
+    	return array_merge($access, $array);
+    }
+
+    public function actionCreateinit(){
+    	$service = $this->getService();
+    	if($service){
+    		$data = $service::data();
+	        $result = $service::createInit($data);
+	        $this->returnJson($result);
+    	}
+    	throw new Exception(Yii::t('yii', 'Check if your service is null'), 1);
+    	
+    }
+
+    public function actionDetailInit() {
+    	$service = $this->getService();
+        $data = $service ::data();
+        $result = $service ::detailInit($data);
+        $this->returnJson($result);
+    }
+
+
+    public function actionGetAll() {
+    	$service = $this->getService();
+
+        $data = $service::data();
+        $result = $service::getAll($data);
+        $this->returnJson($result);
+    }
+
+
+    public function actionGetEmptyError() {
+        $result = ProjectService::getEmptyProjectError();
+        $this->returnJson($result);
+    }
+
+    public function actionCreate() {
+        $data = ProjectService::data();
+        $result = ProjectService::create($data);
+        $this->returnJson($result);
+    }
+
+    public function actionGetById() {
+        $data = ProjectService::data();
+        $result = ProjectService::getProjectById($data);
+        $this->returnJson($result);
+    }
+
+    public function actionUpdate() {
+        $data = ProjectService::data();
+        $result = ProjectService::update($data);
+        $this->returnJson($result);
+    }
+
+    public function actionUpdateTableFilter() {
+        $data = ProjectService::data();
+        $result = ProjectService::update($data);
+        $this->returnJson($result);
+    }
+
+}
