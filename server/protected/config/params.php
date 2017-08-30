@@ -3,7 +3,7 @@
 // this contains the application parameters that can be maintained via GUI
 return array(
 	// this is displayed in the header section
-	'title'=>'PM Asset Manager',
+	'title'=>'DureProject Manager',
 	// this is used in error pages
 	// number of posts displayed per page
 	'postsPerPage'=>10,
