@@ -116,8 +116,8 @@ class ProjectService extends iPhoenixService {
         }
 //        $criteria->compare('t.in_trash', 0);
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
-//        $criteria->limitnum = $data['limitnum'];
-//        $criteria->limitstart = $data['limitstart'];
+        $criteria->limit = $data['limitnum'];
+        $criteria->offset = $data['limitstart'];
 
         // $total = Project::model()->count($criteria);
         $projects = Project::model()->findAll($criteria);

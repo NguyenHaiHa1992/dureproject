@@ -6,11 +6,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Enter customer details
+            Enter signage details
         </h1>
         <ol class="breadcrumb">
             <li><a ui-sref="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-            <li class="active">Enter customer details</li>
+            <li class="active">Enter signage details</li>
         </ol>
     </section>
 
@@ -19,9 +19,9 @@
         <div class="row" ng-show="init_loaded">
             <div class="col-md-12">
                 <ol class="breadcrumb tool_box">
-                    <li><b>Customer actions</b></li>
-                    <li><a ui-sref="customer-list">Customer list</a></li>
-                    <li class="active"><a ui-sref="customer-create" ui-sref-opts="{reload: true, notify: true}">Add new customer</a></li>
+                    <li><b>Signage actions</b></li>
+                    <li><a ui-sref="signage-list">Signage list</a></li>
+                    <li class="active"><a ui-sref="signage-create" ui-sref-opts="{reload: true, notify: true}">Add new signage</a></li>
                 </ol>
                 <!-- general form elements -->
                 <div class="box overhidden top_box">
@@ -34,43 +34,92 @@
             </div>
 
             <div class="col-md-12">
-                <div class="box no-border overhidden" style="min-height: 400px">
+                <div class="box no-border" style="overflow: auto;">
                     <div class="box-body">
                         <div class="col-md-6">
                             <!-- general form elements -->
                             <!-- form start -->
                             <form role="form">
-                                <div class="row form-group" ng-class="{'has-error': customer_error.ship_to.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': signage_error.code.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Ship-To Name <span class="required"></span></label>
+                                        <label>Code <span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="customer.ship_to" type="text" class="form-control" placeholder="Ship-To Name">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.ship_to.length != 0" ng-repeat="error in customer_error.ship_to">
+                                        <input ng-model="signage.code" type="text" class="form-control" placeholder="code">
+                                        <span class="control-label" for="inputError" ng-show="signage_error.code.length != 0" ng-repeat="error in signage_error.code">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
                                 </div>
 
-                                <div class="row form-group" ng-class="{'has-error': customer_error.ship_oa.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': signage_error.category_id.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>O/A (if applicable)<span class="required"></span></label>
+                                        <label for="" >Category <span class="required">*</span></label></br>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="customer.ship_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.ship_oa.length != 0" ng-repeat="error in customer_error.ship_oa">
+                                        <select chosen class="form-control" ng-model="signage.category_id" ng-options="item.id as item.name for item in signage_categories" data-placeholder="Choose category ...">
+                                        </select>
+                                        <span class="control-label" for="inputError" ng-show="signage_error.category_id.length != 0" ng-repeat="error in signage_error.category_id">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group none" ng-class="{'has-error': signage_error.price.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Price</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="signage.price" type="text" class="form-control" placeholder="price">
+                                        <span class="control-label" for="inputError" ng-show="signage_error.price.length != 0" ng-repeat="error in signage_error.price">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': signage_error.description.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Description<span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea ng-model="signage.description" type="text" class="form-control" placeholder="description"></textarea>
+                                        <span class="control-label" for="inputError" ng-show="signage_error.description.length != 0" ng-repeat="error in signage_error.description">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': signage_error.location.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Location</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input ng-model="signage.location" type="text" class="form-control" placeholder="location">
+                                        <span class="control-label" for="inputError" ng-show="signage_error.location.length != 0" ng-repeat="error in signage_error.location">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': customer_error.ship_address.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': signage_error.size.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Address<span class="required"></span></label>
+                                        <label>Size</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="customer.ship_address" type="text" class="form-control" placeholder="Ship Address">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.ship_address.length != 0" ng-repeat="error in customer_error.ship_address">
+                                        <input ng-model="signage.size" type="text" class="form-control" placeholder="size">
+                                        <span class="control-label" for="inputError" ng-show="signage_error.size.length != 0" ng-repeat="error in signage_error.size">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': signage_error.image_id.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Specification Image</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <file-uploader-single option-style="'image'" file-id="signage.image_id" model-id="signage.id" field-id="'image_id'"></file-uploader-single>
+                                        <span class="control-label" for="inputError" ng-show="signage_error.image_id.length != 0" ng-repeat="error in signage_error.image_id">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -80,63 +129,76 @@
                         <div class="col-md-6">
                             <!-- general form elements disabled -->
                             <form role="form">
-                                <div class="row form-group" ng-class="{'has-error': customer_error.bill_to.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': signage_error.material.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Bill-To (Full Legal Company Name)
-                                            <!--<span class="required">*</span>-->
-                                        </label>
+                                        <label>Material</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="customer.bill_to" type="text" class="form-control" placeholder="Bill-To (Full Legal Company Name)">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.bill_to.length != 0" ng-repeat="error in customer_error.bill_to">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.bill_oa.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>O/A (if applicable)</label></br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.bill_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.bill_oa.length != 0" ng-repeat="error in customer_error.bill_oa">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.bill_address.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Address</label></br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.bill_address" type="text" class="form-control" placeholder="Bill Address">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.bill_address.length != 0" ng-repeat="error in customer_error.bill_address">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': customer_error.phone.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Phone</label></br>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="customer.phone" type="text" class="form-control" placeholder="Phone">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.phone.length != 0" ng-repeat="error in customer_error.phone">
+                                        <input ng-model="signage.material" type="text" class="form-control" placeholder="material">
+                                        <span class="control-label" for="inputError" ng-show="signage_error.material.length != 0" ng-repeat="error in signage_error.material">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': customer_error.fax.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': signage_error.vendor.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Fax</label></br>
+                                        <label>Vendor</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="customer.fax" type="text" class="form-control" placeholder="Fax">
-                                        <span class="control-label" for="inputError" ng-show="customer_error.fax.length != 0" ng-repeat="error in customer_error.fax">
+                                        <input ng-model="signage.vendor" type="text" class="form-control" placeholder="vendor">
+                                        <span class="control-label" for="inputError" ng-show="signage_error.vendor.length != 0" ng-repeat="error in signage_error.vendor">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': signage_error.mounting.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Mounting</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="radio" ng-model="signage.mounting" value="1"> Self &nbsp;
+                                        <input type="radio" ng-model="signage.mounting" value="2"> Fixture &nbsp;
+                                        <span class="control-label" for="inputError" ng-show="signage_error.mounting.length != 0" ng-repeat="error in signage_error.mounting">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': signage_error.changes_seasonally.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Changes Seasonally</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="radio" ng-model="signage.changes_seasonally" value="1"> Yes &nbsp;
+                                        <input type="radio" ng-model="signage.changes_seasonally" value="0"> No &nbsp;
+                                        <span class="control-label" for="inputError" ng-show="signage_error.changes_seasonally.length != 0" ng-repeat="error in signage_error.changes_seasonally">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': signage_error.power_required.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Power Required</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="radio" ng-model="signage.power_required" value="1"> Yes &nbsp;
+                                        <input type="radio" ng-model="signage.power_required" value="0"> No &nbsp;
+                                        <span class="control-label" for="inputError" ng-show="signage_error.power_required.length != 0" ng-repeat="error in signage_error.power_required">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" ng-class="{'has-error': signage_error.example_image.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Example Image</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <file-uploader-single option-style="'image'" file-id="signage.example_image" model-id="signage.id" field-id="'example_image'"></file-uploader-single>
+                                        <span class="control-label" for="inputError" ng-show="signage_error.example_image.length != 0" ng-repeat="error in signage_error.example_image">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -146,15 +208,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-12">
                 <div class="box no-border" style="min-height: 100px">
                     <div class="box-header">
-                        <h3 class="box-title">Customer documents</h3>
+                        <h3 class="box-title">Signage documents</h3>
                     </div>
                     <div class="box-body overhidden">
                       <i>Available only on update</i>
-                        <!--<file-uploader file-ids="customer.tmp_file_ids" model-id="customer.id"></file-uploader>-->
+                        <!-- <file-uploader file-ids="signage.tmp_file_ids" model-id="signage.id"></file-uploader> -->
                     </div>
                 </div>
             </div>
