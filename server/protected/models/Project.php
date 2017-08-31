@@ -150,9 +150,18 @@ class Project extends CActiveRecord
 
 	public static function getTypeOfProduct(){
 		return array(
-			self::TYPE_LIFE_STYLE => "Life Style",
-			self::TYPE_ORIGINAL => "Original",
-			self::TYPE_OTHER => 'User Input',
+				array(
+					'id' => self::TYPE_LIFE_STYLE,
+					'name' => 'Life Style',
+				),
+				array(
+					'id' => self::TYPE_ORIGINAL,
+					'name' => 'Original',
+				),
+				array(
+					'id' => self::TYPE_OTHER,
+					'name' => 'User Input',
+				),
 		);
 	}
 
@@ -163,11 +172,22 @@ class Project extends CActiveRecord
 
 	public static function getProductMatch(){
 		return array(
-			'id' => 
-			self::SER_PRE_BLEND => 'Pre-Blended Product/Co-packing',
-			self::SER_BLEND_ING => 'Custom Blends with ingredients supplied to Dure',
-			self::SER_BLEND_ING_PACK => 'Custom Blend with ingredients and packaging supplied by Dure',
-			self::TYPE_OTHER => 'User Input',
+			array(
+				'id' => self::SER_PRE_BLEND ,
+				'name' => 'Pre-Blended Product/Co-packing',
+			),
+			array(
+				'id' => self::SER_BLEND_ING ,
+				'name' => 'Custom Blends with ingredients supplied to Dure',
+			),
+			array(
+				'id' => self::SER_BLEND_ING_PACK ,
+				'name' => 'Custom Blend with ingredients and packaging supplied by Dure',
+			),
+			array(
+				'id' => self::TYPE_OTHER ,
+				'name' => 'User Input',
+			),
 		);
 	}
 }
