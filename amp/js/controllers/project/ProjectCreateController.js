@@ -20,12 +20,14 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $scope.project_empty= data.project_empty;
                 $scope.project_error= data.project_error;
                 $scope.project_error_empty= data.project_error_empty;
-
+                $scope.project_customers = data.project_customers;
+                $scope.project_typeProducts = data.project_typeProducts;
+                $scope.project_services = data.project_services;
+                $scope.libYesNo = [{'id':1,'name':'Yes'},{'id':0,'name':'No'}];
                 $scope.is_update= data.is_update;
                 $scope.is_create= data.is_create;
 
-                $scope.project_code= $scope.project.project_code;
-
+                $scope.project_code= $scope.project.project_code;                
                 // If copy project
                 if($rootScope.is_copy_project){
                     $scope.project.id = undefined;
@@ -97,15 +99,22 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     	});
     };
 
-    $scope.showHideOther = function($attribute){
-        console.log('DEBUG : function showHideOther : attribute ' + $attribute);
-        if($scope.selectedItem.id == 'type_other'){
-            console.log('DEBUG : selectedItem in type_other case');
-            // reset value $attribute
-            $scope.$attribute = "";
+    $scope.showHideOther = function(){
+        console.log('DEBUG : function showHideOther');
+        if ($scope.project.service == 'type_other') {
+            $scope.project.other_service = "";
         }
         console.log('DEBUG : end debug function showHideOther');
     };
+    
+    $scope.showHideLifeStyle = function(){
+        console.log("DEBUG : showHideLifeStyle");
+        console.log($scope.project.life_style);
+        if($scope.project.life_style == 'type_other'){
+            $scope.project.other_type_product = "";
+        }
+        console.log('DEBUG : end debug function showHideLifeStyle');
+    }
 
     //Date picker
     jQuery('.datepicker').datepicker({

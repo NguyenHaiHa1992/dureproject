@@ -233,10 +233,17 @@ class Customer extends CActiveRecord
     */
     public static function getAll(){
         $criteria = new CDbCriteria();
-        $criteria->select = array('id', 'name');
-        $criteria->compare('status', StatusEnum::STATUS_ACTIVE);
+        $criteria->select = array('id', 'ship_address');
+        $criteria->compare('status', 1);
+        $criteria->compare('in_trash',0);
         $customers = Customer::model()->findAll($criteria);
-        $return = CHtml::listData($customers , 'id' , 'name');
+        $return = array();
+        foreach($customers as $customer){
+            $return[] = (object)array(
+                'id' => $customer['id'],
+                'name' => $customer['ship_address'],
+            );
+        }
         return $return;
     }
 }

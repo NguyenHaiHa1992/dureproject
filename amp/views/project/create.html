@@ -52,12 +52,12 @@
                                     </div>
                                 </div>
 
-                                <div class="row form-group none" ng-class="{'has-error': project_error.primary_contact.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.primary_contact.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Primary Contact</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="project.primary_contact" type="text" class="form-control" placeholder="primary_contact">
+                                        <input ng-model="project.primary_contact" type="text" class="form-control" placeholder="primary contact">
                                         <span class="control-label" for="inputError" ng-show="project_error.primary_contact.length != 0" ng-repeat="error in project_error.primary_contact">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
@@ -69,8 +69,11 @@
                                         <label for="" >Customer <span class="required">*</span></label></br>
                                     </div>
                                     <div class="col-md-9">
-                                        <select chosen class="form-control" ng-model="project.customer_id" ng-options="item.id as item.name for item in project_customers" data-placeholder="Choose customer ...">
+                                        <select chosen class="form-control" ng-model="project.customer_id" 
+                                                ng-options="item.id as item.name for item in project_customers" 
+                                                data-placeholder="Choose customer ...">
                                         </select>
+                                        
                                         <span class="control-label" for="inputError" ng-show="project_error.customer_id.length != 0" ng-repeat="error in project_error.customer_id">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
@@ -82,7 +85,7 @@
                                         <label>Project Number</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="project.project_number" type="text" class="form-control" placeholder="project_number">
+                                        <input ng-model="project.project_number" type="text" class="form-control" placeholder="project number">
                                         <span class="control-label" for="inputError" ng-show="project_error.project_number.length != 0" ng-repeat="error in project_error.project_number">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
@@ -101,28 +104,12 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': project_error.image_id.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Document</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <file-uploader-single option-style="'file'" file-id="project.document_id" model-id="project.document_id" field-id="'document_id'"></file-uploader-single>
-                                        <span class="control-label" for="inputError" ng-show="project_error.document_id.length != 0" ng-repeat="error in project_error.document_id">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div><!--/.col (left) -->
-                        <div class="col-md-6">
-                            <!-- general form elements disabled -->
-                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.price_point.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Price Point</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input ng-model="project.price_point" type="text" class="form-control" placeholder="price_point">
+                                        <input ng-model="project.price_point" type="text" class="form-control" placeholder="Price Point">
                                         <span class="control-label" for="inputError" ng-show="project_error.price_point.length != 0" ng-repeat="error in project_error.price_point">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
@@ -134,25 +121,35 @@
                                         <label>What type of product is this? Lifestyle, Original</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <select chosen class="form-control" ng-model="project.life_style" ng-options="item.id as item.name for item in project_typeProducts" data-placeholder="Select Type of Product..." data-ng-change="showHideOther(other_type_product)">
+                                        <select chosen class="form-control" ng-model="project.life_style" 
+                                                ng-options="item.id as item.name for item in project_typeProducts" 
+                                                data-placeholder="Select Type of Product..." data-ng-change="showHideLifeStyle()">
                                         </select>
                                         <span class="control-label" for="inputError" ng-show="project_error.life_style.length != 0" ng-repeat="error in project_error.life_style">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
-                                        <input ng-if="project.life_style == 'other_type'" ng-model="project.other_type_product" class="form-control" placeholder="Add other type of product" />
+                                        <input ng-if="project.life_style == 'type_other'" ng-model="project.other_type_product" class="form-control" placeholder="Add other type of product" />
                                     </div>
                                 </div>
-
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.service.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Services Required</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <select class="form-control chosen" ng-model="project.service" ng-options="item.id as item.name for item in project_services" data-placeholder="Select Service..." data-ng-change="showHideOther(other_service)">
+                                        <select chosen class="form-control" ng-model="project.service"
+                                                ng-options="item.id as item.name for item in project_services"
+                                                data-placeholder="Select Service..." 
+                                                data-ng-change="showHideOther()">
+                                        </select>
                                         <span class="control-label" for="inputError" ng-show="project_error.service.length != 0" ng-repeat="error in project_error.service" />
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
-                                        <input ng-if="project.life_style == 'other_type'" ng-model="project.other_service" class="form-control none" placeholder="Add other service">
+                                        <input ng-if="project.service == 'type_other'" ng-model="project.other_service" class="form-control" placeholder="Add other service">
                                     </div>
                                 </div>
 
@@ -161,7 +158,10 @@
                                         <label>Product Match</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <select class="form-control chosen" ng-model="project.product_match" ng-options="item.id as item.name for item in libYesNo" data-placeholder="Product Matching">
+                                        <select chosen class="form-control" ng-model="project.product_match"
+                                                ng-options="item.id as item.name for item in libYesNo" 
+                                                data-placeholder="Product Matching">
+                                        </select>
                                         <span class="control-label" for="inputError" ng-show="project_error.product_match.length != 0" ng-repeat="error in project_error.product_match">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
@@ -170,24 +170,11 @@
 
                                 <div class="row form-group" ng-class="{'has-error': project_error.note.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Description<span class="required">*</span></label>
+                                        <label>Note<span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-9">
-                                        <textarea ng-model="project.note" type="text" class="form-control" placeholder="note"></textarea>
+                                        <textarea ck-editor ng-model="project.note" type="text" class="form-control" placeholder="note"></textarea>
                                         <span class="control-label" for="inputError" ng-show="project_error.note.length != 0" ng-repeat="error in project_error.note">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="row form-group" ng-class="{'has-error': project_error.status.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Status</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <select chosen class="form-control" ng-model="project.status" ng-options="item.id as item.name for item in project_status" data-placeholder="Status">
-                                        </select>
-                                        <span class="control-label" for="inputError" ng-show="project_error.status.length != 0" ng-repeat="error in project_error.status">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>

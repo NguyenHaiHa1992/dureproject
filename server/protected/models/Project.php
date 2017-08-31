@@ -21,10 +21,12 @@
  * @property integer $updated_by
  * @property integer $updated_time
  * @property integer $status
+ * @property string $other_service
+ * @property string $other_type_product
  */
 class Project extends CActiveRecord
 {
-	public $tmp_file_ids;
+        public $tmp_file_ids;
 	const TYPE_LIFE_STYLE = 'life_style';
 	const TYPE_ORIGINAL = 'original';
 	const TYPE_OTHER = 'type_other';
@@ -49,13 +51,13 @@ class Project extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('date, customer_id, document_id, created_time, updated_by, updated_time, status', 'numerical', 'integerOnly'=>true),
-			array('primary_contact, project_number, life_style, service', 'length', 'max'=>50),
+			array('primary_contact, project_number, life_style, service, other_service, other_type_product', 'length', 'max'=>50),
 			array('volume, product_match, created_by', 'length', 'max'=>255),
 			array('price_point', 'length', 'max'=>11),
 			array('note', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, date, primary_contact, customer_id, project_number, volume, price_point, life_style, service, product_match, note, document_id, created_time, created_by, updated_by, updated_time, status', 'safe', 'on'=>'search'),
+			array('id, date, primary_contact, customer_id, project_number, volume, price_point, life_style, service, product_match, note, document_id, created_time, created_by, updated_by, updated_time, status, other_service, other_type_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -93,6 +95,8 @@ class Project extends CActiveRecord
 			'updated_by' => 'Updated By',
 			'updated_time' => 'Updated Time',
 			'status' => 'Status',
+			'other_service' => 'Other Service',
+			'other_type_product' => 'Other Type Product',
 		);
 	}
 
@@ -131,6 +135,8 @@ class Project extends CActiveRecord
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('updated_time',$this->updated_time);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('other_service',$this->other_service,true);
+		$criteria->compare('other_type_product',$this->other_type_product,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -147,8 +153,8 @@ class Project extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
-	public static function getTypeOfProduct(){
+        
+        public static function getTypeOfProduct(){
 		return array(
 				array(
 					'id' => self::TYPE_LIFE_STYLE,

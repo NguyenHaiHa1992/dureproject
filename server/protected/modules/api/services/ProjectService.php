@@ -29,7 +29,7 @@ class ProjectService extends iPhoenixService {
         // data selection
             $result['project_customers'] = Customer::getAll();
             $result['project_typeProducts'] = Project::getTypeOfProduct();
-            $result['other_type_product'] = Project::getProductMatch();
+            $result['project_services'] = Project::getProductMatch();
         // end data selection
         $result['success'] = true;
         return $result;
@@ -218,6 +218,9 @@ class ProjectService extends iPhoenixService {
         $result = array();
         $project = new Project();
         $project->attributes = $data;
+        if(!is_integer($project->date)){
+            $project->date = strtotime($project->date);
+        }
         $project = ProjectService::beforeSave($project);
         if ($project->validate()) {
             $project->save();
