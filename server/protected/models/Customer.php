@@ -225,4 +225,18 @@ class Customer extends CActiveRecord
             (object)['id' => self::LANGUAGE_FRENCH, 'name' => 'French']
         ];
     }
+
+    /**
+    *   @description getALl Customer 
+    *   @return array('id' => 'name')
+    *   @author tunglexuan <tunghus1993@gmail.com>
+    */
+    public static function getAll(){
+        $criteria = new CDbCriteria();
+        $criteria->select = array('id', 'name');
+        $criteria->compare('status', StatusEnum::STATUS_ACTIVE);
+        $customers = Customer::model()->findAll($criteria);
+        $return = CHtml::listData($customers , 'id' , 'name');
+        return $return;
+    }
 }

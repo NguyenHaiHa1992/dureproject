@@ -42,10 +42,6 @@
             <div class="box no-border" style="overflow: auto;">
                 <div class="box-header">
                     <h3 class="box-title">Signage Information</h3>
-<!--                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                        </button>
-                    </div>-->
                 </div>
                 <div class="box-body overhidden">
                     <div class="col-md-6">
@@ -112,19 +108,6 @@
                                     </span>
                                 </div>
                             </div>
-                            
-<!--                            <div class="row form-group" ng-class="{'has-error': signage_error.status.length != 0}">
-                                <div class="col-md-3 text-right">
-                                    <label>Status</label>
-                                </div>
-                                <div class="col-md-9">
-                                    <input type="radio" ng-model="signage.status" value="1"> Live &nbsp;
-                                    <input type="radio" ng-model="signage.status" value="2"> Archived &nbsp;
-                                    <span class="control-label" for="inputError" ng-show="signage_error.status.length != 0" ng-repeat="error in signage_error.status">
-                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                    </span>
-                                </div>
-                            </div>-->
                             
                             <div class="row form-group" ng-class="{'has-error': signage_error.size.length != 0}">
                                 <div class="col-md-3 text-right">
@@ -383,11 +366,6 @@
                                     <td class=" sorting_1"><a target=_blank ui-sref="fixture-detail({'id':related_item.id})">{{related_item.code}}</a></td>
                                     <td class=" ">{{related_item.category_name}}</td>
                                     <td class=" ">{{related_item.short_description}}</td>
-<!--                                    <td class=" ">
-                                      <button type="button" class="btn btn-danger btn-xs btn-icon" ng-click="removeRelatedFixture(related_item, $index)">
-                                        <span class="glyphicon glyphicon-trash"></span> Remove
-                                      </button>
-                                    </td>-->
                                     <td class="text-center btn-tools">
                                         <div class="btn-group dropdown">
                                             <a href="#" data-toggle="dropdown" class="btn">
@@ -988,18 +966,6 @@
                                 </span>
                             </div>
                         </div>
-
-<!--                        <div class="row form-group" ng-class="{'has-error': store_form.store_error.note.length != 0 && store_form.store_error.note != undefined}">
-                            <div class="col-md-3 text-right">
-                                <label for="">Note</label> </br>
-                            </div>
-                            <div class="col-md-9">
-                                <textarea ng-model="store_form.store.note" type="text" class="form-control" placeholder="note something"></textarea>
-                                <span class="control-label" for="inputError" ng-show="store_form.store_error.note.length != 0 && store_form.store_error.note != undefined" ng-repeat="error in store_form.store_signage_error.note">
-                                    <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                </span>
-                            </div>
-                        </div>-->
                         <div class="row form-group" ng-class="{'has-error': store_form.store_error.signage_quantity.length != 0 && store_form.store_error.signage_quantity != undefined}">
                             <div class="col-md-3 text-right">
                                 <label for="">Signage quantity</label> </br>

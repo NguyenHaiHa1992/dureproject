@@ -26,6 +26,11 @@ class ProjectService extends iPhoenixService {
         $get_empty_project_error = ProjectService::getEmptyProjectError();
         $result['project_error'] = $get_empty_project_error['project_error'];
         $result['project_error_empty'] = $get_empty_project_error['project_error'];
+        // data selection
+            $result['project_customers'] = Customer::getAll();
+            $result['project_typeProducts'] = Project::getTypeOfProduct();
+            $result['other_type_product'] = Project::getProductMatch();
+        // end data selection
         $result['success'] = true;
         return $result;
     }
@@ -148,7 +153,6 @@ class ProjectService extends iPhoenixService {
           $result['project'][$attr] = '';
         }
         $result['project']['tmp_file_ids'] = '';
-        $result['project']['state_name'] = '';
 
         $result['success'] = true;
         return $result;

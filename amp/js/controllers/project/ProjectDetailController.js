@@ -1,4 +1,4 @@
-angular.module('app').controller('CustomerDetailController', ['$scope', '$timeout', '$http', '$location', '$rootScope', 'BASE_URL', '$state', '$stateParams', '$window',
+angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout', '$http', '$location', '$rootScope', 'BASE_URL', '$state', '$stateParams', '$window',
     function ($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state, $stateParams, $window) {
         $scope.root = $rootScope;
         $scope.init_loaded = false;
@@ -6,13 +6,13 @@ angular.module('app').controller('CustomerDetailController', ['$scope', '$timeou
         $scope.createInit = function () {
             var post_information = {};
 
-            $http.post(BASE_URL + '/customer/createInit', post_information)
+            $http.post(BASE_URL + '/project/createInit', post_information)
             .success(function (data) {
                 $scope.init_loaded = true;
                 if (data.success) {
-                    $scope.customer_empty = data.customer_empty;
-                    $scope.customer_error = data.customer_error;
-                    $scope.customer_error_empty = data.customer_error_empty;
+                    $scope.project_empty = data.project_empty;
+                    $scope.project_error = data.project_error;
+                    $scope.project_error_empty = data.project_error_empty;
                     $scope.states = data.states;
                     $scope.tiers = data.tiers;
 
@@ -28,13 +28,13 @@ angular.module('app').controller('CustomerDetailController', ['$scope', '$timeou
         };
         $scope.createInit();
 
-        $scope.getCustomerById = function () {
-            $http.post(BASE_URL + '/customer/getCustomerById', {id: $stateParams.id})
+        $scope.getProjectById = function () {
+            $http.post(BASE_URL + '/project/getProjectById', {id: $stateParams.id})
             .success(function (data) {
                 if (data.success) {
-                    $scope.customer = data.customer;
-                    $scope.customer_code = $scope.customer.customer_code;
-                    $scope.customer_error = data.customer_error;
+                    $scope.project = data.project;
+                    $scope.project_code = $scope.project.project_code;
+                    $scope.project_error = data.project_error;
                 }
                 else {
                     $state.go('404');
@@ -44,27 +44,27 @@ angular.module('app').controller('CustomerDetailController', ['$scope', '$timeou
                 $state.go('404');
             });
         };
-        $scope.getCustomerById();
+        $scope.getProjectById();
 
         $scope.update = function () {
-            var information_post = $scope.customer;
-            $http.post(BASE_URL + '/customer/update', information_post)
+            var information_post = $scope.project;
+            $http.post(BASE_URL + '/project/update', information_post)
                     .success(function (data) {
                         if (data.success) {
-                            swal('Customer updated!', "", "success");
-                            $scope.customer = data.customer;
-                            $scope.customer_error = $scope.customer_error_empty;
+                            swal('Project updated!', "", "success");
+                            $scope.project = data.project;
+                            $scope.project_error = $scope.project_error_empty;
 
                             $("input").removeClass("ng-dirty");
                         }
                         else {
                             swal({
                                 title: '',
-                                text: 'Customer update failed!',
+                                text: 'Project update failed!',
                                 type: 'error',
                                 html: true
                             });
-                            $scope.customer_error = data.customer_error;
+                            $scope.project_error = data.project_error;
                         }
                     })
                     .error(function (data, status, headers, config) {
@@ -75,20 +75,17 @@ angular.module('app').controller('CustomerDetailController', ['$scope', '$timeou
         $scope.copyToClipboard = function () {
             swal({
                 title: 'Copied to clipboard!',
-                text: jQuery('#customer_card').html(),
+                text: jQuery('#project_card').html(),
                 type: 'success',
                 html: true
             });
         }
 
-        $scope.copyCustomer = function () {
-//            $rootScope.view_detail_customer_id = $scope.customer.id;
-//            $rootScope.is_copy_customer = true;
-//            $state.go('customer-create');
-            $http.post(BASE_URL + '/customer/copy', {id: $scope.customer.id})
+        $scope.copyProject = function () {
+            $http.post(BASE_URL + '/project/copy', {id: $scope.project.id})
             .success(function (data) {
                 if (data.success) {
-                    $state.go('customer-detail', {id: data.id});
+                    $state.go('project-detail', {id: data.id});
                 }
                 else {
                     $state.go('404');
@@ -102,11 +99,11 @@ angular.module('app').controller('CustomerDetailController', ['$scope', '$timeou
         
         // Export PDF and Email
         $scope.exportPdf = function(){
-            $http.get(BASE_URL + '/customer/exportPdf?id=' + $scope.customer.id)
+            $http.get(BASE_URL + '/project/exportPdf?id=' + $scope.project.id)
             .success(function (data) {
                 if (data.success) {
                     swal({
-                        title: "Customer Detail exported",
+                        title: "project Detail exported",
                         text: "<button class='email bg-green'><i class='fa fa-envelope'></i> Email it</button> <button class='download bg-blue'><i class='fa fa-download'></i> Download it</button>",
                         type: "info",
                         showConfirmButton: false,
@@ -234,13 +231,13 @@ angular.module('app').controller('CustomerDetailController', ['$scope', '$timeou
                 html: true
             },
             function(){
-                var information_post = {'id': $scope.customer.id};
-                $http.post(BASE_URL + '/customer/delete', information_post)
+                var information_post = {'id': $scope.project.id};
+                $http.post(BASE_URL + '/project/delete', information_post)
                 .success(function (data) {
                     if (data.success) {
                         swal(data.message, "", "success");
                         swal.close();
-                        $state.go('customer-list');
+                        $state.go('project-list');
                     }
                     else {
                         swal(data.message, "", "error");

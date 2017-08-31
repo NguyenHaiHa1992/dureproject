@@ -1,35 +1,35 @@
-angular.module('app').controller('CustomerCreateController', ['$scope', '$timeout', '$http', '$location', '$rootScope','BASE_URL', '$state',
+angular.module('app').controller('ProjectCreateController', ['$scope', '$timeout', '$http', '$location', '$rootScope','BASE_URL', '$state',
 function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     $scope.init_loaded = false;
 
     $scope.createInit= function(){
         var post_information= {};
-        if(jQuery.type($rootScope.view_detail_customer_id) !== "undefined" && $rootScope.view_detail_customer_id !== ''){
+        if(jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== ''){
             post_information= {id: $rootScope.view_detail_customer_id};
-            $rootScope.view_detail_customer_id= undefined;
+            $rootScope.view_detail_project_id= undefined;
         }
         else{
             post_information= {};
         }
-        $http.post(BASE_URL + '/customer/createInit', post_information)
+        $http.post(BASE_URL + '/project/createInit', post_information)
         .success(function(data) {
             $scope.init_loaded = true;
 
             if(data.success) {
-                $scope.customer= data.customer;
-                $scope.customer_empty= data.customer_empty;
-                $scope.customer_error= data.customer_error;
-                $scope.customer_error_empty= data.customer_error_empty;
+                $scope.project= data.project;
+                $scope.project_empty= data.project_empty;
+                $scope.project_error= data.project_error;
+                $scope.project_error_empty= data.project_error_empty;
 
                 $scope.is_update= data.is_update;
                 $scope.is_create= data.is_create;
 
-                $scope.customer_code= $scope.customer.customer_code;
+                $scope.project_code= $scope.project.project_code;
 
-                // If copy customer
-                if($rootScope.is_copy_customer){
-                    $scope.customer.id = undefined;
-                    $scope.customer.name = $scope.customer.name + ' COPY';
+                // If copy project
+                if($rootScope.is_copy_project){
+                    $scope.project.id = undefined;
+                    $scope.project.name = $scope.project.name + ' COPY';
                     $scope.is_update= false;
                     $scope.is_create= true;
                 }
@@ -46,15 +46,15 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     $scope.createInit();
 
     $scope.create= function(){
-        var information_post= $scope.customer;
-        $http.post(BASE_URL + '/customer/create', information_post)
+        var information_post= $scope.project;
+        $http.post(BASE_URL + '/project/create', information_post)
         .success(function(data) {
             if(data.success) {
-                swal('Customer created!', "", "success");
-                $state.go('customer-detail', {id: data.id});
+                swal('Project created!', "", "success");
+                $state.go('project-detail', {id: data.id});
             }
             else{
-                $scope.customer_error= data.customer_error;
+                $scope.project_error= data.project_error;
             }
         })
         .error(function(data, status, headers, config) {
@@ -63,24 +63,24 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     };
 
     $scope.update= function(){
-        var information_post= $scope.customer;
-        $http.post(BASE_URL + '/customer/update', information_post)
+        var information_post= $scope.project;
+        $http.post(BASE_URL + '/project/update', information_post)
         .success(function(data) {
             if(data.success) {
-                swal('Customer updated!', "", "success");
-                $scope.customer= data.customer;
-                $scope.customer_error= $scope.customer_error_empty;
+                swal('Project updated!', "", "success");
+                $scope.project= data.customer;
+                $scope.project_error= $scope.project_error_empty;
 
                 $( "input" ).removeClass( "ng-dirty" );
             }
             else{
                 swal({
                         title: '',
-                        text: 'Customer update failed!',
+                        text: 'Project update failed!',
                         type: 'error',
                         html: true
                 });
-                $scope.customer_error= data.customer_error;
+                $scope.project_error= data.project_error;
             }
         })
         .error(function(data, status, headers, config) {
@@ -91,10 +91,20 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     $scope.copyToClipboard = function () {
     	swal({
             title: 'You have copied card to clipboard!',
-            text: jQuery('#customer_card').html(),
+            text: jQuery('#project_card').html(),
             type: 'success',
             html: true
     	});
+    };
+
+    $scope.showHideOther = function($attribute){
+        console.log('DEBUG : function showHideOther : attribute ' + $attribute);
+        if($scope.selectedItem.id == 'type_other'){
+            console.log('DEBUG : selectedItem in type_other case');
+            // reset value $attribute
+            $scope.$attribute = "";
+        }
+        console.log('DEBUG : end debug function showHideOther');
     };
 
     //Date picker

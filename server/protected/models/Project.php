@@ -25,6 +25,13 @@
 class Project extends CActiveRecord
 {
 	public $tmp_file_ids;
+	const TYPE_LIFE_STYLE = 'life_style';
+	const TYPE_ORIGINAL = 'original';
+	const TYPE_OTHER = 'type_other';
+	const SER_PRE_BLEND = 'ser_pre_blend';
+	const SER_BLEND_ING = 'ser_blend_ing';
+	const SER_BLEND_ING_PACK = 'ser_blend_ing_pack';
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -139,5 +146,28 @@ class Project extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public static function getTypeOfProduct(){
+		return array(
+			self::TYPE_LIFE_STYLE => "Life Style",
+			self::TYPE_ORIGINAL => "Original",
+			self::TYPE_OTHER => 'User Input',
+		);
+	}
+
+	public static function getLabelByType($type){
+		$listTypeProduct = self::getTypeOfProduct();
+		return isset($listTypeProduct[$type]) && $listTypeProduct[$type] ? $listTypeProduct[$type] : self::TYPE_OTHER;
+	}
+
+	public static function getProductMatch(){
+		return array(
+			'id' => 
+			self::SER_PRE_BLEND => 'Pre-Blended Product/Co-packing',
+			self::SER_BLEND_ING => 'Custom Blends with ingredients supplied to Dure',
+			self::SER_BLEND_ING_PACK => 'Custom Blend with ingredients and packaging supplied by Dure',
+			self::TYPE_OTHER => 'User Input',
+		);
 	}
 }

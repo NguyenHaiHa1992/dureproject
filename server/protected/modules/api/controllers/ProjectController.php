@@ -43,6 +43,7 @@ class ProjectController extends Controller {
     public function actionCreateInit() {
         $data = ProjectService::data();
         $result = ProjectService::createInit($data);
+        var_dump($result);exit;
         $this->returnJson($result);
     }
 
