@@ -4,28 +4,28 @@ class CustomerService extends iPhoenixService {
 
     public static function createInit($data) {
         $result = array();
-        $get_empty_project = CustomerService::getEmptyCustomer();
+        $get_empty_customer = CustomerService::getEmptyCustomer();
         if (isset($data['id']) && $data['id'] != '') {
-            $project = CustomerService::getCustomerById(array('id' => $data['id']));
-            if ($project['success'] == true) {
-                $result['project'] = $project['project'];
+            $customer = CustomerService::getCustomerById(array('id' => $data['id']));
+            if ($customer['success'] == true) {
+                $result['customer'] = $customer['customer'];
                 $result['is_update'] = true;
                 $result['is_create'] = false;
             } else {
-                $result['project'] = $get_empty_project['project'];
+                $result['customer'] = $get_empty_customer['customer'];
                 $result['is_update'] = false;
                 $result['is_create'] = true;
             }
         } else {
-            $result['project'] = $get_empty_project['project'];
+            $result['customer'] = $get_empty_customer['customer'];
             $result['is_update'] = false;
             $result['is_create'] = true;
         }
 
-        $result['project_empty'] = $get_empty_project['project'];
-        $get_empty_project_error = CustomerService::getEmptyCustomerError();
-        $result['project_error'] = $get_empty_project_error['project_error'];
-        $result['project_error_empty'] = $get_empty_project_error['project_error'];
+        $result['customer_empty'] = $get_empty_customer['customer'];
+        $get_empty_customer_error = CustomerService::getEmptyCustomerError();
+        $result['customer_error'] = $get_empty_customer_error['customer_error'];
+        $result['customer_error_empty'] = $get_empty_customer_error['customer_error'];
         $result['success'] = true;
         return $result;
     }
@@ -43,57 +43,57 @@ class CustomerService extends iPhoenixService {
 
         $sql = '';
         $sql_order_by = '';
-        $sql_order_by = 'ORDER BY tbl_project.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
+        $sql_order_by = 'ORDER BY tbl_customer.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
 
 //        if(isset($data['signage_id']) && $data['signage_id']){
-//            $sql = "SELECT tbl_project.*, tbl_project_signage.signage_quantity, tbl_project_signage.id project_signage_id FROM tbl_project ";
+//            $sql = "SELECT tbl_customer.*, tbl_customer_signage.signage_quantity, tbl_customer_signage.id customer_signage_id FROM tbl_customer ";
 //        }
 //        else{
-//            $sql = "SELECT tbl_project.* FROM tbl_project ";
+//            $sql = "SELECT tbl_customer.* FROM tbl_customer ";
 //        }
-        $sql = "SELECT tbl_project.* FROM tbl_project ";
+        $sql = "SELECT tbl_customer.* FROM tbl_customer ";
         if(isset($data['signage_id']) && $data['signage_id']){
-            $sql = $sql . " INNER JOIN tbl_project_signage ON tbl_project.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
+            $sql = $sql . " INNER JOIN tbl_customer_signage ON tbl_customer.id = tbl_customer_signage.customer_id AND tbl_customer_signage.signage_id = ".$data['signage_id'];
         }
         $sql = $sql . " Where 1 ";
 
         if (isset($data['ship_to']) && $data['ship_to'] != '') {
-            $sql = $sql . "And tbl_project.ship_to LIKE '%" . $data['ship_to'] . "%' ";
+            $sql = $sql . "And tbl_customer.ship_to LIKE '%" . $data['ship_to'] . "%' ";
         }
         if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
-            $sql = $sql . "And tbl_project.ship_oa LIKE '%" . $data['ship_oa'] . "%' ";
+            $sql = $sql . "And tbl_customer.ship_oa LIKE '%" . $data['ship_oa'] . "%' ";
         }
         if (isset($data['ship_address']) && $data['ship_address'] != '') {
-            $sql = $sql . "And tbl_project.ship_address LIKE '%" . $data['ship_address'] . "%' ";
+            $sql = $sql . "And tbl_customer.ship_address LIKE '%" . $data['ship_address'] . "%' ";
         }
         if (isset($data['bill_to']) && $data['bill_to'] != '') {
-            $sql = $sql . "And tbl_project.bill_to LIKE '%" . $data['bill_to'] . "%' ";
+            $sql = $sql . "And tbl_customer.bill_to LIKE '%" . $data['bill_to'] . "%' ";
         }
         
         if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
-            $sql = $sql . "And tbl_project.bill_oa LIKE '%" . $data['bill_oa'] . "%' ";
+            $sql = $sql . "And tbl_customer.bill_oa LIKE '%" . $data['bill_oa'] . "%' ";
         }
         
         if (isset($data['bill_address']) && $data['bill_address'] != '') {
-            $sql = $sql . "And tbl_project.bill_address LIKE '%" . $data['bill_address'] . "%' ";
+            $sql = $sql . "And tbl_customer.bill_address LIKE '%" . $data['bill_address'] . "%' ";
         }
         
         if (isset($data['phone']) && $data['phone'] != '') {
-            $sql = $sql . "And tbl_project.phone LIKE '%" . $data['phone'] . "%' ";
+            $sql = $sql . "And tbl_customer.phone LIKE '%" . $data['phone'] . "%' ";
         }
         
         if (isset($data['fax']) && $data['fax'] != '') {
-            $sql = $sql . "And tbl_project.fax LIKE '%" . $data['fax'] . "%' ";
+            $sql = $sql . "And tbl_customer.fax LIKE '%" . $data['fax'] . "%' ";
         }
-        $sql = $sql . "And tbl_project.in_trash = 0 ";
+        $sql = $sql . "And tbl_customer.in_trash = 0 ";
         $sql = $sql . $sql_order_by;
         $sql = $sql . " Limit " . $data['limitstart'] . ", " . $data['limitnum'];
-//        $projects = Customer::model()->findAllBySql($sql);
-        $projects = Yii::app()->db->createCommand($sql)->queryAll();
+//        $customers = Customer::model()->findAllBySql($sql);
+        $customers = Yii::app()->db->createCommand($sql)->queryAll();
         
         $criteria = new CDbCriteria();
         if(isset($data['signage_id']) && $data['signage_id']){
-            $criteria->join = "INNER JOIN tbl_project_signage ON t.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
+            $criteria->join = "INNER JOIN tbl_customer_signage ON t.id = tbl_customer_signage.customer_id AND tbl_customer_signage.signage_id = ".$data['signage_id'];
         }
         if (isset($data['ship_to']) && $data['ship_to'] != '') {
             $criteria->compare('ship_to', $data['ship_to'], true);
@@ -123,32 +123,32 @@ class CustomerService extends iPhoenixService {
         $criteria->compare('t.in_trash', 0);
         $total = Customer::model()->count($criteria);
 
-        if ($projects != null) {
+        if ($customers != null) {
             $result['success'] = true;
-            $result['projects'] = self::convertListCustomer($projects, $isRelated);
+            $result['customers'] = self::convertListCustomer($customers, $isRelated);
 
             $result['totalresults'] = $total;
-            $result['start_project'] = (int) $data['limitstart'] + 1;
-            $result['end_project'] = (int) $data['limitstart'] + count($projects);
+            $result['start_customer'] = (int) $data['limitstart'] + 1;
+            $result['end_customer'] = (int) $data['limitstart'] + count($customers);
         } else {
             $result['success'] = true;
-            $result['projects'] = array();
+            $result['customers'] = array();
             $result['totalresults'] = $total;
-            $result['start_project'] = 0;
-            $result['end_project'] = 0;
+            $result['start_customer'] = 0;
+            $result['end_customer'] = 0;
         }
         return $result;
     }
 
     public static function getEmptyCustomer() {
         $result = array();
-        $project = new Customer();
-        $attribute_names = $project->attributeNames();
+        $customer = new Customer();
+        $attribute_names = $customer->attributeNames();
         foreach($attribute_names as $attr){
-          $result['project'][$attr] = '';
+          $result['customer'][$attr] = '';
         }
-        $result['project']['tmp_file_ids'] = '';
-        $result['project']['state_name'] = '';
+        $result['customer']['tmp_file_ids'] = '';
+        $result['customer']['state_name'] = '';
 
         $result['success'] = true;
         return $result;
@@ -156,12 +156,12 @@ class CustomerService extends iPhoenixService {
 
     public static function getEmptyCustomerError() {
       $result = array();
-      $project = new Customer();
-      $attribute_names = $project->attributeNames();
+      $customer = new Customer();
+      $attribute_names = $customer->attributeNames();
       foreach($attribute_names as $attr){
-        $result['project_error'][$attr] = [];
+        $result['customer_error'][$attr] = [];
       }
-      $result['project_error']['tmp_file_ids'] = [];
+      $result['customer_error']['tmp_file_ids'] = [];
 
       $result['success'] = true;
       return $result;
@@ -169,14 +169,14 @@ class CustomerService extends iPhoenixService {
 
     public static function getCustomerById($data) {
         $result = array();
-        $get_empty_project_error = CustomerService::getEmptyCustomerError();
-        $result['project_error'] = $get_empty_project_error['project_error'];
+        $get_empty_customer_error = CustomerService::getEmptyCustomerError();
+        $result['customer_error'] = $get_empty_customer_error['customer_error'];
 
-        $project;
-        $project = Customer::model()->findByPk((int) $data['id']);
-        if ($project != null) {
+        $customer;
+        $customer = Customer::model()->findByPk((int) $data['id']);
+        if ($customer != null) {
             $result['success'] = true;
-            $result['project'] = self::convertCustomer($project);
+            $result['customer'] = self::convertCustomer($customer);
         } else {
             $result['success'] = false;
             $result['message'] = 'Customer\'s not found!';
@@ -186,13 +186,13 @@ class CustomerService extends iPhoenixService {
 
     public static function getCustomersByCategoryId($data) {//data['id']
         $result = array();
-        $projects = Customer::model()->findAllByAttributes(array('category_id' => $data['id']));
-        if ($projects != null && count($projects) > 0) {
+        $customers = Customer::model()->findAllByAttributes(array('category_id' => $data['id']));
+        if ($customers != null && count($customers) > 0) {
             $result['success'] = true;
-            $result['projects'] = self::convertListCustomer($projects, $data);
+            $result['customers'] = self::convertListCustomer($customers, $data);
         } else {
             $result['success'] = true;
-            $result['projects'] = array();
+            $result['customers'] = array();
         }
         return $result;
     }
@@ -212,24 +212,24 @@ class CustomerService extends iPhoenixService {
 
     public static function create($data) {
         $result = array();
-        $project = new Customer();
-        $project->attributes = $data;
-        $project = CustomerService::beforeSave($project);
-        if ($project->validate()) {
-            $project->save();
+        $customer = new Customer();
+        $customer->attributes = $data;
+        $customer = CustomerService::beforeSave($customer);
+        if ($customer->validate()) {
+            $customer->save();
             $result['success'] = true;
-            $result['id'] = $project->id;
-            $new_project = self::getCustomerById(array('id' => $project->id));
-            $result['project'] = $new_project['project'];
+            $result['id'] = $customer->id;
+            $new_customer = self::getCustomerById(array('id' => $customer->id));
+            $result['customer'] = $new_customer['customer'];
         } else {
-            $empty_project_error = CustomerService::getEmptyCustomerError();
-            $result['project_error'] = $empty_project_error['project_error'];
-            foreach ($project->getErrors() as $key => $error_array) {
-                $result['project_error'][$key] = $error_array;
+            $empty_customer_error = CustomerService::getEmptyCustomerError();
+            $result['customer_error'] = $empty_customer_error['customer_error'];
+            foreach ($customer->getErrors() as $key => $error_array) {
+                $result['customer_error'][$key] = $error_array;
             }
             $result['success'] = false;
             $result['message'] = 'Creating Customer has some errors';
-            $result['error_array'] = $project->getErrors();
+            $result['error_array'] = $customer->getErrors();
         }
 
         return $result;
@@ -237,26 +237,26 @@ class CustomerService extends iPhoenixService {
 
     public static function update($data) {
         $result = array();
-        $project = Customer::model()->findByPk((int) $data['id']);
-        $project->attributes = $data;
-        $project = CustomerService::beforeSave($project);
-        if ($project->validate()) {
-            $project->save();
+        $customer = Customer::model()->findByPk((int) $data['id']);
+        $customer->attributes = $data;
+        $customer = CustomerService::beforeSave($customer);
+        if ($customer->validate()) {
+            $customer->save();
             $result['success'] = true;
-            $project_array = CustomerService::getCustomerById(array('id' => $project->id));
-            $get_empty_project_error = CustomerService::getEmptyCustomerError();
-            $result['project_error'] = $get_empty_project_error['project_error'];
-            $result['project'] = $project_array['project'];
-            $result['id'] = $project->id;
+            $customer_array = CustomerService::getCustomerById(array('id' => $customer->id));
+            $get_empty_customer_error = CustomerService::getEmptyCustomerError();
+            $result['customer_error'] = $get_empty_customer_error['customer_error'];
+            $result['customer'] = $customer_array['customer'];
+            $result['id'] = $customer->id;
         } else {
-            $empty_project_error = CustomerService::getEmptyCustomerError();
-            $result['project_error'] = $empty_project_error['project_error'];
-            foreach ($project->getErrors() as $key => $error_array) {
-                $result['project_error'][$key] = $error_array;
+            $empty_customer_error = CustomerService::getEmptyCustomerError();
+            $result['customer_error'] = $empty_customer_error['customer_error'];
+            foreach ($customer->getErrors() as $key => $error_array) {
+                $result['customer_error'][$key] = $error_array;
             }
             $result['success'] = false;
             $result['message'] = 'Update Customer has some errors';
-            $result['error_array'] = $project->getErrors();
+            $result['error_array'] = $customer->getErrors();
         }
 
         return $result;
@@ -268,60 +268,60 @@ class CustomerService extends iPhoenixService {
             $result['success'] = false;
             return $result;
         }
-        $project = Customer::model()->findByPk((int)$data['id']);
-        if(!$project){
+        $customer = Customer::model()->findByPk((int)$data['id']);
+        if(!$customer){
             $result['success'] = false;
             return $result;
         }
-        $project->in_trash = 1;
-        if($project->save(false)){
+        $customer->in_trash = 1;
+        if($customer->save(false)){
             $result['success'] = true;
         }
         return $result;
     }
 
-    public static function beforeSave($project) {
-        if ($project->isNewRecord) {
-            $project->status = 1;
-            $project->created_time = time();
-//            $project->created_by = Yii::app()->user->id;
+    public static function beforeSave($customer) {
+        if ($customer->isNewRecord) {
+            $customer->status = 1;
+            $customer->created_time = time();
+//            $customer->created_by = Yii::app()->user->id;
         }
         else{
-            $project->updated_time = time();
+            $customer->updated_time = time();
         }
-        return $project;
+        return $customer;
     }
 
-    public static function convertListCustomer($projects, $isRelated = true) {
+    public static function convertListCustomer($customers, $isRelated = true) {
         $result = array();
-        if ($projects != null && count($projects) > 0) {
-            foreach ($projects as $project) {
-                $result[] = self::convertCustomer($project, $isRelated);
+        if ($customers != null && count($customers) > 0) {
+            foreach ($customers as $customer) {
+                $result[] = self::convertCustomer($customer, $isRelated);
             }
         }
         return $result;
     }
 
-    public static function convertCustomer($project, $isRelated = true) {
-        if(is_array($project)){
-            $result = $project;
-            $id = isset($project['id']) ? $project['id'] : 0;
-            $project = Customer::model()->findByPk($id);
+    public static function convertCustomer($customer, $isRelated = true) {
+        if(is_array($customer)){
+            $result = $customer;
+            $id = isset($customer['id']) ? $customer['id'] : 0;
+            $customer = Customer::model()->findByPk($id);
         }
         else{
-            $result = $project->attributes;
+            $result = $customer->attributes;
         }
-        $result['tmp_file_ids'] = $project->tmp_file_ids;
+        $result['tmp_file_ids'] = $customer->tmp_file_ids;
 //        if($isRelated){
-//            $result['project_signages'] = $project->getListSignage();
-//            $result['project_fixtures'] = $project->getListFixture();
+//            $result['customer_signages'] = $customer->getListSignage();
+//            $result['customer_fixtures'] = $customer->getListFixture();
 //        }
         
-//        if($project->open_date){
-//            $result['open_date'] = date('Y-m-d', $project->open_date);
+//        if($customer->open_date){
+//            $result['open_date'] = date('Y-m-d', $customer->open_date);
 //        }
-//        $result['image_id_url'] = $project->image && $project->image->getThumbUrl(80, 80, false)
-//                ? "server/".$project->image->getThumbUrl(80, 80, false)
+//        $result['image_id_url'] = $customer->image && $customer->image->getThumbUrl(80, 80, false)
+//                ? "server/".$customer->image->getThumbUrl(80, 80, false)
 //                : "server/".CustomEnum::IMAGE_NOT_AVAILABLE;
         return $result;
     }
@@ -329,38 +329,38 @@ class CustomerService extends iPhoenixService {
     public static function copy($data) {
         $result = array();
         $id = isset($data['id']) ? (int)$data['id'] : null;
-        $projectCopy = Customer::model()->findByPk($id);
-        if(!$projectCopy){
+        $customerCopy = Customer::model()->findByPk($id);
+        if(!$customerCopy){
             $result['success'] = false;
             $result['message'] = 'Customer copy is not found';
             return $result;
         }
-        $project = new Customer();
-        $project->attributes = $projectCopy->attributes;
-//        $project->name = time()."_".CustomEnum::COPY_CODE.$projectCopy->name;
-        $project = CustomerService::beforeSave($project);
-        if ($project->validate()) {
-            $project->save();
+        $customer = new Customer();
+        $customer->attributes = $customerCopy->attributes;
+//        $customer->name = time()."_".CustomEnum::COPY_CODE.$customerCopy->name;
+        $customer = CustomerService::beforeSave($customer);
+        if ($customer->validate()) {
+            $customer->save();
             $result['success'] = true;
-            $result['id'] = $project->id;
-            $new_project = self::getCustomerById(array('id' => $project->id));
-            $result['project'] = $new_project['project'];
+            $result['id'] = $customer->id;
+            $new_customer = self::getCustomerById(array('id' => $customer->id));
+            $result['customer'] = $new_customer['customer'];
             
             // create CustomerSignage
-//            self::copyRelate('CustomerSignage', 'project_id', $projectCopy->id, $project->id);
+//            self::copyRelate('CustomerSignage', 'customer_id', $customerCopy->id, $customer->id);
             // create CustomerFixture
-//            self::copyRelate('CustomerFixture', 'project_id', $projectCopy->id, $project->id);
+//            self::copyRelate('CustomerFixture', 'customer_id', $customerCopy->id, $customer->id);
             // create CustomerFile
-//            self::copyRelate('CustomerFile', 'project_id', $projectCopy->id, $project->id);
+//            self::copyRelate('CustomerFile', 'customer_id', $customerCopy->id, $customer->id);
         } else {
-            $empty_project_error = CustomerService::getEmptyCustomerError();
-            $result['project_error'] = $empty_project_error['project_error'];
-            foreach ($project->getErrors() as $key => $error_array) {
-                $result['project_error'][$key] = $error_array;
+            $empty_customer_error = CustomerService::getEmptyCustomerError();
+            $result['customer_error'] = $empty_customer_error['customer_error'];
+            foreach ($customer->getErrors() as $key => $error_array) {
+                $result['customer_error'][$key] = $error_array;
             }
             $result['success'] = false;
             $result['message'] = 'Creating Customer has some errors';
-            $result['error_array'] = $project->getErrors();
+            $result['error_array'] = $customer->getErrors();
         }
 
         return $result;
