@@ -192,7 +192,7 @@ html, body{
     font-size: 30px;
 }
 .skin-amp h1 span{
-    color: #e55425;
+    color: #4d4d4f;
 }
 .skin-amp .btn .btn-default {
     border-radius: 6px;
@@ -203,7 +203,7 @@ html, body{
     border: none;
     border-radius: 6px;
     font-size: 16px;
-    background-color: #e55425;
+    background-color: #4d4d4f;
 }
 .skin-amp .btn-primary:hover, .skin-amp .btn-primary:active, .skin-amp .btn-primary.hover {
 /*    background-color: #171A28;*/
@@ -603,7 +603,7 @@ header .logo span{
     display: block;
     padding: 10px;
     position: relative;
-    background: #fd5c28;
+    background: #4d4d4f;
 }
 .skin-amp .box-header .btn-box-tool {
     color: #333;
@@ -691,4 +691,8 @@ header .logo span{
     letter-spacing: 2px;
     font-weight: 600;
     margin: 30px;
+}
+
+.sub-box-title{
+    background-color: #9f9fa0 !important;
 }

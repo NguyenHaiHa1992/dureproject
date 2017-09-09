@@ -239,6 +239,10 @@ class ProjectService extends iPhoenixService {
     }
 
     public static function beforeSave($project) {
+        
+        if($project->date &&  !is_int($project->date)){
+            $project->date = strtotime($project->date);
+        }
         if ($project->isNewRecord) {
             $project->status = 1;
             $project->created_time = time();
