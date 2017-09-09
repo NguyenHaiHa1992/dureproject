@@ -46,54 +46,7 @@ class ProjectService extends iPhoenixService {
             $data['sort_type'] = 'DESC';
         }
 
-        // $sql = '';
-        // // $sql_order_by = '';
-        // // $sql_order_by = 'ORDER BY tbl_project.' . $data['sort_attribute'] . ' ' . $data['sort_type'];
-
-        // $sql = "SELECT tbl_project.* FROM tbl_project ";
-        // // if(isset($data['signage_id']) && $data['signage_id']){
-        // //     $sql = $sql . " INNER JOIN tbl_project_signage ON tbl_project.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
-        // // }
-        // $sql = $sql . " Where 1 ";
-
-        // if (isset($data['ship_to']) && $data['ship_to'] != '') {
-        //     $sql = $sql . "And tbl_project.ship_to LIKE '%" . $data['ship_to'] . "%' ";
-        // }
-        // if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
-        //     $sql = $sql . "And tbl_project.ship_oa LIKE '%" . $data['ship_oa'] . "%' ";
-        // }
-        // if (isset($data['ship_address']) && $data['ship_address'] != '') {
-        //     $sql = $sql . "And tbl_project.ship_address LIKE '%" . $data['ship_address'] . "%' ";
-        // }
-        // if (isset($data['bill_to']) && $data['bill_to'] != '') {
-        //     $sql = $sql . "And tbl_project.bill_to LIKE '%" . $data['bill_to'] . "%' ";
-        // }
-        
-        // if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
-        //     $sql = $sql . "And tbl_project.bill_oa LIKE '%" . $data['bill_oa'] . "%' ";
-        // }
-        
-        // if (isset($data['bill_address']) && $data['bill_address'] != '') {
-        //     $sql = $sql . "And tbl_project.bill_address LIKE '%" . $data['bill_address'] . "%' ";
-        // }
-        
-        // if (isset($data['phone']) && $data['phone'] != '') {
-        //     $sql = $sql . "And tbl_project.phone LIKE '%" . $data['phone'] . "%' ";
-        // }
-        
-        // if (isset($data['fax']) && $data['fax'] != '') {
-        //     $sql = $sql . "And tbl_project.fax LIKE '%" . $data['fax'] . "%' ";
-        // }
-        // $sql = $sql . "And tbl_project.in_trash = 0 ";
-        // $sql = $sql . $sql_order_by;
-        // $sql = $sql . " Limit " . $data['limitstart'] . ", " . $data['limitnum'];
-//        $projects = Project::model()->findAllBySql($sql);
-        // $projects = Yii::app()->db->createCommand($sql)->queryAll();
-        
         $criteria = new CDbCriteria();
-        // if(isset($data['signage_id']) && $data['signage_id']){
-        //     $criteria->join = "INNER JOIN tbl_project_signage ON t.id = tbl_project_signage.project_id AND tbl_project_signage.signage_id = ".$data['signage_id'];
-        // }
         if (isset($data['ship_to']) && $data['ship_to'] != '') {
             $criteria->compare('ship_to', $data['ship_to'], true);
         }
@@ -119,12 +72,10 @@ class ProjectService extends iPhoenixService {
         if (isset($data['fax']) && $data['fax'] != '') {
             $criteria->compare('fax', $data['fax'], true);
         }
-//        $criteria->compare('t.in_trash', 0);
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
         $criteria->limit = $data['limitnum'];
         $criteria->offset = $data['limitstart'];
 
-        // $total = Project::model()->count($criteria);
         $projects = Project::model()->findAll($criteria);
         $total = count($projects);
 
@@ -317,6 +268,12 @@ class ProjectService extends iPhoenixService {
         }
         else{
             $result = $project->attributes;
+        }
+       if(isset($result['date']) && $result['date']){
+        //                if(is_integer($project['date'])){
+
+                            $result['date'] = date('Y-m-d' ,$result['date']);
+        //                }
         }
         $result['tmp_file_ids'] = $project->tmp_file_ids;
         return $result;

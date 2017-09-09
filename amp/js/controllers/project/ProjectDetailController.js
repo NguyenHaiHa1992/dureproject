@@ -13,9 +13,10 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.project_empty = data.project_empty;
                     $scope.project_error = data.project_error;
                     $scope.project_error_empty = data.project_error_empty;
-                    $scope.states = data.states;
-                    $scope.tiers = data.tiers;
-
+                    $scope.project_customers = data.project_customers;
+                    $scope.project_typeProducts = data.project_typeProducts;
+                    $scope.project_services = data.project_services;
+                    $scope.libYesNo = [{id:1,name:'Yes'},{id:0,name:'No'}];
                     $scope.is_update = true;
                 }
                 else {

@@ -66,7 +66,7 @@
 
                                 <div class="row form-group" ng-class="{'has-error': project_error.customer_id.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label for="" >Customer <span class="required">*</span></label></br>
+                                        <label>Customer <span class="required">*</span></label></br>
                                     </div>
                                     <div class="col-md-9">
                                         <select chosen class="form-control" ng-model="project.customer_id" 
@@ -77,6 +77,9 @@
                                         <span class="control-label" for="inputError" ng-show="project_error.customer_id.length != 0" ng-repeat="error in project_error.customer_id">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
+                                        <div class="add-customer" style="padding:10px 0 10px;">
+                                            <button class="btn btn-primary" ng-click="addCustomer()">Add new Customer</button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -146,7 +149,7 @@
                                                 data-placeholder="Select Service..." 
                                                 data-ng-change="showHideOther()">
                                         </select>
-                                        <span class="control-label" for="inputError" ng-show="project_error.service.length != 0" ng-repeat="error in project_error.service" />
+                                        <span class="control-label" for="inputError" ng-show="project_error.service.length != 0" ng-repeat="error in project_error.service">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                         <input ng-if="project.service == 'type_other'" ng-model="project.other_service" class="form-control" placeholder="Add other service">
@@ -198,4 +201,119 @@
             </div>
         </div>
     </section>
+</div>
+
+<div class="modal" id="customerAddModal" tabindex="-1" role="dialog" aria-labelledby="customerAddModal" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 902px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create Customer</h4>
+            </div>
+            <div class="modal-body overhidden">
+                <div class="col-md-6">
+                    <div class="row form-group" ng-class="{'has-error': customer_error.ship_to.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>Ship-To Name <span class="required"></span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.ship_to" type="text" class="form-control" placeholder="Ship-To Name">
+                            <span class="control-label" for="inputError" ng-show="customer_error.ship_to.length != 0" ng-repeat="error in customer_error.ship_to">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': customer_error.ship_oa.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>O/A (if applicable)<span class="required"></span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.ship_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
+                            <span class="control-label" for="inputError" ng-show="customer_error.ship_oa.length != 0" ng-repeat="error in customer_error.ship_oa">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': customer_error.ship_address.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>Address<span class="required"></span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.ship_address" type="text" class="form-control" placeholder="Ship Address">
+                            <span class="control-label" for="inputError" ng-show="customer_error.ship_address.length != 0" ng-repeat="error in customer_error.ship_address">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row form-group" ng-class="{'has-error': customer_error.bill_to.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>Bill-To</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.bill_to" type="text" class="form-control" placeholder="Bill-To (Full Legal Company Name)">
+                            <span class="control-label" for="inputError" ng-show="customer_error.bill_to.length != 0" ng-repeat="error in customer_error.bill_to">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': customer_error.bill_oa.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>O/A (if applicable)</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.bill_oa" type="text" class="form-control" placeholder="O/A (if applicable)">
+                            <span class="control-label" for="inputError" ng-show="customer_error.bill_oa.length != 0" ng-repeat="error in customer_error.bill_oa">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': customer_error.bill_address.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>Bill Address</label></br>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.bill_address" type="text" class="form-control" placeholder="Bill Address">
+                            <span class="control-label" for="inputError" ng-show="customer_error.bill_address.length != 0" ng-repeat="error in customer_error.bill_address">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group" ng-class="{'has-error': customer_error.phone.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>Phone</label></br>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.phone" type="text" class="form-control" placeholder="Phone">
+                            <span class="control-label" for="inputError" ng-show="customer_error.phone.length != 0" ng-repeat="error in customer_error.phone">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+                                
+                    <div class="row form-group" ng-class="{'has-error': customer_error.fax.length != 0}">
+                        <div class="col-md-3 text-right">
+                            <label>Fax</label></br>
+                        </div>
+                        <div class="col-md-9">
+                            <input ng-model="customer.fax" type="text" class="form-control" placeholder="Fax">
+                            <span class="control-label" for="inputError" ng-show="customer_error.fax.length != 0" ng-repeat="error in customer_error.fax">
+                                <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="submitAddCustomer(customer)">Create customer</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
 </div>

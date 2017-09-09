@@ -716,7 +716,7 @@ angular.module('app', [
              * add controller project-view
              */
             .state('project-view',{
-                url:'/project-view',
+                url:'/project-view/:id',
                 views:{
                     "lazyLoadView":{
                         controller:"ProjectViewController",
@@ -739,7 +739,7 @@ angular.module('app', [
              * add controller project-detail
              */
             .state('project-detail',{
-                url:'/project-detail',
+                url:'/project-detail/:id',
                 views:{
                     "lazyLoadView":{
                         controller:"ProjectDetailController",

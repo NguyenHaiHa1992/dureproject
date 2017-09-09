@@ -82,9 +82,7 @@
                             <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': customer_error.bill_to.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Bill-To (Full Legal Company Name)
-                                            <!--<span class="required">*</span>-->
-                                        </label>
+                                        <label>Bill-To</label>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.bill_to" type="text" class="form-control" placeholder="Bill-To (Full Legal Company Name)">
@@ -108,7 +106,7 @@
 
                                 <div class="row form-group" ng-class="{'has-error': customer_error.bill_address.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Address</label></br>
+                                        <label>Bill Address</label></br>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="customer.bill_address" type="text" class="form-control" placeholder="Bill Address">

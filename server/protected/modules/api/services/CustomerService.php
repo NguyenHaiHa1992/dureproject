@@ -221,6 +221,7 @@ class CustomerService extends iPhoenixService {
             $result['id'] = $customer->id;
             $new_customer = self::getCustomerById(array('id' => $customer->id));
             $result['customer'] = $new_customer['customer'];
+            $result['message'] = 'Create customer successful!';
         } else {
             $empty_customer_error = CustomerService::getEmptyCustomerError();
             $result['customer_error'] = $empty_customer_error['customer_error'];
