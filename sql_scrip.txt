@@ -54,3 +54,31 @@ CREATE TABLE `tbl_project` (
 --- 01-09-2017
 ALTER TABLE tbl_project ADD COLUMN `other_service` VARCHAR(50) DEFAULT NULL;
 ALTER TABLE tbl_project ADD COLUMN `other_type_product` VARCHAR(50) DEFAULT NULL;
+
+- 10-09-2017 add tbl_product_development
+CREATE TABLE `tbl_product_development` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) DEFAULT NULL,
+  `spec_for_product` tinyint(2) DEFAULT NULL COMMENT 'Specification sheet/nutritionals for product matching',
+  `customer_submit_product` tinyint(2) DEFAULT NULL COMMENT 'Has the Customer submitted a product formula?',
+  `customer_provide_control` tinyint(2) DEFAULT NULL COMMENT 'Has the Customer provided a control sample?',
+  `physical_spec_product` varchar(255) DEFAULT NULL COMMENT 'Physical specifications of product i.e, density, flowability etc.',
+  `allergent_product` varchar(255) DEFAULT NULL COMMENT 'What allergens does this product contain?',
+  `customer_require_spec` tinyint(2) DEFAULT NULL COMMENT 'Does this Customer require any special claims? Non-GMO, vegan, allergen free, organic etc.',
+  `spec_handing_instruction` tinyint(2) DEFAULT NULL COMMENT 'Any special handling instructions? ex. Dry clean before due to allergen etc.',
+  `spec_ingredients_require` tinyint(2) DEFAULT NULL COMMENT 'Are there any special ingredients required?',
+  `approve_customer_formula_code` varchar(255) DEFAULT NULL COMMENT 'Approved Customer Formula Code',
+  `risk_or_hazard_ingredient` tinyint(2) DEFAULT NULL COMMENT 'Are there any known Risks or hazards associated with the ingredients (including adulteration)',
+  `additional_test_require` tinyint(2) DEFAULT NULL COMMENT 'Is additional testing required?',
+  `note` text,
+  `document_id` int(11) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `customer_require_spec_other` varchar(255) DEFAULT NULL,
+  `spec_handing_instruction_other` varchar(255) DEFAULT NULL,
+  `spec_ingredients_require_other` varchar(255) DEFAULT NULL,
+  `risk_or_hazard_ingredient_other` varchar(255) DEFAULT NULL,
+  `additional_test_require_other` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
