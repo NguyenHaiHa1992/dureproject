@@ -552,6 +552,12 @@ class FileService extends iPhoenixService {
                 'file_id' => $data['file_id']
             ]);
         }
+        elseif($data['related'] == "project_file"){
+            $model = ProjectFile::model()->findByAttributes([
+                'customer_id' => $data['model_id'],
+                'file_id' => $data['file_id']
+            ]);
+        }
         else{
             $model = null;
         }
