@@ -35,6 +35,13 @@
 
             <div class="col-md-12">
                 <div class="box no-border" style="overflow: auto;">
+                    <div class="box-header">
+                        <h3 class="box-title">Project documents</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            </button>
+                        </div>
+                    </div>
                     <div class="box-body">
                         <div class="col-md-6">
                             <!-- general form elements -->
@@ -189,13 +196,31 @@
             </div>
 
             <div class="col-md-12">
-                <div class="box no-border" style="min-height: 100px">
+                <div class="box no-border collapsed-box" style="min-height: 100px">
                     <div class="box-header">
                         <h3 class="box-title">Project documents</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="box-body overhidden">
                       <i>Available only on update</i>
-                        <!-- <file-uploader file-ids="project.tmp_file_ids" model-id="project.id"></file-uploader> -->
+                         <!--<file-uploader file-ids="project.tmp_file_ids" model-id="project.id"></file-uploader>--> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="box no-border" style="overflow: auto;">
+                    <div class="box-header">
+                        <h3 class="box-title">Product Development</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body overhidden">
+                        <product-development ng-model="productDevelopment"></product-development>
                     </div>
                 </div>
             </div>
