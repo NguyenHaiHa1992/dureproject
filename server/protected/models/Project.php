@@ -54,7 +54,7 @@ class Project extends CActiveRecord
 			array('primary_contact, project_number, life_style, service, other_service, other_type_product', 'length', 'max'=>50),
 			array('volume, product_match, created_by', 'length', 'max'=>255),
 			array('price_point', 'length', 'max'=>11),
-			array('note', 'safe'),
+			array('note, tmp_file_ids', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, date, primary_contact, customer_id, project_number, volume, price_point, life_style, service, product_match, note, document_id, created_time, created_by, updated_by, updated_time, status, other_service, other_type_product', 'safe', 'on'=>'search'),
@@ -69,6 +69,7 @@ class Project extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'files' => array(self::MANY_MANY, 'File', 'tbl_project_file(project_id, file_id)'),
 		);
 	}
 
@@ -196,4 +197,60 @@ class Project extends CActiveRecord
 			),
 		);
 	}
+        
+    protected function afterSave() {
+        $new_list_file_ids = explode(',', $this->tmp_file_ids);
+        foreach ($new_list_file_ids as $file_id) {
+            $criteria = new CDbCriteria();
+            $criteria->compare('project_id', $this->id);
+            $criteria->compare('file_id', $file_id);
+            $document_file = ProjectFile::model()->find($criteria);
+            if (!isset($document_file)) {
+                $document_file = new ProjectFile();
+                $document_file->project_id = $this->id;
+                $document_file->file_id = $file_id;
+                $document_file->save();
+            }
+        }
+        $list_current_file_ids = $this->list_current_file_ids;
+        foreach ($list_current_file_ids as $file_id) {
+            if (!in_array($file_id, $new_list_file_ids)) {
+                $criteria = new CDbCriteria();
+                $criteria->compare('project_id', $this->id);
+                $criteria->compare('file_id', $file_id);
+                ProjectFile::model()->deleteAll($criteria);
+            }
+        }
+
+        parent::afterSave();
+    }
+    
+    protected function afterDelete() {
+        parent::afterDelete();
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('project_id =' . $this->id);
+        ProjectFile::model()->deleteAll($criteria);
+    }
+
+    public function getList_current_file_ids() {
+        $list = $this->files;
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        return $result;
+    }
+    
+    protected function afterFind() {
+        $list = $this->files;
+
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        $this->tmp_file_ids = implode(',', $result);
+
+        return parent::afterFind();
+    }
 }
