@@ -25,7 +25,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                     .success(function (data) {
                         $scope.init_loaded = true;
                         if (data.success) {
-                            $scope.productDevelopment = data.productDevelopment;
+                            $scope.ngModel = data.productDevelopment;
                             $scope.productDevelopment_empty = data.productDevelopment_empty;
                             $scope.productDevelopment_error = data.productDevelopment_error;
                             $scope.productDevelopment_error_empty = data.productDevelopment_error_empty;
