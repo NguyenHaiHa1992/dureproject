@@ -32,13 +32,12 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12">
-                <div class="box no-border" style="overflow: auto;">
+            <div class="col-md-12 box-over">
+                <div class="box no-border collapsed-box" style="overflow: auto;">
                     <div class="box-header">
-                        <h3 class="box-title">Project documents</h3>
+                        <h3 class="box-title">Project Details</h3>
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            <button type="button" class="btn btn-box-tool box-first" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>
                         </div>
                     </div>
@@ -194,8 +193,9 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12">
+            
+            <!-- Project document -->
+            <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="min-height: 100px">
                     <div class="box-header">
                         <h3 class="box-title">Project documents</h3>
@@ -206,13 +206,14 @@
                     </div>
                     <div class="box-body overhidden">
                       <i>Available only on update</i>
-                         <!--<file-uploader file-ids="project.tmp_file_ids" model-id="project.id"></file-uploader>--> 
                     </div>
                 </div>
             </div>
+            <!-- end Project document -->
             
-            <div class="col-md-12">
-                <div class="box no-border" style="overflow: auto;">
+            <!--  Start Product Development -->
+            <div class="col-md-6 box-over">
+                <div class="box no-border collapsed-box" style="overflow: auto;">
                     <div class="box-header">
                         <h3 class="box-title">Product Development</h3>
                         <div class="box-tools pull-right">
@@ -220,10 +221,12 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <product-development ng-model="productDevelopment"></product-development>
+                        <product-development ng-model="productDevelopment" file-id="1"></product-development>
                     </div>
                 </div>
             </div>
+            
+            <!-- End Product Development -->
         </div>
     </section>
 </div>

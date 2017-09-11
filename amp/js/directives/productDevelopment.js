@@ -2,11 +2,16 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
   return {
     restrict: 'E',
     replace: true,
-    scope:{},
+    scope:{
+        ngModel : "=",
+        fileId : "=",
+    },
+    require :'ngModel',
     templateUrl: "amp/views/productDevelopment/product-create.html",
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state', function ($scope, $http, $rootScope, BASE_URL, $state){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
+        console.log("DeBUG : " + $scope.ngModel);
         console.log("DEBUG : init ProductDevelopment");
         $scope.createInit = function () {
             var post_information = {};
@@ -19,7 +24,6 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             $http.post(BASE_URL + '/productDevelopment/createInit', post_information)
                     .success(function (data) {
                         $scope.init_loaded = true;
-
                         if (data.success) {
                             $scope.productDevelopment = data.productDevelopment;
                             $scope.productDevelopment_empty = data.productDevelopment_empty;
@@ -38,48 +42,15 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
         };
 
         $scope.createInit();
-
-        $scope.create = function () {
-            var information_post = $scope.project;
-            $http.post(BASE_URL + '/project/create', information_post)
-                    .success(function (data) {
-                        if (data.success) {
-                            swal('Project created!', "", "success");
-                            $state.go('project-detail', {id: data.id});
-                        } else {
-                            $scope.project_error = data.project_error;
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        $state.go('404');
-                    });
+        console.log("DEBUG : end init productDevelopment");
+        
+        $scope.showHideOther = function($model ,compare){
+            console.log('DEBUG : function showHideOther');
+            if ($model == compare) {
+                $model = "";
+            }
+            console.log('DEBUG : end debug function showHideOther');
         };
-
-        $scope.update = function () {
-            var information_post = $scope.project;
-            $http.post(BASE_URL + '/project/update', information_post)
-                    .success(function (data) {
-                        if (data.success) {
-                            swal('Project updated!', "", "success");
-                            $scope.project = data.customer;
-                            $scope.project_error = $scope.project_error_empty;
-
-                            $("input").removeClass("ng-dirty");
-                        } else {
-                            swal({
-                                title: '',
-                                text: 'Project update failed!',
-                                type: 'error',
-                                html: true
-                            });
-                            $scope.project_error = data.project_error;
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        $state.go('404');
-                    });
-        };
-
         //Date picker
         jQuery('.datepicker').datepicker({
             autoclose: true,

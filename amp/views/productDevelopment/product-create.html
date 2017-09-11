@@ -83,12 +83,14 @@
                 <div class="col-md-9">
                     <select chosen class="form-control" ng-model="productDevelopment.customer_require_spec" 
                             ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(productDevelopment.customer_require_spec, 1)"
                             >
                     </select>
 
                     <span class="control-label" for="inputError" ng-show="productDevelopment_error.customer_require_spec.length != 0" ng-repeat="error in productDevelopment_error.customer_require_spec">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
+                    <input ng-if="productDevelopment.customer_require_spec == 1" ng-model="productDevelopment.customer_require_spec_other" class="form-control" placeholder="Details">
                 </div>
             </div>
 
@@ -99,18 +101,37 @@
                 <div class="col-md-9">
                     <select chosen class="form-control" ng-model="productDevelopment.spec_handing_instruction" 
                             ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(productDevelopment.spec_handing_instruction , 1)"
                             >
                     </select>
 
                     <span class="control-label" for="inputError" ng-show="productDevelopment_error.spec_handing_instruction.length != 0" ng-repeat="error in productDevelopment_error.spec_handing_instruction">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
+                    <input ng-if="productDevelopment.spec_handing_instruction == 1" ng-model="productDevelopment.spec_handing_instruction_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            
+            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.spec_ingredients_require.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Spec Ingredients Require</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="productDevelopment.spec_ingredients_require" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(productDevelopment.spec_ingredients_require , 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.spec_ingredients_require.length != 0" ng-repeat="error in productDevelopment_error.spec_ingredients_require">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="productDevelopment.spec_ingredients_require == 1" ng-model="productDevelopment.spec_ingredients_require_other" class="form-control" placeholder="Details"/>
                 </div>
             </div>
         </form>
     </div><!--/.col (left) -->
     <div class="col-md-6">
-        <!-- general form elements disabled -->
         <form role="form">
             <div class="row form-group" ng-class="{'has-error': productDevelopment_error.approve_customer_formula_code.length != 0}">
                 <div class="col-md-3 text-right">
@@ -123,11 +144,7 @@
                     </span>
                 </div>
             </div>
-<!--			'customer_require_spec_other' => 'Customer Require Spec Other',
-			'spec_handing_instruction_other' => 'Spec Handing Instruction Other',
-			'spec_ingredients_require_other' => 'Spec Ingredients Require Other',
-			'risk_or_hazard_ingredient_other' => 'Risk Or Hazard Ingredient Other',
-			'additional_test_require_other' => 'Additional Test Require Other',-->
+            
             <div class="row form-group" ng-class="{'has-error': productDevelopment_error.risk_or_hazard_ingredient.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Are there any known Risks or hazards associated with the ingredients (including adulteration)</label>
@@ -135,12 +152,14 @@
                 <div class="col-md-9">
                     <select chosen class="form-control" ng-model="productDevelopment.risk_or_hazard_ingredient" 
                             ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(productDevelopment.risk_or_hazard_ingredient_other ,1)"
                             >
                     </select>
 
                     <span class="control-label" for="inputError" ng-show="productDevelopment_error.risk_or_hazard_ingredient.length != 0" ng-repeat="error in productDevelopment_error.risk_or_hazard_ingredient">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
+                    <input ng-if="productDevelopment.risk_or_hazard_ingredient == 1" ng-model="productDevelopment.risk_or_hazard_ingredient_other" class="form-control" placeholder="Details"/>
                 </div>
             </div>
 
@@ -152,11 +171,13 @@
                 <div class="col-md-9">
                     <select chosen class="form-control" ng-model="productDevelopment.additional_test_require"
                             ng-options="item.id as item.name for item in libYesNo" 
-                            data-placeholder="Is additional testing required?">
+                            data-ng-change="showHideOther(productDevelopment.additional_test_require, 1)"
+                            >
                     </select>
                     <span class="control-label" for="inputError" ng-show="productDevelopment_error.additional_test_require.length != 0" ng-repeat="error in productDevelopment_error.additional_test_require">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
+                    <input ng-if="productDevelopment.additional_test_require == 1" ng-model="productDevelopment.additional_test_require_other" class="form-control" placeholder="Details"/>
                 </div>
             </div>
 
