@@ -773,7 +773,6 @@ angular.module('app', [
                             'amp/js/config/app.js',
                             'amp/js/config/constant.js',
                             'amp/js/controllers/project/ProjectCreateController.js',
-//                            'amp/js/controllers/product/ProductDevelopmentController.js',
                         ]});
                     }]
                 }

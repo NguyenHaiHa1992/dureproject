@@ -1,7 +1,7 @@
 angular.module('app').controller('ProductDevelopmentController', ['$scope', '$timeout', '$http', '$location', '$rootScope','BASE_URL', '$state',
 function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     $scope.init_loaded = false;
-    console.log("DEBUG : init ProductDevelopment");
+    console.log("DEBUG : init 111");
     $scope.createInit= function(){
         var post_information= {};
         if(jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== ''){
