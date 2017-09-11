@@ -11,8 +11,14 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state', function ($scope, $http, $rootScope, BASE_URL, $state){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
-        console.log("DeBUG : " + $scope.ngModel);
+        console.log("id : " + $scope.ngModel.id);
+        console.log("project_id : " + $scope.ngModel.id);
+//        for(var k in $scope.ngModel){
+//            if(!$scope.ngModel.hasOwnProperty(k)) continue;
+//            console.log(k + $scope.ngModel[k]);
+//        }
         console.log("DEBUG : init ProductDevelopment");
+        console.log($scope.fileId);
         $scope.createInit = function () {
             var post_information = {};
             if (jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== '') {
@@ -32,6 +38,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                             $scope.libYesNo = [{'id': 1, 'name': 'Yes'}, {'id': 0, 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
+                            $scope.ngModel = $scope.productDevelopment;
                         } else {
                             $state.go('404');
                         }

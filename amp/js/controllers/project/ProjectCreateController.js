@@ -37,6 +37,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                         $scope.is_update= false;
                         $scope.is_create= true;
                     }
+                    $scope.project.productDevelopment = {id: null};
                 }
                 else{
                     $state.go('404');
@@ -48,33 +49,33 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         }
         
          // create init ProductDevelopment
-         function initProductDevelopment(){
-             var post_information = {};
-            if (jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== '') {
-                post_information = {id: $rootScope.view_detail_customer_id};
-                $rootScope.view_detail_project_id = undefined;
-            } else {
-                post_information = {};
-            }
-            $http.post(BASE_URL + '/productDevelopment/createInit', post_information)
-                .success(function (data) {
-                    $scope.init_loaded = true;
-                    if (data.success) {
-                        $scope.productDevelopment = data.productDevelopment;
-                        $scope.productDevelopment_empty = data.productDevelopment_empty;
-                        $scope.productDevelopment_error = data.productDevelopment_error;
-                        $scope.productDevelopment_error_empty = data.productDevelopment_error_empty;
-                        $scope.libYesNo = [{'id': 1, 'name': 'Yes'}, {'id': 0, 'name': 'No'}];
-                    } else {
-                        $state.go('404');
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    $state.go('404');
-                });
-         }
+//         function initProductDevelopment(){
+//             var post_information = {};
+//            if (jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== '') {
+//                post_information = {id: $rootScope.view_detail_customer_id};
+//                $rootScope.view_detail_project_id = undefined;
+//            } else {
+//                post_information = {};
+//            }
+//            $http.post(BASE_URL + '/productDevelopment/createInit', post_information)
+//                .success(function (data) {
+//                    $scope.init_loaded = true;
+//                    if (data.success) {
+//                        $scope.productDevelopment = data.productDevelopment;
+//                        $scope.productDevelopment_empty = data.productDevelopment_empty;
+//                        $scope.productDevelopment_error = data.productDevelopment_error;
+//                        $scope.productDevelopment_error_empty = data.productDevelopment_error_empty;
+//                        $scope.libYesNo = [{'id': 1, 'name': 'Yes'}, {'id': 0, 'name': 'No'}];
+//                    } else {
+//                        $state.go('404');
+//                    }
+//                })
+//                .error(function (data, status, headers, config) {
+//                    $state.go('404');
+//                });
+//         }
          initProject();
-         initProductDevelopment();
+//         initProductDevelopment();
     };
 
     $scope.createInit();
@@ -86,7 +87,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
-        return;
+//        return false;
         $http.post(BASE_URL + '/project/create', information_post)
         .success(function(data) {
             if(data.success) {
