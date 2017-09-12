@@ -37,6 +37,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                         $scope.is_update= false;
                         $scope.is_create= true;
                     }
+                    $scope.productDevelopment = {};
                 }
                 else{
                     $state.go('404');
@@ -74,7 +75,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 });
          }
          initProject();
-         initProductDevelopment();
+//         initProductDevelopment();
+         console.log("DEBUG : after create : " + JSON.stringify($scope.productDevelopment));
     };
 
     $scope.createInit();
@@ -86,7 +88,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
-        return;
+//        return false;
         $http.post(BASE_URL + '/project/create', information_post)
         .success(function(data) {
             if(data.success) {
@@ -95,6 +97,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             }
             else{
                 $scope.project_error= data.project_error;
+                $scope.productDevelopment_error = data.productDevelopment_error;
             }
         })
         .error(function(data, status, headers, config) {
