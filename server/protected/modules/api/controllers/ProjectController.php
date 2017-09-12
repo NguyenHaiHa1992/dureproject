@@ -31,7 +31,7 @@ class ProjectController extends Controller {
                 'actions'=>array('create', 'update', 
                     'createInit', 'detailInit', 'getAll', 'getEmptyProject', 
                     'getEmptyProjectError', 'getProjectById', 'exportExcel', 'exportPdf', 'exportExcelItem', 
-                    'testpdf', 'importObject', 'downloadfile', 'showhtml', 'test'),
+                    'testpdf', 'importObject', 'downloadfile', 'showhtml', 'test','getProjectUpdateById'),
                 'users' => array('@'),
             ),
             array('deny',
@@ -70,14 +70,13 @@ class ProjectController extends Controller {
 
     public function actionCreate() {
 
-        $success = false;
-
-        $data = iPhoenixService::data();
+        $success = false;   
+        $data = ProjectService::data();
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevelopment'];
 
         $resultProject = ProjectService::create($dataProject);
-
+        $resultProductDev = ['success' => false , 'message' => ""];
         // check if project create Success 
         if($resultProject['success']) {
             $success = true;
@@ -112,11 +111,14 @@ class ProjectController extends Controller {
         $data = iPhoenixService::data();
         $resultProject = ProjectService::getProjectById($data);
         $resultProductDev = ProductService::getProductByProjectId($data);
-
+        $success = $resultProject['success'] && $resultProductDev['success'];
         $resutl = [
+            'success' => $success,
             'project' => $resultProject,
             'productDevelopment' => $resultProductDev,
         ];
+
+        $this->returnJson($resutl);
     }
 
     public function actionUpdate() {

@@ -154,6 +154,7 @@ class ProjectService extends iPhoenixService {
 
     public static function create($data) {
         $result = array();
+        $project = null;
         if(isset($data['id']) && $data['id']){
             $project = Project::model()->findByPk((int)$data['id']);
         }

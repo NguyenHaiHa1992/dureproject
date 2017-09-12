@@ -29,6 +29,7 @@
  */
 class ProductDevelopment extends CActiveRecord
 {
+	public $tmp_file_ids;
 	/**
 	 * @return string the associated database table name
 	 */

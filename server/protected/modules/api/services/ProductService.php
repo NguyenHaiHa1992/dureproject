@@ -151,7 +151,7 @@ class ProductService extends iPhoenixService {
         $result['productDevelopment_error'] = $get_empty_productDevelopment_error['productDevelopment_error'];
 
         $productDevelopment;
-        $productDevelopment = ProductDevelopment::model()->findByAttribute(['project_id' => (int)$data['id']])->one();
+        $productDevelopment = ProductDevelopment::model()->findByAttributes(['project_id' => (int)$data['id']]);
         if ($productDevelopment != null) {
             $result['success'] = true;
             $result['productDevelopment'] = self::convertProductDevelopment($productDevelopment);
@@ -164,18 +164,16 @@ class ProductService extends iPhoenixService {
 
     public static function create($data) {
         $result = array();
-
-        if(isset($data['id']) && $data[['id']){
-            $productDevelopment = ProductDevelopment::model()->findByPk((int)$data[['id']);
+        $productDevelopment = null;
+        if(isset($data['id']) && $data['id']){
+            $productDevelopment = ProductDevelopment::model()->findByPk((int)$data['id']);
         }
         if(!$productDevelopment){
             $productDevelopment = new ProductDevelopment();
         }
 
         $productDevelopment->attributes = $data;
-        if(!is_integer($productDevelopment->date)){
-            $productDevelopment->date = strtotime($productDevelopment->date);
-        }
+        
         $productDevelopment = ProductService::beforeSave($productDevelopment);
         if ($productDevelopment->validate()) {
             $productDevelopment->save();
@@ -244,13 +242,9 @@ class ProductService extends iPhoenixService {
 
     public static function beforeSave($productDevelopment) {
         
-        if($productDevelopment->date &&  !is_int($productDevelopment->date)){
-            $productDevelopment->date = strtotime($productDevelopment->date);
-        }
         if ($productDevelopment->isNewRecord) {
-            $productDevelopment->status = 1;
+            // $productDevelopment->status = 1;
             $productDevelopment->created_time = time();
-//            $productDevelopment->created_by = Yii::app()->user->id;
         }
         else{
             $productDevelopment->updated_time = time();
