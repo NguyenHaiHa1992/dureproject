@@ -88,16 +88,16 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
-//        return false;
+
         $http.post(BASE_URL + '/project/create', information_post)
         .success(function(data) {
             if(data.success) {
                 swal('Project created!', "", "success");
-                $state.go('project-detail', {id: data.id});
+                $state.go('project-detail', {id: data.project.id});
             }
             else{
-                $scope.project_error= data.project_error;
-                $scope.productDevelopment_error = data.productDevelopment_error;
+                $scope.project_error= data.project.project_error;
+                $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
             }
         })
         .error(function(data, status, headers, config) {
@@ -123,7 +123,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                         type: 'error',
                         html: true
                 });
-                $scope.project_error= data.project_error;
+                $scope.project_error= data.project.project_error;
             }
         })
         .error(function(data, status, headers, config) {

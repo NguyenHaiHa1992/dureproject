@@ -69,9 +69,37 @@ class ProjectController extends Controller {
     }
 
     public function actionCreate() {
-        $data = ProjectService::data();
-        $result = ProjectService::create($data);
-        $this->returnJson($result);
+
+        $success = false;
+
+        $data = iPhoenixService::data();
+        $dataProject = $data['project'];
+        $dataProductDev  = $data['productDevelopment'];
+
+        $resultProject = ProjectService::create($dataProject);
+
+        // check if project create Success 
+        if($resultProject['success']) {
+            $success = true;
+            $projectId = (int)$resultProject['id'];
+
+            // create product Development model
+            $dataProductDev['project_id'] = $projectId;
+
+            $resultProductDev = ProductService::create($dataProductDev);
+            if(!$resultProductDev) {
+                 $success = false;
+            }
+            // create any other model
+
+        }
+        $result = [
+            'success' => $success,
+            'project' => $resultProject,
+            'productDevelopment' => $resultProductDev,
+        ];
+        //
+        $this->returnJson($result );
     }
 
     public function actionGetProjectById() {
@@ -80,9 +108,43 @@ class ProjectController extends Controller {
         $this->returnJson($result);
     }
 
+    public function actionGetProjectUpdateById(){
+        $data = iPhoenixService::data();
+        $resultProject = ProjectService::getProjectById($data);
+        $resultProductDev = ProductService::getProductByProjectId($data);
+
+        $resutl = [
+            'project' => $resultProject,
+            'productDevelopment' => $resultProductDev,
+        ];
+    }
+
     public function actionUpdate() {
-        $data = ProjectService::data();
-        $result = ProjectService::update($data);
+        $success = false;
+        
+        $data = iPhoenixService::data();
+        $dataProject = $data['project'];
+        $dataProductDev  = $data['productDevelopment'];
+
+        $resultProject = ProjectService::update($dataProject);
+
+        if($resultProject['success']) {
+            // update other model if project update success
+            $success = true;
+            $resultProductDev = ProductService::update($dataProductDev);
+            if(!$resultProductDev['success']) {
+                $success = false;
+            }
+            // update any other model
+
+
+        }
+        $result = [
+            'success' => $success,
+            'project' => $resultProject,
+            'productDevelopment' => $resultProductDev,
+        ];
+
         $this->returnJson($result);
     }
 

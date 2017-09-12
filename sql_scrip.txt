@@ -86,13 +86,13 @@ CREATE TABLE `tbl_product_development` (
 CREATE TABLE `tbl_customer_file` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `file_id` int(11) NOT NULL
+  `file_id` int(11) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `tbl_project_file` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `project_id` int(11) NOT NULL,
-  `file_id` int(11) NOT NULL
+  `file_id` int(11) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

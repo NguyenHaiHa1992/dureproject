@@ -152,22 +152,15 @@ class ProjectService extends iPhoenixService {
         return $result;
     }
 
-    public static function getEmailTemplateByName($data) {
-        $result = array();
-        $email_template = EmailTemplate::model()->findByAttributes(array('name' => $data['name']));
-        if ($email_template != null) {
-            $result['success'] = true;
-            $result['email_template'] = self::convertEmailTemplate($email_template);
-        } else {
-            $result['success'] = false;
-            $result['message'] = 'Không tồn tại Email Template này!';
-        }
-        return $result;
-    }
-
     public static function create($data) {
         $result = array();
-        $project = new Project();
+        if(isset($data['id']) && $data['id']){
+            $project = Project::model()->findByPk((int)$data['id']);
+        }
+        if(!$project){
+            $project = new Project();
+        }
+
         $project->attributes = $data;
         if(!is_integer($project->date)){
             $project->date = strtotime($project->date);

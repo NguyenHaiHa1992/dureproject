@@ -145,35 +145,33 @@ class ProductService extends iPhoenixService {
         return $result;
     }
 
-    public static function getProductDevelopmentsByCategoryId($data) {//data['id']
+    public static function getProductByProjectId($data){
         $result = array();
-        $productDevelopments = ProductDevelopment::model()->findAllByAttributes(array('category_id' => $data['id']));
-        if ($productDevelopments != null && count($productDevelopments) > 0) {
-            $result['success'] = true;
-            $result['productDevelopments'] = self::convertListProductDevelopment($productDevelopments, $data);
-        } else {
-            $result['success'] = true;
-            $result['productDevelopments'] = array();
-        }
-        return $result;
-    }
+        $get_empty_productDevelopment_error = ProductService::getEmptyProductDevelopmentError();
+        $result['productDevelopment_error'] = $get_empty_productDevelopment_error['productDevelopment_error'];
 
-    public static function getEmailTemplateByName($data) {
-        $result = array();
-        $email_template = EmailTemplate::model()->findByAttributes(array('name' => $data['name']));
-        if ($email_template != null) {
+        $productDevelopment;
+        $productDevelopment = ProductDevelopment::model()->findByAttribute(['project_id' => (int)$data['id']])->one();
+        if ($productDevelopment != null) {
             $result['success'] = true;
-            $result['email_template'] = self::convertEmailTemplate($email_template);
+            $result['productDevelopment'] = self::convertProductDevelopment($productDevelopment);
         } else {
             $result['success'] = false;
-            $result['message'] = 'Không tồn tại Email Template này!';
+            $result['message'] = 'ProductDevelopment\'s not found!';
         }
         return $result;
     }
 
     public static function create($data) {
         $result = array();
-        $productDevelopment = new ProductDevelopment();
+
+        if(isset($data['id']) && $data[['id']){
+            $productDevelopment = ProductDevelopment::model()->findByPk((int)$data[['id']);
+        }
+        if(!$productDevelopment){
+            $productDevelopment = new ProductDevelopment();
+        }
+
         $productDevelopment->attributes = $data;
         if(!is_integer($productDevelopment->date)){
             $productDevelopment->date = strtotime($productDevelopment->date);
