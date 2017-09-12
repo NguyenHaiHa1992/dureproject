@@ -1,6 +1,6 @@
 angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_URL', '$rootScope', function ($http, $state, BASE_URL, $rootScope) {
   return {
-    restrict: 'AE',
+    restrict: 'E',
     replace: true,
     scope:{
         productDevelopment : "=",
@@ -32,7 +32,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                     .success(function (data) {
                         $scope.init_loaded = true;
                         if (data.success) {
-                            $scope.productDevelopment = data.productDevelopment;
+                            // $scope.productDevelopment = data.productDevelopment;
                             $scope.productDevelopment_empty = data.productDevelopment_empty;
                             $scope.productDevelopment_error = data.productDevelopment_error;
                             $scope.productDevelopment_error_empty = data.productDevelopment_error_empty;
@@ -40,8 +40,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
                             $scope.ngModel = data.productDevelopment;
-                            
-                            console.log(JSON.stringify($scope.ngModel));
+                            scopeSetData($scope.productDevelopment, data.productDevelopment)
                         } else {
                             $state.go('404');
                         }
