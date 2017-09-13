@@ -3,6 +3,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     $scope.init_loaded = false;
 
     $scope.createInit= function(){
+        //  init Project
         function initProject(){
             var post_information= {};
             if(jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== ''){
@@ -47,6 +48,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $state.go('404');
             });
         }
+
+        // end init Project
         
          // create init ProductDevelopment
          function initProductDevelopment(){
@@ -74,8 +77,10 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     $state.go('404');
                 });
          }
+         // end init ProductDevelopment
+
          initProject();
-//         initProductDevelopment();
+         // initProductDevelopment();
          console.log("DEBUG : after create : " + JSON.stringify($scope.productDevelopment));
     };
 

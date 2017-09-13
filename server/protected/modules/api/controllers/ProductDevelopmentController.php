@@ -34,7 +34,7 @@ class ProductDevelopmentController extends Controller{
             array('allow',
                 'actions'=>array('create', 'update', 
                     'createInit', 'detailInit', 'getAll', 'getEmptyProduct', 
-                    'getEmptyProductError', 'getProductById', 'exportExcel', 'exportPdf', 'exportExcelItem', 
+                    'getEmptyProductError', 'getProductById', 'exportExcel', 'exportPdf', 'exportExcelItem', 'getProductByProjectId', 
                     'testpdf', 'importObject', 'downloadfile', 'showhtml', 'test'),
                 'users' => array('@'),
             ),
@@ -81,6 +81,12 @@ class ProductDevelopmentController extends Controller{
     public function actionGetProductById() {
         $data = ProductService::data();
         $result = ProductService::getProductById($data);
+        $this->returnJson($result);
+    }
+
+    public function actionGetProductByProjectId(){
+        $data = ProductService::data();
+        $result = ProductService::getProductByProjectId($data);
         $this->returnJson($result);
     }
 

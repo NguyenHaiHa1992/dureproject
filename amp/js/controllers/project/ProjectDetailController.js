@@ -18,6 +18,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.project_services = data.project_services;
                     $scope.libYesNo = [{id:1,name:'Yes'},{id:0,name:'No'}];
                     $scope.is_update = true;
+                    $scope.productDevelopment = {};
                 }
                 else {
                     $state.go('404');
@@ -45,7 +46,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 $state.go('404');
             });
         };
-
+        $scope.getProjectById();
 
         $scope.getProjectUpdateById = function () {
             $http.post(BASE_URL + '/project/getProjectUpdateById', {id: $stateParams.id})
@@ -57,7 +58,6 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     // add scope productDevelopment
                     $scope.productDevelopment = data.productDevelopment.productDevelopment;
                     $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
-
                 }
                 else {
                     $state.go('404');
@@ -67,7 +67,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 $state.go('404');
             });
         };
-        $scope.getProjectUpdateById();
+        // $scope.getProjectUpdateById();
 
         $scope.update = function () {
             var information_post = $scope.project;
@@ -223,21 +223,27 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
           autoclose: true,
           format: 'yyyy-mm-dd'
         });
-		// Jquery
-		jQuery("[data-widget='collapse']").click(function() {
-			//Find the box parent........
-			var box = jQuery(this).parents(".box").first();
-			//Find the body and the footer
-			var bf = box.find(".box-body, .box-footer");
-			if (!jQuery(this).children().hasClass("fa-plus")) {
-				jQuery(this).children(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
-				bf.slideUp();
-			} else {
-				//Convert plus into minus
-				jQuery(this).children(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
-				bf.slideDown();
-			}
-		});
+
+		/// Jquery collapse
+        jQuery("[data-widget='collapse']").click(function() {
+                //Find the box parent........
+                var first = jQuery(this).hasClass('box-first');
+                var box = jQuery(this).parents(".box").first();
+                //Find the body and the footer
+                var bf = box.find(".box-body, .box-footer");
+                if (!jQuery(this).children().hasClass("fa-plus")) {
+                        jQuery(this).children(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
+                        bf.slideUp();
+                        box.parent(".box-over").removeClass("col-md-12").addClass("col-md-6");
+                } else {
+                        //Convert plus into minus
+                        jQuery(this).children(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
+                        bf.slideDown();
+                        if(!first){
+                            box.parent(".box-over").removeClass("col-md-6").addClass("col-md-12");
+                        }
+                }
+        });
             
         
         
