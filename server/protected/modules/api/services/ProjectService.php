@@ -242,7 +242,7 @@ class ProjectService extends iPhoenixService {
             $project->created_time = time();
 //            $project->created_by = Yii::app()->user->id;
         }
-        else{
+        else if(isset($project->updated_time)){
             $project->updated_time = time();
         }
         return $project;
@@ -273,6 +273,8 @@ class ProjectService extends iPhoenixService {
                             $result['date'] = date('Y-m-d' ,$result['date']);
         //                }
         }
+        $serviceLabel = Project::getLabelByType($result['service']);
+        $result['service_label']  = $serviceLabel;
         $result['tmp_file_ids'] = $project->tmp_file_ids;
         return $result;
     }

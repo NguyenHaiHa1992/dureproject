@@ -173,8 +173,13 @@ class Project extends CActiveRecord
 	}
 
 	public static function getLabelByType($type){
-		$listTypeProduct = self::getTypeOfProduct();
-		return isset($listTypeProduct[$type]) && $listTypeProduct[$type] ? $listTypeProduct[$type] : self::TYPE_OTHER;
+                $listTypeProduct = self::getTypeOfProduct();
+                foreach($listTypeProduct as $idx => $ele){
+                    if($ele['id'] == $type){
+                        return $ele['name'];
+                    }
+                }
+                return 'Other';
 	}
 
 	public static function getProductMatch(){

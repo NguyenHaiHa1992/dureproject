@@ -81,7 +81,7 @@ class ProductService extends iPhoenixService {
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
         $criteria->limit = $data['limitnum'];
         $criteria->offset = $data['limitstart'];
-
+        
         $productDevelopments = ProductDevelopment::model()->findAll($criteria);
         $total = count($productDevelopments);
 
@@ -198,6 +198,9 @@ class ProductService extends iPhoenixService {
     public static function update($data) {
         $result = array();
         $productDevelopment = ProductDevelopment::model()->findByPk((int) $data['id']);
+        if(!$productDevelopment){
+            $productDevelopment = new ProductDevelopment();
+        }
         $productDevelopment->attributes = $data;
         $productDevelopment = ProductService::beforeSave($productDevelopment);
         if ($productDevelopment->validate()) {
@@ -246,7 +249,7 @@ class ProductService extends iPhoenixService {
             // $productDevelopment->status = 1;
             $productDevelopment->created_time = time();
         }
-        else{
+        else if(isset($productDevelopment->updated_time)){
             $productDevelopment->updated_time = time();
         }
         return $productDevelopment;

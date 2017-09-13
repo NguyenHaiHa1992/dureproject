@@ -123,10 +123,10 @@ class ProjectController extends Controller {
 
     public function actionUpdate() {
         $success = false;
-        
         $data = iPhoenixService::data();
+        
         $dataProject = $data['project'];
-        $dataProductDev  = $data['productDevelopment'];
+        $dataProductDev  = $data['productDevleopment'];
 
         $resultProject = ProjectService::update($dataProject);
 
@@ -138,8 +138,6 @@ class ProjectController extends Controller {
                 $success = false;
             }
             // update any other model
-
-
         }
         $result = [
             'success' => $success,
