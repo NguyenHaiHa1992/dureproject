@@ -2,7 +2,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
     function ($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state, $stateParams, $window) {
         $scope.root = $rootScope;
         $scope.init_loaded = false;
-
+        $scope.productDevelopment = {};
         $scope.createInit = function () {
             var post_information = {};
 
@@ -18,7 +18,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.project_services = data.project_services;
                     $scope.libYesNo = [{id:1,name:'Yes'},{id:0,name:'No'}];
                     $scope.is_update = true;
-                    $scope.productDevelopment = {};
+//                    $scope.productDevelopment = {};
                 }
                 else {
                     $state.go('404');
@@ -48,25 +48,25 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         };
         $scope.getProjectById();
 
-        $scope.getProjectUpdateById = function () {
-            $http.post(BASE_URL + '/project/getProjectUpdateById', {id: $stateParams.id})
-            .success(function (data) {
-                if (data.success) {
-                    $scope.project = data.project.project;
-                    $scope.project_error = data.project.project_error;
-
-                    // add scope productDevelopment
-                    $scope.productDevelopment = data.productDevelopment.productDevelopment;
-                    $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
-                }
-                else {
-                    $state.go('404');
-                }
-            })
-            .error(function (data, status, headers, config) {
-                $state.go('404');
-            });
-        };
+//        $scope.getProjectUpdateById = function () {
+//            $http.post(BASE_URL + '/project/getProjectUpdateById', {id: $stateParams.id})
+//            .success(function (data) {
+//                if (data.success) {
+//                    $scope.project = data.project.project;
+//                    $scope.project_error = data.project.project_error;
+//
+//                    // add scope productDevelopment
+//                    $scope.productDevelopment = data.productDevelopment.productDevelopment;
+//                    $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
+//                }
+//                else {
+//                    $state.go('404');
+//                }
+//            })
+//            .error(function (data, status, headers, config) {
+//                $state.go('404');
+//            });
+//        };
         // $scope.getProjectUpdateById();
 
         $scope.update = function () {
