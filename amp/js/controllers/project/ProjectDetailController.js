@@ -70,14 +70,27 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         // $scope.getProjectUpdateById();
 
         $scope.update = function () {
-            var information_post = $scope.project;
+            var projectInfo = $scope.project;
+            var productDevInof = $scope.productDevelopment;
+            var information_post = {
+                'project' : projectInfo,
+                'productDevleopment' : productDevInof,
+            };
+            
+            console.log("DEBUG :  submit information: " + JSON.stringify(information_post));
+            
             $http.post(BASE_URL + '/project/update', information_post)
                     .success(function (data) {
                         if (data.success) {
+                            console.log("Project Update success");
                             swal('Project updated!', "", "success");
-                            $scope.project = data.project;
-                            $scope.project_error = $scope.project_error_empty;
-
+                            
+                            console.log("DEBUG : data success respone :"+ JSON.stringify(data));
+                            $scope.project = data.project.project;
+                            $scope.project_error = $scope.project.project_error_empty;
+                            
+                            $scope.productDevelopment = data.productDevelopment.productDevelopment;
+                            $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
                             $("input").removeClass("ng-dirty");
                         }
                         else {
