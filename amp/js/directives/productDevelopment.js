@@ -35,7 +35,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
-                            scopeSetData($scope.productDevelopment, data.productDevelopment);
+//                            scopeSetData($scope.productDevelopment, data.productDevelopment);
                         } else {
                             $state.go('404');
                         }
@@ -57,7 +57,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                     scopeSetData($scope.productDevelopment, data.productDevelopment);
                 }
                 else {
-                    $state.go('404');
+//                    $state.go('404');
                 }
             })
             .error(function (data, status, headers, config) {
