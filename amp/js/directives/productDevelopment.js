@@ -35,7 +35,11 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
-//                            scopeSetData($scope.productDevelopment, data.productDevelopment);
+                            scopeSetData($scope.productDevelopment, data.productDevelopment);
+                            if($scope.update){
+                                console.log("DEBUG : on getProductProjectById");
+                                $scope.getProductProjectById();
+                            }
                         } else {
                             $state.go('404');
                         }
@@ -65,10 +69,6 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             });
         };
 
-        if($scope.update){
-            console.log("DEBUG : on getProductProjectById");
-            $scope.getProductProjectById();
-        }
         
         $scope.showHideOther = function($model ,compare){
             console.log('DEBUG : function showHideOther');
@@ -77,6 +77,12 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             }
             console.log('DEBUG : end debug function showHideOther');
         };
+        console.log('$scope.productDevelopment.tmp_file_ids');
+        console.log($scope.productDevelopment.tmp_file_ids);
+        $scope.$watch('productDevelopment.tmp_file_ids', function(newValue, oldValue){
+            console.log('newValue');
+            console.log(newValue);
+        });
         //Date picker
         jQuery('.datepicker').datepicker({
             autoclose: true,

@@ -70,7 +70,12 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         // $scope.getProjectUpdateById();
 
         $scope.update = function () {
-            var information_post = $scope.project;
+            var information_post = {
+                project : $scope.project,
+                productDevelopment : $scope.productDevelopment,
+            };
+            console.log('pD tmp_file_ids');
+            console.log($scope.productDevelopment);
             $http.post(BASE_URL + '/project/update', information_post)
                     .success(function (data) {
                         if (data.success) {

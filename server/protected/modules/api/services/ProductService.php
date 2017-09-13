@@ -247,7 +247,7 @@ class ProductService extends iPhoenixService {
             $productDevelopment->created_time = time();
         }
         else{
-            $productDevelopment->updated_time = time();
+//            $productDevelopment->updated_time = time();
         }
         return $productDevelopment;
     }
