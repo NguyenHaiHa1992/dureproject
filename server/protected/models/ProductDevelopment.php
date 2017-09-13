@@ -51,7 +51,14 @@ class ProductDevelopment extends CActiveRecord
 			array('note, created_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, spec_for_product, customer_submit_product, customer_provide_control, physical_spec_product, allergent_product, customer_require_spec, spec_handing_instruction, spec_ingredients_require, approve_customer_formula_code, risk_or_hazard_ingredient, additional_test_require, note, document_id, created_time, created_by, customer_require_spec_other, spec_handing_instruction_other, spec_ingredients_require_other, risk_or_hazard_ingredient_other, additional_test_require_other', 'safe', 'on'=>'search'),
+                        array('tmp_file_ids', 'safe'),
+			array('id, project_id, spec_for_product, customer_submit_product, 
+                            customer_provide_control, physical_spec_product, allergent_product, 
+                            customer_require_spec, spec_handing_instruction, spec_ingredients_require, 
+                            approve_customer_formula_code, risk_or_hazard_ingredient, additional_test_require, 
+                            note, document_id, created_time, created_by, customer_require_spec_other, 
+                            spec_handing_instruction_other, spec_ingredients_require_other, 
+                            risk_or_hazard_ingredient_other, additional_test_require_other', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +70,7 @@ class ProductDevelopment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'files' => array(self::MANY_MANY, 'File', 'tbl_product_development_file(product_development_id, file_id)'),
 		);
 	}
 
@@ -153,4 +161,60 @@ class ProductDevelopment extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+    protected function afterSave() {
+        $new_list_file_ids = explode(',', $this->tmp_file_ids);
+        foreach ($new_list_file_ids as $file_id) {
+            $criteria = new CDbCriteria();
+            $criteria->compare('product_development_id', $this->id);
+            $criteria->compare('file_id', $file_id);
+            $document_file = ProductDevelopmentFile::model()->find($criteria);
+            if (!isset($document_file)) {
+                $document_file = new ProductDevelopmentFile();
+                $document_file->product_development_id = $this->id;
+                $document_file->file_id = $file_id;
+                $document_file->save();
+            }
+        }
+        $list_current_file_ids = $this->list_current_file_ids;
+        foreach ($list_current_file_ids as $file_id) {
+            if (!in_array($file_id, $new_list_file_ids)) {
+                $criteria = new CDbCriteria();
+                $criteria->compare('product_development_id', $this->id);
+                $criteria->compare('file_id', $file_id);
+                ProductDevelopmentFile::model()->deleteAll($criteria);
+            }
+        }
+
+        parent::afterSave();
+    }
+    
+    protected function afterDelete() {
+        parent::afterDelete();
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('product_development_id =' . $this->id);
+        ProductDevelopmentFile::model()->deleteAll($criteria);
+    }
+
+    public function getList_current_file_ids() {
+        $list = $this->files;
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        return $result;
+    }
+    
+    protected function afterFind() {
+        $list = $this->files;
+
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        $this->tmp_file_ids = implode(',', $result);
+
+        return parent::afterFind();
+    }
 }

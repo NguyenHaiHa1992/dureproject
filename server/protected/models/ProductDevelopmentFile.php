@@ -1,19 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "{{project_file}}".
+ * This is the model class for table "{{product_development_file}}".
  *
- * The followings are the available columns in table '{{project_file}}':
+ * The followings are the available columns in table '{{product_development_file}}':
  * @property integer $id
- * @property integer $project_id
+ * @property integer $product_development_id
  * @property integer $image_id
  */
-class ProjectFile extends CActiveRecord {
+class ProductDevelopmentFile extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return ProjectFile the static model class
+     * @return ProductDevelopmentFile the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -23,7 +23,7 @@ class ProjectFile extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return '{{project_file}}';
+        return '{{product_development_file}}';
     }
 
     /**
@@ -33,11 +33,11 @@ class ProjectFile extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('project_id, file_id', 'required'),
-            array('project_id, file_id', 'numerical', 'integerOnly' => true),
+            array('product_development_id, file_id', 'required'),
+            array('product_development_id, file_id', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, project_id, file_id', 'safe', 'on' => 'search'),
+            array('id, product_development_id, file_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -57,7 +57,7 @@ class ProjectFile extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'project_id' => 'Project',
+            'product_development_id' => 'ProductDevelopment',
             'file_id' => 'File',
         );
     }
@@ -73,7 +73,7 @@ class ProjectFile extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('project_id', $this->project_id);
+        $criteria->compare('product_development_id', $this->product_development_id);
         $criteria->compare('file_id', $this->file_id);
 
         return new CActiveDataProvider($this, array(

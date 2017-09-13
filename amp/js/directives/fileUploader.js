@@ -2,14 +2,14 @@ angular.module('app').directive('fileUploader',[ '$rootScope', '$http', '$state'
   return {
     restrict: 'E',
     replace: true,
-    scope:{ fileIds: "=", modelId: "=", disabled: "=", optionStyle: "=", sendemail: "=", emailFiles: "="},
+    scope:{ fileIds: "=", modelId: "=", disabled: "=", optionStyle: "=", sendemail: "=", 
+        emailFiles: "=", objectType: "="},
     templateUrl: "amp/views/partials/_fileUploader.html",
     controller: ['$scope', '$rootScope', 'FileUploader', function ($scope, $rootScope, FileUploader){
       $scope.root = $rootScope;
       var uploader = $scope.uploader = new FileUploader({
         url: BASE_URL + '/file/upload',
       });
-
       $scope.file_cat_ids = [];
       $scope.file_restricteds = [];
 
@@ -108,13 +108,25 @@ angular.module('app').directive('fileUploader',[ '$rootScope', '$http', '$state'
                 urlParams.related = "customer_file";
             }
             else if(stateName === "project-detail"){
-                urlParams.related = "project_file";
+                if($scope.objectType){
+                    urlParams.related = $scope.objectType;
+                }
+                else{
+                    urlParams.related = "project_file";
+                }
             }
 //            $http.post(BASE_URL + '/file/deleteFileById', {id: item.id})
             $http.post(BASE_URL + '/file/deleterelated', urlParams)
               .success(function(data) {
                 if(data.success) {
                   $scope.files.splice(index, 1);
+                  $scope.fileIds = '';
+                  var fileIdsTmp = [];
+                  $.each($scope.files, function (i, v) {
+                    fileIdsTmp.push(v.id);
+                  });
+                  $scope.fileIds = fileIdsTmp.join();
+                  console.log($scope.fileIds);
                   swal("Deleted!",
                   "Your file has been deleted.",
                   "success");
@@ -224,7 +236,9 @@ angular.module('app').directive('fileUploader',[ '$rootScope', '$http', '$state'
         };
         
         $scope.showListDocument = function showListDocument() {
-            $('#listDocumentModal').modal('show');
+//            $('#listDocumentModal').modal('show');
+            var objectType = $scope.objectType ? $scope.objectType : '';
+            $('#listDocumentModal'+objectType).modal('show');
             $scope.checkRelatedDocument = function(checked_document){
               for(var i in $scope.files){
                 var related_signage = $scope.files[i];

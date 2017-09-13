@@ -35,7 +35,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
-                            scopeSetData($scope.productDevelopment, data.productDevelopment);
+                            $scope.scopeSetData(data.productDevelopment);
                             if($scope.update){
                                 console.log("DEBUG : on getProductProjectById");
                                 $scope.getProductProjectById();
@@ -58,7 +58,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             .success(function (data) {
                 if (data.success) {
                     $scope.productDevelopment_error = data.productDevelopment_error;
-                    scopeSetData($scope.productDevelopment, data.productDevelopment);
+                    $scope.scopeSetData(data.productDevelopment);
                 }
                 else {
 //                    $state.go('404');
@@ -68,7 +68,6 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                 $state.go('404');
             });
         };
-
         
         $scope.showHideOther = function($model ,compare){
             console.log('DEBUG : function showHideOther');
@@ -77,12 +76,19 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             }
             console.log('DEBUG : end debug function showHideOther');
         };
-        console.log('$scope.productDevelopment.tmp_file_ids');
-        console.log($scope.productDevelopment.tmp_file_ids);
-        $scope.$watch('productDevelopment.tmp_file_ids', function(newValue, oldValue){
-            console.log('newValue');
-            console.log(newValue);
-        });
+        $scope.scopeSetData = function(data){
+            if(typeof data !== 'object'){
+                console.log(1);
+                return;
+            }
+            else{
+                console.log(2);
+                for(var dataKey in data){
+                    if(!data.hasOwnProperty(dataKey)) continue;
+                    $scope.productDevelopment[dataKey] = data[dataKey];
+                }
+            }
+        };
         //Date picker
         jQuery('.datepicker').datepicker({
             autoclose: true,

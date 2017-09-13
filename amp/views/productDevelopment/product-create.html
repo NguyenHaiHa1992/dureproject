@@ -192,6 +192,16 @@
                     </span>
                 </div>
             </div>
+            
+            <div class="row form-group" ng-class="{'has-error': productDevelopment.note.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Photos and documents</label>
+                </div>
+                <div class="col-md-9">
+                    <file-uploader file-ids="productDevelopment.tmp_file_ids" model-id="productDevelopment.id"
+                                   sendemail="true" email-files = "email.documents" object-type="'product_development_file'"></file-uploader>
+                </div>
+            </div>
         </form>
     </div>
 </div>
