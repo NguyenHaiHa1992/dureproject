@@ -1,0 +1,207 @@
+<div class="box-body">
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <!-- form start -->
+        <form role="form">
+            <div class="row form-group" ng-class="{'has-error': qa_error.spec_for_product.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Specification sheet/nutritionals for product matching </label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.spec_for_product" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_id.length != 0" ng-repeat="error in qa_error.spec_for_product">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_submit_product.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer submitted a product formula?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_submit_product" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_id.length != 0" ng-repeat="error in qa_error.customer_submit_product">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_control.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer provided a control sample? </label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_provide_control" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_provide_control.length != 0" ng-repeat="error in qa_error.customer_provide_control">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.physical_spec_product.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Physical specifications of product i.e, density, flowability etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <input ng-model="qa.physical_spec_product" type="text" class="form-control" placeholder="Physical specifications of product i.e, density, flowability etc.">
+                    <span class="control-label" for="inputError" ng-show="qa_error.physical_spec_product.length != 0" ng-repeat="error in qa_error.physical_spec_product">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.allergent_product.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>What allergens does this product contain?</label>
+                </div>
+                <div class="col-md-9">
+                    <input ng-model="qa.allergent_product" type="text" class="form-control" placeholder="What allergens does this product contain?">
+                    <span class="control-label" for="inputError" ng-show="qa_error.allergent_product.length != 0" ng-repeat="error in qa_error.allergent_product">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_require_spec.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Does this Customer require any special claims? Non-GMO, vegan, allergen free, organic etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_require_spec" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_require_spec, 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_require_spec.length != 0" ng-repeat="error in qa_error.customer_require_spec">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_require_spec == 1" ng-model="qa.customer_require_spec_other" class="form-control" placeholder="Details">
+                </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.spec_handing_instruction.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Any special handling instructions? ex. Dry clean before due to allergen etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.spec_handing_instruction" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.spec_handing_instruction , 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.spec_handing_instruction.length != 0" ng-repeat="error in qa_error.spec_handing_instruction">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.spec_handing_instruction == 1" ng-model="qa.spec_handing_instruction_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            
+            <div class="row form-group" ng-class="{'has-error': qa_error.spec_ingredients_require.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Spec Ingredients Require</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.spec_ingredients_require" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.spec_ingredients_require , 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.spec_ingredients_require.length != 0" ng-repeat="error in qa_error.spec_ingredients_require">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.spec_ingredients_require == 1" ng-model="qa.spec_ingredients_require_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+        </form>
+    </div><!--/.col (left) -->
+    <div class="col-md-6">
+        <form role="form">
+            <div class="row form-group" ng-class="{'has-error': qa_error.approve_customer_formula_code.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Approved Customer Formula Code</label>
+                </div>
+                <div class="col-md-9">
+                    <input ng-model="qa.approve_customer_formula_code" type="text" class="form-control" placeholder="Approved Customer Formula Code">
+                    <span class="control-label" for="inputError" ng-show="qa_error.approve_customer_formula_code.length != 0" ng-repeat="error in qa_error.approve_customer_formula_code">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="row form-group" ng-class="{'has-error': qa_error.risk_or_hazard_ingredient.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Are there any known Risks or hazards associated with the ingredients (including adulteration)</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.risk_or_hazard_ingredient" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.risk_or_hazard_ingredient_other ,1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.risk_or_hazard_ingredient.length != 0" ng-repeat="error in qa_error.risk_or_hazard_ingredient">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.risk_or_hazard_ingredient == 1" ng-model="qa.risk_or_hazard_ingredient_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa_error.additional_test_require.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Is additional testing required?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.additional_test_require"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.additional_test_require, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.additional_test_require.length != 0" ng-repeat="error in qa_error.additional_test_require">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.additional_test_require == 1" ng-model="qa.additional_test_require_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': qa.note.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Note</label>
+                </div>
+                <div class="col-md-9">
+                    <textarea ck-editor ng-model="qa.note" type="text" class="form-control" placeholder="note"></textarea>
+                    <span class="control-label" for="inputError" ng-show="qa.note.length != 0" ng-repeat="error in qa_error.note">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="row form-group" ng-class="{'has-error': qa.note.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Photos and documents</label>
+                </div>
+                <div class="col-md-9">
+                    <file-uploader file-ids="qa.tmp_file_ids" model-id="qa.id"
+                                   sendemail="true" email-files = "email.documents" object-type="'product_development_file'"></file-uploader>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
