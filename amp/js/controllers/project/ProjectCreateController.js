@@ -39,6 +39,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                         $scope.is_create= true;
                     }
                     $scope.productDevelopment = {};
+                    $scope.qa = {};
                 }
                 else{
                     $state.go('404');
@@ -90,6 +91,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         var information_post = {
             project : $scope.project,
             productDevelopment : $scope.productDevelopment,
+            qa: $scope.qa,
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
