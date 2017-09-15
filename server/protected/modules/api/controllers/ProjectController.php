@@ -74,29 +74,34 @@ class ProjectController extends Controller {
         $data = ProjectService::data();
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevelopment'];
+        $transaction = Yii::app()->db->beginTransaction();
 
-        $resultProject = ProjectService::create($dataProject);
-        $resultProductDev = ['success' => false , 'message' => ""];
-        // check if project create Success 
-        if($resultProject['success']) {
-            $success = true;
-            $projectId = (int)$resultProject['id'];
+        try{
+            $resultProject = ProjectService::create($dataProject);
+            $resultProductDev = ['success' => false , 'message' => ""];
+            // check if project create Success 
+            if($resultProject['success']) {
+                $success = true;
+                $projectId = (int)$resultProject['id'];
 
-            // create product Development model
-            $dataProductDev['project_id'] = $projectId;
+                // create product Development model
+                $dataProductDev['project_id'] = $projectId;
 
-            $resultProductDev = ProductService::create($dataProductDev);
-            if(!$resultProductDev) {
-                 $success = false;
+                $resultProductDev = ProductService::create($dataProductDev);
+                if(!$resultProductDev) {
+                     $success = false;
+                }
+                // create any other model
+
             }
-            // create any other model
-
+            $result = [
+                'success' => $success,
+                'project' => $resultProject,
+                'productDevelopment' => $resultProductDev,
+            ];
+        }catch(CException $e){
+            $transaction->rollBack();
         }
-        $result = [
-            'success' => $success,
-            'project' => $resultProject,
-            'productDevelopment' => $resultProductDev,
-        ];
         //
         $this->returnJson($result );
     }
@@ -127,23 +132,33 @@ class ProjectController extends Controller {
         
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevleopment'];
-
-        $resultProject = ProjectService::update($dataProject);
-
-        if($resultProject['success']) {
-            // update other model if project update success
-            $success = true;
-            $resultProductDev = ProductService::update($dataProductDev);
-            if(!$resultProductDev['success']) {
-                $success = false;
-            }
-            // update any other model
+        $projectId = (int)$dataProject['id'];
+        if(!$dataProductDev['project_id']){
+            $dataProductDev['project_id'] = $projectId;
         }
-        $result = [
-            'success' => $success,
-            'project' => $resultProject,
-            'productDevelopment' => $resultProductDev,
-        ];
+
+        $transaction = Yii::app()->db->beginTransaction();
+
+        try{
+            $resultProject = ProjectService::update($dataProject);
+
+            if($resultProject['success']) {
+                // update other model if project update success
+                $success = true;
+                $resultProductDev = ProductService::update($dataProductDev);
+                if(!$resultProductDev['success']) {
+                    $success = false;
+                }
+                // update any other model
+            }
+            $result = [
+                'success' => $success,
+                'project' => $resultProject,
+                'productDevelopment' => $resultProductDev,
+            ];
+        }catch(CException $e){
+            $transaction->rollBack();
+        }
 
         $this->returnJson($result);
     }

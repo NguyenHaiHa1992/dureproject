@@ -96,3 +96,11 @@ CREATE TABLE `tbl_project_file` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--- 13-09-2017 tbl_product_development_file
+CREATE TABLE `tbl_product_development_file` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `product_development_id` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
