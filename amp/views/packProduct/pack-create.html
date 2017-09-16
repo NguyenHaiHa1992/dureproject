@@ -10,7 +10,7 @@
                     <label>Please enter who has performed the test:</label>
                 </div>
             </div>
-            
+
             <div class="row form-group" ng-class="{'has-error': packProduct_error.customer_id.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Name</label>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <!-- end customer_id -->
-            
+
             <!-- end date -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.date.length != 0}">
                 <div class="col-md-3 text-right">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <!-- end date -->
-            
+
             <!-- start begin_sample_weight -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.begin_sample_weight.length != 0}">
                 <div class="col-md-3 text-right">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <!-- end begin_sample_weight -->
-            
+
             <!-- start pack_use -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_use.length != 0}">
                 <div class="col-md-3 text-right">
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <!-- end pack_use -->
-            
+
             <!-- start net_weight -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.net_weight.length != 0}">
                 <div class="col-md-3 text-right">
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <!-- end net_weight -->
-            
+
             <!-- start density -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.density.length != 0}">
                 <div class="col-md-3 text-right">
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <!-- end density -->
-            
+
             <!-- start length_pack -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.length_pack.length != 0}">
                 <div class="col-md-3 text-right">
@@ -110,7 +110,7 @@
                 </div>
             </div>
             <!-- end length_pack -->
-            
+
             <!-- start long_heart_temp -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.long_heart_temp.length != 0}">
                 <div class="col-md-3 text-right">
@@ -124,7 +124,16 @@
                 </div>
             </div>
             <!-- end long_heart_temp -->
-            
+
+        </form>
+    </div><!--/.col (left) -->
+    <div class="col-md-6">
+        <form role="form">
+            <div class="row form-group">
+                <div class="col-md-6 text-right">
+                    <label> </label>
+                </div>
+            </div>
             <!-- start cross_heart_temp -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.cross_heart_temp.length != 0}">
                 <div class="col-md-3 text-right">
@@ -138,7 +147,7 @@
                 </div>
             </div>
             <!-- end cross_heart_temp -->
-            
+
             <!-- start dose_volume -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.dose_volume.length != 0}">
                 <div class="col-md-3 text-right">
@@ -152,7 +161,7 @@
                 </div>
             </div>
             <!-- end dose_volume -->
-            
+
             <!-- start rev_dose -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.rev_dose.length != 0}">
                 <div class="col-md-3 text-right">
@@ -166,7 +175,7 @@
                 </div>
             </div>
             <!-- end rev_dose -->
-            
+
             <!-- start auger_speed -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.auger_speed.length != 0}">
                 <div class="col-md-3 text-right">
@@ -180,7 +189,7 @@
                 </div>
             </div>
             <!-- end auger_speed -->
-            
+
             <!-- start pack_per_minute -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_per_minute.length != 0}">
                 <div class="col-md-3 text-right">
@@ -194,7 +203,7 @@
                 </div>
             </div>
             <!-- end pack_per_minute -->
-            
+
             <!-- start amount_left -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.amount_left.length != 0}">
                 <div class="col-md-3 text-right">
@@ -208,7 +217,7 @@
                 </div>
             </div>
             <!-- end amount_left -->
-            
+
             <!-- start carton_use -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.carton_use.length != 0}">
                 <div class="col-md-3 text-right">
@@ -222,16 +231,6 @@
                 </div>
             </div>
             <!-- end carton_use -->
-            
-        </form>
-    </div><!--/.col (left) -->
-    <div class="col-md-6">
-        <form role="form">
-            <div class="row form-group">
-                <div class="col-md-6 text-right">
-                    <label> </label>
-                </div>
-            </div>
             <!-- start amoutn_per_carton -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.amoutn_per_carton.length != 0}">
                 <div class="col-md-3 text-right">
@@ -245,7 +244,7 @@
                 </div>
             </div>
             <!-- end amoutn_per_carton -->
-            
+
             <!-- start weight_carton -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.weight_carton.length != 0}">
                 <div class="col-md-3 text-right">
@@ -259,7 +258,15 @@
                 </div>
             </div>
             <!-- end weight_carton -->
-            
+        </form>
+    </div>
+
+    <div class="col-md-12">
+        <div class="row form-group">
+            <div class="col-md-5"></div>
+            <div class="col-md-7"><h3 class="title-box"><b>Production Approval</b></h3></div>
+        </div>
+        <div class="col-md-6">
             <!-- start pack_per_carton -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_per_carton.length != 0}">
                 <div class="col-md-3 text-right">
@@ -273,8 +280,8 @@
                 </div>
             </div>
             <!-- end pack_per_carton -->
-            
-            
+
+
             <!-- start customer_request_spec -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.customer_request_spec.length != 0}">
                 <div class="col-md-3 text-right">
@@ -302,7 +309,9 @@
                 </div>
             </div>
             <!-- end pack_net_weight -->
-            
+        </div>
+
+        <div class="col-md-6">
             <!-- start note -->
             <div class="row form-group" ng-class="{'has-error': packProduct.note.length != 0}">
                 <div class="col-md-3 text-right">
@@ -316,20 +325,20 @@
                 </div>
             </div>
             <!-- end note -->
-        </form>
+        </div>
     </div>
     <div class="col-md-12 border">
         <!-- start photo and document -->
-            <div class="row form-group">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6"><h3 class="box-title">Photos and documents</h4></div>
+        <div class="row form-group">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6"><h3 class="box-title"><b>Photos and documents</b></h3></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <file-uploader file-ids="packProduct.tmp_file_ids" model-id="packProduct.id"
+                               sendemail="true" email-files = "email.documents" object-type="'pack_product_file'"></file-uploader>
             </div>
-            <div class="row form-group">
-                <div class="col-md-12">
-                    <file-uploader file-ids="packProduct.tmp_file_ids" model-id="packProduct.id"
-                                   sendemail="true" email-files = "email.documents" object-type="'pack_product_file'"></file-uploader>
-                </div>
-            </div>
-            <!-- start photo and document -->
+        </div>
+        <!-- start photo and document -->
     </div>
 </div>

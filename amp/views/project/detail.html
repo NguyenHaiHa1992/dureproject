@@ -91,7 +91,11 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.project_number.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Project Number</label>
@@ -127,7 +131,18 @@
                                         </span>
                                     </div>
                                 </div>
-
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5"></div>
+                                <div class="col-md-7">
+                                    <h3 class="box-title"><b>General Prodcut Information</b></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.life_style.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>What type of product is this? Lifestyle, Original</label>
@@ -143,11 +158,7 @@
                                         <input ng-if="project.life_style == 'type_other'" ng-model="project.other_type_product" class="form-control" placeholder="Add other type of product" />
                                     </div>
                                 </div>
-                            </form>
-                        </div><!--/.col (left) -->
-                        <div class="col-md-6">
-                            <!-- general form elements disabled -->
-                            <form role="form">
+
                                 <div class="row form-group" ng-class="{'has-error': project_error.service.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Services Required</label>
