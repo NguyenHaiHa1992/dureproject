@@ -116,6 +116,10 @@ class PackProductService extends iPhoenixService{
             $packProduct->date = strtotime($packProduct->date);
         }
         
+        if(!is_integer($packProduct->plan_manager)){
+            $packProduct->plan_manager = strtotime($packProduct->plant_manager);
+        }
+        
         $packProduct = PackProductService::beforeSave($packProduct);
         if ($packProduct->validate()) {
             $packProduct->save();
@@ -197,6 +201,10 @@ class PackProductService extends iPhoenixService{
         if(isset($packProduct->date) && !is_int($packProduct->date)){
             $packProduct->date = strtotime($packProduct->date);
         }
+        
+        if(isset($packProduct->plan_manager) && !is_int($packProduct->plan_manager)){
+            $packProduct->plan_manager = strtotime($packProduct->plan_manager);
+        }
         return $packProduct;
     }
 
@@ -222,6 +230,13 @@ class PackProductService extends iPhoenixService{
             //                if(is_integer($packProduct['date'])){
 
             $result['date'] = date('Y-m-d', $result['date']);
+            //                }
+        }
+        
+        if (isset($result['plan_manager']) && $result['plan_manager']) {
+            //                if(is_integer($packProduct['date'])){
+
+            $result['plan_manager'] = date('Y-m-d', $result['plan_manager']);
             //                }
         }
         $result['tmp_file_ids'] = $packProduct->tmp_file_ids;

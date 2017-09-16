@@ -267,6 +267,21 @@
             <div class="col-md-7"><h3 class="title-box"><b>Production Approval</b></h3></div>
         </div>
         <div class="col-md-6">
+            
+            <!-- start plant_manager -->
+            <div class="row form-group" ng-class="{'has-error': packProduct_error.plant_manager.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Plant Manager</label>
+                </div>
+                <div class="col-md-9">
+                    <input ng-model="packProduct.plant_manager" type="text" class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                    <span class="control-label" for="inputError" ng-show="packProduct_error.plant_manager.length != 0" ng-repeat="error in packProduct_error.plant_manager">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            <!-- end plant_manager -->
+            
             <!-- start pack_per_carton -->
             <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_per_carton.length != 0}">
                 <div class="col-md-3 text-right">
