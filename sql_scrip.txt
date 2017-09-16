@@ -158,6 +158,15 @@ CREATE TABLE `tbl_qa` (
 --- 16-09-2017 add column in_trash in tbl_product_development , tbl_qa
 ALTER TABLE `tbl_product_development` ADD COLUMN `in_trash` INTEGER DEFAULT 0;
 ALTER TABLE `tbl_qa` ADD COLUMN `in_trash` INTEGER DEFAULT 0;
+ALTER TABLE `tbl_project` ADD COLUMN `in_trash` INTEGER DEFAULT 0;
+
+--- 16-09-2017 tbl_qa_file
+CREATE TABLE `tbl_qa_file` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `qa_id` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --- add table tbl_pack_product_file + tbl_qa_file
 
