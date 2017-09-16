@@ -74,38 +74,50 @@ class ProjectController extends Controller {
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevelopment'];
         $dataQa = $data['qa'];
+        $dataPackProduct = $data['packProduct'];
+        
         $transaction = Yii::app()->db->beginTransaction();
 
         try{
             $resultProject = ProjectService::create($dataProject);
             $resultProductDev = ['success' => false , 'message' => ""];
+            $resultQa = ['success' => false , 'message' => ""];
+            $resultPackProduct = ['success' => false , 'message' => ""];
             // check if project create Success 
             if($resultProject['success']) {
                 $success = true;
                 $projectId = (int)$resultProject['id'];
-
                 // create product Development model
                 $dataProductDev['project_id'] = $projectId;
 
                 $resultProductDev = ProductService::create($dataProductDev);
-                if(!$resultProductDev) {
+                if(!$resultProductDev['success']) {
                      $success = false;
                 }
                 
-                $resultQa = QaService::create($dataQa);
                 $dataQa['project_id'] = $projectId;
-                if(!$resultQa) {
+                $resultQa = QaService::create($dataQa);
+                if(!$resultQa['success']) {
                      $success = false;
                 }
-                // create any other model
                 
-                $transaction->commit();
+                $dataPackProduct['project_id'] = $projectId;
+                $resultPackProduct = PackProductService::create($dataPackProduct);
+                
+                $success = $success && $resultProductDev['success'] && $resultQa['success'] && $resultPackProduct['success'];
+                // create any other model
+                if($success){
+                    $transaction->commit();
+                }else{
+                    $transaction->rollBack();
+                }
             }
             $result = [
                 'success' => $success,
                 'project' => $resultProject,
                 'productDevelopment' => $resultProductDev,
                 'qa' => $resultQa,
+                'packProduct' => $resultPackProduct,
             ];
         }catch(CException $e){
             $transaction->rollBack();
@@ -125,12 +137,15 @@ class ProjectController extends Controller {
         $resultProject = ProjectService::getProjectById($data);
         $resultProductDev = ProductService::getProductByProjectId($data);
         $resultQa = QaService::getQaByProjectId($data);
-        $success = $resultProject['success'] && $resultProductDev['success'] && $resultQa['success'];
+        $resultPackProduct = PackProductService::getPackProductByProjectId($data);
+        $success = $resultProject['success'] && $resultProductDev['success']
+                && $resultQa['success'] && $resultPackProduct['success'];
         $resutl = [
             'success' => $success,
             'project' => $resultProject,
             'productDevelopment' => $resultProductDev,
             'qa' => $resultQa,
+            'packProduct' => $resultPackProduct,
         ];
         
         $this->returnJson($resutl);
@@ -143,6 +158,8 @@ class ProjectController extends Controller {
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevleopment'];
         $dataQa = $data['qa'];
+        $dataPackProduct = $data['packProduct'];
+        
         $projectId = (int)$dataProject['id'];
         if(!$dataProductDev['project_id']){
             $dataProductDev['project_id'] = $projectId;
@@ -150,6 +167,10 @@ class ProjectController extends Controller {
         
         if(!$dataQa['project_id']){
             $dataQa['project_id'] = $projectId;
+        }
+        
+        if(!$dataPackProduct['project_id']){
+            $dataPackProduct['project_id'] = $projectId;
         }
         
         $transaction = Yii::app()->db->beginTransaction();
@@ -169,6 +190,11 @@ class ProjectController extends Controller {
                 if(!$resultQa['success']) {
                     $success = false;
                 }
+                
+                $resultPackProduct = PackProductService::update($dataPackProduct);
+                if(!$resultPackProduct['success']) {
+                    $success = false;
+                }
                 // update any other model
                 
                 $transaction->commit();
@@ -178,6 +204,7 @@ class ProjectController extends Controller {
                 'project' => $resultProject,
                 'productDevelopment' => $resultProductDev,
                 'qa' => $resultQa,
+                'packProduct' => $resultPackProduct,
             ];
         }catch(CException $e){
             $transaction->rollBack();

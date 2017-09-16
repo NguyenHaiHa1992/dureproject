@@ -39,7 +39,12 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                         $scope.is_create= true;
                     }
                     $scope.productDevelopment = {};
+                    
                     $scope.qa = {};
+                    
+                    $scope.packProduct = {};
+                    // add lib customers
+                    $scope.packProduct.customers = data.project_customers;
                 }
                 else{
                     $state.go('404');
@@ -51,34 +56,6 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         }
 
         // end init Project
-        
-         // create init ProductDevelopment
-         function initProductDevelopment(){
-             var post_information = {};
-            if (jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== '') {
-                post_information = {id: $rootScope.view_detail_customer_id};
-                $rootScope.view_detail_project_id = undefined;
-            } else {
-                post_information = {};
-            }
-            $http.post(BASE_URL + '/productDevelopment/createInit', post_information)
-                .success(function (data) {
-                    $scope.init_loaded = true;
-                    if (data.success) {
-                        $scope.productDevelopment = data.productDevelopment;
-                        $scope.productDevelopment_empty = data.productDevelopment_empty;
-                        $scope.productDevelopment_error = data.productDevelopment_error;
-                        $scope.productDevelopment_error_empty = data.productDevelopment_error_empty;
-                        $scope.libYesNo = [{'id': 1, 'name': 'Yes'}, {'id': 0, 'name': 'No'}];
-                    } else {
-                        $state.go('404');
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    $state.go('404');
-                });
-         }
-         // end init ProductDevelopment
 
          initProject();
          // initProductDevelopment();
@@ -92,6 +69,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             project : $scope.project,
             productDevelopment : $scope.productDevelopment,
             qa: $scope.qa,
+            packProduct : $scope.packProduct,
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
@@ -105,6 +83,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             else{
                 $scope.project_error= data.project.project_error;
                 $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
+                $scope.qa_error = data.qa.qa_error;
+                $scope.packProduct_error = data.packProduct.packProduct_error;
             }
         })
         .error(function(data, status, headers, config) {

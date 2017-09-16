@@ -696,3 +696,7 @@ header .logo span{
 .sub-box-title{
     background-color: #9f9fa0 !important;
 }
+.border{
+    border: solid 1px #d2d6de;
+    padding : 15px 10px 5px;
+}

@@ -88,7 +88,11 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </form>
+                        </div><!--/.col (left) -->
+                        <div class="col-md-6">
+                            <!-- general form elements disabled -->
+                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.project_number.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Project Number</label>
@@ -124,7 +128,20 @@
                                         </span>
                                     </div>
                                 </div>
-                                
+                            </form>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5"></div>
+                                <div class="col-md-7">
+                                    <h3 class="box-title"><b>General Prodcut Information</b></h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.life_style.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>What type of product is this? Lifestyle, Original</label>
@@ -140,11 +157,7 @@
                                         <input ng-if="project.life_style == 'type_other'" ng-model="project.other_type_product" class="form-control" placeholder="Add other type of product" />
                                     </div>
                                 </div>
-                            </form>
-                        </div><!--/.col (left) -->
-                        <div class="col-md-6">
-                            <!-- general form elements disabled -->
-                            <form role="form">
+
                                 <div class="row form-group" ng-class="{'has-error': project_error.service.length != 0}">
                                     <div class="col-md-3 text-right">
                                         <label>Services Required</label>
@@ -176,45 +189,46 @@
                                         </span>
                                     </div>
                                 </div>
-
-                                <div class="row form-group" ng-class="{'has-error': project_error.note.length != 0}">
-                                    <div class="col-md-3 text-right">
-                                        <label>Note<span class="required">*</span></label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <textarea ck-editor ng-model="project.note" type="text" class="form-control" placeholder="note"></textarea>
-                                        <span class="control-label" for="inputError" ng-show="project_error.note.length != 0" ng-repeat="error in project_error.note">
-                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                                        </span>
-                                    </div>
-                                </div>
                             </form>
                         </div>
+                        
+                        <div class="col-md-6">
+                            <div class="row form-group" ng-class="{'has-error': project_error.note.length != 0}">
+                                <div class="col-md-3 text-right">
+                                    <label>Note<span class="required">*</span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea ck-editor ng-model="project.note" type="text" class="form-control" placeholder="note"></textarea>
+                                    <span class="control-label" for="inputError" ng-show="project_error.note.length != 0" ng-repeat="error in project_error.note">
+                                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
             
-            <!-- Project document -->
+            <!-- Start Sales -->
             <div class="col-md-6 box-over">
-                <div class="box no-border collapsed-box" style="min-height: 100px">
-                    <div class="box-header">
-                        <h3 class="box-title">Project documents</h3>
+                <div class="box no-border collapsed-box" >
+                    <div class="box-header sub-box-title">
+                        <h3 class="box-title">Sales</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="box-body overhidden">
-                      <i>Available only on update</i>
-                    </div>
+                    <div class="box-body overhidden"></div>
                 </div>
             </div>
-            <!-- end Project document -->
+            <!-- end Sales -->
             
             <!--  Start Product Development -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header">
+                    <div class="box-header sub-box-title">
                         <h3 class="box-title">Product Development</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
@@ -228,11 +242,27 @@
             
             <!-- End Product Development -->
             
+            <!--  Start Package and Production -->
+            <div class="col-md-6 box-over">
+                <div class="box no-border collapsed-box" style="overflow: auto;">
+                    <div class="box-header sub-box-title">
+                        <h3 class="box-title">PACKAGING TEST/ PRODUCTION</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body overhidden">
+                        <pack-product pack-product="packProduct" ng-if="packProduct"></pack-product>
+                    </div>
+                </div>
+            </div>
+            <!-- End Package and Production -->
+            
             <!--  Start QA -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header">
-                        <h3 class="box-title">QA</h3>
+                    <div class="box-header sub-box-title">
+                        <h3 class="box-title">Q/A</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
                         </div>
@@ -242,8 +272,39 @@
                     </div>
                 </div>
             </div>
-            
             <!-- End QA -->
+            
+            <!-- Start APPROVALS -->
+            <div class="col-md-6 box-over">
+                <div class="box no-border collapsed-box" >
+                    <div class="box-header sub-box-title">
+                        <h3 class="box-title">APPROVALS</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body overhidden">
+                    </div>
+                </div>
+            </div>
+            <!-- end APPROVALS -->
+            
+            <!-- Start HISTORY -->
+            <div class="col-md-6 box-over">
+                <div class="box no-border collapsed-box" >
+                    <div class="box-header sub-box-title">
+                        <h3 class="box-title">HISTORY</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body overhidden">
+                    </div>
+                </div>
+            </div>
+            <!-- end HISTORY -->
         </div>
     </section>
 </div>

@@ -167,3 +167,54 @@ CREATE TABLE `tbl_qa_file` (
   `file_id` int(11) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+=======
+
+--- add table tbl_pack_product_file + tbl_qa_file
+
+CREATE TABLE `tbl_pack_product_file` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pack_product_id` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tbl_qa_file` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `qa_file_id` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--- tbl_pack_product
+CREATE TABLE `tbl_pack_production` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `date` int(11) DEFAULT NULL,
+  `begin_sample_weight` varchar(255) DEFAULT NULL,
+  `pack_use` varchar(255) DEFAULT NULL,
+  `net_weight` varchar(255) DEFAULT NULL,
+  `density` varchar(255) DEFAULT NULL,
+  `length_pack` varchar(255) DEFAULT NULL,
+  `long_heart_temp` varchar(255) DEFAULT NULL,
+  `cross_heart_temp` varchar(255) DEFAULT NULL,
+  `dose_volume` varchar(255) DEFAULT NULL,
+  `rev_dose` varchar(255) DEFAULT NULL,
+  `auger_speed` varchar(255) DEFAULT NULL,
+  `pack_per_minute` varchar(255) DEFAULT NULL,
+  `amount_left` varchar(255) DEFAULT NULL,
+  `carton_use` varchar(255) DEFAULT NULL,
+  `amoutn_per_carton` varchar(255) DEFAULT NULL,
+  `weight_carton` varchar(255) DEFAULT NULL,
+  `pack_per_carton` varchar(255) DEFAULT NULL,
+  `customer_request_spec` varchar(255) DEFAULT NULL,
+  `pack_net_weight` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `document_id` int(11) DEFAULT '0',
+  `in_trash` tinyint(2) DEFAULT '0',
+  `status` tinyint(2) DEFAULT NULL,
+  `created_time` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

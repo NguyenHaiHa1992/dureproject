@@ -456,19 +456,23 @@
                     </span>
                 </div>
             </div>
-            <!-- end note -->
-            
-            <!-- start photo and document -->
-            <div class="row form-group" ng-class="{'has-error': qa.note.length != 0}">
-                <div class="col-md-3 text-right">
-                    <label>Photos and documents</label>
-                </div>
-                <div class="col-md-9">
+            <!-- end note -->            
+        </form>
+    </div>
+    
+    <div class="col-md-12 border">
+        <!-- start photo and document -->
+            <div class="row form-group">
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6"><h3 class="box-title">Photos and documents</h4></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
                     <file-uploader file-ids="qa.tmp_file_ids" model-id="qa.id"
                                    sendemail="true" email-files = "email.documents" object-type="'qa_file'"></file-uploader>
                 </div>
             </div>
             <!-- start photo and document -->
-        </form>
     </div>
+    
 </div>

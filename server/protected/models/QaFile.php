@@ -4,6 +4,7 @@
  * This is the model class for table "{{qa_file}}".
  *
  * The followings are the available columns in table '{{qa_file}}':
+<<<<<<< HEAD
  * @property integer $id
  * @property integer $qa_id
  * @property integer $image_id
@@ -80,5 +81,4 @@ class QaFile extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-
 }
