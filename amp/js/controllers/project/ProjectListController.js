@@ -57,10 +57,10 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                 'attribute': 'primary_contact' ,
                 'label' : 'Primary Contact',
             },
-            {
-                'attribute': 'customer_id' ,
-                'label' : 'Customer',
-            },
+//            {
+//                'attribute': 'customer_id' ,
+//                'label' : 'Customer',
+//            },
             {
                 'attribute': 'project_number' ,
                 'label' : 'Project Number',
@@ -524,56 +524,6 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
 	    }
 	};
         
-        // search relate
-        $scope.related_signages = [];
-        $scope.getRelatedSignages = function(){
-            $http.get(BASE_URL + '/signage/getAll?sort_attribute=code&sort_type=ASC')
-            .success(function (data) {
-                if (data.success) {
-//                    var tmpList = [];
-                    angular.forEach(data.signages, function(v, i){
-                        var itemTmp = {id: v.id, code: v.code};
-//                        var idTmp = tmpList.indexOf(v.id);
-//                        if(idTmp === -1){
-//                            tmpList.push(v.id);
-                            $scope.related_signages.push(itemTmp);
-//                        }
-                    });
-                }
-                else {
-                    $state.go('404');
-                }
-            })
-            .error(function (data, status, headers, config) {
-                $state.go('404');
-            });
-        };
-        //$scope.getRelatedSignages();
-        
-        $scope.related_fixtures = [];
-        $scope.getRelatedFixtures = function(){
-            $http.get(BASE_URL + '/fixture/getAll?sort_attribute=code&sort_type=ASC')
-            .success(function (data) {
-                if (data.success) {
-//                    var tmpList = [];
-                    angular.forEach(data.fixtures, function(v, i){
-                        var itemTmp = {id: v.id, code: v.code};
-//                        var idTmp = tmpList.indexOf(v.id);
-//                        if(idTmp === -1){
-//                            tmpList.push(v.id);
-                            $scope.related_fixtures.push(itemTmp);
-//                        }
-                    });
-                }
-                else {
-                    $state.go('404');
-                }
-            })
-            .error(function (data, status, headers, config) {
-                $state.go('404');
-            });
-        };
-        //$scope.getRelatedFixtures();
         
         // Import excel
         $scope.uploaded_file = null;

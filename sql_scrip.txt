@@ -154,3 +154,7 @@ CREATE TABLE `tbl_qa` (
   `product_have_npn_other` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--- 16-09-2017 add column in_trash in tbl_product_development , tbl_qa
+ALTER TABLE `tbl_product_development` ADD COLUMN `in_trash` INTEGER DEFAULT 0;
+ALTER TABLE `tbl_qa` ADD COLUMN `in_trash` INTEGER DEFAULT 0;

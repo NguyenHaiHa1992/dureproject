@@ -75,6 +75,8 @@ class ProjectService extends iPhoenixService {
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
         $criteria->limit = $data['limitnum'];
         $criteria->offset = $data['limitstart'];
+        
+        $criteria->compare('in_trash', 0);
 
         $projects = Project::model()->findAll($criteria);
         $total = count($projects);
@@ -227,6 +229,22 @@ class ProjectService extends iPhoenixService {
         }
         $project->in_trash = 1;
         if($project->save(false)){
+            // delete productDevelopment
+            $productDev = ProductDevelopment::model()->findByAttributes(['project_id' => (int)$data['id']]);
+            if($productDev){
+                if(isset($productDev->in_trash)){
+                    $productDev->in_trash  = 1;
+                    $productDev->save(false);
+                }
+            }
+            // delete qa
+            $qa = Qa::model()->findByAttributes(['project_id' => (int)$data['id']]);
+            if($qa){
+                if(isset($qa->in_trash)){
+                    $qa->in_trash  = 1;
+                    $qa->save(false);
+                }
+            }
             $result['success'] = true;
         }
         return $result;
