@@ -3,6 +3,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.root = $rootScope;
         $scope.init_loaded = false;
         $scope.productDevelopment = {};
+        $scope.qa = {};
         $scope.createInit = function () {
             var post_information = {};
 
@@ -18,7 +19,6 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.project_services = data.project_services;
                     $scope.libYesNo = [{id:1,name:'Yes'},{id:0,name:'No'}];
                     $scope.is_update = true;
-//                    $scope.productDevelopment = {};
                 }
                 else {
                     $state.go('404');
@@ -48,33 +48,14 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         };
         $scope.getProjectById();
 
-//        $scope.getProjectUpdateById = function () {
-//            $http.post(BASE_URL + '/project/getProjectUpdateById', {id: $stateParams.id})
-//            .success(function (data) {
-//                if (data.success) {
-//                    $scope.project = data.project.project;
-//                    $scope.project_error = data.project.project_error;
-//
-//                    // add scope productDevelopment
-//                    $scope.productDevelopment = data.productDevelopment.productDevelopment;
-//                    $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
-//                }
-//                else {
-//                    $state.go('404');
-//                }
-//            })
-//            .error(function (data, status, headers, config) {
-//                $state.go('404');
-//            });
-//        };
-        // $scope.getProjectUpdateById();
-
         $scope.update = function () {
             var projectInfo = $scope.project;
             var productDevInof = $scope.productDevelopment;
+            var qaInfo = $scope.qa;
             var information_post = {
                 'project' : projectInfo,
                 'productDevleopment' : productDevInof,
+                'qa' : qaInfo,
             };
             
             console.log("DEBUG :  submit information: " + JSON.stringify(information_post));
@@ -85,12 +66,14 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             console.log("Project Update success");
                             swal('Project updated!', "", "success");
                             
-                            console.log("DEBUG : data success respone :"+ JSON.stringify(data));
                             $scope.project = data.project.project;
                             $scope.project_error = $scope.project.project_error_empty;
                             
                             $scope.productDevelopment = data.productDevelopment.productDevelopment;
                             $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
+                            
+                            $scope.qa = data.qa.qa;
+                            $scope.qa_error = data.qa.qa_error;
                             $("input").removeClass("ng-dirty");
                         }
                         else {

@@ -1,0 +1,37 @@
+{
+    "name": "tunglexuan <tunghus1993@gmail.com>",
+    "model": "qa",
+    "erro_model" : "qa_error",
+    "attributes" : [
+        {
+            "name" : "",
+            "label" : "",
+            "type" : "",
+            "data" : ""
+        },
+        {
+            "name" : "",
+            "label" : "",
+            "type" : "",
+            "data" : ""
+        },
+        {
+            "name" : "",
+            "label" : "",
+            "type" : "",
+            "data" : ""
+        },
+        {
+            "name" : "",
+            "label" : "",
+            "type" : "",
+            "data" : ""
+        },
+        {
+            "name" : "",
+            "label" : "",
+            "type" : "",
+            "data" : ""
+        }
+    ]
+}

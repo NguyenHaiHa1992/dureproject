@@ -69,11 +69,11 @@ class ProjectController extends Controller {
     }
 
     public function actionCreate() {
-
         $success = false;   
         $data = ProjectService::data();
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevelopment'];
+        $dataQa = $data['qa'];
         $transaction = Yii::app()->db->beginTransaction();
 
         try{
@@ -91,13 +91,21 @@ class ProjectController extends Controller {
                 if(!$resultProductDev) {
                      $success = false;
                 }
+                
+                $resultQa = QaService::create($dataQa);
+                $dataQa['project_id'] = $projectId;
+                if(!$resultQa) {
+                     $success = false;
+                }
                 // create any other model
-
+                
+                $transaction->commit();
             }
             $result = [
                 'success' => $success,
                 'project' => $resultProject,
                 'productDevelopment' => $resultProductDev,
+                'qa' => $resultQa,
             ];
         }catch(CException $e){
             $transaction->rollBack();
@@ -116,13 +124,15 @@ class ProjectController extends Controller {
         $data = iPhoenixService::data();
         $resultProject = ProjectService::getProjectById($data);
         $resultProductDev = ProductService::getProductByProjectId($data);
-        $success = $resultProject['success'] && $resultProductDev['success'];
+        $resultQa = QaService::getQaByProjectId($data);
+        $success = $resultProject['success'] && $resultProductDev['success'] && $resultQa['success'];
         $resutl = [
             'success' => $success,
             'project' => $resultProject,
             'productDevelopment' => $resultProductDev,
+            'qa' => $resultQa,
         ];
-
+        
         $this->returnJson($resutl);
     }
 
@@ -132,11 +142,16 @@ class ProjectController extends Controller {
         
         $dataProject = $data['project'];
         $dataProductDev  = $data['productDevleopment'];
+        $dataQa = $data['qa'];
         $projectId = (int)$dataProject['id'];
         if(!$dataProductDev['project_id']){
             $dataProductDev['project_id'] = $projectId;
         }
-
+        
+        if(!$dataQa['project_id']){
+            $dataQa['project_id'] = $projectId;
+        }
+        
         $transaction = Yii::app()->db->beginTransaction();
 
         try{
@@ -149,12 +164,20 @@ class ProjectController extends Controller {
                 if(!$resultProductDev['success']) {
                     $success = false;
                 }
+                
+                $resultQa = QaService::update($dataQa);
+                if(!$resultQa['success']) {
+                    $success = false;
+                }
                 // update any other model
+                
+                $transaction->commit();
             }
             $result = [
                 'success' => $success,
                 'project' => $resultProject,
                 'productDevelopment' => $resultProductDev,
+                'qa' => $resultQa,
             ];
         }catch(CException $e){
             $transaction->rollBack();

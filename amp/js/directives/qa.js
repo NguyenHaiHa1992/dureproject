@@ -43,7 +43,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
         console.log("DEBUG : end init qa");
 
         $scope.getProductProjectById = function () {
-            $http.post(BASE_URL + '/qa/getProductByProjectId', {id: $stateParams.id})
+            $http.post(BASE_URL + '/qa/getQaByProjectId', {id: $stateParams.id})
             .success(function (data) {
                 if (data.success) {
                     $scope.qa_error = data.qa_error;
@@ -59,11 +59,9 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
         };
         
         $scope.showHideOther = function($model ,compare){
-            console.log('DEBUG : function showHideOther');
             if ($model == compare) {
                 $model = "";
             }
-            console.log('DEBUG : end debug function showHideOther');
         };
         $scope.scopeSetData = function(data){
             if(typeof data !== 'object'){

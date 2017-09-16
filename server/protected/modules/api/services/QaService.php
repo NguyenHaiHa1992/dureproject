@@ -84,7 +84,7 @@ class QaService extends iPhoenixService{
         return $result;
     }
 
-    public static function getProductByProjectId($data) {
+    public static function getQaByProjectId($data) {
         $result = array();
         $get_empty_qa_error = QaService::getEmptyQaError();
         $result['qa_error'] = $get_empty_qa_error['qa_error'];
