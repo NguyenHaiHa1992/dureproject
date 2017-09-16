@@ -73,7 +73,7 @@ class Qa extends CActiveRecord
 			array('project_id, spec_micro_test, spec_sample, customer_require_coa, customer_spec_sensor, customer_require_preship, product_spec_sheet, allergen_status, customer_provide_confirm, customer_supply_letter, customer_spec_net_weight, customer_provide_label, is_upc_scc_code, customer_provide_label_primary_pack, customer_provide_label_inner_pack, customer_provide_label_shipper, product_have_spec_claim, spec_hand_instruc, customer_request_spec_ship, product_have_npn, product_nsf_for_sport, document_id, status, created_time, updated_time, created_by, appr_coa_submit', 'numerical', 'integerOnly'=>true),
 			array('physical_spec_product, spec_micro_test_other, spec_sample_other, customer_require_coa_other, customer_spec_sensor_other, allergen_status_other, customer_spec_net_weight_other, customer_provide_label_other, is_upc_scc_code_other, customer_provide_label_primary_pack_other, customer_provide_label_inner_pack_other, customer_provide_label_shipper_other, product_have_spec_claim_other, spec_hand_instruc_other, customer_request_spec_ship_other, product_have_npn_other', 'length', 'max'=>255),
 			array('package_net_weight', 'length', 'max'=>50),
-			array('note', 'safe'),
+			array('note, tmp_file_ids', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, project_id, spec_micro_test, spec_sample, customer_require_coa, customer_spec_sensor, customer_require_preship, physical_spec_product, product_spec_sheet, allergen_status, customer_provide_confirm, customer_supply_letter, package_net_weight, customer_spec_net_weight, customer_provide_label, is_upc_scc_code, customer_provide_label_primary_pack, customer_provide_label_inner_pack, customer_provide_label_shipper, product_have_spec_claim, spec_hand_instruc, customer_request_spec_ship, product_have_npn, product_nsf_for_sport, note, document_id, status, created_time, updated_time, created_by, appr_coa_submit, spec_micro_test_other, spec_sample_other, customer_require_coa_other, customer_spec_sensor_other, allergen_status_other, customer_spec_net_weight_other, customer_provide_label_other, is_upc_scc_code_other, customer_provide_label_primary_pack_other, customer_provide_label_inner_pack_other, customer_provide_label_shipper_other, product_have_spec_claim_other, spec_hand_instruc_other, customer_request_spec_ship_other, product_have_npn_other', 'safe', 'on'=>'search'),
@@ -88,6 +88,7 @@ class Qa extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'files' => array(self::MANY_MANY, 'File', 'tbl_qa_file(qa_id, file_id)'),
 		);
 	}
 
@@ -226,4 +227,60 @@ class Qa extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+    protected function afterSave() {
+        $new_list_file_ids = explode(',', $this->tmp_file_ids);
+        foreach ($new_list_file_ids as $file_id) {
+            $criteria = new CDbCriteria();
+            $criteria->compare('qa_id', $this->id);
+            $criteria->compare('file_id', $file_id);
+            $document_file = QaFile::model()->find($criteria);
+            if (!isset($document_file)) {
+                $document_file = new QaFile();
+                $document_file->qa_id = $this->id;
+                $document_file->file_id = $file_id;
+                $document_file->save();
+            }
+        }
+        $list_current_file_ids = $this->list_current_file_ids;
+        foreach ($list_current_file_ids as $file_id) {
+            if (!in_array($file_id, $new_list_file_ids)) {
+                $criteria = new CDbCriteria();
+                $criteria->compare('qa_id', $this->id);
+                $criteria->compare('file_id', $file_id);
+                QaFile::model()->deleteAll($criteria);
+            }
+        }
+
+        parent::afterSave();
+    }
+    
+    protected function afterDelete() {
+        parent::afterDelete();
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('qa_id =' . $this->id);
+        QaFile::model()->deleteAll($criteria);
+    }
+
+    public function getList_current_file_ids() {
+        $list = $this->files;
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        return $result;
+    }
+    
+    protected function afterFind() {
+        $list = $this->files;
+
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        $this->tmp_file_ids = implode(',', $result);
+
+        return parent::afterFind();
+    }
 }

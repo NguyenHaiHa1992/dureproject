@@ -564,6 +564,12 @@ class FileService extends iPhoenixService {
                 'file_id' => $data['file_id']
             ]);
         }
+        elseif($data['related'] == "qa_file"){
+            $model = QaFile::model()->findByAttributes([
+                'qa_id' => $data['model_id'],
+                'file_id' => $data['file_id']
+            ]);
+        }
         else{
             $model = null;
         }
