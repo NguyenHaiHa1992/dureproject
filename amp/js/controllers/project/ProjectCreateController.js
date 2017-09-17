@@ -211,7 +211,9 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     jQuery(this).children(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
                     bf.slideUp();
                     console.log("Convert minus into plus");
-                    box.parent(".box-over").removeClass("col-md-12").addClass("col-md-6");
+                    if(!first){
+                        box.parent(".box-over").removeClass("col-md-12").addClass("col-md-6");
+                    }
             } else {
                     //Convert plus into minus
                     jQuery(this).children(".fa-plus").removeClass("fa-plus").addClass("fa-minus");

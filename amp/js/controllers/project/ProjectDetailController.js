@@ -239,7 +239,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 if (!jQuery(this).children().hasClass("fa-plus")) {
                         jQuery(this).children(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
                         bf.slideUp();
-                        box.parent(".box-over").removeClass("col-md-12").addClass("col-md-6");
+                        if(!first){
+                            box.parent(".box-over").removeClass("col-md-12").addClass("col-md-6");
+                        }
                 } else {
                         //Convert plus into minus
                         jQuery(this).children(".fa-plus").removeClass("fa-plus").addClass("fa-minus");

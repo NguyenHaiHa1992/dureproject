@@ -77,7 +77,7 @@ class ProjectController extends Controller {
         $dataPackProduct = $data['packProduct'];
         
         $transaction = Yii::app()->db->beginTransaction();
-
+        $result = ['sucess' => $success, 'message' => ""];
         try{
             $resultProject = ProjectService::create($dataProject);
             $resultProductDev = ['success' => false , 'message' => ""];
@@ -120,6 +120,7 @@ class ProjectController extends Controller {
                 'packProduct' => $resultPackProduct,
             ];
         }catch(CException $e){
+            $result['message'] = $e->getMessage();
             $transaction->rollBack();
         }
         //
