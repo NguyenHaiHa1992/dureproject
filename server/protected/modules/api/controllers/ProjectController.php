@@ -76,9 +76,9 @@ class ProjectController extends Controller {
         $dataQa = $data['qa'];
         $dataPackProduct = $data['packProduct'];
         
-//        $transaction = Yii::app()->db->beginTransaction();
-
-//        try{
+        $transaction = Yii::app()->db->beginTransaction();
+        $result = ['sucess' => $success, 'message' => ""];
+        try{
             $resultProject = ProjectService::create($dataProject);
             $resultProductDev = ['success' => false , 'message' => ""];
             $resultQa = ['success' => false , 'message' => ""];
@@ -119,9 +119,10 @@ class ProjectController extends Controller {
                 'qa' => $resultQa,
                 'packProduct' => $resultPackProduct,
             ];
-//        }catch(CException $e){
-//            $transaction->rollBack();
-//        }
+        }catch(CException $e){
+            $result['message'] = $e->getMessage();
+            $transaction->rollBack();
+        }
         //
         $this->returnJson($result );
     }

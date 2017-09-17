@@ -226,3 +226,6 @@ CREATE TABLE `tbl_pack_product_file` (
   `file_id` int(11) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 17 - 09 -2017 change column name qa_file_id to qa_id in tbl_qa_file
+ALTER TABLE tbl_qa_file CHANGE COLUMN `qa_file_id` `qa_id` INTEGER(11);

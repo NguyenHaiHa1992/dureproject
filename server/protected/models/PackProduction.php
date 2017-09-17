@@ -37,7 +37,7 @@
  */
 class PackProduction extends CActiveRecord
 {
-    public $tmp_file_ids;
+        public $tmp_file_ids;
 	/**
 	 * @return string the associated database table name
 	 */
