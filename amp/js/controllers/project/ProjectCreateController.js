@@ -45,6 +45,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     $scope.packProduct = {};
                     // add lib customers
                     $scope.packProduct.customers = data.project_customers;
+                    $scope.packProduct_error = {};
                 }
                 else{
                     $state.go('404');

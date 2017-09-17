@@ -252,7 +252,8 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <pack-product pack-product="packProduct" ng-if="packProduct"></pack-product>
+                        <pack-product pack-product="packProduct" pack-product-error="packProduct_error" 
+                                      ng-if="packProduct && packProduct_error"></pack-product>
                     </div>
                 </div>
             </div>
