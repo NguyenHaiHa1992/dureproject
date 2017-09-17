@@ -219,3 +219,10 @@ CREATE TABLE `tbl_pack_production` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `tbl_pack_production` ADD COLUMN `plant_manager` INTEGER(11);
+
+CREATE TABLE `tbl_pack_product_file` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pack_product_file_id` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -76,9 +76,9 @@ class ProjectController extends Controller {
         $dataQa = $data['qa'];
         $dataPackProduct = $data['packProduct'];
         
-        $transaction = Yii::app()->db->beginTransaction();
+//        $transaction = Yii::app()->db->beginTransaction();
 
-        try{
+//        try{
             $resultProject = ProjectService::create($dataProject);
             $resultProductDev = ['success' => false , 'message' => ""];
             $resultQa = ['success' => false , 'message' => ""];
@@ -107,9 +107,9 @@ class ProjectController extends Controller {
                 $success = $success && $resultProductDev['success'] && $resultQa['success'] && $resultPackProduct['success'];
                 // create any other model
                 if($success){
-                    $transaction->commit();
+//                    $transaction->commit();
                 }else{
-                    $transaction->rollBack();
+//                    $transaction->rollBack();
                 }
             }
             $result = [
@@ -119,9 +119,9 @@ class ProjectController extends Controller {
                 'qa' => $resultQa,
                 'packProduct' => $resultPackProduct,
             ];
-        }catch(CException $e){
-            $transaction->rollBack();
-        }
+//        }catch(CException $e){
+//            $transaction->rollBack();
+//        }
         //
         $this->returnJson($result );
     }
@@ -173,9 +173,9 @@ class ProjectController extends Controller {
             $dataPackProduct['project_id'] = $projectId;
         }
         
-        $transaction = Yii::app()->db->beginTransaction();
-
-        try{
+//        $transaction = Yii::app()->db->beginTransaction();
+//
+//        try{
             $resultProject = ProjectService::update($dataProject);
 
             if($resultProject['success']) {
@@ -197,7 +197,7 @@ class ProjectController extends Controller {
                 }
                 // update any other model
                 
-                $transaction->commit();
+//                $transaction->commit();
             }
             $result = [
                 'success' => $success,
@@ -206,9 +206,9 @@ class ProjectController extends Controller {
                 'qa' => $resultQa,
                 'packProduct' => $resultPackProduct,
             ];
-        }catch(CException $e){
-            $transaction->rollBack();
-        }
+//        }catch(CException $e){
+//            $transaction->rollBack();
+//        }
 
         $this->returnJson($result);
     }
