@@ -1,0 +1,478 @@
+<div class="box-body">
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <!-- form start -->
+        <form role="form">
+            <!-- start product_sample_product -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.spec_micro_test.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Is there any special micro testing required. If so, please specify</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.spec_micro_test" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.spec_micro_test, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_idspec_micro_test.length != 0" ng-repeat="error in qa_error.spec_micro_test">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.spec_micro_test == 1" ng-model="qa.spec_micro_test_other" class="form-control" placeholder="Details">
+                </div>
+            </div>
+            <!-- end product_sample_product -->
+            
+            <!-- start product_infor_provide_product -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.spec_sample.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Do you have any specified sampling requirements? Is so, provide details</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.spec_sample" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.spec_sample, 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.spec_sample.length != 0" ng-repeat="error in qa_error.spec_sample">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.spec_sample == 1" ng-model="qa.spec_sample_other" class="form-control" placeholder="Details">
+                </div>
+            </div>
+            <!-- end product_infor_provide_product -->
+            
+            <!-- start product_sample_submit_pack -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_require_coa.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Does the Customer require a COA? If so, provide contact information </label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_require_coa" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_require_coa, 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_require_coa.length != 0" ng-repeat="error in qa_error.customer_require_coa">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_require_coa == 1" ng-model="qa.customer_require_coa_other" class="form-control" placeholder="Details">
+                    </div>
+            </div>
+            <!-- end product_sample_submit_pack -->
+            
+            <!-- start appr_coa_submit -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.appr_coa_submit.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Have the appropriate COAs been submitted?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.appr_coa_submit" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.appr_coa_submit.length != 0" ng-repeat="error in qa_error.appr_coa_submit">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            <!-- end appr_coa_submit -->
+            
+            <!-- start customer_spec_sensor -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_spec_sensor.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer specified specific sensory testing requirements? Ie. Mixing instructions, density etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_spec_sensor" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_spec_sensor, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_spec_sensor.length != 0" ng-repeat="error in qa_error.customer_spec_sensor">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_spec_sensor == 1" ng-model="qa.customer_spec_sensor_other" class="form-control" placeholder="Details">
+                </div>
+            </div>
+            <!-- end customer_spec_sensor -->
+            
+            
+            <!-- start customer_require_preship -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_spec_sensor.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Does the Customer require a pre-shipment sample?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_require_preship" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_spec_sensor.length != 0" ng-repeat="error in qa_error.customer_spec_sensor">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+             <!-- end customer_require_preship -->
+            
+            <!-- start physical_spec_product -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.physical_spec_product.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Physical specifications of product i.e, density, flowability etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.physical_spec_product" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.physical_spec_product, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.physical_spec_product.length != 0" ng-repeat="error in qa_error.physical_spec_product">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.physical_spec_product == 1" ng-model="qa.physical_spec_product_other" class="form-control" placeholder="Details">
+                </div>
+            </div>
+            <!-- end physical_spec_product -->
+            
+            <!-- start product_spec_sheet -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.product_spec_sheet.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Product spec sheet reviewed?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.product_spec_sheet" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.product_spec_sheet, 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.product_spec_sheet.length != 0" ng-repeat="error in qa_error.product_spec_sheet">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.product_spec_sheet == 1" ng-model="qa.product_spec_sheet_other" class="form-control" placeholder="Details">
+                </div>
+            </div>
+            <!-- end product_spec_sheet -->
+            
+            <!-- start allergen_status -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.allergen_status.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Allergen status reviewed?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.allergen_status" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.allergen_status , 1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.allergen_status.length != 0" ng-repeat="error in qa_error.allergen_status">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.allergen_status == 1" ng-model="qa.allergen_status_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end allergen_status -->
+            
+            <!-- start customer_provide_confirm -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_confirm.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer provided a confirmation letter regarding label verification?</label>
+                </div>
+                <div class="col-md-9">
+                    <input ng-model="qa.customer_provide_confirm" type="text" class="form-control" placeholder="Approved Customer Formula Code">
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_provide_confirm.length != 0" ng-repeat="error in qa_error.customer_provide_confirm">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            <!-- end customer_provide_confirm -->
+            
+            <!-- start customer_supply_letter -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_supply_letter.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer supplied a letter regarding stability testing?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_supply_letter" 
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_supply_letter ,1)"
+                            >
+                    </select>
+
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_supply_letter.length != 0" ng-repeat="error in qa_error.customer_supply_letter">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_supply_letter == 1" ng-model="qa.customer_supply_letter_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- start customer_supply_letter -->
+            
+            <!-- start package_net_weight -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.package_net_weight.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>What is the net weight of each package?</label>
+                </div>
+                <div class="col-md-9">
+                    <input ng-model="qa.package_net_weight" type="text" class="form-control" placeholder="">
+                    <span class="control-label" for="inputError" ng-show="qa_error.package_net_weight.length != 0" ng-repeat="error in qa_error.package_net_weight">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            <!-- end package_net_weight -->
+            
+            <!-- start customer_spec_net_weight -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_spec_net_weight.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer specified net weight limits? If so, provide details</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_spec_net_weight"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_spec_net_weight, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_spec_net_weight.length != 0" ng-repeat="error in qa_error.customer_spec_net_weight">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_spec_net_weight == 1" ng-model="qa.customer_spec_net_weight_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end customer_spec_net_weight -->
+            
+            <!-- start customer_provide_label -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_label.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer provided labelling requirements for primary packaging? Provide details</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_provide_label"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_provide_label, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_provide_label.length != 0" ng-repeat="error in qa_error.customer_provide_label">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_provide_label == 1" ng-model="qa.customer_provide_label_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end customer_provide_label -->
+            
+            <!-- start is_upc_scc_code -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.is_upc_scc_code.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Does this product have a UPC / SCC codes? If so, please provide.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.is_upc_scc_code"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.is_upc_scc_code, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.is_upc_scc_code.length != 0" ng-repeat="error in qa_error.is_upc_scc_code">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.is_upc_scc_code == 1" ng-model="qa.is_upc_scc_code_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end is_upc_scc_code -->
+        </form>
+    </div><!--/.col (left) -->
+    <div class="col-md-6">
+        <form role="form">
+            <!-- start customer_provide_label_primary_pack -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_label_primary_pack.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer provided labelling requirements for primary packaging? Provide details</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_provide_label_primary_pack"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_provide_label_primary_pack, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_provide_label_primary_pack.length != 0" ng-repeat="error in qa_error.customer_provide_label_primary_pack">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_provide_label_primary_pack == 1" ng-model="qa.customer_provide_label_primary_pack_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end customer_provide_label_primary_pack -->
+            
+            <!-- start customer_provide_label_inner_pack -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_label_inner_pack.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer provided labelling requirements for inner packaging? Provide details</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_provide_label_inner_pack"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_provide_label_inner_pack, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_provide_label_inner_pack.length != 0" ng-repeat="error in qa_error.customer_provide_label_inner_pack">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_provide_label_inner_pack == 1" ng-model="qa.customer_provide_label_inner_pack_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end customer_provide_label_inner_pack -->
+            
+            <!-- start customer_provide_label_shipper -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_label_shipper.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer provided labelling requirements for shippers? Provide details</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_provide_label_shipper"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_provide_label_shipper, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_provide_label_shipper.length != 0" ng-repeat="error in qa_error.customer_provide_label_shipper">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_provide_label_shipper == 1" ng-model="qa.customer_provide_label_shipper_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end customer_provide_label_shipper -->
+            
+            <!-- start product_have_spec_claim -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.product_have_spec_claim.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Does this product have special claims? Non-GMO, vegan, allergen free, organic, Kosher etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.product_have_spec_claim"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.product_have_spec_claim, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.product_have_spec_claim.length != 0" ng-repeat="error in qa_error.product_have_spec_claim">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.product_have_spec_claim == 1" ng-model="qa.product_have_spec_claim_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end product_have_spec_claim -->
+            
+            <!-- start spec_hand_instruc -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.spec_hand_instruc.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Any special handling instructions? ex. Dry clean before due to allergen etc.</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.spec_hand_instruc"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.spec_hand_instruc, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.spec_hand_instruc.length != 0" ng-repeat="error in qa_error.spec_hand_instruc">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.spec_hand_instruc == 1" ng-model="qa.spec_hand_instruc_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end spec_hand_instruc -->
+            
+            <!-- start customer_request_spec_ship -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.customer_request_spec_ship.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Has the Customer requested special shipping requirrements?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.customer_request_spec_ship"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.customer_request_spec_ship, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.customer_request_spec_ship.length != 0" ng-repeat="error in qa_error.customer_request_spec_ship">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.customer_request_spec_ship == 1" ng-model="qa.customer_request_spec_ship_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end customer_request_spec_ship -->
+            
+            <!-- start product_have_npn -->
+            <div class="row form-group" ng-class="{'has-error': qa_error.product_have_npn.length != 0}">
+                
+                <div class="col-md-3 text-right">
+                    <label>Does this product have a NPN#?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.product_have_npn"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            data-ng-change="showHideOther(qa.product_have_npn, 1)"
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa_error.product_have_npn.length != 0" ng-repeat="error in qa_error.product_have_npn">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                    <input ng-if="qa.product_have_npn == 1" ng-model="qa.product_have_npn_other" class="form-control" placeholder="Details"/>
+                </div>
+            </div>
+            <!-- end product_have_npn -->
+            
+            <!-- start product_nsf_for_sport -->
+            <div class="row form-group" ng-class="{'has-error': qa.product_nsf_for_sport.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Is this product NSF certified for sports?</label>
+                </div>
+                <div class="col-md-9">
+                    <select chosen class="form-control" ng-model="qa.product_nsf_for_sport"
+                            ng-options="item.id as item.name for item in libYesNo" 
+                            >
+                    </select>
+                    <span class="control-label" for="inputError" ng-show="qa.product_nsf_for_sport.length != 0" ng-repeat="error in qa_error.product_nsf_for_sport">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            <!-- end product_nsf_for_sport -->
+            
+            <!-- start note -->
+            <div class="row form-group" ng-class="{'has-error': qa.note.length != 0}">
+                <div class="col-md-3 text-right">
+                    <label>Note</label>
+                </div>
+                <div class="col-md-9">
+                    <textarea ck-editor ng-model="qa.note" type="text" class="form-control" placeholder="note"></textarea>
+                    <span class="control-label" for="inputError" ng-show="qa.note.length != 0" ng-repeat="error in qa_error.note">
+                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                    </span>
+                </div>
+            </div>
+            <!-- end note -->            
+        </form>
+    </div>
+    
+    <div class="col-md-12 border">
+        <!-- start photo and document -->
+            <div class="row form-group">
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6"><h3 class="box-title">Photos and documents</h4></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <file-uploader file-ids="qa.tmp_file_ids" model-id="qa.id"
+                                   sendemail="true" email-files = "email.documents" object-type="'qa_file'"></file-uploader>
+                </div>
+            </div>
+            <!-- start photo and document -->
+    </div>
+    
+</div>

@@ -45,6 +45,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     $scope.packProduct = {};
                     // add lib customers
                     $scope.packProduct.customers = data.project_customers;
+                    
+                    $scope.sale = {};
                 }
                 else{
                     $state.go('404');
@@ -70,6 +72,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             productDevelopment : $scope.productDevelopment,
             qa: $scope.qa,
             packProduct : $scope.packProduct,
+            sale : $scope.sale,
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
@@ -85,6 +88,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
                 $scope.qa_error = data.qa.qa_error;
                 $scope.packProduct_error = data.packProduct.packProduct_error;
+                $scope.sale_error = data.sale.sale_error;
             }
         })
         .error(function(data, status, headers, config) {
