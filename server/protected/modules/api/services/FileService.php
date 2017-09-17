@@ -570,6 +570,12 @@ class FileService extends iPhoenixService {
                 'file_id' => $data['file_id']
             ]);
         }
+        elseif($data['related'] == "pack_product_file"){
+            $model = PackProductFile::model()->findByAttributes([
+                'pack_product_id' => $data['model_id'],
+                'file_id' => $data['file_id']
+            ]);
+        }
         else{
             $model = null;
         }

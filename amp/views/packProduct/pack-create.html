@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.customer_id.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.customer_id.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Name</label>
                 </div>
@@ -20,7 +20,7 @@
                             ng-options="item.id as item.name for item in packProduct.customers" 
                             >
                     </select>
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.customer_id.length != 0" ng-repeat="error in packProduct_error.customer_id">
+                    <span class="control-label" for="inputError" ng-show="packProductError.customer_id.length != 0" ng-repeat="error in packProductError.customer_id">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -28,13 +28,13 @@
             <!-- end customer_id -->
 
             <!-- end date -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.date.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.date.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Date</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.date" type="text" class="form-control datepicker" placeholder="YYYY-MM-DD" />
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.date.length != 0" ng-repeat="error in packProduct_error.date">
+                    <span class="control-label" for="inputError" ng-show="packProductError.date.length != 0" ng-repeat="error in packProductError.date">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -42,13 +42,13 @@
             <!-- end date -->
 
             <!-- start begin_sample_weight -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.begin_sample_weight.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.begin_sample_weight.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Beginning sample weight</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.begin_sample_weight" type="text" class="form-control" placeholder="Beginning sample weight">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.begin_sample_weight.length != 0" ng-repeat="error in packProduct_error.begin_sample_weight">
+                    <span class="control-label" for="inputError" ng-show="packProductError.begin_sample_weight.length != 0" ng-repeat="error in packProductError.begin_sample_weight">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -56,13 +56,13 @@
             <!-- end begin_sample_weight -->
 
             <!-- start pack_use -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_use.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.pack_use.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Packaging used</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.pack_use" type="text" class="form-control" placeholder="Packaging used">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.pack_use.length != 0" ng-repeat="error in packProduct_error.pack_use">
+                    <span class="control-label" for="inputError" ng-show="packProductError.pack_use.length != 0" ng-repeat="error in packProductError.pack_use">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -70,13 +70,13 @@
             <!-- end pack_use -->
 
             <!-- start net_weight -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.net_weight.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.net_weight.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Net weight</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.net_weight" type="text" class="form-control" placeholder="Net weight">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.net_weight.length != 0" ng-repeat="error in packProduct_error.net_weight">
+                    <span class="control-label" for="inputError" ng-show="packProductError.net_weight.length != 0" ng-repeat="error in packProductError.net_weight">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -84,13 +84,13 @@
             <!-- end net_weight -->
 
             <!-- start density -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.density.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.density.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Density</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.density" type="text" class="form-control" placeholder="Density">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.density.length != 0" ng-repeat="error in packProduct_error.density">
+                    <span class="control-label" for="inputError" ng-show="packProductError.density.length != 0" ng-repeat="error in packProductError.density">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -98,13 +98,13 @@
             <!-- end density -->
 
             <!-- start length_pack -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.length_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.length_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Length of packaging</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.length_pack" type="text" class="form-control" placeholder="Length of packaging">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.length_pack.length != 0" ng-repeat="error in packProduct_error.length_pack">
+                    <span class="control-label" for="inputError" ng-show="packProductError.length_pack.length != 0" ng-repeat="error in packProductError.length_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -112,13 +112,13 @@
             <!-- end length_pack -->
 
             <!-- start long_heart_temp -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.long_heart_temp.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.long_heart_temp.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Long heat temperature</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.ship_to" type="text" class="form-control" placeholder="Long heat temperature">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.long_heart_temp.length != 0" ng-repeat="error in packProduct_error.long_heart_temp">
+                    <span class="control-label" for="inputError" ng-show="packProductError.long_heart_temp.length != 0" ng-repeat="error in packProductError.long_heart_temp">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -135,13 +135,13 @@
                 </div>
             </div>
             <!-- start cross_heart_temp -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.cross_heart_temp.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.cross_heart_temp.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Cross heat temperature</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.cross_heart_temp" type="text" class="form-control" placeholder="Cross heat temperature">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.cross_heart_temp.length != 0" ng-repeat="error in packProduct_error.cross_heart_temp">
+                    <span class="control-label" for="inputError" ng-show="packProductError.cross_heart_temp.length != 0" ng-repeat="error in packProductError.cross_heart_temp">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -149,13 +149,13 @@
             <!-- end cross_heart_temp -->
 
             <!-- start dose_volume -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.dose_volume.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.dose_volume.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Dose Volume</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.dose_volume" type="text" class="form-control" placeholder="Dose Volume">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.dose_volume.length != 0" ng-repeat="error in packProduct_error.dose_volume">
+                    <span class="control-label" for="inputError" ng-show="packProductError.dose_volume.length != 0" ng-repeat="error in packProductError.dose_volume">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -163,13 +163,13 @@
             <!-- end dose_volume -->
 
             <!-- start rev_dose -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.rev_dose.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.rev_dose.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Rev Dose</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.rev_dose" type="text" class="form-control" placeholder="Rev Dose">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.rev_dose.length != 0" ng-repeat="error in packProduct_error.rev_dose">
+                    <span class="control-label" for="inputError" ng-show="packProductError.rev_dose.length != 0" ng-repeat="error in packProductError.rev_dose">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -177,13 +177,13 @@
             <!-- end rev_dose -->
 
             <!-- start auger_speed -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.auger_speed.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.auger_speed.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Auger Speed</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.auger_speed" type="text" class="form-control" placeholder="Auger Speed">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.auger_speed.length != 0" ng-repeat="error in packProduct_error.auger_speed">
+                    <span class="control-label" for="inputError" ng-show="packProductError.auger_speed.length != 0" ng-repeat="error in packProductError.auger_speed">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -191,13 +191,13 @@
             <!-- end auger_speed -->
 
             <!-- start pack_per_minute -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_per_minute.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.pack_per_minute.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Packages per minute</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.pack_per_minute" type="text" class="form-control" placeholder="Packages per minute">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.pack_per_minute.length != 0" ng-repeat="error in packProduct_error.pack_per_minute">
+                    <span class="control-label" for="inputError" ng-show="packProductError.pack_per_minute.length != 0" ng-repeat="error in packProductError.pack_per_minute">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -205,13 +205,13 @@
             <!-- end pack_per_minute -->
 
             <!-- start amount_left -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.amount_left.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.amount_left.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Amount left in system</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.amount_left" type="text" class="form-control" placeholder="Amount left in system">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.amount_left.length != 0" ng-repeat="error in packProduct_error.amount_left">
+                    <span class="control-label" for="inputError" ng-show="packProductError.amount_left.length != 0" ng-repeat="error in packProductError.amount_left">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -219,26 +219,26 @@
             <!-- end amount_left -->
 
             <!-- start carton_use -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.carton_use.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.carton_use.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Carton used</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.carton_use" type="text" class="form-control" placeholder="Carton used">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.carton_use.length != 0" ng-repeat="error in packProduct_error.carton_use">
+                    <span class="control-label" for="inputError" ng-show="packProductError.carton_use.length != 0" ng-repeat="error in packProductError.carton_use">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end carton_use -->
             <!-- start amoutn_per_carton -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.amoutn_per_carton.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.amoutn_per_carton.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Amount per carton</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.amoutn_per_carton" type="text" class="form-control" placeholder="Amount per carton">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.amoutn_per_carton.length != 0" ng-repeat="error in packProduct_error.amoutn_per_carton">
+                    <span class="control-label" for="inputError" ng-show="packProductError.amoutn_per_carton.length != 0" ng-repeat="error in packProductError.amoutn_per_carton">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -246,13 +246,13 @@
             <!-- end amoutn_per_carton -->
 
             <!-- start weight_carton -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.weight_carton.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.weight_carton.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Weight of carton (including carton)</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.weight_carton" type="text" class="form-control" placeholder="Weight of carton (including carton)">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.weight_carton.length != 0" ng-repeat="error in packProduct_error.weight_carton">
+                    <span class="control-label" for="inputError" ng-show="packProductError.weight_carton.length != 0" ng-repeat="error in packProductError.weight_carton">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -269,13 +269,13 @@
         <div class="col-md-6">
             
             <!-- start plant_manager -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.plant_manager.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.plant_manager.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Plant Manager</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.plant_manager" type="text" class="form-control datepicker" placeholder="YYYY-MM-DD" />
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.plant_manager.length != 0" ng-repeat="error in packProduct_error.plant_manager">
+                    <span class="control-label" for="inputError" ng-show="packProductError.plant_manager.length != 0" ng-repeat="error in packProductError.plant_manager">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -283,13 +283,13 @@
             <!-- end plant_manager -->
             
             <!-- start pack_per_carton -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_per_carton.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.pack_per_carton.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Packaging configuration ie. Packages per carton etc.</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.pack_per_carton" type="text" class="form-control" placeholder="Packaging configuration ie. Packages per carton etc.">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.pack_per_carton.length != 0" ng-repeat="error in packProduct_error.pack_per_carton">
+                    <span class="control-label" for="inputError" ng-show="packProductError.pack_per_carton.length != 0" ng-repeat="error in packProductError.pack_per_carton">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -298,13 +298,13 @@
 
 
             <!-- start customer_request_spec -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.customer_request_spec.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.customer_request_spec.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has the Customer requested a specific pallet configuration or amount of shippers per pallet?</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.customer_request_spec" type="text" class="form-control" placeholder="Has the Customer requested a specific pallet configuration or amount of shippers per pallet?">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.customer_request_spec.length != 0" ng-repeat="error in packProduct_error.customer_request_spec">
+                    <span class="control-label" for="inputError" ng-show="packProductError.customer_request_spec.length != 0" ng-repeat="error in packProductError.customer_request_spec">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -312,13 +312,13 @@
             <!-- end customer_request_spec -->
             
             <!-- start pack_net_weight -->
-            <div class="row form-group" ng-class="{'has-error': packProduct_error.pack_net_weight.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': packProductError.pack_net_weight.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Package net weight</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="packProduct.pack_net_weight" type="text" class="form-control" placeholder="Package net weight">
-                    <span class="control-label" for="inputError" ng-show="packProduct_error.pack_net_weight.length != 0" ng-repeat="error in packProduct_error.pack_net_weight">
+                    <span class="control-label" for="inputError" ng-show="packProductError.pack_net_weight.length != 0" ng-repeat="error in packProductError.pack_net_weight">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -334,7 +334,7 @@
                 </div>
                 <div class="col-md-9">
                     <textarea ck-editor ng-model="packProduct.note" type="text" class="form-control" placeholder="note"></textarea>
-                    <span class="control-label" for="inputError" ng-show="packProduct.note.length != 0" ng-repeat="error in packProduct_error.note">
+                    <span class="control-label" for="inputError" ng-show="packProduct.note.length != 0" ng-repeat="error in packProductError.note">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>

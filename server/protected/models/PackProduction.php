@@ -59,7 +59,8 @@ class PackProduction extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, project_id, customer_id, date, begin_sample_weight, pack_use, net_weight, density, length_pack, long_heart_temp, cross_heart_temp, dose_volume, rev_dose, auger_speed, pack_per_minute, amount_left, carton_use, amoutn_per_carton, weight_carton, pack_per_carton, customer_request_spec, pack_net_weight, note, document_id, in_trash, status, created_time, updated_by, created_by, plant_manager', 'safe', 'on'=>'search'),
-		);
+                        array('note, tmp_file_ids', 'safe'),
+                );
 	}
 
 	/**
@@ -70,6 +71,7 @@ class PackProduction extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'files' => array(self::MANY_MANY, 'File', 'tbl_pack_product_file(pack_product_id, file_id)'),
 		);
 	}
 
@@ -176,4 +178,60 @@ class PackProduction extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+    protected function afterSave() {
+        $new_list_file_ids = explode(',', $this->tmp_file_ids);
+        foreach ($new_list_file_ids as $file_id) {
+            $criteria = new CDbCriteria();
+            $criteria->compare('pack_product_id', $this->id);
+            $criteria->compare('file_id', $file_id);
+            $document_file = PackProductFile::model()->find($criteria);
+            if (!isset($document_file)) {
+                $document_file = new PackProductFile();
+                $document_file->pack_product_id = $this->id;
+                $document_file->file_id = $file_id;
+                $document_file->save();
+            }
+        }
+        $list_current_file_ids = $this->list_current_file_ids;
+        foreach ($list_current_file_ids as $file_id) {
+            if (!in_array($file_id, $new_list_file_ids)) {
+                $criteria = new CDbCriteria();
+                $criteria->compare('pack_product_id', $this->id);
+                $criteria->compare('file_id', $file_id);
+                PackProductFile::model()->deleteAll($criteria);
+            }
+        }
+
+        parent::afterSave();
+    }
+    
+    protected function afterDelete() {
+        parent::afterDelete();
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('pack_product_id =' . $this->id);
+        PackProductFile::model()->deleteAll($criteria);
+    }
+
+    public function getList_current_file_ids() {
+        $list = $this->files;
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        return $result;
+    }
+    
+    protected function afterFind() {
+        $list = $this->files;
+
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        $this->tmp_file_ids = implode(',', $result);
+
+        return parent::afterFind();
+    }
 }

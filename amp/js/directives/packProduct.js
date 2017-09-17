@@ -4,6 +4,7 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
     replace: true,
     scope:{
         packProduct : "=",
+        packProductError: "=",
         update : "=",
         create : "=",
     },
@@ -20,8 +21,8 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
                         if (data.success) {
                             // $scope.packProduct = data.packProduct;
                             $scope.packProduct_empty = data.packProduct_empty;
-                            $scope.packProduct_error = data.packProduct_error;
-                            $scope.packProduct_error_empty = data.packProduct_error_empty;
+//                            $scope.packProductError = data.packProductError;
+                            $scope.packProductError_empty = data.packProductError_empty;
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
                             $scope.scopeSetData(data.packProduct);
@@ -44,7 +45,7 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
             $http.post(BASE_URL + '/packProduct/getPackProductByProjectId', {id: $stateParams.id})
             .success(function (data) {
                 if (data.success) {
-                    $scope.packProduct_error = data.packProduct_error;
+                    $scope.packProductError = data.packProductError;
                     $scope.scopeSetData(data.packProduct);
                 }
                 else {

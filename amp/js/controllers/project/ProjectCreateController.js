@@ -47,6 +47,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     $scope.packProduct.customers = data.project_customers;
                     
                     $scope.sale = {};
+                    $scope.packProduct_error = {};
                 }
                 else{
                     $state.go('404');
