@@ -62,7 +62,7 @@
             </div>
             <!-- end product_sample_submit_pack -->
             
-            <!-- start appr_coa_submit -->
+            <!-- start product_coa_submit -->
             <div class="row form-group" ng-class="{'has-error': qa_error.appr_coa_submit.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Have the appropriate COAs been submitted?</label>
@@ -77,9 +77,9 @@
                     </span>
                 </div>
             </div>
-            <!-- end appr_coa_submit -->
+            <!-- end product_coa_submit -->
             
-            <!-- start customer_spec_sensor -->
+            <!-- start product_spec_qa -->
             <div class="row form-group" ng-class="{'has-error': qa_error.customer_spec_sensor.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has the Customer specified specific sensory testing requirements? Ie. Mixing instructions, density etc.</label>
@@ -96,10 +96,10 @@
                     <input ng-if="qa.customer_spec_sensor == 1" ng-model="qa.customer_spec_sensor_other" class="form-control" placeholder="Details">
                 </div>
             </div>
-            <!-- end customer_spec_sensor -->
+            <!-- end product_spec_qa -->
             
             
-            <!-- start customer_require_preship -->
+            <!-- start product_allergen_qa -->
             <div class="row form-group" ng-class="{'has-error': qa_error.customer_spec_sensor.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Does the Customer require a pre-shipment sample?</label>
@@ -114,9 +114,9 @@
                     </span>
                 </div>
             </div>
-             <!-- end customer_require_preship -->
+             <!-- end product_allergen_qa -->
             
-            <!-- start physical_spec_product -->
+            <!-- start product_product_kosher -->
             <div class="row form-group" ng-class="{'has-error': qa_error.physical_spec_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Physical specifications of product i.e, density, flowability etc.</label>
@@ -133,9 +133,9 @@
                     <input ng-if="qa.physical_spec_product == 1" ng-model="qa.physical_spec_product_other" class="form-control" placeholder="Details">
                 </div>
             </div>
-            <!-- end physical_spec_product -->
+            <!-- end product_product_kosher -->
             
-            <!-- start product_spec_sheet -->
+            <!-- start product_product_spec_provide_qa -->
             <div class="row form-group" ng-class="{'has-error': qa_error.product_spec_sheet.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Product spec sheet reviewed?</label>
@@ -153,9 +153,9 @@
                     <input ng-if="qa.product_spec_sheet == 1" ng-model="qa.product_spec_sheet_other" class="form-control" placeholder="Details">
                 </div>
             </div>
-            <!-- end product_spec_sheet -->
+            <!-- end product_product_spec_provide_qa -->
             
-            <!-- start allergen_status -->
+            <!-- start product_physical_spec -->
             <div class="row form-group" ng-class="{'has-error': qa_error.allergen_status.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Allergen status reviewed?</label>
@@ -173,7 +173,7 @@
                     <input ng-if="qa.allergen_status == 1" ng-model="qa.allergen_status_other" class="form-control" placeholder="Details"/>
                 </div>
             </div>
-            <!-- end allergen_status -->
+            <!-- end product_physical_spec -->
             
             <!-- start customer_provide_confirm -->
             <div class="row form-group" ng-class="{'has-error': qa_error.customer_provide_confirm.length != 0}">

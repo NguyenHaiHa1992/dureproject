@@ -4,7 +4,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
     replace: true,
     scope:{
         productDevelopment : "=",
-//        fileId : "=",
+        productDevelopmentError : "=",
         update : "=",
         create : "=",
     },

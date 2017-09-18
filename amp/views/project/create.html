@@ -237,7 +237,8 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <product-development product-development="productDevelopment" ng-if="productDevelopment"></product-development>
+                        <product-development product-development="productDevelopment" product-development-error="productDevelopment_error"
+                                             ng-if="productDevelopment && productDevelopment_error"></product-development>
                     </div>
                 </div>
             </div>
@@ -271,7 +272,7 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <qa qa="qa" ng-if="qa"></qa>
+                        <qa qa="qa" qa-error="qa_error" ng-if="qa && qa_error"></qa>
                     </div>
                 </div>
             </div>

@@ -39,15 +39,18 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                         $scope.is_create= true;
                     }
                     $scope.productDevelopment = {};
+                    $scope.productDevelopment_error = {};
                     
                     $scope.qa = {};
+                    $scope.qa_error = {};
                     
                     $scope.packProduct = {};
                     // add lib customers
                     $scope.packProduct.customers = data.project_customers;
+                    $scope.packProduct_error = {};
                     
                     $scope.sale = {};
-                    $scope.packProduct_error = {};
+                    $scope.sale_error = {};
                 }
                 else{
                     $state.go('404');
