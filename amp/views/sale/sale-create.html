@@ -1,72 +1,84 @@
 <div class="box-body">
+    <div class="col-md-12">
+        <div class="row form-group">
+            <div class="col-md-5"></div>
+            <div class="col-md-7">
+                <h3 class="box-title"><b>PRODUCT INFORMATION</b></h3>
+            </div>
+        </div>
+    </div>
     <div class="col-md-6">
         <!-- general form elements -->
         <!-- form start -->
         <form role="form">
             <!-- start product_sample_product -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_sample_product.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_sample_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has a product sample been submitted to Product Development?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.libTypeProductInfo" 
+                    <select chosen class="form-control" ng-model="sale.libTypeProductInfo" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             >
                     </select>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_sample_product.length != 0" ng-repeat="error in qa_error.product_sample_product">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_sample_product.length != 0" ng-repeat="error in saleError.product_sample_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_sample_product -->
-            
+
             <!-- start product_infor_provide_product -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_infor_provide_product.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_infor_provide_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>*If so, has information (ie. nutritionals, product specs) been provided to product development</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_infor_provide_product" 
+                    <select chosen class="form-control" ng-model="sale.product_infor_provide_product" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_infor_provide_product.length != 0" ng-repeat="error in qa_error.product_infor_provide_product">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_infor_provide_product.length != 0" ng-repeat="error in saleError.product_infor_provide_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_infor_provide_product -->
-            
+
             <!-- start product_sample_submit_pack -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_sample_submit_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_sample_submit_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has a sample been submitted for a packaging test or has a pack test been performed?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_sample_submit_pack" 
+                    <select chosen class="form-control" ng-model="sale.product_sample_submit_pack" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_sample_submit_pack.length != 0" ng-repeat="error in qa_error.product_sample_submit_pack">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_sample_submit_pack.length != 0" ng-repeat="error in saleError.product_sample_submit_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_sample_submit_pack -->
-            
+        </form>
+    </div>
+    
+    <div class="col-md-6">
+        <form role="form">
             <!-- start product_coa_submit -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_coa_submit.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_coa_submit.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>*If so, has a COA been submitted?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_coa_submit" 
+                    <select chosen class="form-control" ng-model="sale.product_coa_submit" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_coa_submit.length != 0" ng-repeat="error in qa_error.product_coa_submit">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_coa_submit.length != 0" ng-repeat="error in saleError.product_coa_submit">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -74,72 +86,80 @@
             <!-- end product_coa_submit -->
             
             <!-- start product_spec_qa -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_spec_qa.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_spec_qa.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Product spec sheet provided to QA?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_spec_qa" 
+                    <select chosen class="form-control" ng-model="sale.product_spec_qa" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_spec_qa.length != 0" ng-repeat="error in qa_error.product_spec_qa">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_spec_qa.length != 0" ng-repeat="error in saleError.product_spec_qa">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_spec_qa -->
-            
-            
+
+
             <!-- start product_allergen_qa -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_allergen_qa.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_allergen_qa.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Allergen status provided to QA?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_allergen_qa" 
+                    <select chosen class="form-control" ng-model="sale.product_allergen_qa" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_allergen_qa.length != 0" ng-repeat="error in qa_error.product_allergen_qa">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_allergen_qa.length != 0" ng-repeat="error in saleError.product_allergen_qa">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
-             <!-- end product_allergen_qa -->
-            
+            <!-- end product_allergen_qa -->
+
             <!-- start product_product_kosher -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_product_kosher.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_product_kosher.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Is the product Kosher?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_product_kosher" 
+                    <select chosen class="form-control" ng-model="sale.product_product_kosher" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_product_kosher.length != 0" ng-repeat="error in qa_error.product_product_kosher">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_product_kosher.length != 0" ng-repeat="error in saleError.product_product_kosher">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_product_kosher -->
-            
+        </form>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="row form-group">&nbsp;</div>
+    </div>
+    
+    <div class="col-md-6">
+        <form role="form">
             <!-- start product_product_spec_provide_qa -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_product_spec_provide_qa.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_product_spec_provide_qa.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Have product specifications been provided to QA?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.product_product_spec_provide_qa" 
+                    <select chosen class="form-control" ng-model="sale.product_product_spec_provide_qa" 
                             ng-options="item.id as item.name for item in libTypeProductInfo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_product_spec_provide_qa.length != 0" ng-repeat="error in qa_error.product_product_spec_provide_qa">
+                    <span class="control-label" for="inputError" ng-show="saleError.product_product_spec_provide_qa.length != 0" ng-repeat="error in saleError.product_product_spec_provide_qa">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -147,13 +167,13 @@
             <!-- end product_product_spec_provide_qa -->
             
             <!-- start product_physical_spec -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_physical_spec.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_physical_spec.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Physical specifications of product i.e, density, flowability etc.</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_physical_spec" class="form-control" placeholder="Physical specifications of product i.e, density, flowability etc."/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_physical_spec.length != 0" ng-repeat="error in qa_error.product_physical_spec">
+                    <input ng-model="sale.product_physical_spec" class="form-control" placeholder="Physical specifications of product i.e, density, flowability etc."/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_physical_spec.length != 0" ng-repeat="error in saleError.product_physical_spec">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -161,13 +181,13 @@
             <!-- end product_physical_spec -->
             
             <!-- start product_allergen_status -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_allergen_status.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_allergen_status.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has an allergen status been provided? Identify allergens present in the product.</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_allergen_status" class="form-control" placeholder="Has an allergen status been provided? Identify allergens present in the product."/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_allergen_status.length != 0" ng-repeat="error in qa_error.product_allergen_status">
+                    <input ng-model="sale.product_allergen_status" class="form-control" placeholder="Has an allergen status been provided? Identify allergens present in the product."/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_allergen_status.length != 0" ng-repeat="error in saleError.product_allergen_status">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -175,13 +195,13 @@
             <!-- end product_allergen_status -->
 
             <!-- start product_product_kosher_input -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_product_kosher_input.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_product_kosher_input.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Is this product Kosher?</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_product_kosher_input" class="form-control" placeholder="Is this product Kosher?"/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_product_kosher_input.length != 0" ng-repeat="error in qa_error.product_product_kosher_input">
+                    <input ng-model="sale.product_product_kosher_input" class="form-control" placeholder="Is this product Kosher?"/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_product_kosher_input.length != 0" ng-repeat="error in saleError.product_product_kosher_input">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -189,13 +209,13 @@
             <!-- end product_product_kosher_input -->
 
             <!-- start product_type_pack -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_type_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_type_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>What type of packaging? Stick, pouch, jar, can, SUP, bulk etc.</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_type_pack" class="form-control" placeholder="What type of packaging?"/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_type_pack.length != 0" ng-repeat="error in qa_error.product_type_pack">
+                    <input ng-model="sale.product_type_pack" class="form-control" placeholder="What type of packaging?"/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_type_pack.length != 0" ng-repeat="error in saleError.product_type_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -203,27 +223,31 @@
             <!-- end product_type_pack -->
 
             <!-- start product_net_weight -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_net_weight.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_net_weight.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Net weight per package</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_net_weight" class="form-control" placeholder="Net weight per package"/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_net_weight.length != 0" ng-repeat="error in qa_error.product_net_weight">
+                    <input ng-model="sale.product_net_weight" class="form-control" placeholder="Net weight per package"/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_net_weight.length != 0" ng-repeat="error in saleError.product_net_weight">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_net_weight -->
-
+        </form>
+    </div>
+    
+    <div class="col-md-6">
+        <form role="form">
             <!-- start product_sample_provide_pack -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_sample_provide_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_sample_provide_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has a sample been provided for a packaging test?</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_sample_provide_pack" class="form-control" placeholder="Has a sample been provided for a packaging test?"/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_sample_provide_pack.length != 0" ng-repeat="error in qa_error.product_sample_provide_pack">
+                    <input ng-model="sale.product_sample_provide_pack" class="form-control" placeholder="Has a sample been provided for a packaging test?"/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_sample_provide_pack.length != 0" ng-repeat="error in saleError.product_sample_provide_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -231,13 +255,13 @@
             <!-- end product_sample_provide_pack -->
 
             <!-- start product_sample_coa_submit -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_sample_coa_submit.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_sample_coa_submit.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>If a sample is provided, has the COA been submitted, as applicable?</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_sample_coa_submit" class="form-control" placeholder="If a sample is provided, has the COA been submitted, as applicable?"/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_sample_coa_submit.length != 0" ng-repeat="error in qa_error.product_sample_coa_submit">
+                    <input ng-model="sale.product_sample_coa_submit" class="form-control" placeholder="If a sample is provided, has the COA been submitted, as applicable?"/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_sample_coa_submit.length != 0" ng-repeat="error in saleError.product_sample_coa_submit">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -245,13 +269,13 @@
             <!-- end product_sample_coa_submit -->
 
             <!-- start product_product_spec_claim -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_product_spec_claim.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_product_spec_claim.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Does this product have special claims? Non-GMO, vegan, allergen free, organic etc.</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_product_spec_claim" class="form-control" placeholder="Does this product have special claims? Non-GMO, vegan, allergen free, organic etc."/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_product_spec_claim.length != 0" ng-repeat="error in qa_error.product_product_spec_claim">
+                    <input ng-model="sale.product_product_spec_claim" class="form-control" placeholder="Does this product have special claims? Non-GMO, vegan, allergen free, organic etc."/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_product_spec_claim.length != 0" ng-repeat="error in saleError.product_product_spec_claim">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -259,13 +283,13 @@
             <!-- end product_product_spec_claim -->
 
             <!-- start product_spec_hand_instruc -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_spec_hand_instruc.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_spec_hand_instruc.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Any special handling instructions? ex. Dry clean before due to allergen etc.</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_spec_hand_instruc" class="form-control" placeholder="Any special handling instructions? ex. Dry clean before due to allergen etc."/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_spec_hand_instruc.length != 0" ng-repeat="error in qa_error.product_spec_hand_instruc">
+                    <input ng-model="sale.product_spec_hand_instruc" class="form-control" placeholder="Any special handling instructions? ex. Dry clean before due to allergen etc."/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_spec_hand_instruc.length != 0" ng-repeat="error in saleError.product_spec_hand_instruc">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -273,31 +297,43 @@
             <!-- end product_spec_hand_instruc -->
 
             <!-- start product_spec_ingredient -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.product_spec_ingredient.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.product_spec_ingredient.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Are there any special ingredients required?</label>
                 </div>
                 <div class="col-md-9">
-                    <input ng-model="qa.product_spec_ingredient" class="form-control" placeholder="Are there any special ingredients required?"/>
-                    <span class="control-label" for="inputError" ng-show="qa_error.product_spec_ingredient.length != 0" ng-repeat="error in qa_error.product_spec_ingredient">
+                    <input ng-model="sale.product_spec_ingredient" class="form-control" placeholder="Are there any special ingredients required?"/>
+                    <span class="control-label" for="inputError" ng-show="saleError.product_spec_ingredient.length != 0" ng-repeat="error in saleError.product_spec_ingredient">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             <!-- end product_spec_ingredient -->
-
+        </form>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="row form-group">
+            <div class="col-md-5"></div>
+            <div class="col-md-7">
+                <h3 class="box-title"><b>PACKAGING DETAILS</b></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <form role="form">
             <!-- start pack_type_pack -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_type_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_type_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Which type of packaging?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_type_pack" 
+                    <select chosen class="form-control" ng-model="sale.pack_type_pack" 
                             ng-options="item.id as item.name for item in libTypeOfPacking" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_type_pack.length != 0" ng-repeat="error in qa_error.pack_type_pack">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_type_pack.length != 0" ng-repeat="error in saleError.pack_type_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -305,17 +341,17 @@
             <!-- end pack_type_pack -->
 
             <!-- start pack_plan_print -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_plan_print.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_plan_print.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Is this plain or pre-printed? </label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_plan_print" 
+                    <select chosen class="form-control" ng-model="sale.pack_plan_print" 
                             ng-options="item.id as item.name for item in libPackPlain" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_plan_print.length != 0" ng-repeat="error in qa_error.pack_plan_print">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_plan_print.length != 0" ng-repeat="error in saleError.pack_plan_print">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -323,17 +359,17 @@
             <!-- end pack_plan_print -->
 
             <!-- start pack_provide_primary_pack -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_provide_primary_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_provide_primary_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Who is providing primary packaging? Customer or Dure.</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_provide_primary_pack" 
+                    <select chosen class="form-control" ng-model="sale.pack_provide_primary_pack" 
                             ng-options="item.id as item.name for item in libPackCustomer" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_provide_primary_pack.length != 0" ng-repeat="error in qa_error.pack_provide_primary_pack">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_provide_primary_pack.length != 0" ng-repeat="error in saleError.pack_provide_primary_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -341,17 +377,17 @@
             <!-- end pack_provide_primary_pack -->
 
             <!-- start pack_provide_inner_pack -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_provide_inner_pack.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_provide_inner_pack.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Who is providing inner packaging? Customer or Dure.</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_provide_inner_pack" 
+                    <select chosen class="form-control" ng-model="sale.pack_provide_inner_pack" 
                             ng-options="item.id as item.name for item in libPackCustomer" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_provide_inner_pack.length != 0" ng-repeat="error in qa_error.pack_provide_inner_pack">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_provide_inner_pack.length != 0" ng-repeat="error in saleError.pack_provide_inner_pack">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -359,17 +395,17 @@
             <!-- end pack_provide_inner_pack -->
             
             <!-- start pack_provide_shipper -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_provide_shipper.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_provide_shipper.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Who is providing the shippers? Customer or Dure.</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_provide_shipper" 
+                    <select chosen class="form-control" ng-model="sale.pack_provide_shipper" 
                             ng-options="item.id as item.name for item in libPackCustomer" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_provide_shipper.length != 0" ng-repeat="error in qa_error.pack_provide_shipper">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_provide_shipper.length != 0" ng-repeat="error in saleError.pack_provide_shipper">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -377,17 +413,17 @@
             <!-- end pack_provide_shipper -->
 
             <!-- start pack_customer_aware -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_customer_aware.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_customer_aware.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Is the Customer aware of our Shipping and Receiving Policy?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_customer_aware" 
+                    <select chosen class="form-control" ng-model="sale.pack_customer_aware" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_customer_aware.length != 0" ng-repeat="error in qa_error.pack_customer_aware">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_customer_aware.length != 0" ng-repeat="error in saleError.pack_customer_aware">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -395,58 +431,59 @@
             <!-- end pack_customer_aware -->
 
             <!-- start pack_spec_ship -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_spec_ship.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_spec_ship.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Are there any Special Shipping requirements?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_spec_ship" 
+                    <select chosen class="form-control" ng-model="sale.pack_spec_ship" 
                             ng-options="item.id as item.name for item in libYesNo"
-                            ng-change="showHideOther(qa.pack_spec_ship, 1)"
+                            ng-change="showHideOther(sale.pack_spec_ship, 1)"
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_spec_ship.length != 0" ng-repeat="error in qa_error.pack_spec_ship">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_spec_ship.length != 0" ng-repeat="error in saleError.pack_spec_ship">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
-                    <input ng-if="qa.pack_spec_ship == 1" ng-model="qa.pack_spec_ship_other" class="form-control" placeholder="Details">
+                    <input ng-if="sale.pack_spec_ship == 1" ng-model="sale.pack_spec_ship_other" class="form-control" placeholder="Details">
                 </div>
             </div>
             <!-- end pack_spec_ship -->
 
             <!-- start pack_customer_spec_pallet -->
-            <div class="row form-group" ng-class="{'has-error': qa_error.pack_customer_spec_pallet.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': saleError.pack_customer_spec_pallet.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has the Customer requested a specific pallet configuration or amount of shippers per pallet?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="qa.pack_customer_spec_pallet" 
+                    <select chosen class="form-control" ng-model="sale.pack_customer_spec_pallet" 
                             ng-options="item.id as item.name for item in libYesNo" 
-                            ng-change="showHideOther(qa.pack_customer_spec_pallet, 1)"
+                            ng-change="showHideOther(sale.pack_customer_spec_pallet, 1)"
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="qa_error.pack_customer_spec_pallet.length != 0" ng-repeat="error in qa_error.pack_customer_spec_pallet">
+                    <span class="control-label" for="inputError" ng-show="saleError.pack_customer_spec_pallet.length != 0" ng-repeat="error in saleError.pack_customer_spec_pallet">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
-                    <input ng-if="qa.pack_customer_spec_pallet == 1" ng-model="qa.pack_customer_spec_pallet_other" class="form-control" placeholder="Details">
+                    <input ng-if="sale.pack_customer_spec_pallet == 1" ng-model="sale.pack_customer_spec_pallet_other" class="form-control" placeholder="Details">
                 </div>
             </div>
             <!-- end pack_customer_spec_pallet -->
             
         </form>
     </div><!--/.col (left) -->
+    
     <div class="col-md-6">
         <form role="form">
             
             <!-- start note -->
-            <div class="row form-group" ng-class="{'has-error': qa.note.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': sale.note.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Note</label>
                 </div>
                 <div class="col-md-9">
-                    <textarea ck-editor ng-model="qa.note" type="text" class="form-control" placeholder="note"></textarea>
-                    <span class="control-label" for="inputError" ng-show="qa.note.length != 0" ng-repeat="error in qa_error.note">
+                    <textarea ck-editor ng-model="sale.note" type="text" class="form-control" placeholder="note"></textarea>
+                    <span class="control-label" for="inputError" ng-show="sale.note.length != 0" ng-repeat="error in saleError.note">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
@@ -463,8 +500,8 @@
             </div>
             <div class="row form-group">
                 <div class="col-md-12">
-                    <file-uploader file-ids="qa.tmp_file_ids" model-id="qa.id"
-                                   sendemail="true" email-files = "email.documents" object-type="'qa_file'"></file-uploader>
+                    <file-uploader file-ids="sale.tmp_file_ids" model-id="sale.id"
+                                   sendemail="true" email-files = "email.documents" object-type="'sale_file'"></file-uploader>
                 </div>
             </div>
             <!-- start photo and document -->

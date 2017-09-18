@@ -3,7 +3,7 @@
         <!-- general form elements -->
         <!-- form start -->
         <form role="form">
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.spec_for_product.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.spec_for_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Specification sheet/nutritionals for product matching </label>
                 </div>
@@ -13,14 +13,14 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.customer_id.length != 0" ng-repeat="error in productDevelopment_error.spec_for_product">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.customer_id.length != 0" ng-repeat="error in productDevelopmentError.spec_for_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.customer_submit_product.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.customer_submit_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has the Customer submitted a product formula?</label>
                 </div>
@@ -30,13 +30,13 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.customer_id.length != 0" ng-repeat="error in productDevelopment_error.customer_submit_product">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.customer_id.length != 0" ng-repeat="error in productDevelopmentError.customer_submit_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.customer_provide_control.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.customer_provide_control.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Has the Customer provided a control sample? </label>
                 </div>
@@ -46,37 +46,37 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.customer_provide_control.length != 0" ng-repeat="error in productDevelopment_error.customer_provide_control">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.customer_provide_control.length != 0" ng-repeat="error in productDevelopmentError.customer_provide_control">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                     </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.physical_spec_product.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.physical_spec_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Physical specifications of product i.e, density, flowability etc.</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="productDevelopment.physical_spec_product" type="text" class="form-control" placeholder="Physical specifications of product i.e, density, flowability etc.">
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.physical_spec_product.length != 0" ng-repeat="error in productDevelopment_error.physical_spec_product">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.physical_spec_product.length != 0" ng-repeat="error in productDevelopmentError.physical_spec_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.allergent_product.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.allergent_product.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>What allergens does this product contain?</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="productDevelopment.allergent_product" type="text" class="form-control" placeholder="What allergens does this product contain?">
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.allergent_product.length != 0" ng-repeat="error in productDevelopment_error.allergent_product">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.allergent_product.length != 0" ng-repeat="error in productDevelopmentError.allergent_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.customer_require_spec.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.customer_require_spec.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Does this Customer require any special claims? Non-GMO, vegan, allergen free, organic etc.</label>
                 </div>
@@ -87,14 +87,14 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.customer_require_spec.length != 0" ng-repeat="error in productDevelopment_error.customer_require_spec">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.customer_require_spec.length != 0" ng-repeat="error in productDevelopmentError.customer_require_spec">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                     <input ng-if="productDevelopment.customer_require_spec == 1" ng-model="productDevelopment.customer_require_spec_other" class="form-control" placeholder="Details">
                 </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.spec_handing_instruction.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.spec_handing_instruction.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Any special handling instructions? ex. Dry clean before due to allergen etc.</label>
                 </div>
@@ -105,14 +105,14 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.spec_handing_instruction.length != 0" ng-repeat="error in productDevelopment_error.spec_handing_instruction">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.spec_handing_instruction.length != 0" ng-repeat="error in productDevelopmentError.spec_handing_instruction">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                     <input ng-if="productDevelopment.spec_handing_instruction == 1" ng-model="productDevelopment.spec_handing_instruction_other" class="form-control" placeholder="Details"/>
                 </div>
             </div>
             
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.spec_ingredients_require.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.spec_ingredients_require.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Spec Ingredients Require</label>
                 </div>
@@ -123,7 +123,7 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.spec_ingredients_require.length != 0" ng-repeat="error in productDevelopment_error.spec_ingredients_require">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.spec_ingredients_require.length != 0" ng-repeat="error in productDevelopmentError.spec_ingredients_require">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                     <input ng-if="productDevelopment.spec_ingredients_require == 1" ng-model="productDevelopment.spec_ingredients_require_other" class="form-control" placeholder="Details"/>
@@ -133,19 +133,19 @@
     </div><!--/.col (left) -->
     <div class="col-md-6">
         <form role="form">
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.approve_customer_formula_code.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.approve_customer_formula_code.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Approved Customer Formula Code</label>
                 </div>
                 <div class="col-md-9">
                     <input ng-model="productDevelopment.approve_customer_formula_code" type="text" class="form-control" placeholder="Approved Customer Formula Code">
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.approve_customer_formula_code.length != 0" ng-repeat="error in productDevelopment_error.approve_customer_formula_code">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.approve_customer_formula_code.length != 0" ng-repeat="error in productDevelopmentError.approve_customer_formula_code">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>
             </div>
             
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.risk_or_hazard_ingredient.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.risk_or_hazard_ingredient.length != 0}">
                 <div class="col-md-3 text-right">
                     <label>Are there any known Risks or hazards associated with the ingredients (including adulteration)</label>
                 </div>
@@ -156,14 +156,14 @@
                             >
                     </select>
 
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.risk_or_hazard_ingredient.length != 0" ng-repeat="error in productDevelopment_error.risk_or_hazard_ingredient">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.risk_or_hazard_ingredient.length != 0" ng-repeat="error in productDevelopmentError.risk_or_hazard_ingredient">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                     <input ng-if="productDevelopment.risk_or_hazard_ingredient == 1" ng-model="productDevelopment.risk_or_hazard_ingredient_other" class="form-control" placeholder="Details"/>
                 </div>
             </div>
 
-            <div class="row form-group" ng-class="{'has-error': productDevelopment_error.additional_test_require.length != 0}">
+            <div class="row form-group" ng-class="{'has-error': productDevelopmentError.additional_test_require.length != 0}">
                 
                 <div class="col-md-3 text-right">
                     <label>Is additional testing required?</label>
@@ -174,7 +174,7 @@
                             data-ng-change="showHideOther(productDevelopment.additional_test_require, 1)"
                             >
                     </select>
-                    <span class="control-label" for="inputError" ng-show="productDevelopment_error.additional_test_require.length != 0" ng-repeat="error in productDevelopment_error.additional_test_require">
+                    <span class="control-label" for="inputError" ng-show="productDevelopmentError.additional_test_require.length != 0" ng-repeat="error in productDevelopmentError.additional_test_require">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                     <input ng-if="productDevelopment.additional_test_require == 1" ng-model="productDevelopment.additional_test_require_other" class="form-control" placeholder="Details"/>
@@ -187,7 +187,7 @@
                 </div>
                 <div class="col-md-9">
                     <textarea ck-editor ng-model="productDevelopment.note" type="text" class="form-control" placeholder="note"></textarea>
-                    <span class="control-label" for="inputError" ng-show="productDevelopment.note.length != 0" ng-repeat="error in productDevelopment_error.note">
+                    <span class="control-label" for="inputError" ng-show="productDevelopment.note.length != 0" ng-repeat="error in productDevelopmentError.note">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
                     </span>
                 </div>

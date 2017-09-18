@@ -204,6 +204,8 @@
                         <h3 class="box-title">Sales</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                                <sale sale="sale" ng-if="sale" sale-error="sale_error" update="true"
+                               ng-if="sale && is_update"></sale>
                             </button>
                         </div>
                     </div>
@@ -224,7 +226,7 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <product-development product-development="productDevelopment" update="true" ng-if="productDevelopment && is_update"></product-development>
+                        <product-development product-development="productDevelopment" product-development-error="productDevelopment_error" update="true" ng-if="productDevelopment && is_update"></product-development>
                     </div>
                 </div>
             </div>
@@ -241,7 +243,7 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <pack-product pack-product="packProduct" update="true" ng-if="packProduct && is_update"></pack-product>
+                        <pack-product pack-product="packProduct" update="true" pack-product-error="packProduct_error" ng-if="packProduct && is_update"></pack-product>
                     </div>
                 </div>
             </div>
@@ -258,7 +260,7 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <qa qa="qa" update="true" ng-if="qa && is_update"></qa>
+                        <qa qa="qa" update="true" qa-error="qa_error" ng-if="qa && is_update"></qa>
                     </div>
                 </div>
             </div>

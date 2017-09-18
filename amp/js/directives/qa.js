@@ -21,12 +21,13 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
                         $scope.init_loaded = true;
                         if (data.success) {
                             $scope.qa_empty = data.qa_empty;
-                            $scope.qaError = data.qaError;
+                            $scope.qaError = data.qa_error;
                             $scope.qaError_empty = data.qaError_empty;
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
                             $scope.scopeSetData($scope.qa, data.qa);
+                            $scope.scopeSetData($scope.qaError, data.qa_error);
                             if($scope.update){
                                 $scope.getProductProjectById();
                             }
@@ -70,7 +71,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
             }
             else{
                 for(var dataKey in data){
-                    if(!data.hasOwnProperty(dataKey)) continue;
+                    if(!data.hasOwnProperty(dataKey) && !$obj.hasOwnProperty(dataKey)) continue;
                     $obj[dataKey] = data[dataKey];
                 }
             }

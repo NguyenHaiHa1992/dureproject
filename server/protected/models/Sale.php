@@ -276,15 +276,15 @@ class Sale extends CActiveRecord
 	public static function getPackPlain(){
 		return array(
 			array(
-				'id' 	=> PACK_TYPE_PLAIN,
+				'id' 	=> self::PACK_TYPE_PLAIN,
 				'name'	=> "Plan with dure food printing",
 			),
 			array(
-				'id' 	=> PACK_TYPE_PREPRINT,
+				'id' 	=> self::PACK_TYPE_PREPRINT,
 				'name'	=> "Pre-printed",
 			),
 			array(
-				'id' 	=> TYPE_OTHER,
+				'id' 	=> self::TYPE_OTHER,
 				'name'	=> "Other",
 			),
 		);
@@ -293,15 +293,15 @@ class Sale extends CActiveRecord
 	public static function getPackCustomer(){
 		return array(
 			array(
-				'id' 	=> PACKT_TYPE_CUSTOMER,
+				'id' 	=> self::PACKT_TYPE_CUSTOMER,
 				'name'	=> "Customer",
 			),
 			array(
-				'id' 	=> PACK_TYPE_DURE,
+				'id' 	=> self::PACK_TYPE_DURE,
 				'name'	=> "Dure",
 			),
 			array(
-				'id' 	=> TYPE_OTHER,
+				'id' 	=> self::TYPE_OTHER,
 				'name'	=> "Other",
 			),
 		);

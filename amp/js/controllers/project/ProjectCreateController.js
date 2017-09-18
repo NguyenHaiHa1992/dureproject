@@ -35,7 +35,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     if($rootScope.is_copy_project){
                         $scope.project.id = undefined;
                         $scope.project.name = $scope.project.name + ' COPY';
-                        $scope.is_update= false;
+                        $scope.is_update= false;   
                         $scope.is_create= true;
                     }
                     $scope.productDevelopment = {};

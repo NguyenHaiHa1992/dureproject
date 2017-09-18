@@ -5,6 +5,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.productDevelopment = {};
         $scope.qa = {};
         $scope.packProduct = {};
+        $scope.sale = {};
         $scope.createInit = function () {
             var post_information = {};
 
@@ -56,12 +57,14 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
             var productDevInof = $scope.productDevelopment;
             var qaInfo = $scope.qa;
             var packProductInfo = $scope.packProduct;
+            var saleInfo = $scope.sale;
             
             var information_post = {
                 'project' : projectInfo,
                 'productDevleopment' : productDevInof,
                 'qa' : qaInfo,
                 'packProduct' : packProductInfo,
+                'saleInfo' : saleInfo,
             };
             
             console.log("DEBUG :  submit information: " + JSON.stringify(information_post));
@@ -76,13 +79,16 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             $scope.project_error = $scope.project.project_error_empty;
                             
                             $scope.productDevelopment = data.productDevelopment.productDevelopment;
-                            $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error_empty;
+                            $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error_empty;
                             
                             $scope.qa = data.qa.qa;
-                            $scope.qa_error = data.qa.qa_error;
+                            $scope.qaError = data.qa.qa_error;
                             
                             $scope.packProduct = data.packProduct.packProduct;
-                            $scope.packProduct_error = data.packProduct.packProduct_error_empty;
+                            $scope.packProductError = data.packProduct.packProduct_error_empty;
+                            
+                            $scope.sale = data.sale.sale;
+                            $scope.saleError = data.sale.sale_error_empty;
                             $("input").removeClass("ng-dirty");
                         }
                         else {

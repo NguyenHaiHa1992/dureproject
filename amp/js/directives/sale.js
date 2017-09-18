@@ -26,14 +26,14 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
 
                             /** setLib **/
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
-                            $rootScope.libTypeProductInfo = data.libTypeProductInfo;
-                            $rootScope.libTypeOfPacking = data.libTypeOfPacking;
-                            $rootScope.libPackPlain = data.libPackPlain;
-                            $rootScope.libPackCustomer = data.libPackCustomer;
+                            $scope.libTypeProductInfo = data.libTypeProductInfo;
+                            $scope.libTypeOfPacking = data.libTypeOfPacking;
+                            $scope.libPackPlain = data.libPackPlain;
+                            $scope.libPackCustomer = data.libPackCustomer;
 
                             /*end setLib*/
-
                             $scope.scopeSetData($scope.sale , data.sale);
+                            $scope.scopeSetData($scope.saleError , data.sale_error);
                             if($scope.update){
                                 $scope.getProductProjectById();
                             }
@@ -77,7 +77,7 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
             }
             else{
                 for(var dataKey in data){
-                    if(!data.hasOwnProperty(dataKey)) continue;
+                    if(!data.hasOwnProperty(dataKey) || !$obj.hasOwnProperty(dataKey)) continue;
                     $obj[dataKey] = data[dataKey];
                 }
             }

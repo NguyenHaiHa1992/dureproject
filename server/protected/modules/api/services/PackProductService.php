@@ -115,10 +115,12 @@ class PackProductService extends iPhoenixService{
         if(!is_integer($packProduct->date)){
             $packProduct->date = strtotime($packProduct->date);
         }
+        $packProduct->date = (int)$packProduct->date;
         
         if(!is_integer($packProduct->plant_manager)){
             $packProduct->plant_manager = strtotime($packProduct->plant_manager);
         }
+        $packProduct->plant_manager = (int)$packProduct->plant_manager;
         
         $packProduct = PackProductService::beforeSave($packProduct);
         if ($packProduct->validate()) {
