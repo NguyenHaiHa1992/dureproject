@@ -43,7 +43,24 @@
  */
 class Sale extends CActiveRecord
 {
-        public $tmp_file_ids;
+
+	const TYPE_YES = 1;
+	const TYPE_NO = 0;
+	const TYPE_NA = 2;
+
+	const PACK_TYPE_PILOW = "pack_type_pilow";
+	const PACK_TYPE_SACHET = "pack_type_sachet";
+	const PACK_TYPE_STICK = "pack_type_stick";
+	const PACK_TYPE_CAN = "pack_type_can";
+	const PACK_TYPE_JAR = "pack_type_jar";
+	const TYPE_OTHER = 'type_other';
+
+	const PACK_TYPE_PLAIN = 'pack_type_plain';
+	const PACK_TYPE_PREPRINT = "pack_type_preprint";
+	const PACKT_TYPE_CUSTOMER = "pack_type_customer";
+	const PACK_TYPE_DURE = "pack_type_dure";
+
+    public $tmp_file_ids;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -196,5 +213,97 @@ class Sale extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+
+
+	public static function getTypeProductInfo(){
+		return array(
+					array(
+						'id' => self::TYPE_YES,
+						'name' => 'Yes',
+					),
+					array(
+						'id' => self::TYPE_NO,
+						'name' => 'No',
+					),
+					array(
+						'id' => self::TYPE_NA,
+						'name' => 'N/A',
+					),
+		);
+	}
+
+	// public static function getLabelByType($type){
+ //                $listTypeProduct = self::getTypeOfProduct();
+ //                foreach($listTypeProduct as $idx => $ele){
+ //                    if($ele['id'] == $type){
+ //                        return $ele['name'];
+ //                    }
+ //                }
+ //                return 'Other';
+	// }
+
+	public static function getTypeOfPacking(){
+		return array(
+			array(
+				'id' => self::PACK_TYPE_PILOW ,
+				'name' => '2lbs Pillow Pouch',
+			),
+			array(
+				'id' => self::PACK_TYPE_SACHET ,
+				'name' => 'Sachet',
+			),
+			array(
+				'id' => self::PACK_TYPE_STICK ,
+				'name' => 'Stick Pack',
+			),
+			array(
+				'id' => self::PACK_TYPE_CAN ,
+				'name' => 'Can',
+			),
+			array(
+				'id' => self::PACK_TYPE_JAR,
+				'name' => 'Jar',
+			),
+			array(
+				'id' => self::TYPE_OTHER,
+				'name' => 'Other',
+			),
+		);
+	}
+
+	public static function getPackPlain(){
+		return array(
+			array(
+				'id' 	=> PACK_TYPE_PLAIN,
+				'name'	=> "Plan with dure food printing",
+			),
+			array(
+				'id' 	=> PACK_TYPE_PREPRINT,
+				'name'	=> "Pre-printed",
+			),
+			array(
+				'id' 	=> TYPE_OTHER,
+				'name'	=> "Other",
+			),
+		);
+	}
+
+	public static function getPackCustomer(){
+		return array(
+			array(
+				'id' 	=> PACKT_TYPE_CUSTOMER,
+				'name'	=> "Customer",
+			),
+			array(
+				'id' 	=> PACK_TYPE_DURE,
+				'name'	=> "Dure",
+			),
+			array(
+				'id' 	=> TYPE_OTHER,
+				'name'	=> "Other",
+			),
+		);
 	}
 }

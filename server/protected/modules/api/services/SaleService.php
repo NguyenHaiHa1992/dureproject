@@ -37,6 +37,12 @@ class SaleService extends iPhoenixService{
         $get_empty_sale_error = SaleService::getEmptySaleError();
         $result['sale_error'] = $get_empty_sale_error['sale_error'];
         $result['sale_error_empty'] = $get_empty_sale_error['sale_error'];
+
+        $result['libTypeProductInfo'] = Sale::getTypeProductInfo();
+        $result['libTypeOfPacking'] = Sale::getTypeOfPacking();
+        $result['libPackPlain'] = Sale::getPackPlain();
+        $result['libPackCustomer'] = Sale::getPackCustomer();
+
         $result['success'] = true;
         return $result;
     }

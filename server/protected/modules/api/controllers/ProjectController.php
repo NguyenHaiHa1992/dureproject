@@ -107,9 +107,9 @@ class ProjectController extends Controller {
                 $success = $success && $resultProductDev['success'] && $resultQa['success'] && $resultPackProduct['success'];
                 // create any other model
                 if($success){
-//                    $transaction->commit();
+                   $transaction->commit();
                 }else{
-//                    $transaction->rollBack();
+                   $transaction->rollBack();
                 }
             }
             $result = [

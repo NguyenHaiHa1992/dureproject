@@ -25,7 +25,7 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
                             $scope.packProductError_empty = data.packProductError_empty;
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
-                            $scope.scopeSetData(data.packProduct);
+                            $scope.scopeSetData($scope.packProduct ,data.packProduct);
                             if($scope.update){
                                 $scope.getPackProductByProjectId();
                             }
@@ -46,7 +46,7 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
             .success(function (data) {
                 if (data.success) {
                     $scope.packProductError = data.packProductError;
-                    $scope.scopeSetData(data.packProduct);
+                    $scope.scopeSetData($scope.packProduct, data.packProduct);
                 }
                 else {
 //                    $state.go('404');
@@ -57,14 +57,14 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
             });
         };
         
-        $scope.scopeSetData = function(data){
+        $scope.scopeSetData = function($obj ,data){
             if(typeof data !== 'object'){
                 return;
             }
             else{
                 for(var dataKey in data){
                     if(!data.hasOwnProperty(dataKey)) continue;
-                    $scope.packProduct[dataKey] = data[dataKey];
+                    $obj[dataKey] = data[dataKey];
                 }
             }
         };

@@ -4,6 +4,7 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
     replace: true,
     scope:{
         sale : "=",
+        saleError : "=",
         update : "=",
         create : "=",
     },
@@ -20,12 +21,19 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
                         $scope.init_loaded = true;
                         if (data.success) {
                             $scope.sale_empty = data.sale_empty;
-                            $scope.sale_error = data.sale_error;
-                            $scope.sale_error_empty = data.sale_error_empty;
+                            $scope.saleError = data.sale_error;
+                            $scope.saleError_empty = data.sale_error_empty;
+
+                            /** setLib **/
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
-                            $scope.is_update = data.is_update;
-                            $scope.is_create = data.is_create;
-                            $scope.scopeSetData(data.sale);
+                            $rootScope.libTypeProductInfo = data.libTypeProductInfo;
+                            $rootScope.libTypeOfPacking = data.libTypeOfPacking;
+                            $rootScope.libPackPlain = data.libPackPlain;
+                            $rootScope.libPackCustomer = data.libPackCustomer;
+
+                            /*end setLib*/
+
+                            $scope.scopeSetData($scope.sale , data.sale);
                             if($scope.update){
                                 $scope.getProductProjectById();
                             }
@@ -46,8 +54,8 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
             $http.post(BASE_URL + '/sale/getSaleByProjectId', {id: $stateParams.id})
             .success(function (data) {
                 if (data.success) {
-                    $scope.sale_error = data.sale_error;
-                    $scope.scopeSetData(data.sale);
+                    $scope.saleError = data.sale_error;
+                    $scope.scopeSetData($scope.sale ,data.sale);
                 }
                 else {
 //                    $state.go('404');
@@ -63,14 +71,14 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
                 $model = "";
             }
         };
-        $scope.scopeSetData = function(data){
+        $scope.scopeSetData = function($obj ,data){
             if(typeof data !== 'object'){
                 return;
             }
             else{
                 for(var dataKey in data){
                     if(!data.hasOwnProperty(dataKey)) continue;
-                    $scope.sale[dataKey] = data[dataKey];
+                    $obj[dataKey] = data[dataKey];
                 }
             }
         };

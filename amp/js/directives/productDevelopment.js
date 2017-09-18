@@ -30,8 +30,8 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                         if (data.success) {
                             // $scope.productDevelopment = data.productDevelopment;
                             $scope.productDevelopment_empty = data.productDevelopment_empty;
-                            $scope.productDevelopment_error = data.productDevelopment_error;
-                            $scope.productDevelopment_error_empty = data.productDevelopment_error_empty;
+                            $scope.productDevelopmentError = data.productDevelopment_error;
+                            $scope.productDevelopmentError_empty = data.productDevelopment_error_empty;
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
@@ -57,8 +57,9 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             $http.post(BASE_URL + '/productDevelopment/getProductByProjectId', {id: $stateParams.id})
             .success(function (data) {
                 if (data.success) {
-                    $scope.productDevelopment_error = data.productDevelopment_error;
-                    $scope.scopeSetData(data.productDevelopment);
+                    // $scope.productDevelopmentError = data.productDevelopment_error;
+                    $scope.scopeSetData($scope.productDevelopmentError ,data.productDevelopment_error)
+                    $scope.scopeSetData($scope.productDevelopment, data.productDevelopment);
                 }
                 else {
 //                    $state.go('404');
@@ -76,7 +77,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
             }
             console.log('DEBUG : end debug function showHideOther');
         };
-        $scope.scopeSetData = function(data){
+        $scope.scopeSetData = function($obj,data){
             if(typeof data !== 'object'){
                 console.log(1);
                 return;
@@ -85,7 +86,7 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                 console.log(2);
                 for(var dataKey in data){
                     if(!data.hasOwnProperty(dataKey)) continue;
-                    $scope.productDevelopment[dataKey] = data[dataKey];
+                        $obj[dataKey] = data[dataKey];
                 }
             }
         };

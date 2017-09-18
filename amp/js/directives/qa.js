@@ -26,7 +26,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
-                            $scope.scopeSetData(data.qa);
+                            $scope.scopeSetData($scope.qa, data.qa);
                             if($scope.update){
                                 $scope.getProductProjectById();
                             }
@@ -48,7 +48,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
             .success(function (data) {
                 if (data.success) {
                     $scope.qaError = data.qaError;
-                    $scope.scopeSetData(data.qa);
+                    $scope.scopeSetData($scope.qa, data.qa);
                 }
                 else {
 //                    $state.go('404');
@@ -64,14 +64,14 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
                 $model = "";
             }
         };
-        $scope.scopeSetData = function(data){
+        $scope.scopeSetData = function($obj ,data){
             if(typeof data !== 'object'){
                 return;
             }
             else{
                 for(var dataKey in data){
                     if(!data.hasOwnProperty(dataKey)) continue;
-                    $scope.qa[dataKey] = data[dataKey];
+                    $obj[dataKey] = data[dataKey];
                 }
             }
         };
