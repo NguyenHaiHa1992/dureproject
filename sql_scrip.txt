@@ -229,3 +229,44 @@ CREATE TABLE `tbl_pack_product_file` (
 
 -- 17 - 09 -2017 change column name qa_file_id to qa_id in tbl_qa_file
 ALTER TABLE tbl_qa_file CHANGE COLUMN `qa_file_id` `qa_id` INTEGER(11);
+
+-- 18 -09 -2017 add tbl_sale
+CREATE TABLE `tbl_sale` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) DEFAULT NULL,
+  `product_sample_product` int(11) DEFAULT NULL COMMENT 'Has a product sample been submitted to Product Development?',
+  `product_infor_provide_product` int(11) DEFAULT NULL COMMENT '*If so, has information (ie. nutritionals, product specs) been provided to product development',
+  `product_sample_submit_pack` int(11) DEFAULT NULL COMMENT 'Has a sample been submitted for a packaging test or has a pack test been performed?',
+  `product_coa_submit` int(11) DEFAULT NULL COMMENT '*If so, has a COA been submitted?',
+  `product_spec_qa` int(11) DEFAULT NULL COMMENT 'Product spec sheet provided to QA?',
+  `product_allergen_qa` int(11) DEFAULT NULL COMMENT 'Allergen status provided to QA?',
+  `product_product_kosher` int(11) DEFAULT NULL COMMENT 'Is the product Kosher?',
+  `product_product_spec_provide_qa` int(11) DEFAULT NULL COMMENT 'Have product specifications been provided to QA?',
+  `product_physical_spec` varchar(255) DEFAULT NULL COMMENT 'Physical specifications of product i.e, density, flowability etc.',
+  `product_allergen_status` varchar(255) DEFAULT NULL COMMENT 'Has an allergen status been provided? Identify allergens present in the product.',
+  `product_product_kosher_input` varchar(255) DEFAULT NULL COMMENT 'Is this product Kosher?',
+  `product_type_pack` varchar(255) DEFAULT NULL COMMENT 'What type of packaging? Stick, pouch, jar, can, SUP, bulk etc.',
+  `product_net_weight` double DEFAULT NULL COMMENT 'Net weight per package',
+  `product_sample_provide_pack` varchar(255) DEFAULT NULL COMMENT 'Has a sample been provided for a packaging test?',
+  `product_sample_coa_submit` varchar(255) DEFAULT NULL COMMENT 'If a sample is provided, has the COA been submitted, as applicable?',
+  `product_product_spec_claim` varchar(255) DEFAULT NULL COMMENT 'Does this product have special claims? Non-GMO, vegan, allergen free, organic etc.',
+  `product_spec_hand_instruc` varchar(255) DEFAULT NULL COMMENT 'Any special handling instructions? ex. Dry clean before due to allergen etc.',
+  `product_spec_ingredient` varchar(255) DEFAULT NULL COMMENT 'Are there any special ingredients required?',
+  `pack_type_pack` varchar(50) DEFAULT NULL COMMENT 'Which type of packaging?',
+  `pack_plan_print` varchar(50) DEFAULT NULL COMMENT 'Is this plain or pre-printed? ',
+  `pack_provide_primary_pack` varchar(50) DEFAULT NULL COMMENT 'Who is providing primary packaging? Customer or Dure.',
+  `pack_provide_inner_pack` varchar(50) DEFAULT NULL COMMENT 'Who is providing inner packaging? Customer or Dure.',
+  `pack_provide_shipper` varchar(50) DEFAULT NULL COMMENT 'Who is providing the shippers? Customer or Dure. ',
+  `pack_customer_aware` varchar(50) DEFAULT NULL COMMENT 'Is the Customer aware of our Shipping and Receiving Policy?',
+  `pack_spec_ship` varchar(50) DEFAULT NULL COMMENT 'Are there any Special Shipping requirements?',
+  `pack_customer_spec_pallet` varchar(50) DEFAULT NULL COMMENT 'Has the Customer requested a specific pallet configuration or amount of shippers per pallet?',
+  `pack_spec_ship_other` varchar(255) DEFAULT NULL,
+  `pack_custome_spec_pallet_other` varchar(255) DEFAULT NULL,
+  `note` text,
+  `document_id` int(11) DEFAULT NULL,
+  `created_time` int(11) DEFAULT NULL,
+  `updated_time` int(11) DEFAULT NULL,
+  `in_trash` tinyint(2) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
