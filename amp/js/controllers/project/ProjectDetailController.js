@@ -8,6 +8,8 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.packProduct = {};
         $scope.packProduct_error = {};
         $scope.sale = {};
+        $scope.productApproval = {};
+        
         $scope.createInit = function () {
             var post_information = {};
 
@@ -60,6 +62,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
             var qaInfo = $scope.qa;
             var packProductInfo = $scope.packProduct;
             var saleInfo = $scope.sale;
+            var productAppr = $scope.productApproval;
             
             var information_post = {
                 'project' : projectInfo,
@@ -67,6 +70,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 'qa' : qaInfo,
                 'packProduct' : packProductInfo,
                 'sale' : saleInfo,
+                'productApproval' : productAppr,
             };
             
             console.log("DEBUG :  submit information: " + JSON.stringify(information_post));
@@ -90,6 +94,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             
                             $scope.sale = data.sale.sale;
                             $scope.saleError = data.sale.sale_error_empty;
+                            
+                            $scope.productApproval = data.productApproval.productApproval;
+                            $scope.productApprovalError = data.productApproval_error_empty;
                             $("input").removeClass("ng-dirty");
                         }
                         else {

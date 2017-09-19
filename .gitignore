@@ -1,3 +1,5 @@
 /nbproject/private/
 server/assets/
 /server/protected/runtime/
+server/protected/config/main.php
+server/protected/runtime/application.log
