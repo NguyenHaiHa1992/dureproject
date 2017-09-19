@@ -23,6 +23,8 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
                             $scope.sale_empty = data.sale_empty;
                             $scope.saleError = data.sale_error;
                             $scope.saleError_empty = data.sale_error_empty;
+                            $scope.is_update = data.is_update;
+                            $scope.is_create = data.is_create;
 
                             /** setLib **/
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
