@@ -220,15 +220,15 @@ class Sale extends CActiveRecord
 	public static function getTypeProductInfo(){
 		return array(
 					array(
-						'id' => self::TYPE_YES,
+						'id' => (string)self::TYPE_YES,
 						'name' => 'Yes',
 					),
 					array(
-						'id' => self::TYPE_NO,
+						'id' => (string)self::TYPE_NO,
 						'name' => 'No',
 					),
 					array(
-						'id' => self::TYPE_NA,
+						'id' => (string)self::TYPE_NA,
 						'name' => 'N/A',
 					),
 		);

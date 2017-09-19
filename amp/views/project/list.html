@@ -93,7 +93,7 @@
                                   <tbody role="alert" aria-live="polite" aria-relevant="all">
                                       <tr class="even" ng-repeat="project in projects">
                                           <td>{{$index + 1}}</td>
-                                          <td class=" sorting_1"><a ui-sref="project-view({'id':project.primary_contact})">{{project.primary_contact}}</a></td>
+                                          <td class=" sorting_1">{{project.primary_contact}}</td>
                                           <!--<td class=" ">{{project.customer_id}}</td>-->
                                           <td class=" ">{{project.project_number}}</td>
                                           <td class=" ">{{project.volume}}</td>

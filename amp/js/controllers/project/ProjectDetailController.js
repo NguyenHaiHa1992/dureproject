@@ -64,7 +64,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 'productDevleopment' : productDevInof,
                 'qa' : qaInfo,
                 'packProduct' : packProductInfo,
-                'saleInfo' : saleInfo,
+                'sale' : saleInfo,
             };
             
             console.log("DEBUG :  submit information: " + JSON.stringify(information_post));

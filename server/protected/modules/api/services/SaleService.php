@@ -217,6 +217,9 @@ class SaleService extends iPhoenixService{
         } else {
             $result = $sale->attributes;
         }
+        foreach($result as $attr => $value){
+            $result[$attr] = (string)$value;
+        }
         if (isset($result['date']) && $result['date']) {
             //                if(is_integer($sale['date'])){
 

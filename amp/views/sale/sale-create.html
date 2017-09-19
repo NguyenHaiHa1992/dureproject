@@ -17,7 +17,7 @@
                     <label>Has a product sample been submitted to Product Development?</label>
                 </div>
                 <div class="col-md-9">
-                    <select chosen class="form-control" ng-model="sale.libTypeProductInfo" 
+                    <select chosen class="form-control" ng-model="sale.product_sample_product" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             >
                     </select>
@@ -492,19 +492,6 @@
         </form>
     </div>
     
-    <div class="col-md-12 border">
-        <!-- start photo and document -->
-            <div class="row form-group">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6"><h3 class="box-title">Photos and documents</h4></div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-12">
-                    <file-uploader file-ids="sale.tmp_file_ids" model-id="sale.id"
-                                   sendemail="true" email-files = "email.documents" object-type="'sale_file'"></file-uploader>
-                </div>
-            </div>
-            <!-- start photo and document -->
-    </div>
+    
     
 </div>

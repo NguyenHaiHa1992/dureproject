@@ -79,7 +79,7 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
             }
             else{
                 for(var dataKey in data){
-                    if(!data.hasOwnProperty(dataKey) || !$obj.hasOwnProperty(dataKey)) continue;
+                    if(!data.hasOwnProperty(dataKey)) continue;
                     $obj[dataKey] = data[dataKey];
                 }
             }
