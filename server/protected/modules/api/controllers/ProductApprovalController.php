@@ -42,7 +42,7 @@ class ProductApprovalController extends Controller {
             array('allow',
                 'actions'=>array('create', 'update', 
                     'createInit', 'detailInit', 'getAll', 'getEmptyProduct', 
-                    'getEmptyProductError', 'getProductById', 'getProductByProjectId'),
+                    'getEmptyProductError', 'getProductApprovalById', 'getProductApprovalByProjectId'),
                 'users' => array('@'),
             ),
             array('deny',
@@ -87,13 +87,13 @@ class ProductApprovalController extends Controller {
 
     public function actionGetProductApprovalById() {
         $data = ProductApprovalService::data();
-        $result = ProductApprovalService::getProductById($data);
+        $result = ProductApprovalService::getProductApprovalById($data);
         $this->returnJson($result);
     }
 
     public function actionGetProductApprovalByProjectId(){
         $data = ProductApprovalService::data();
-        $result = ProductApprovalService::getProductByProjectId($data);
+        $result = ProductApprovalService::getProductApprovalByProjectId($data);
         $this->returnJson($result);
     }
 
