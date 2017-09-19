@@ -34,6 +34,7 @@
  * @property integer $updated_by
  * @property integer $created_by
  * @property integer $plant_manager
+ * @property integer $plant_manager_date
  */
 class PackProduction extends CActiveRecord
 {
@@ -54,11 +55,11 @@ class PackProduction extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, customer_id, date, document_id, in_trash, status, created_time, updated_by, created_by, plant_manager', 'numerical', 'integerOnly'=>true),
-			array('begin_sample_weight, pack_use, net_weight, density, length_pack, long_heart_temp, cross_heart_temp, dose_volume, rev_dose, auger_speed, pack_per_minute, amount_left, carton_use, amoutn_per_carton, weight_carton, pack_per_carton, customer_request_spec, pack_net_weight, note', 'length', 'max'=>255),
+			array('project_id, customer_id, date, document_id, in_trash, status, created_time, updated_by, created_by, plant_manager_date', 'numerical', 'integerOnly'=>true),
+			array('begin_sample_weight, pack_use, net_weight, density, length_pack, long_heart_temp, cross_heart_temp, dose_volume, rev_dose, auger_speed, pack_per_minute, amount_left, carton_use, amoutn_per_carton, weight_carton, pack_per_carton, customer_request_spec, pack_net_weight, note, plant_manager', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, project_id, customer_id, date, begin_sample_weight, pack_use, net_weight, density, length_pack, long_heart_temp, cross_heart_temp, dose_volume, rev_dose, auger_speed, pack_per_minute, amount_left, carton_use, amoutn_per_carton, weight_carton, pack_per_carton, customer_request_spec, pack_net_weight, note, document_id, in_trash, status, created_time, updated_by, created_by, plant_manager', 'safe', 'on'=>'search'),
+			array('id, project_id, customer_id, date, begin_sample_weight, pack_use, net_weight, density, length_pack, long_heart_temp, cross_heart_temp, dose_volume, rev_dose, auger_speed, pack_per_minute, amount_left, carton_use, amoutn_per_carton, weight_carton, pack_per_carton, customer_request_spec, pack_net_weight, note, document_id, in_trash, status, created_time, updated_by, created_by, plant_manager, plant_manager_date', 'safe', 'on'=>'search'),
                         array('note, tmp_file_ids', 'safe'),
                 );
 	}
@@ -111,6 +112,7 @@ class PackProduction extends CActiveRecord
 			'updated_by' => 'Updated By',
 			'created_by' => 'Created By',
 			'plant_manager' => 'Plant Manager',
+                        'plant_manager_date' => 'Plant Manager Date'
 		);
 	}
 
@@ -162,6 +164,7 @@ class PackProduction extends CActiveRecord
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('created_by',$this->created_by);
 		$criteria->compare('plant_manager',$this->plant_manager);
+                $criteria->compare('plant_manager_date',$this->plant_manager_date);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

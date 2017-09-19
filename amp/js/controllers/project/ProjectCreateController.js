@@ -198,7 +198,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
 		    }
 		    else{
                         $scope.customer = customer;
-		    	$scope.customer_error= data.user_error;
+		    	$scope.customer_error= data.customer_error;
 		    }
 		})
 		.error(function(data, status, headers, config) {

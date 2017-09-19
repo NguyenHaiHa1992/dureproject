@@ -117,10 +117,10 @@ class PackProductService extends iPhoenixService{
         }
         $packProduct->date = (int)$packProduct->date;
         
-        if(!is_integer($packProduct->plant_manager)){
-            $packProduct->plant_manager = strtotime($packProduct->plant_manager);
+        if(!is_integer($packProduct->plant_manager_date)){
+            $packProduct->plant_manager_date = strtotime($packProduct->plant_manager_date);
         }
-        $packProduct->plant_manager = (int)$packProduct->plant_manager;
+        $packProduct->plant_manager_date = (int)$packProduct->plant_manager_date;
         
         $packProduct = PackProductService::beforeSave($packProduct);
         if ($packProduct->validate()) {
@@ -204,8 +204,8 @@ class PackProductService extends iPhoenixService{
             $packProduct->date = strtotime($packProduct->date);
         }
         
-        if(isset($packProduct->plant_manager) && !is_int($packProduct->plant_manager)){
-            $packProduct->plant_manager = strtotime($packProduct->plant_manager);
+        if(isset($packProduct->plant_manager_date) && !is_int($packProduct->plant_manager_date)){
+            $packProduct->plant_manager_date = strtotime($packProduct->plant_manager_date);
         }
         return $packProduct;
     }
@@ -235,10 +235,10 @@ class PackProductService extends iPhoenixService{
             //                }
         }
         
-        if (isset($result['plant_manager']) && $result['plant_manager']) {
+        if (isset($result['plant_manager_date']) && $result['plant_manager_date']) {
             //                if(is_integer($packProduct['date'])){
 
-            $result['plant_manager'] = date('Y-m-d', $result['plant_manager']);
+            $result['plant_manager_date'] = date('Y-m-d', $result['plant_manager_date']);
             //                }
         }
         $result['tmp_file_ids'] = $packProduct->tmp_file_ids;

@@ -81,7 +81,7 @@ class Sale extends CActiveRecord
 			array('product_net_weight', 'numerical'),
 			array('product_physical_spec, product_allergen_status, product_product_kosher_input, product_type_pack, product_sample_provide_pack, product_sample_coa_submit, product_product_spec_claim, product_spec_hand_instruc, product_spec_ingredient, pack_spec_ship_other, pack_custome_spec_pallet_other', 'length', 'max'=>255),
 			array('pack_type_pack, pack_plan_print, pack_provide_primary_pack, pack_provide_inner_pack, pack_provide_shipper, pack_customer_aware, pack_spec_ship, pack_customer_spec_pallet', 'length', 'max'=>50),
-			array('note', 'safe'),
+			array('note, tmp_file_ids', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, project_id, product_sample_product, product_infor_provide_product, product_sample_submit_pack, product_coa_submit, product_spec_qa, product_allergen_qa, product_product_kosher, product_product_spec_provide_qa, product_physical_spec, product_allergen_status, product_product_kosher_input, product_type_pack, product_net_weight, product_sample_provide_pack, product_sample_coa_submit, product_product_spec_claim, product_spec_hand_instruc, product_spec_ingredient, pack_type_pack, pack_plan_print, pack_provide_primary_pack, pack_provide_inner_pack, pack_provide_shipper, pack_customer_aware, pack_spec_ship, pack_customer_spec_pallet, pack_spec_ship_other, pack_custome_spec_pallet_other, note, document_id, created_time, updated_time, in_trash, created_by', 'safe', 'on'=>'search'),
@@ -96,6 +96,7 @@ class Sale extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'files' => array(self::MANY_MANY, 'File', 'tbl_sale_file(sale_id, file_id)'),
 		);
 	}
 
@@ -306,4 +307,60 @@ class Sale extends CActiveRecord
 			),
 		);
 	}
+        
+    protected function afterSave() {
+        $new_list_file_ids = explode(',', $this->tmp_file_ids);
+        foreach ($new_list_file_ids as $file_id) {
+            $criteria = new CDbCriteria();
+            $criteria->compare('sale_id', $this->id);
+            $criteria->compare('file_id', $file_id);
+            $document_file = SaleFile::model()->find($criteria);
+            if (!isset($document_file)) {
+                $document_file = new SaleFile();
+                $document_file->sale_id = $this->id;
+                $document_file->file_id = $file_id;
+                $document_file->save();
+            }
+        }
+        $list_current_file_ids = $this->list_current_file_ids;
+        foreach ($list_current_file_ids as $file_id) {
+            if (!in_array($file_id, $new_list_file_ids)) {
+                $criteria = new CDbCriteria();
+                $criteria->compare('sale_id', $this->id);
+                $criteria->compare('file_id', $file_id);
+                ProjectFile::model()->deleteAll($criteria);
+            }
+        }
+
+        parent::afterSave();
+    }
+    
+    protected function afterDelete() {
+        parent::afterDelete();
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('sale_id =' . $this->id);
+        SaleFile::model()->deleteAll($criteria);
+    }
+
+    public function getList_current_file_ids() {
+        $list = $this->files;
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        return $result;
+    }
+    
+    protected function afterFind() {
+        $list = $this->files;
+
+        $result = array();
+        foreach ($list as $file) {
+            $result[] = $file->id;
+        }
+        $this->tmp_file_ids = implode(',', $result);
+
+        return parent::afterFind();
+    }
 }

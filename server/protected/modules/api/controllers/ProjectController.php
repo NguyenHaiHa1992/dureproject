@@ -103,7 +103,7 @@ class ProjectController extends Controller {
                 $dataPackProduct['project_id'] = $projectId;
                 $resultPackProduct = PackProductService::create($dataPackProduct);
                 
-                $dataSale['projecet_id']  = $projectId;
+                $dataSale['project_id']  = $projectId;
                 $resultSale  = SaleService::create($dataSale);
                 
                 $success = $success && $resultProductDev['success'] && $resultQa['success'] && $resultPackProduct['success'] && $resultSale['success'];

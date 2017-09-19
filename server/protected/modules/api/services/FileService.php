@@ -576,6 +576,12 @@ class FileService extends iPhoenixService {
                 'file_id' => $data['file_id']
             ]);
         }
+        elseif($data['related'] == "sale_file"){
+            $model = SaleFile::model()->findByAttributes([
+                'sale_id' => $data['model_id'],
+                'file_id' => $data['file_id']
+            ]);
+        }
         else{
             $model = null;
         }

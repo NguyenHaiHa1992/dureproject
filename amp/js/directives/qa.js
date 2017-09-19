@@ -7,13 +7,14 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
         qaError: "=",
         update : "=",
         create : "=",
+        projectService: "="
     },
     templateUrl: "amp/views/qa/qa-create.html",
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state' ,'$stateParams', function ($scope, $http, $rootScope, BASE_URL, $state, $stateParams){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
         console.log("DEBUG : init Qa");
-
+        console.log($scope.projectService);
         $scope.createInit = function () {
             var post_information = {};
             $http.post(BASE_URL + '/qa/createInit', post_information)
@@ -48,7 +49,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
             $http.post(BASE_URL + '/qa/getQaByProjectId', {id: $stateParams.id})
             .success(function (data) {
                 if (data.success) {
-                    $scope.qaError = data.qaError;
+                    $scope.scopeSetData($scope.qaError, data.qa_error);
                     $scope.scopeSetData($scope.qa, data.qa);
                 }
                 else {
@@ -71,7 +72,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
             }
             else{
                 for(var dataKey in data){
-                    if(!data.hasOwnProperty(dataKey) && !$obj.hasOwnProperty(dataKey)) continue;
+                    if(!data.hasOwnProperty(dataKey)) continue;
                     $obj[dataKey] = data[dataKey];
                 }
             }

@@ -72,7 +72,7 @@
 
                                 <div class="row form-group" ng-class="{'has-error': project_error.customer_id.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Customer <span class="required">*</span></label></br>
+                                        <label>Company</label></br>
                                     </div>
                                     <div class="col-md-9">
                                         <select chosen class="form-control" ng-model="project.customer_id" 
@@ -95,11 +95,23 @@
                             <form role="form">
                                 <div class="row form-group" ng-class="{'has-error': project_error.project_number.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Project Number</label>
+                                        <label>Project number / ID</label>
                                     </div>
                                     <div class="col-md-9">
                                         <input ng-model="project.project_number" type="text" class="form-control" placeholder="project number">
                                         <span class="control-label" for="inputError" ng-show="project_error.project_number.length != 0" ng-repeat="error in project_error.project_number">
+                                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
+                                    <div class="col-md-3 text-right">
+                                        <label>Brand/Product</label>
+                                    </div>
+                                    <div class="    col-md-9">
+                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
+                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -135,7 +147,7 @@
                             <div class="row">
                                 <div class="col-md-5"></div>
                                 <div class="col-md-7">
-                                    <h3 class="box-title"><b>General Prodcut Information</b></h3>
+                                    <h3 class="box-title"><b>General Product Information</b></h3>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +234,8 @@
                     </div>
                     <div class="box-body overhidden">
                          <sale sale="sale" ng-if="sale" sale-error="sale_error"
-                               ng-if="sale && sale_error"></sale> 
+                               ng-if="sale && sale_error && typeof(project.service) !== 'undefined'"
+                               project-service="project.service"></sale> 
                     </div>
                 </div>
             </div>
@@ -273,7 +286,9 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <qa qa="qa" qa-error="qa_error" ng-if="qa && qa_error"></qa>
+                        <qa qa="qa" qa-error="qa_error" 
+                            ng-if="qa && qa_error && typeof(project.service) !== 'undefined'"
+                            project-service="project.service"></qa>
                     </div>
                 </div>
             </div>

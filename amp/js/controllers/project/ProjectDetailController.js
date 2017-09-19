@@ -4,7 +4,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.init_loaded = false;
         $scope.productDevelopment = {};
         $scope.qa = {};
+        $scope.qa_error = {};
         $scope.packProduct = {};
+        $scope.packProduct_error = {};
         $scope.sale = {};
         $scope.createInit = function () {
             var post_information = {};
@@ -76,8 +78,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             swal('Project updated!', "", "success");
                             
                             $scope.project = data.project.project;
-                            $scope.project_error = $scope.project.project_error_empty;
-                            
+                            $scope.project_error = data.project.project_error;
                             $scope.productDevelopment = data.productDevelopment.productDevelopment;
                             $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error_empty;
                             
@@ -291,5 +292,60 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 });
             });
         };
+        
+        $scope.addCustomer = function(){
+            console.log("DEBUG : function addCustomer");
+            $('input, select').removeClass('ng-dirty');
+            $scope.customer_error = {
+                'ship_to' : [],
+                'ship_oa' : [],
+                'ship_address' : [],
+                'bill_to' : [],
+                'bill_oa' : [],
+                'bill_address' : [],
+                'phone' : [],
+                'fax' :[],
+            };
+            $scope.customer = {};
+            $('#customerAddModal').modal('show');
+            console.log("DEBUG : end function addCustomer");
+        }
+
+        $scope.submitAddCustomer = function(customer){
+            console.log("DEBUG : function submitAddCustomer");
+            var information_post = customer;
+            $http.post(BASE_URL + '/customer/create', information_post)
+                .success(function(data) {
+                        if(data.success) {
+                            swal(data.message, "", "success");
+                            $('#customerAddModal').modal('hide');
+                            $scope.customer_error = 
+                                {
+                                    'ship_to' : [],
+                                    'ship_oa' : [],
+                                    'ship_address' : [],
+                                    'bill_to' : [],
+                                    'bill_oa' : [],
+                                    'bill_address' : [],
+                                    'phone' : [],
+                                    'fax' :[],
+                                };
+
+                            //  update customer select
+                            console.log("DEBUG : customer  update success, get by add : " + JSON.stringify(data.customer));
+                            $scope.project.customer_id = data.customer.id;
+                            $scope.project_customers.push({'id' : data.customer.id ,'name' : data.customer.ship_address});
+                            console.log("DEBUG : project customer after update : " + JSON.stringify($scope.project_customers));
+                        }
+                        else{
+                            $scope.customer = customer;
+                            $scope.customer_error= data.customer_error;
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        $state.go('404');	
+                    });
+            console.log("DEBUG : end funciton submitAddCustomer");
+        }
     }
 ]);

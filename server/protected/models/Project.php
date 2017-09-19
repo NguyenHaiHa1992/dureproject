@@ -9,6 +9,7 @@
  * @property string $primary_contact
  * @property integer $customer_id
  * @property string $project_number
+ * @property string $project_name
  * @property string $volume
  * @property string $price_point
  * @property string $life_style
@@ -51,7 +52,7 @@ class Project extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('date, customer_id, document_id, created_time, updated_by, updated_time, status', 'numerical', 'integerOnly'=>true),
-			array('primary_contact, project_number, life_style, service, other_service, other_type_product', 'length', 'max'=>50),
+			array('primary_contact, project_number, project_name, life_style, service, other_service, other_type_product', 'length', 'max'=>50),
 			array('volume, product_match, created_by', 'length', 'max'=>255),
 			array('price_point', 'length', 'max'=>11),
 			array('note, tmp_file_ids', 'safe'),
@@ -84,6 +85,7 @@ class Project extends CActiveRecord
 			'primary_contact' => 'Primary Contact',
 			'customer_id' => 'Customer',
 			'project_number' => 'Project Number',
+                        'project_name' => 'Project Name',
 			'volume' => 'Volume',
 			'price_point' => 'Price Point',
 			'life_style' => 'Life Style',
@@ -124,6 +126,7 @@ class Project extends CActiveRecord
 		$criteria->compare('primary_contact',$this->primary_contact,true);
 		$criteria->compare('customer_id',$this->customer_id);
 		$criteria->compare('project_number',$this->project_number,true);
+                $criteria->compare('project_name',$this->project_name,true);
 		$criteria->compare('volume',$this->volume,true);
 		$criteria->compare('price_point',$this->price_point,true);
 		$criteria->compare('life_style',$this->life_style,true);

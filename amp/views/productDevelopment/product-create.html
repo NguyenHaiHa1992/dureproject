@@ -4,10 +4,10 @@
         <!-- form start -->
         <form role="form">
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.spec_for_product.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Specification sheet/nutritionals for product matching </label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.spec_for_product" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             >
@@ -21,10 +21,10 @@
             
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.customer_submit_product.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Has the Customer submitted a product formula?</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.customer_submit_product" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             >
@@ -37,10 +37,10 @@
             </div>
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.customer_provide_control.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Has the Customer provided a control sample? </label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.customer_provide_control" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             >
@@ -53,10 +53,10 @@
             </div>
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.physical_spec_product.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Physical specifications of product i.e, density, flowability etc.</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <input ng-model="productDevelopment.physical_spec_product" type="text" class="form-control" placeholder="Physical specifications of product i.e, density, flowability etc.">
                     <span class="control-label" for="inputError" ng-show="productDevelopmentError.physical_spec_product.length != 0" ng-repeat="error in productDevelopmentError.physical_spec_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
@@ -65,10 +65,10 @@
             </div>
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.allergent_product.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>What allergens does this product contain?</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <input ng-model="productDevelopment.allergent_product" type="text" class="form-control" placeholder="What allergens does this product contain?">
                     <span class="control-label" for="inputError" ng-show="productDevelopmentError.allergent_product.length != 0" ng-repeat="error in productDevelopmentError.allergent_product">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
@@ -77,10 +77,10 @@
             </div>
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.customer_require_spec.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Does this Customer require any special claims? Non-GMO, vegan, allergen free, organic etc.</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.customer_require_spec" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             data-ng-change="showHideOther(productDevelopment.customer_require_spec, 1)"
@@ -95,10 +95,10 @@
             </div>
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.spec_handing_instruction.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Any special handling instructions? ex. Dry clean before due to allergen etc.</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.spec_handing_instruction" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             data-ng-change="showHideOther(productDevelopment.spec_handing_instruction , 1)"
@@ -113,10 +113,10 @@
             </div>
             
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.spec_ingredients_require.length != 0}">
-                <div class="col-md-3 text-right">
-                    <label>Spec Ingredients Require</label>
+                <div class="col-md-5 text-right">
+                    <label>Are there any special ingredients required?</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.spec_ingredients_require" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             data-ng-change="showHideOther(productDevelopment.spec_ingredients_require , 1)"
@@ -134,10 +134,10 @@
     <div class="col-md-6">
         <form role="form">
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.approve_customer_formula_code.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Approved Customer Formula Code</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <input ng-model="productDevelopment.approve_customer_formula_code" type="text" class="form-control" placeholder="Approved Customer Formula Code">
                     <span class="control-label" for="inputError" ng-show="productDevelopmentError.approve_customer_formula_code.length != 0" ng-repeat="error in productDevelopmentError.approve_customer_formula_code">
                         <i class="fa fa-times-circle-o"></i> Error: {{error}}
@@ -146,10 +146,10 @@
             </div>
             
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.risk_or_hazard_ingredient.length != 0}">
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Are there any known Risks or hazards associated with the ingredients (including adulteration)</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.risk_or_hazard_ingredient" 
                             ng-options="item.id as item.name for item in libYesNo" 
                             data-ng-change="showHideOther(productDevelopment.risk_or_hazard_ingredient_other ,1)"
@@ -165,10 +165,10 @@
 
             <div class="row form-group" ng-class="{'has-error': productDevelopmentError.additional_test_require.length != 0}">
                 
-                <div class="col-md-3 text-right">
+                <div class="col-md-5 text-right">
                     <label>Is additional testing required?</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <select chosen class="form-control" ng-model="productDevelopment.additional_test_require"
                             ng-options="item.id as item.name for item in libYesNo" 
                             data-ng-change="showHideOther(productDevelopment.additional_test_require, 1)"

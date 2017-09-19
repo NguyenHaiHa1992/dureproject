@@ -7,13 +7,13 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
         saleError : "=",
         update : "=",
         create : "=",
+        projectService: "="
     },
     templateUrl: "amp/views/sale/sale-create.html",
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state' ,'$stateParams', function ($scope, $http, $rootScope, BASE_URL, $state, $stateParams){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
         console.log("DEBUG : init Sale");
-
         $scope.createInit = function () {
             var post_information = {};
             $http.post(BASE_URL + '/sale/createInit', post_information)
