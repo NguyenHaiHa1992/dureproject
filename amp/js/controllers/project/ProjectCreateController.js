@@ -51,6 +51,9 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     
                     $scope.sale = {};
                     $scope.sale_error = {};
+                    
+                    $scope.productApproval = {};
+                    $scope.productApproval_error = {};
                 }
                 else{
                     $state.go('404');
@@ -77,6 +80,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             qa: $scope.qa,
             packProduct : $scope.packProduct,
             sale : $scope.sale,
+            productApproval : $scope.productApproval,
         };
         
         console.log("Project Information Post :" + JSON.stringify(information_post));
@@ -93,6 +97,7 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $scope.qa_error = data.qa.qa_error;
                 $scope.packProduct_error = data.packProduct.packProduct_error;
                 $scope.sale_error = data.sale.sale_error;
+                $scope.productApproval_error = data.productApproval.productApproval_error;
             }
         })
         .error(function(data, status, headers, config) {

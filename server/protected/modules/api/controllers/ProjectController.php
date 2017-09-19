@@ -76,12 +76,14 @@ class ProjectController extends Controller {
         $dataQa = $data['qa'];
         $dataPackProduct = $data['packProduct'];
         $dataSale = $data['sale'];
+        $dataProductAppr = $data['productApproval'];
         
         $transaction = Yii::app()->db->beginTransaction();
         $result = ['sucess' => $success, 'message' => ""];
         try{
             $resultProject = ProjectService::create($dataProject);
-            $resultProductDev = $resultQa = $resultPackProduct  = $resultSale = ['success' => false , 'message' => ""];
+            $resultProductDev = $resultQa = $resultPackProduct  = $resultSale
+                    = $resultProductAppr = ['success' => false , 'message' => ""];
             // check if project create Success 
             if($resultProject['success']) {
                 $success = true;
@@ -106,7 +108,11 @@ class ProjectController extends Controller {
                 $dataSale['projecet_id']  = $projectId;
                 $resultSale  = SaleService::create($dataSale);
                 
-                $success = $success && $resultProductDev['success'] && $resultQa['success'] && $resultPackProduct['success'] && $resultSale['success'];
+                $dataProductAppr['project_id'] = $projectId;
+                $resultProductAppr = ProductApprovalService::create($dataProductAppr);
+                
+                $success = $success && $resultProductDev['success'] && $resultQa['success']
+                        && $resultPackProduct['success'] && $resultSale['success'] && $resultProductAppr['success'];
                 // create any other model
                 if($success){
                    $transaction->commit();
@@ -121,6 +127,7 @@ class ProjectController extends Controller {
                 'qa' => $resultQa,
                 'packProduct' => $resultPackProduct,
                 'sale' => $resultSale,
+                'productApproval' => $resultProductAppr,
             ];
         }catch(CException $e){
             $result['message'] = $e->getMessage();
@@ -143,9 +150,11 @@ class ProjectController extends Controller {
         $resultQa = QaService::getQaByProjectId($data);
         $resultPackProduct = PackProductService::getPackProductByProjectId($data);
         $resultSale = SaleService::getSaleByProjectId($data);
+        $resultProductAppr = ProductApprovalService::getProductApprovalByProjectId($data);
         
         $success = $resultProject['success'] && $resultProductDev['success']
-                && $resultQa['success'] && $resultPackProduct['success'] && $resultSale['success'];
+                && $resultQa['success'] && $resultPackProduct['success'] 
+                && $resultSale['success'] && $resultProductAppr['success'];
         $resutl = [
             'success' => $success,
             'project' => $resultProject,
@@ -153,6 +162,7 @@ class ProjectController extends Controller {
             'qa' => $resultQa,
             'packProduct' => $resultPackProduct,
             'sale' => $resultSale,
+            'productApproval' => $resultProductAppr,
         ];
         
         $this->returnJson($resutl);
@@ -167,6 +177,7 @@ class ProjectController extends Controller {
         $dataQa = $data['qa'];
         $dataPackProduct = $data['packProduct'];
         $dataSale = $data['sale'];
+        $dataProductAppr = $data['productApproval'];
         
         $projectId = (int)$dataProject['id'];
         if(!$dataProductDev['project_id']){
@@ -184,36 +195,34 @@ class ProjectController extends Controller {
         if(!$dataSale['project_id']){
             $dataSale['project_id'] = $projectId;
         }
-//        $transaction = Yii::app()->db->beginTransaction();
-//
-//        try{
+        
+        if(!$dataProductAppr['project_id']){
+            $dataProductAppr['project_id'] = $projectId;
+        }
+        $transaction = Yii::app()->db->beginTransaction();
+
+        try{
             $resultProject = ProjectService::update($dataProject);
 
             if($resultProject['success']) {
                 // update other model if project update success
                 $success = true;
+                
                 $resultProductDev = ProductService::update($dataProductDev);
-                if(!$resultProductDev['success']) {
-                    $success = false;
-                }
                 
                 $resultQa = QaService::update($dataQa);
-                if(!$resultQa['success']) {
-                    $success = false;
-                }
                 
                 $resultPackProduct = PackProductService::update($dataPackProduct);
-                if(!$resultPackProduct['success']) {
-                    $success = false;
-                }
                 
                 $resultSale = SaleService::update($dataSale);
-                if(!$resultSale['success']){
-                    $success = false;
-                }
+                
+                $resultProductAppr = ProductApprovalService::update($dataProductAppr);
+                
+                $success = $success && $resultProductDev['success'] && $resultQa['success'] && $resultPackProduct['success']
+                        && $resultSale['success'] && $resultProductAppr['success'];
                 // update any other model
                 
-//                $transaction->commit();
+                $transaction->commit();
             }
             $result = [
                 'success' => $success,
@@ -223,9 +232,10 @@ class ProjectController extends Controller {
                 'packProduct' => $resultPackProduct,
                 'sale' => $resultSale,
             ];
-//        }catch(CException $e){
-//            $transaction->rollBack();
-//        }
+        }catch(CException $e){
+            $transaction->rollBack();
+            $result = ['success' => false , 'message' => $e->getMessage()];
+        }
 
         $this->returnJson($result);
     }
