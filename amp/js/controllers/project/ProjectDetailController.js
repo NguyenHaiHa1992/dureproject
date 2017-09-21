@@ -392,14 +392,6 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
             console.log("DEBUG : end funciton submitAddCustomer");
         };
         
-//        $scope.productDevelopment = {};
-//        $scope.qa = {};
-//        $scope.qa_error = {};
-//        $scope.packProduct = {};
-//        $scope.packProduct_error = {};
-//        $scope.sale = {};
-//        $scope.productApproval = {};
-//        $scope.isFullInfo = false;
         $scope.$watch('project', function () {
             console.log('change project');
             console.log($scope.project);
@@ -410,11 +402,10 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     || !in_array($scope.formAttributes, key)) continue;
                     if(typeof($scope.project[key]) === 'undefined' 
                             || $scope.project[key] === null || $scope.project[key] === ''){
+                        console.log(key);
                         $scope.isFullInfo = false;
+                        $scope.productApproval.status = 0;
                     }
-            }
-            if(!$scope.isFullInfo){
-                $scope.productApproval.status = 0;
             }
         }, true);
         
