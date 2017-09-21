@@ -320,8 +320,10 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <product-approval product-approval="productApproval" product-approval-error="productApproval_error" 
-                                      ng-if="productApproval && is_update" update="true"></product-approval>
+                        <product-approval product-approval="productApproval" 
+                                    is-full-info="isFullInfo"
+                                    product-approval-error="productApproval_error" 
+                                    ng-if="productApproval && is_update && typeof(isFullInfo) !== 'undefined' && productApproval_error" update="true"></product-approval>
                     </div>
                 </div>
             </div>

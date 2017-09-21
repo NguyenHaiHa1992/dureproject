@@ -48,6 +48,7 @@ class ProductApprovalService extends iPhoenixService {
         foreach($attribute_names as $attr){
           $result['productApproval'][$attr] = '';
         }
+        $result['productApproval']['status'] = 0;
         $result['productApproval']['tmp_file_ids'] = '';
 
         $result['success'] = true;

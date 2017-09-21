@@ -231,6 +231,7 @@ class ProjectController extends Controller {
                 'qa' => $resultQa,
                 'packProduct' => $resultPackProduct,
                 'sale' => $resultSale,
+                'productApproval' => $resultProductAppr,
             ];
         }catch(CException $e){
             $transaction->rollBack();

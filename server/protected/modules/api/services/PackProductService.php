@@ -201,11 +201,11 @@ class PackProductService extends iPhoenixService{
         }
         
         if(isset($packProduct->date) && !is_int($packProduct->date)){
-            $packProduct->date = strtotime($packProduct->date);
+            $packProduct->date = strtotime($packProduct->date) ? strtotime($packProduct->date) : 0;
         }
         
         if(isset($packProduct->plant_manager_date) && !is_int($packProduct->plant_manager_date)){
-            $packProduct->plant_manager_date = strtotime($packProduct->plant_manager_date);
+            $packProduct->plant_manager_date = strtotime($packProduct->plant_manager_date) ? strtotime($packProduct->plant_manager_date) : 0;
         }
         return $packProduct;
     }

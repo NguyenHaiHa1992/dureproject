@@ -9,6 +9,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.packProduct_error = {};
         $scope.sale = {};
         $scope.productApproval = {};
+        $scope.productApproval_error = {};
+        $scope.isFullInfo = true;
+        $scope.formAttributes = [];
         
         $scope.createInit = function () {
             var post_information = {};
@@ -27,6 +30,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.is_update = true;
                     
                     $scope.packProduct.customers = data.project_customers;
+                    $scope.formAttributes = data.formAttributes;
                 }
                 else {
                     $state.go('404');
@@ -96,7 +100,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             $scope.saleError = data.sale.sale_error_empty;
                             
                             $scope.productApproval = data.productApproval.productApproval;
-                            $scope.productApprovalError = data.productApproval_error_empty;
+                            $scope.productApprovalError = data.productApproval.productApproval_error;
                             $("input").removeClass("ng-dirty");
                         }
                         else {
@@ -353,6 +357,37 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                         $state.go('404');	
                     });
             console.log("DEBUG : end funciton submitAddCustomer");
-        }
+        };
+        
+//        $scope.productDevelopment = {};
+//        $scope.qa = {};
+//        $scope.qa_error = {};
+//        $scope.packProduct = {};
+//        $scope.packProduct_error = {};
+//        $scope.sale = {};
+//        $scope.productApproval = {};
+//        $scope.isFullInfo = false;
+        $scope.$watch('project', function () {
+            console.log('change project');
+            console.log($scope.project);
+            $scope.isFullInfo = true;
+            for(var key in $scope.project){
+                if(!$scope.project.hasOwnProperty(key) 
+                    || typeof($scope.project[key]) === 'object' 
+                    || !in_array($scope.formAttributes, key)) continue;
+                    if(typeof($scope.project[key]) === 'undefined' 
+                            || $scope.project[key] === null || $scope.project[key] === ''){
+                        $scope.isFullInfo = false;
+                    }
+            }
+            if(!$scope.isFullInfo){
+                $scope.productApproval.status = 0;
+            }
+        }, true);
+        
+        $scope.$watch('isFullInfo', function(){
+            console.log('is full info');
+            console.log($scope.isFullInfo);
+        });
     }
 ]);
