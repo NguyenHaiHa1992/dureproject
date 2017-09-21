@@ -700,3 +700,10 @@ header .logo span{
     border: solid 1px #d2d6de;
     padding : 15px 10px 5px;
 }
+
+.fa-warning-triangle{
+    background: url(../images/dialog-warning.png) center center no-repeat;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+}

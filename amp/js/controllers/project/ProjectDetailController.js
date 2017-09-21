@@ -87,14 +87,19 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             
                             $scope.project = data.project.project;
                             $scope.project_error = data.project.project_error;
+                            $scope.has_error_project = $scope.checkErrorObject($scope.project_error);
+                            
                             $scope.productDevelopment = data.productDevelopment.productDevelopment;
-                            $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error_empty;
+                            $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error;
+                            $scope.has_error_productDevelopment = $scope.checkErrorObject($scope.productDevelopmentError);
                             
                             $scope.qa = data.qa.qa;
                             $scope.qaError = data.qa.qa_error;
+                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
                             
                             $scope.packProduct = data.packProduct.packProduct;
                             $scope.packProductError = data.packProduct.packProduct_error_empty;
+                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
                             
                             $scope.sale = data.sale.sale;
                             $scope.saleError = data.sale.sale_error_empty;
@@ -143,6 +148,20 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
     
         }
         
+        
+        $scope.checkErrorObject = function(obj){
+            if(typeof obj !== 'object'){
+                return false;
+            }
+            else{
+                for(var errAttr in obj){
+                    if(errAttr.length > 0){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         // Export PDF and Email
         $scope.exportPdf = function(){
             $http.get(BASE_URL + '/project/exportPdf?id=' + $scope.project.id)
@@ -269,7 +288,21 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                         }
                 }
         });
-            
+        
+        // show hide warning
+        $(document).ready(function(){
+            jQuery(".box-header").each(function(){
+                var that = jQuery(this);
+                var hasError = that.parent().find(".has-error").length;
+                if(hasError > 0){
+                    that.addClass("alert-warning");
+                    that.find(".btn-warning").show();
+                }else{
+                    that.removeClass("alert-warning");
+                    that.find(".btn-warning").hide();
+                }
+            });
+        });
         
         
         
