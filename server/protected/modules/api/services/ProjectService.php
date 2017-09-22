@@ -166,9 +166,9 @@ class ProjectService extends iPhoenixService {
         }
 
         $project->attributes = $data;
-        if(!is_integer($project->date)){
-            $project->date = strtotime($project->date);
-        }
+        // if(!is_integer($project->date)){
+        //     $project->date = strtotime($project->date);
+        // }
         $project = ProjectService::beforeSave($project);
         if ($project->validate()) {
             $project->save();

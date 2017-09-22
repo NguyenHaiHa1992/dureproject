@@ -54,6 +54,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     
                     $scope.productApproval = {};
                     $scope.productApproval_error = {};
+
+                    $scope.formAttributes = data.formAttributes;
                 }
                 else{
                     $state.go('404');
@@ -92,12 +94,25 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $state.go('project-detail', {id: data.project.id});
             }
             else{
-                $scope.project_error= data.project.project_error;
-                $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
-                $scope.qa_error = data.qa.qa_error;
-                $scope.packProduct_error = data.packProduct.packProduct_error;
-                $scope.sale_error = data.sale.sale_error;
-                $scope.productApproval_error = data.productApproval.productApproval_error;
+                if(data.project.project_error){
+                    $scope.project_error= data.project.project_error;    
+                }
+                if(data.productDevelopment.productDevelopment_error){
+                    $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;    
+                }
+                if(data.qa.qa_error){
+                    $scope.qa_error = data.qa.qa_error;    
+                }
+                if(data.packProduct.packProduct_error){
+                    $scope.packProduct_error = data.packProduct.packProduct_error;    
+                }
+                if(data.sale.sale_error){
+                    $scope.sale_error = data.sale.sale_error;    
+                }
+                if(data.productApproval.productApproval_error){
+                    $scope.productApproval_error = data.productApproval.productApproval_error;    
+                }
+                
             }
         })
         .error(function(data, status, headers, config) {
@@ -211,6 +226,29 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
   		});
         console.log("DEBUG : end funciton submitAddCustomer");
     }
+
+    $scope.$watch('project', function () {
+            console.log('change project');
+            console.log($scope.project);
+            $scope.isFullInfo = true;
+            for(var key in $scope.project){
+                if(!$scope.project.hasOwnProperty(key) 
+                    || !in_array($scope.formAttributes, key)){ continue; } 
+                    console.log(key);
+                    console.log($scope.project.customer_id);
+                    if(typeof($scope.project[key]) === 'undefined' 
+                            || $scope.project[key] === null || $scope.project[key] === ''){
+                        console.log(key);
+                        $scope.isFullInfo = false;
+                        $scope.productApproval.status = 0;
+                    }
+            }
+        }, true);
+        
+        $scope.$watch('isFullInfo', function(){
+            console.log('is full info');
+            console.log($scope.isFullInfo);
+        });
     
     // Jquery collapse
     jQuery("[data-widget='collapse']").click(function() {

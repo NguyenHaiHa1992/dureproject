@@ -398,8 +398,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
             $scope.isFullInfo = true;
             for(var key in $scope.project){
                 if(!$scope.project.hasOwnProperty(key) 
-                    || typeof($scope.project[key]) === 'object' 
-                    || !in_array($scope.formAttributes, key)) continue;
+                    || !in_array($scope.formAttributes, key)){ continue; } 
+                    console.log(key);
+                    console.log($scope.project.customer_id);
                     if(typeof($scope.project[key]) === 'undefined' 
                             || $scope.project[key] === null || $scope.project[key] === ''){
                         console.log(key);
