@@ -32,7 +32,7 @@ class SaleService extends iPhoenixService{
             $result['is_update'] = false;
             $result['is_create'] = true;
         }
-
+        $result['sale']['formAttributes'] = self::formAttributes();
         $result['sale_empty'] = $get_empty_sale['sale'];
         $get_empty_sale_error = SaleService::getEmptySaleError();
         $result['sale_error'] = $get_empty_sale_error['sale_error'];
@@ -121,7 +121,9 @@ class SaleService extends iPhoenixService{
 
         $sale = SaleService::beforeSave($sale);
         if ($sale->validate()) {
-            $sale->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $sale->save();
+            }
             $result['success'] = true;
             $result['id'] = $sale->id;
             $new_sale = self::getSaleById(array('id' => $sale->id));
@@ -149,7 +151,9 @@ class SaleService extends iPhoenixService{
         $sale->attributes = $data;
         $sale = SaleService::beforeSave($sale);
         if ($sale->validate()) {
-            $sale->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $sale->save();
+            }
             $result['success'] = true;
             $sale_array = SaleService::getSaleById(array('id' => $sale->id));
             $get_empty_sale_error = SaleService::getEmptySaleError();
@@ -227,6 +231,17 @@ class SaleService extends iPhoenixService{
             //                }
         }
         $result['tmp_file_ids'] = $sale->tmp_file_ids;
+        $result['formAttributes'] = self::formAttributes();
         return $result;
     }
+    
+    public static function formAttributes(){
+        return ['product_sample_product', 'product_infor_provide_product', 'product_sample_submit_pack', 
+            'product_coa_submit', 'product_spec_qa', 'product_allergen_qa', 'product_product_kosher',
+            'product_product_spec_provide_qa', 'product_physical_spec', 'product_allergen_status', 
+            'product_product_kosher_input', 'product_type_pack', 'product_net_weight', 'product_product_spec_claim', 
+            'product_spec_hand_instruc', 'product_spec_ingredient', 'pack_type_pack', 'pack_plan_print', 
+            'pack_provide_primary_pack', 'pack_provide_inner_pack', 'pack_provide_shipper', 'pack_customer_aware', 
+            'pack_spec_ship', 'pack_customer_spec_pallet', 'note'];
+    }   
 }

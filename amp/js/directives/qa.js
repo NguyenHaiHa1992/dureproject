@@ -13,8 +13,6 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state' ,'$stateParams', function ($scope, $http, $rootScope, BASE_URL, $state, $stateParams){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
-        console.log("DEBUG : init Qa");
-        console.log($scope.projectService);
         $scope.createInit = function () {
             var post_information = {};
             $http.post(BASE_URL + '/qa/createInit', post_information)
@@ -42,8 +40,6 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
         };
 
         $scope.createInit();
-
-        console.log("DEBUG : end init qa");
 
         $scope.getProductProjectById = function () {
             $http.post(BASE_URL + '/qa/getQaByProjectId', {id: $stateParams.id})

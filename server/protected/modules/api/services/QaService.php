@@ -32,7 +32,7 @@ class QaService extends iPhoenixService{
             $result['is_update'] = false;
             $result['is_create'] = true;
         }
-
+        $result['qa']['formAttributes'] = self::formAttributes();
         $result['qa_empty'] = $get_empty_qa['qa'];
         $get_empty_qa_error = QaService::getEmptyQaError();
         $result['qa_error'] = $get_empty_qa_error['qa_error'];
@@ -115,7 +115,9 @@ class QaService extends iPhoenixService{
 
         $qa = QaService::beforeSave($qa);
         if ($qa->validate()) {
-            $qa->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $qa->save();
+            }
             $result['success'] = true;
             $result['id'] = $qa->id;
             $new_qa = self::getQaById(array('id' => $qa->id));
@@ -143,7 +145,9 @@ class QaService extends iPhoenixService{
         $qa->attributes = $data;
         $qa = QaService::beforeSave($qa);
         if ($qa->validate()) {
-            $qa->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $qa->save();
+            }
             $result['success'] = true;
             $qa_array = QaService::getQaById(array('id' => $qa->id));
             $get_empty_qa_error = QaService::getEmptyQaError();
@@ -218,6 +222,17 @@ class QaService extends iPhoenixService{
             //                }
         }
         $result['tmp_file_ids'] = $qa->tmp_file_ids;
+        $result['formAttributes'] = self::formAttributes();
         return $result;
     }
+    
+    public static function formAttributes(){
+        return ['spec_micro_test', 'spec_sample', 'customer_require_coa', 
+            'customer_spec_sensor', 'customer_require_preship', 'physical_spec_product', 'product_spec_sheet',
+            'allergen_status', 'package_net_weight', 
+            'customer_spec_net_weight', 'customer_provide_label', 'is_upc_scc_code', 'customer_provide_label_primary_pack', 
+            'customer_provide_label_inner_pack', 'customer_provide_label_shipper', 'product_have_spec_claim', 
+            'spec_hand_instruc', 'customer_request_spec_ship', 'product_have_npn', 'product_nsf_for_sport', 
+            'note', 'appr_coa_submit'];
+    }  
 }

@@ -13,7 +13,6 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state' ,'$stateParams', function ($scope, $http, $rootScope, BASE_URL, $state, $stateParams){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
-        console.log("DEBUG : init Sale");
         $scope.createInit = function () {
             var post_information = {};
             $http.post(BASE_URL + '/sale/createInit', post_information)
@@ -49,8 +48,6 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
         };
 
         $scope.createInit();
-
-        console.log("DEBUG : end init sale");
 
         $scope.getProductProjectById = function () {
             $http.post(BASE_URL + '/sale/getSaleByProjectId', {id: $stateParams.id})

@@ -32,7 +32,7 @@ class ProductApprovalService extends iPhoenixService {
             $result['is_update'] = false;
             $result['is_create'] = true;
         }
-
+        $result['productApproval']['formAttributes'] = self::formAttributes();
         $result['productApproval_empty'] = $get_empty_productApproval['productApproval'];
         $get_empty_productApproval_error = ProductApprovalService::getEmptyProductApprovalError();
         $result['productApproval_error'] = $get_empty_productApproval_error['productApproval_error'];
@@ -116,7 +116,9 @@ class ProductApprovalService extends iPhoenixService {
         
         $productApproval = ProductApprovalService::beforeSave($productApproval);
         if ($productApproval->validate()) {
-            $productApproval->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $productApproval->save();
+            }
             $result['success'] = true;
             $result['id'] = $productApproval->id;
             $new_productApproval = self::getProductApprovalById(array('id' => $productApproval->id));
@@ -144,7 +146,9 @@ class ProductApprovalService extends iPhoenixService {
         $productApproval->attributes = $data;
         $productApproval = ProductApprovalService::beforeSave($productApproval);
         if ($productApproval->validate()) {
-            $productApproval->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $productApproval->save();
+            }
             $result['success'] = true;
             $productApproval_array = ProductApprovalService::getProductApprovalById(array('id' => $productApproval->id));
             $get_empty_productApproval_error = ProductApprovalService::getEmptyProductApprovalError();
@@ -192,6 +196,12 @@ class ProductApprovalService extends iPhoenixService {
         else if(isset($productApproval->updated_time)){
             $productApproval->updated_time = time();
         }
+        if(isset($productApproval->president_date) && !is_int($productApproval->president_date)){
+            $productApproval->president_date = strtotime($productApproval->president_date) ? strtotime($productApproval->president_date) : 0;
+        }
+        if(isset($productApproval->qa_supervisor_date) && !is_int($productApproval->qa_supervisor_date)){
+            $productApproval->qa_supervisor_date = strtotime($productApproval->qa_supervisor_date) ? strtotime($productApproval->qa_supervisor_date) : 0;
+        }
         return $productApproval;
     }
 
@@ -217,11 +227,22 @@ class ProductApprovalService extends iPhoenixService {
         if(isset($result['president_date']) && $result['president_date']){
             $result['president_date'] = date('Y-m-d' ,$result['president_date']);
         }
+        else{
+            $result['president_date'] = null;
+        }
         
         if(isset($result['qa_supervisor_date']) && $result['qa_supervisor_date']){
             $result['qa_supervisor_date'] = date('Y-m-d' ,$result['qa_supervisor_date']);
         }
+        else{
+            $result['qa_supervisor_date'] = null;
+        }
         $result['tmp_file_ids'] = $productApproval->tmp_file_ids;
+        $result['formAttributes'] = self::formAttributes();
         return $result;
     }    
+    
+    public static function formAttributes(){
+        return ['president', 'president_date', 'qa_supervisor', 'qa_supervisor_date', 'note'];
+    }  
 }

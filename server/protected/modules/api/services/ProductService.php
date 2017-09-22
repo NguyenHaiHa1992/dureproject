@@ -32,7 +32,7 @@ class ProductService extends iPhoenixService {
             $result['is_update'] = false;
             $result['is_create'] = true;
         }
-
+        $result['productDevelopment']['formAttributes'] = self::formAttributes();
         $result['productDevelopment_empty'] = $get_empty_productDevelopment['productDevelopment'];
         $get_empty_productDevelopment_error = ProductService::getEmptyProductDevelopmentError();
         $result['productDevelopment_error'] = $get_empty_productDevelopment_error['productDevelopment_error'];
@@ -176,7 +176,9 @@ class ProductService extends iPhoenixService {
         
         $productDevelopment = ProductService::beforeSave($productDevelopment);
         if ($productDevelopment->validate()) {
-            $productDevelopment->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $productDevelopment->save();
+            }
             $result['success'] = true;
             $result['id'] = $productDevelopment->id;
             $new_productDevelopment = self::getProductDevelopmentById(array('id' => $productDevelopment->id));
@@ -204,7 +206,9 @@ class ProductService extends iPhoenixService {
         $productDevelopment->attributes = $data;
         $productDevelopment = ProductService::beforeSave($productDevelopment);
         if ($productDevelopment->validate()) {
-            $productDevelopment->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $productDevelopment->save();
+            }
             $result['success'] = true;
             $productDevelopment_array = ProductService::getProductDevelopmentById(array('id' => $productDevelopment->id));
             $get_empty_productDevelopment_error = ProductService::getEmptyProductDevelopmentError();
@@ -281,6 +285,7 @@ class ProductService extends iPhoenixService {
         //                }
         }
         $result['tmp_file_ids'] = $productDevelopment->tmp_file_ids;
+        $result['formAttributes'] = self::formAttributes();
         return $result;
     }
     
@@ -316,4 +321,11 @@ class ProductService extends iPhoenixService {
 
         return $result;
     }
+    
+    public static function formAttributes(){
+        return ['spec_for_product', 'customer_submit_product', 'customer_provide_control', 
+            'physical_spec_product', 'allergent_product', 'customer_require_spec', 'spec_handing_instruction',
+            'spec_ingredients_require', 'approve_customer_formula_code', 'risk_or_hazard_ingredient', 
+            'additional_test_require', 'note'];
+    }  
 }

@@ -13,8 +13,6 @@ angular.module('app').directive('productApproval',[ '$http', '$state', 'BASE_URL
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state' ,'$stateParams', function ($scope, $http, $rootScope, BASE_URL, $state, $stateParams){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
-        console.log('productApprovalError');
-        console.log($scope.productApprovalError);
         $scope.createInit = function () {
             var post_information = {};
             $http.post(BASE_URL + '/productApproval/createInit', post_information)
@@ -33,8 +31,6 @@ angular.module('app').directive('productApproval',[ '$http', '$state', 'BASE_URL
                             }
                             else{
                                 $scope.scopeSetData($scope.productApproval ,data.productApproval);
-                                console.log('$scope.productApproval');
-                                console.log(data.productApproval);
                             }
                         } else {
                             $state.go('404');

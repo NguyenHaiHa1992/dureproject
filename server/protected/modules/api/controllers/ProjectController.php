@@ -85,12 +85,18 @@ class ProjectController extends Controller {
             $resultProductDev = $resultQa = $resultPackProduct  = $resultSale
                     = $resultProductAppr = ['success' => false , 'message' => ""];
             // check if project create Success 
-            if($resultProject['success']) {
-                $success = true;
+            $projectId = 1;
+            if($resultProject['success']){
                 $projectId = (int)$resultProject['id'];
+                $dataProductDev['_is_save'] = $dataQa['_is_save'] 
+                    = $dataPackProduct['_is_save'] = $dataSale['_is_save'] 
+                    = $dataProductAppr['_is_save'] = true;
+                
+                $success = true;
+            }
+//            if($resultProject['success']) {
                 // create product Development model
                 $dataProductDev['project_id'] = $projectId;
-
                 $resultProductDev = ProductService::create($dataProductDev);
                 if(!$resultProductDev['success']) {
                      $success = false;
@@ -119,7 +125,7 @@ class ProjectController extends Controller {
                 }else{
                    $transaction->rollBack();
                 }
-            }
+//            }
             $result = [
                 'success' => $success,
                 'project' => $resultProject,
@@ -203,10 +209,18 @@ class ProjectController extends Controller {
 
         try{
             $resultProject = ProjectService::update($dataProject);
-
-            if($resultProject['success']) {
-                // update other model if project update success
+            $isSave = false;
+            if($resultProject['success']){
+                $isSave = true;
+                $projectId = (int)$resultProject['id'];
+                $dataProductDev['_is_save'] = $dataQa['_is_save'] 
+                    = $dataPackProduct['_is_save'] = $dataSale['_is_save'] 
+                    = $dataProductAppr['_is_save'] = true;
+                
                 $success = true;
+            }
+//            if($resultProject['success']) {
+                // update other model if project update success
                 
                 $resultProductDev = ProductService::update($dataProductDev);
                 
@@ -223,7 +237,7 @@ class ProjectController extends Controller {
                 // update any other model
                 
                 $transaction->commit();
-            }
+//            }
             $result = [
                 'success' => $success,
                 'project' => $resultProject,
