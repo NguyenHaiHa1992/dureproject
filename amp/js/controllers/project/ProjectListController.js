@@ -54,8 +54,8 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         //config attributes sortting
         $scope.sorts = [
             {
-                'attribute': 'primary_contact' ,
-                'label' : 'Primary Contact',
+                'attribute': 'project_name' ,
+                'label' : 'Project Name',
             },
 //            {
 //                'attribute': 'customer_id' ,
@@ -164,25 +164,12 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
             };
             $scope.getProjects(post_information);
         };
-
+        var searchAttributes = ['project_name', 'project_number', 'volume', 'service'];
         $scope.search = function () {
-            post_information.ship_to = $scope.search_project.ship_to;
-            post_information.ship_oa = $scope.search_project.ship_oa;
-            post_information.ship_address = $scope.search_project.ship_address;
-            post_information.bill_to = $scope.search_project.bill_to;
-            post_information.bill_oa = $scope.search_project.bill_oa;
-            post_information.bill_address = $scope.search_project.bill_address;
-            post_information.phone = $scope.search_project.phone;
-            post_information.fax = $scope.search_project.fax;
-            
-            $scope.copy_search_project.ship_to = $scope.search_project.ship_to;
-            $scope.copy_search_project.ship_oa = $scope.search_project.ship_oa;
-            $scope.copy_search_project.ship_address = $scope.search_project.ship_address;
-            $scope.copy_search_project.bill_to = $scope.search_project.bill_to;
-            $scope.copy_search_project.bill_oa = $scope.search_project.bill_oa;
-            $scope.copy_search_project.bill_address = $scope.search_project.bill_address;
-            post_information.phone = $scope.search_project.phone;
-            post_information.fax = $scope.search_project.fax;
+            searchAttributes.forEach(function(attribute){
+                post_information[attribute] = $scope.search_project[attribute];
+                $scope.copy_search_project[attribute] = $scope.search_project[attribute];
+            });
             $scope.getProjects(post_information);
         }
 
@@ -221,13 +208,19 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         });
         
         $scope.exportExcel = function(){
-            var search_information = '&tier_id=' + $scope.copy_search_project.tier_id 
-                    + '&name=' + $scope.copy_search_project.name 
-                    + '&city=' + $scope.copy_search_project.city 
-                    + '&email=' + $scope.copy_search_project.email
-                    + '&signage_id=' + $scope.copy_search_project.signage_id
-                    + '&fixture_id=' + $scope.copy_search_project.fixture_id;
-            var post_information = $('#export-excel-column').serialize() + search_information;
+            var search_information = '';
+            var key = 0;
+            searchAttributes.forEach(function(attribute){
+                if($scope.copy_search_project[attribute]){
+                    if(key !== 0){
+                        search_information += '&';
+                    }
+                    search_information += attribute + '=' + $scope.copy_search_project[attribute];
+                    key++;
+                }
+            });
+//            var post_information = $('#export-excel-column').serialize() + search_information;
+            var post_information = search_information;
             if($scope.selectedDbIds.length){
                 post_information += "&ids="+$scope.selectedDbIds.toString();
             }
@@ -269,14 +262,20 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
         };
         
         $scope.exportPdf = function(){
-            var search_information = '&tier_id=' + $scope.copy_search_project.tier_id 
-                    + '&name=' + $scope.copy_search_project.name 
-                    + '&city=' + $scope.copy_search_project.city 
-                    + '&email=' + $scope.copy_search_project.email
-                    + '&signage_id=' + $scope.copy_search_project.signage_id
-                    + '&fixture_id=' + $scope.copy_search_project.fixture_id
-                    + '&type=pdf';
-            var post_information = $('#export-excel-column').serialize() + search_information;
+            var search_information = '';
+            var key = 0;
+            searchAttributes.forEach(function(attribute){
+                if($scope.copy_search_project[attribute]){
+                    if(key !== 0){
+                        search_information += '&';
+                    }
+                    search_information += attribute + '=' + $scope.copy_search_project[attribute];
+                    key++;
+                }
+            });
+            search_information += '&type=pdf';
+//            var post_information = $('#export-excel-column').serialize() + search_information;
+            var post_information = search_information;
             if($scope.selectedDbIds.length){
                 post_information += "&ids="+$scope.selectedDbIds.toString();
             }

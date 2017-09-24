@@ -126,11 +126,15 @@ class PackProductService extends iPhoenixService{
         if ($packProduct->validate()) {
             if(isset($data['_is_save']) && $data['_is_save']){
                 $packProduct->save();
+                $result['id'] = $packProduct->id;
+                $new_packProduct = self::getPackProductById(array('id' => $packProduct->id));
+                $result['packProduct'] = $new_packProduct['packProduct'];
+            }
+            else{
+                $result['packProduct'] = $data;
             }
             $result['success'] = true;
-            $result['id'] = $packProduct->id;
-            $new_packProduct = self::getPackProductById(array('id' => $packProduct->id));
-            $result['packProduct'] = $new_packProduct['packProduct'];
+            
         } else {
             $empty_packProduct_error = PackProductService::getEmptyPackProductError();
             $result['packProduct_error'] = $empty_packProduct_error['packProduct_error'];

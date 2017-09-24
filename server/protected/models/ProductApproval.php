@@ -36,7 +36,6 @@ class ProductApproval extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('president', 'required'),
 			array('project_id, status, president_date, qa_supervisor_date, document_id, created_time, updated_time, in_trash', 'numerical', 'integerOnly'=>true),
 			array('president, qa_supervisor', 'length', 'max'=>255),
                         array('note, tmp_file_ids', 'safe'),

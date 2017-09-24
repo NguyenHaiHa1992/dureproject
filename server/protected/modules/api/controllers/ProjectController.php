@@ -309,4 +309,112 @@ class ProjectController extends Controller {
             echo "No model";
         }
     }
+    
+    public function actionExportExcel(){
+        $data = ProjectService::data();
+
+        require_once(Yii::getPathOfAlias('ext.phpexcel.Classes') . '/PHPExcel.php');
+        $type = 'Excel5';
+        if(isset($_GET['type']) && $_GET['type'] == 'pdf'){
+            $type = 'PDF';
+        }
+        
+        $columns = [];
+        if(isset($data['ExportExcelColumn'])){
+            foreach($data['ExportExcelColumn'] as $col => $val){
+                if(!(int)$val){
+                    continue;
+                }
+                switch ($col){
+                    case 'tier_name' :
+                        $columns[] = [
+                           'header' => 'Tier',
+                           'value' => 'isset($data->tier) ? $data->tier->name : "-"',
+                        ];
+                        break;
+                    case '_no' :
+                        if($type == 'PDF'){
+                            $columns[] = [
+                                'header' => 'No',
+                                'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+                            ];
+                        }
+                        else{
+                            $columns[] = $col;
+                        }
+                        break;
+                    case CustomEnum::COLUMN_IMG.'image_id':
+                        if($type == 'PDF'){
+                            $columns[] = [
+                                'header' => 'Image',
+                                'type' => 'raw',
+                                'value' => '(isset($data->image) && $data->image->getThumbUrl(80, 80, false))'
+                                            . '? CHtml::image(CustomEnum::FILE_SERVER_PATH.$data->image->getThumbUrl(80, 80, false),"",array("style"=>"width:80px;height:80px;"))'
+    //                                        . '? echo \'<img src="\'.CustomEnum::FILE_SERVER_PATH.$data->image->getThumbUrl(80, 80, false).\'" />\''
+                                            . ': CHtml::image(CustomEnum::FILE_SERVER_PATH.CustomEnum::IMAGE_NOT_AVAILABLE,"",array("style"=>"width:80px;height:80px;"))',
+                            ];
+                        }
+                        else{
+                            $columns[] = $col;
+                        }
+                        break;
+                    default :
+                        $columns[] = $col;
+                        break;
+                }
+            }
+        }
+        else{
+            $columns = [
+                'project_name', 'project_number', 'primary_contact',
+                ['header' => 'Date', 'value' => '$data->date ? date("Y-m-d", $data->date) : "-"'],
+                ['header' => 'Company', 'value' => 'isset($data->customer_id) ? $data->customer->ship_address : "-"'],
+                'volume', 'price_point', 
+                ['header' => 'note', 'type' => 'raw', 'value' => '$data->note']
+            ];
+        }
+
+        $criteria = new CDbCriteria();
+        if(isset($_GET['ids']) && $_GET['ids']){
+            $criteria->compare('id', explode(",", $_GET['ids']));
+        }
+        else{
+            $searchAttributes = ProjectService::searchAttributes();
+            foreach($searchAttributes as $searchAttribute){
+                if (isset($_GET[$searchAttribute]) && $_GET[$searchAttribute] != '') {
+                    $criteria->compare($searchAttribute, $_GET[$searchAttribute], true);
+                }
+            }
+//            if(isset($_GET['signage_id']) && $_GET['signage_id'] != ''){
+//                $criteria->join = 'INNER JOIN tbl_store_signage AS ss ON t.id = ss.store_id AND ss.signage_id = '.$_GET['signage_id'];
+//            }
+//            if(isset($_GET['fixture_id']) && $_GET['fixture_id'] != ''){
+//                $criteria->join = 'INNER JOIN tbl_store_fixture AS sf ON t.id = sf.store_id AND sf.fixture_id = '.$_GET['fixture_id'];
+//            }
+        }
+        $criteria->compare('t.in_trash', 0);
+        $model = Project::model()->findAll($criteria);
+        $name = 'Export_Project_DB';
+//        if(isset($_GET['related_name']) && $_GET['related_name'] != ''){
+//            $name = 'Related_Stores_of_'.  preg_replace("/[^a-zA-Z0-9\-\_]/", "", $_GET['related_name']);
+//        }
+        
+        // Export it
+        $result = $this->toExcel($model,
+            $columns,
+            'Export_Project_DB',
+            array(
+                'creator' => 'NamNT',
+            ),
+            $type,
+            'export',
+            false,
+            $name    
+        );
+
+        echo json_encode([
+            'success' => true,
+            'result' => $result
+        ]);
+    }
 }

@@ -71,6 +71,7 @@ class Project extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     'files' => array(self::MANY_MANY, 'File', 'tbl_project_file(project_id, file_id)'),
+                    'customer' => array(self::BELONGS_TO, 'Customer', 'customer_id'),
 		);
 	}
 

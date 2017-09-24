@@ -123,11 +123,15 @@ class SaleService extends iPhoenixService{
         if ($sale->validate()) {
             if(isset($data['_is_save']) && $data['_is_save']){
                 $sale->save();
+                $result['id'] = $sale->id;
+                $new_sale = self::getSaleById(array('id' => $sale->id));
+                $result['sale'] = $new_sale['sale'];
+            }
+            else{
+                $result['sale'] = $data;
             }
             $result['success'] = true;
-            $result['id'] = $sale->id;
-            $new_sale = self::getSaleById(array('id' => $sale->id));
-            $result['sale'] = $new_sale['sale'];
+            
         } else {
             $empty_sale_error = SaleService::getEmptySaleError();
             $result['sale_error'] = $empty_sale_error['sale_error'];

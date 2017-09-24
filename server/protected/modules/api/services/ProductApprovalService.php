@@ -118,11 +118,15 @@ class ProductApprovalService extends iPhoenixService {
         if ($productApproval->validate()) {
             if(isset($data['_is_save']) && $data['_is_save']){
                 $productApproval->save();
+                $result['id'] = $productApproval->id;
+                $new_productApproval = self::getProductApprovalById(array('id' => $productApproval->id));
+                $result['productApproval'] = $new_productApproval['productApproval'];
+            }
+            else{
+                $result['productApproval'] = $data;
             }
             $result['success'] = true;
-            $result['id'] = $productApproval->id;
-            $new_productApproval = self::getProductApprovalById(array('id' => $productApproval->id));
-            $result['productApproval'] = $new_productApproval['productApproval'];
+            
         } else {
             $empty_productApproval_error = ProductApprovalService::getEmptyProductApprovalError();
             $result['productApproval_error'] = $empty_productApproval_error['productApproval_error'];

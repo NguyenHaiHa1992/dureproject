@@ -52,6 +52,8 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
         $scope.getProductProjectById = function () {
             $http.post(BASE_URL + '/sale/getSaleByProjectId', {id: $stateParams.id})
             .success(function (data) {
+                console.log('get sale by project di');
+                console.log(data);
                 if (data.success) {
                     $scope.saleError = data.sale_error;
                     $scope.scopeSetData($scope.sale ,data.sale);

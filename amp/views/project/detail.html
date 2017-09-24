@@ -21,7 +21,7 @@
                 <ol class="breadcrumb tool_box">
                     <li><b>Project actions</b></li>
                     <li><a ui-sref="project-list">Project list</a></li>
-                    <li class="active"><a ui-sref="project-create" ui-sref-opts="{reload: true, notify: true}">Add new project</a></li>
+                    <li class=""><a ui-sref="project-create" ui-sref-opts="{reload: true, notify: true}">Add new project</a></li>
                 </ol>
                 <!-- general form elements -->
                 <div class="box overhidden top_box">
@@ -229,7 +229,7 @@
                     </div>
                     <div class="box-body overhidden">
                         <sale sale="sale" sale-error="sale_error"
-                               ng-if="sale && is_update && typeof(project.service) !== 'undefined'" update="true"
+                               ng-if="sale && is_update && typeof(project.service) !== 'undefined' && sale_error" update="true"
                                project-service="project.service"></sale>
                     </div>
                 </div>
@@ -250,7 +250,9 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                        <product-development product-development="productDevelopment" product-development-error="productDevelopment_error" update="true" ng-if="productDevelopment && is_update"></product-development>
+                        <product-development product-development="productDevelopment" 
+                            product-development-error="productDevelopment_error" update="true" 
+                            ng-if="productDevelopment && is_update && productDevelopment_error"></product-development>
                     </div>
                 </div>
             </div>
@@ -344,12 +346,12 @@
             <!-- Begin Notes -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header sub-box-title">
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': project.note === ''}">
                         <h3 class="box-title">Notes</h3>
-
-            <!--                        <button type="button" class="btn btn-box-tool btn-warning">
-                            <i class="fa fa-warning-triangle" aria-hidden="true"></i>
-                        </button>-->            <div class="box-tools pull-right">
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning" ng-if="project.note === ''">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>  
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>
                         </div>

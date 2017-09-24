@@ -46,32 +46,13 @@ class ProjectService extends iPhoenixService {
             $data['sort_attribute'] = 'created_time';
             $data['sort_type'] = 'DESC';
         }
-
-        $criteria = new CDbCriteria();
-        if (isset($data['ship_to']) && $data['ship_to'] != '') {
-            $criteria->compare('ship_to', $data['ship_to'], true);
-        }
-        if (isset($data['ship_oa']) && $data['ship_oa'] != '') {
-            $criteria->compare('ship_oa', $data['ship_oa'], true);
-        }
-        if (isset($data['ship_address']) && $data['ship_address'] != '') {
-            $criteria->compare('ship_address', $data['ship_address'], true);
-        }
         
-        if (isset($data['bill_to']) && $data['bill_to'] != '') {
-            $criteria->compare('bill_to', $data['bill_to'], true);
-        }
-        if (isset($data['bill_oa']) && $data['bill_oa'] != '') {
-            $criteria->compare('bill_oa', $data['bill_oa'], true);
-        }
-        if (isset($data['bill_address']) && $data['bill_address'] != '') {
-            $criteria->compare('bill_address', $data['bill_address'], true);
-        }
-        if (isset($data['phone']) && $data['phone'] != '') {
-            $criteria->compare('phone', $data['phone'], true);
-        }
-        if (isset($data['fax']) && $data['fax'] != '') {
-            $criteria->compare('fax', $data['fax'], true);
+        $searchAttributes = self::searchAttributes();
+        $criteria = new CDbCriteria();
+        foreach ($searchAttributes as $attribute) {
+            if (isset($data[$attribute]) && $data[$attribute] != '') {
+                $criteria->compare($attribute, $data[$attribute], true);
+            }
         }
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
         $criteria->limit = $data['limitnum'];
@@ -334,5 +315,9 @@ class ProjectService extends iPhoenixService {
     public static function formAttributes(){
         return ['date', 'primary_contact', 'customer_id', 'project_number', 'project_name', 'volume', 
             'price_point', 'life_style', 'service', 'product_match', 'note'];
+    }
+    
+    public static function searchAttributes(){
+        return array('project_name', 'project_number', 'volume', 'service');
     }
 }
