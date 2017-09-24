@@ -31,6 +31,7 @@ class ProjectService extends iPhoenixService {
             $result['project_typeProducts'] = Project::getTypeOfProduct();
             $result['project_services'] = Project::getProductMatch();
         // end data selection
+        $result['formAttributes'] = self::formAttributes();
         $result['success'] = true;
         return $result;
     }
@@ -165,9 +166,9 @@ class ProjectService extends iPhoenixService {
         }
 
         $project->attributes = $data;
-        if(!is_integer($project->date)){
-            $project->date = strtotime($project->date);
-        }
+        // if(!is_integer($project->date)){
+        //     $project->date = strtotime($project->date);
+        // }
         $project = ProjectService::beforeSave($project);
         if ($project->validate()) {
             $project->save();
@@ -328,5 +329,10 @@ class ProjectService extends iPhoenixService {
         }
 
         return $result;
+    }
+    
+    public static function formAttributes(){
+        return ['date', 'primary_contact', 'customer_id', 'project_number', 'project_name', 'volume', 
+            'price_point', 'life_style', 'service', 'product_match', 'note'];
     }
 }

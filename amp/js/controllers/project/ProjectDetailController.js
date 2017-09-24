@@ -9,6 +9,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.packProduct_error = {};
         $scope.sale = {};
         $scope.productApproval = {};
+        $scope.productApproval_error = {};
+        $scope.isFullInfo = true;
+        $scope.formAttributes = [];
         
         $scope.createInit = function () {
             var post_information = {};
@@ -27,6 +30,7 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.is_update = true;
                     
                     $scope.packProduct.customers = data.project_customers;
+                    $scope.formAttributes = data.formAttributes;
                 }
                 else {
                     $state.go('404');
@@ -73,35 +77,17 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                 'productApproval' : productAppr,
             };
             
-            console.log("DEBUG :  submit information: " + JSON.stringify(information_post));
-            
             $http.post(BASE_URL + '/project/update', information_post)
                     .success(function (data) {
                         if (data.success) {
-                            console.log("Project Update success");
                             swal('Project updated!', "", "success");
                             
                             $scope.project = data.project.project;
-                            $scope.project_error = data.project.project_error;
-                            $scope.has_error_project = $scope.checkErrorObject($scope.project_error);
-                            
                             $scope.productDevelopment = data.productDevelopment.productDevelopment;
-                            $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error;
-                            $scope.has_error_productDevelopment = $scope.checkErrorObject($scope.productDevelopmentError);
-                            
                             $scope.qa = data.qa.qa;
-                            $scope.qaError = data.qa.qa_error;
-                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
-                            
                             $scope.packProduct = data.packProduct.packProduct;
-                            $scope.packProductError = data.packProduct.packProduct_error_empty;
-                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
-                            
                             $scope.sale = data.sale.sale;
-                            $scope.saleError = data.sale.sale_error_empty;
-                            
                             $scope.productApproval = data.productApproval.productApproval;
-                            $scope.productApprovalError = data.productApproval_error_empty;
                             $("input").removeClass("ng-dirty");
                         }
                         else {
@@ -113,6 +99,31 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             });
                             $scope.project_error = data.project_error;
                         }
+                        if(data.project.project_error){
+                            $scope.project_error = data.project.project_error;
+                            $scope.has_error_project = $scope.checkErrorObject($scope.project_error);
+                        }
+                        if(data.productDevelopment.productDevelopment_error){
+                            $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error;
+                            $scope.has_error_productDevelopment = $scope.checkErrorObject($scope.productDevelopmentError);
+                        }
+                        if(data.qa.qa_error){
+                            $scope.qaError = data.qa.qa_error;
+                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
+                        }
+                        if(data.packProduct.packProduct_error){
+                            $scope.packProductError = data.packProduct.packProduct_error;
+                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
+                        }
+                        if(data.sale.sale_error){
+                            $scope.saleError = data.sale.sale_error;
+                            $scope.has_error_sale = $scope.checkErrorObject($scope.saleError);
+                        }
+                        if(data.productApproval.productApproval_error){
+                            $scope.productApprovalError = data.productApproval.productApproval_error;
+                            $scope.has_error_product_approval = $scope.checkErrorObject($scope.productApproval);
+                        }
+                        
                     })
                     .error(function (data, status, headers, config) {
                         $state.go('404');
@@ -286,19 +297,19 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         });
         
         // show hide warning
-        $(document).ready(function(){
-            jQuery(".box-header").each(function(){
-                var that = jQuery(this);
-                var hasError = that.parent().find(".has-error").length;
-                if(hasError > 0){
-                    that.addClass("alert-warning");
-                    that.find(".btn-warning").show();
-                }else{
-                    that.removeClass("alert-warning");
-                    that.find(".btn-warning").hide();
-                }
-            });
-        });
+//        $(document).ready(function(){
+//            jQuery(".box-header").each(function(){
+//                var that = jQuery(this);
+//                var hasError = that.parent().find(".has-error").length;
+//                if(hasError > 0){
+//                    that.addClass("alert-warning");
+//                    that.find(".btn-warning").show();
+//                }else{
+//                    that.removeClass("alert-warning");
+//                    that.find(".btn-warning").hide();
+//                }
+//            });
+//        });
         
         
         
@@ -334,7 +345,6 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         };
         
         $scope.addCustomer = function(){
-            console.log("DEBUG : function addCustomer");
             $('input, select').removeClass('ng-dirty');
             $scope.customer_error = {
                 'ship_to' : [],
@@ -348,11 +358,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
             };
             $scope.customer = {};
             $('#customerAddModal').modal('show');
-            console.log("DEBUG : end function addCustomer");
         }
 
         $scope.submitAddCustomer = function(customer){
-            console.log("DEBUG : function submitAddCustomer");
             var information_post = customer;
             $http.post(BASE_URL + '/customer/create', information_post)
                 .success(function(data) {
@@ -372,10 +380,8 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                                 };
 
                             //  update customer select
-                            console.log("DEBUG : customer  update success, get by add : " + JSON.stringify(data.customer));
                             $scope.project.customer_id = data.customer.id;
                             $scope.project_customers.push({'id' : data.customer.id ,'name' : data.customer.ship_address});
-                            console.log("DEBUG : project customer after update : " + JSON.stringify($scope.project_customers));
                         }
                         else{
                             $scope.customer = customer;
@@ -385,7 +391,74 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     .error(function(data, status, headers, config) {
                         $state.go('404');	
                     });
-            console.log("DEBUG : end funciton submitAddCustomer");
-        }
+        };
+        
+        var objects = ['sale', 'qa', 'productDevelopment', 'packProduct', 'productApproval'];
+        $scope.$watch('project', function () {
+            if($scope.project){
+                $scope.project.isFullInfo = true;
+            }
+            for(var key in $scope.project){
+                if(!$scope.project.hasOwnProperty(key) 
+                    || !in_array($scope.formAttributes, key)){ continue; } 
+                if(typeof($scope.project[key]) === 'undefined' 
+                        || $scope.project[key] === null || $scope.project[key] === ''){
+                    $scope.project.isFullInfo = false;
+                    $scope.productApproval.status = 0;
+                }
+            }
+            var objectsIsFullInfo = true;
+            objects.forEach(function(object){
+                objectsIsFullInfo = objectsIsFullInfo && $scope[object].isFullInfo;
+            });
+            if($scope.project){
+                $scope.isFullInfo = $scope.project.isFullInfo && objectsIsFullInfo;
+            }
+        }, true);
+        
+//        $scope.$watch('sale', function () {
+//            if($scope.sale){
+//                $scope.sale.isFullInfo = true;
+//            }
+//            for(var key in $scope.sale){
+//                if(!$scope.sale.hasOwnProperty(key) 
+//                    || !in_array($scope.sale.formAttributes, key)){ continue; } 
+//                if(typeof($scope.sale[key]) === 'undefined' 
+//                        || $scope.sale[key] === null || $scope.sale[key] === ''){
+//                    $scope.sale.isFullInfo = false;
+//                    $scope.productApproval.status = 0;
+//                }
+//            }
+//            $scope.isFullInfo = $scope.isFullInfo && $scope.sale.isFullInfo;
+//        }, true);
+        
+        objects.forEach(function(object){
+            $scope.$watch(object, function () {
+                if($scope[object]){
+                    $scope[object].isFullInfo = true;
+                }
+                for(var key in $scope[object]){
+                    if(!$scope[object].hasOwnProperty(key) 
+                        || !in_array($scope[object].formAttributes, key)){ continue; } 
+                    if(typeof($scope[object][key]) === 'undefined' 
+                            || $scope[object][key] === null || $scope[object][key] === ''){
+                        $scope[object].isFullInfo = false;
+                        $scope.productApproval.status = 0;
+                    }
+                }
+                var objectsIsFullInfo = true;
+                objects.forEach(function(object){
+                    objectsIsFullInfo = objectsIsFullInfo && $scope[object].isFullInfo;
+                });
+                if($scope.project){
+                    $scope.isFullInfo = $scope.project.isFullInfo && objectsIsFullInfo;
+                }
+            }, true);
+        });
+                
+        $scope.$watch('isFullInfo', function(){
+            console.log('is full info');
+            console.log($scope.isFullInfo);
+        });
     }
 ]);

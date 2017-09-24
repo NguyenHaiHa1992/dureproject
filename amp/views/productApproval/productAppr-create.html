@@ -3,56 +3,93 @@
         <!-- form start -->
         <form role="form">
             <!-- start radio -->
-            <div class="row form-group" ng-class="{'has-error': productApprovalError.status.length != 0}">
-                <div class="col-md-3 text-right">
+            <div class="row form-group" >
+<!--                <div class="col-md-3 text-right">
                     <label>President</label>
+                </div>-->
+                <div class="col-md-9 col-md-offset-0">
+                    <div class="col-md-6 text-left">
+                        <label>
+                            Product Approved
+                        </label>
+                        <input type="radio" ng-model="productApproval.status" value="1" ng-disabled="!isFullInfo">
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>
+                            Product Not Approved
+                        </label>
+                        <input type="radio" ng-model="productApproval.status" value="0">
+                    </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="col-md-6">
-                        <label>
-                            <input type="radio" ng-model="productApprovalError.status" value="1">Product Approved
-                        </label>
-                    </div>
-                    <div class="col-md-6">
-                        <label>
-                            <input type="radio" ng-model="productApprovalError.status" value="0">Product Not Approved
-                        </label>
-                    </div>
-                    <label class="info warning">Can not be approved until all info is complete</label>
+                <div class="col-md-9 col-md-offset-0">
+                    <!--<label class="col-md-12 info warning">(Can not be approved until all info is complete)</label>-->
+                    <label class="col-md-12 info warning" style="font-style: italic">(All info must be completed before the project is approved. Please check project for incomplete info)</label>
                 </div>
             </div>
             <!-- end radio -->
             
-            <!-- start president_date -->
-            <div class="row form-group" ng-class="{'has-error': productApprovalError.president_date.length != 0}">
-                <div class="col-md-3 text-right">
-                    <label>President</label>
+            <div class="col-md-6">
+                <!-- start president -->
+                <div class="row form-group" ng-class="{'has-error': productApprovalError.president.length != 0}">
+                    <div class="col-md-3 text-left">
+                        <label>President</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input ng-model="productApproval.president" type="text" class="form-control"
+                               placeholder="President" />
+                        <span class="control-label" for="inputError" ng-show="productApprovalError.president.length != 0" ng-repeat="error in productApprovalError.president">
+                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                        </span>
+                    </div>
                 </div>
-                <div class="col-md-9">
-                    <input ng-model="productApproval.president_date" type="text" class="form-control datepicker"
-                           placeholder="YYYY-MM-DD" />
-                    <span class="control-label" for="inputError" ng-show="productApprovalError.president_date.length != 0" ng-repeat="error in productApprovalError.president_date">
-                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                    </span>
-                </div>
-            </div>
-            <!-- end president_date -->
+                <!-- end president -->
+                <!-- start qa_supervisor -->
+                <div class="row form-group" ng-class="{'has-error': productApprovalError.qa_supervisor.length != 0}">
+                    <div class="col-md-3 text-left">
+                        <label>QA Supervisor</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input ng-model="productApproval.qa_supervisor" type="text" class="form-control"
+                               placeholder="Qa supervisor" />
 
-            <!-- start qa_supervisor_date -->
-            <div class="row form-group" ng-class="{'has-error': productApprovalError.qa_supervisor_date.length != 0}">
-                <div class="col-md-3 text-right">
-                    <label>QA Supervisor</label>
+                        <span class="control-label" for="inputError" ng-show="productApprovalError.qa_supervisor.length != 0" ng-repeat="error in productApprovalError.qa_supervisor_date">
+                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                        </span>
+                    </div>
                 </div>
-                <div class="col-md-9">
-                    <input ng-model="productApproval.qa_supervisor_date" type="text" class="form-control datepicker"
-                           placeholder="YYYY-MM-DD" />
-
-                    <span class="control-label" for="inputError" ng-show="productApprovalError.qa_supervisor_date.length != 0" ng-repeat="error in productApprovalError.qa_supervisor_date">
-                        <i class="fa fa-times-circle-o"></i> Error: {{error}}
-                    </span>
-                </div>
+                <!-- end qa_supervisor_date -->
             </div>
-            <!-- end qa_supervisor_date -->
+            <div class="col-md-6">
+                <!-- start president_date -->
+                <div class="row form-group" ng-class="{'has-error': productApprovalError.president_date.length != 0}">
+                    <div class="col-md-3 text-left">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input ng-model="productApproval.president_date" type="text" class="form-control datepicker"
+                               placeholder="YYYY-MM-DD" />
+                        <span class="control-label" for="inputError" ng-show="productApprovalError.president_date.length != 0" ng-repeat="error in productApprovalError.president_date">
+                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                        </span>
+                    </div>
+                </div>
+                <!-- end president_date -->
+                <!-- start qa_supervisor_date -->
+                <div class="row form-group" ng-class="{'has-error': productApprovalError.qa_supervisor_date.length != 0}">
+                    <div class="col-md-3 text-left">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input ng-model="productApproval.qa_supervisor_date" type="text" class="form-control datepicker"
+                               placeholder="YYYY-MM-DD" />
+
+                        <span class="control-label" for="inputError" ng-show="productApprovalError.qa_supervisor_date.length != 0" ng-repeat="error in productApprovalError.qa_supervisor_date">
+                            <i class="fa fa-times-circle-o"></i> Error: {{error}}
+                        </span>
+                    </div>
+                </div>
+                <!-- end qa_supervisor_date -->
+            </div>
             
         </form>
     </div><!--/.col (left) -->
@@ -60,10 +97,10 @@
     <div class="col-md-6">
         <!-- start note -->
         <div class="row form-group" ng-class="{'has-error': productApproval.note.length != 0}">
-            <div class="col-md-3 text-right">
+            <div class="col-md-2 text-right">
                 <label>Note</label>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <textarea ck-editor ng-model="productApproval.note" type="text" class="form-control" placeholder="note"></textarea>
                 <span class="control-label" for="inputError" ng-show="productApproval.note.length != 0" ng-repeat="error in productApprovalError.note">
                     <i class="fa fa-times-circle-o"></i> Error: {{error}}
@@ -82,7 +119,7 @@
             <div class="row form-group">
                 <div class="col-md-12">
                     <file-uploader file-ids="productApproval.tmp_file_ids" model-id="productApproval.id"
-                                   sendemail="true" email-files = "email.documents" object-type="'product_development_file'"></file-uploader>
+                                   sendemail="true" email-files = "email.documents" object-type="'product_approval_file'"></file-uploader>
                 </div>
             </div>
             <!-- start photo and document -->

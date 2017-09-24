@@ -18,3 +18,16 @@ function scopeSetData(scope, data, callback){
 		}
 	}, 1000);
 }
+
+function in_array(array, search){
+    if(!array || !array.length){
+        return false;
+    }
+    var result = false;
+    array.forEach(function(item){
+        if(item === search){
+            result = true;
+        }
+    });
+    return result;
+}

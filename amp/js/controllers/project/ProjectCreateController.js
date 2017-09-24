@@ -1,7 +1,8 @@
 angular.module('app').controller('ProjectCreateController', ['$scope', '$timeout', '$http', '$location', '$rootScope','BASE_URL', '$state',
 function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     $scope.init_loaded = false;
-
+    $scope.isFullInfo = true;
+    $scope.formAttributes = [];
     $scope.createInit= function(){
         //  init Project
         function initProject(){
@@ -54,6 +55,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     
                     $scope.productApproval = {};
                     $scope.productApproval_error = {};
+
+                    $scope.formAttributes = data.formAttributes;
                 }
                 else{
                     $state.go('404');
@@ -68,7 +71,6 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
 
          initProject();
          // initProductDevelopment();
-         console.log("DEBUG : after create : " + JSON.stringify($scope.productDevelopment));
     };
 
     $scope.createInit();
@@ -83,8 +85,6 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             productApproval : $scope.productApproval,
         };
         
-        console.log("Project Information Post :" + JSON.stringify(information_post));
-
         $http.post(BASE_URL + '/project/create', information_post)
         .success(function(data) {
             if(data.success) {
@@ -92,12 +92,43 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $state.go('project-detail', {id: data.project.id});
             }
             else{
-                $scope.project_error= data.project.project_error;
-                $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
-                $scope.qa_error = data.qa.qa_error;
-                $scope.packProduct_error = data.packProduct.packProduct_error;
-                $scope.sale_error = data.sale.sale_error;
-                $scope.productApproval_error = data.productApproval.productApproval_error;
+                if(data.project.project_error){
+                    $scope.project_error= data.project.project_error;    
+                }
+                else{
+                    $scope.emptyError('project_error');
+                }
+                if(data.productDevelopment.productDevelopment_error){
+                    $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;    
+                }
+                else{
+                    $scope.emptyError('productDevelopment_error');
+                }
+                if(data.qa.qa_error){
+                    $scope.qa_error = data.qa.qa_error;    
+                }
+                else{
+                    $scope.emptyError('qa_error');
+                }
+                if(data.packProduct.packProduct_error){
+                    $scope.packProduct_error = data.packProduct.packProduct_error;    
+                }
+                else{
+                    $scope.emptyError('packProduct_error');
+                }
+                if(data.sale.sale_error){
+                    $scope.sale_error = data.sale.sale_error;    
+                }
+                else{
+                    $scope.emptyError('sale_error');
+                }
+                if(data.productApproval.productApproval_error){
+                    $scope.productApproval_error = data.productApproval.productApproval_error;    
+                }
+                else{
+                    $scope.emptyError('productApproval_error');
+                }
+                
             }
         })
         .error(function(data, status, headers, config) {
@@ -141,24 +172,18 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
     };
 
     $scope.showHideOther = function(){
-        console.log('DEBUG : function showHideOther');
         if ($scope.project.service == 'type_other') {
             $scope.project.other_service = "";
         }
-        console.log('DEBUG : end debug function showHideOther');
     };
     
     $scope.showHideLifeStyle = function(){
-        console.log("DEBUG : showHideLifeStyle");
-        console.log($scope.project.life_style);
         if($scope.project.life_style == 'type_other'){
             $scope.project.other_type_product = "";
         }
-        console.log('DEBUG : end debug function showHideLifeStyle');
     }
     
     $scope.addCustomer = function(){
-        console.log("DEBUG : function addCustomer");
         $('input, select').removeClass('ng-dirty');
         $scope.customer_error = {
             'ship_to' : [],
@@ -172,11 +197,9 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
         };
         $scope.customer = {};
         $('#customerAddModal').modal('show');
-        console.log("DEBUG : end function addCustomer");
     }
     
     $scope.submitAddCustomer = function(customer){
-        console.log("DEBUG : function submitAddCustomer");
         var information_post = customer;
         $http.post(BASE_URL + '/customer/create', information_post)
 	    .success(function(data) {
@@ -196,10 +219,8 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                             };
                             
                         //  update customer select
-                        console.log("DEBUG : customer  update success, get by add : " + JSON.stringify(data.customer));
                         $scope.project.customer_id = data.customer.id;
                         $scope.project_customers.push({'id' : data.customer.id ,'name' : data.customer.ship_address});
-                        console.log("DEBUG : project customer after update : " + JSON.stringify($scope.project_customers));
 		    }
 		    else{
                         $scope.customer = customer;
@@ -209,21 +230,88 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
 		.error(function(data, status, headers, config) {
                     $state.go('404');	
   		});
-        console.log("DEBUG : end funciton submitAddCustomer");
     }
+
+    var objects = ['sale', 'qa', 'productDevelopment', 'packProduct', 'productApproval'];
+        $scope.$watch('project', function () {
+            if($scope.project){
+                $scope.project.isFullInfo = true;
+            }
+            for(var key in $scope.project){
+                if(!$scope.project.hasOwnProperty(key) 
+                    || !in_array($scope.formAttributes, key)){ continue; } 
+                if(typeof($scope.project[key]) === 'undefined' 
+                        || $scope.project[key] === null || $scope.project[key] === ''){
+                    $scope.project.isFullInfo = false;
+                    $scope.productApproval.status = 0;
+                }
+            }
+            var objectsIsFullInfo = true;
+            objects.forEach(function(object){
+                if($scope[object]){
+                    objectsIsFullInfo = objectsIsFullInfo && $scope[object].isFullInfo;
+                }
+            });
+            if($scope.project){
+                $scope.isFullInfo = $scope.project.isFullInfo && objectsIsFullInfo;
+            }
+        }, true);
+        
+        objects.forEach(function(object){
+            $scope.$watch(object, function () {
+                if($scope[object]){
+                    $scope[object].isFullInfo = true;
+                }
+                if(object === 'productApproval'){
+                    console.log(object + ' change');
+                    console.log($scope[object]);
+                }
+                for(var key in $scope[object]){
+                    if(!$scope[object].hasOwnProperty(key) 
+                        || !in_array($scope[object].formAttributes, key)){ continue; } 
+                    if(typeof($scope[object][key]) === 'undefined' 
+                            || $scope[object][key] === null || $scope[object][key] === ''){
+                        $scope[object].isFullInfo = false;
+                        $scope.productApproval.status = 0;
+                    }
+                }
+                var objectsIsFullInfo = true;
+                objects.forEach(function(object){
+                    if($scope[object]){
+                        objectsIsFullInfo = objectsIsFullInfo && $scope[object].isFullInfo;
+                    }
+                });
+                if($scope.project){
+                    $scope.isFullInfo = $scope.project.isFullInfo && objectsIsFullInfo;
+                }
+            }, true);
+        });
+                
+        $scope.$watch('isFullInfo', function(){
+            console.log('is full info');
+            console.log($scope.isFullInfo);
+        });
+
+        $scope.emptyError = function(objectKey){
+            if(typeof $scope[objectKey] !== 'object'){
+                return false;
+            }
+            for(var k in $scope[objectKey]){
+                if(!$scope[objectKey].hasOwnProperty(k)) continue;
+                $scope[objectKey][k] = [];
+            }
+        }
     
     // Jquery collapse
     jQuery("[data-widget='collapse']").click(function() {
             //Find the box parent........
             var first = jQuery(this).hasClass('box-first');
             var box = jQuery(this).parents(".box").first();
-            console.log("IsFirst : " + first);
             //Find the body and the footer
             var bf = box.find(".box-body, .box-footer");
             if (!jQuery(this).children().hasClass("fa-plus")) {
                     jQuery(this).children(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
                     bf.slideUp();
-                    console.log("Convert minus into plus");
                     if(!first){
                         box.parent(".box-over").removeClass("col-md-12").addClass("col-md-6");
                     }
@@ -232,7 +320,6 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                     jQuery(this).children(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
                     bf.slideDown();
                     if(!first){
-                        console.log("Convert plus into minus");
                         box.parent(".box-over").removeClass("col-md-6").addClass("col-md-12");
                     }
             }

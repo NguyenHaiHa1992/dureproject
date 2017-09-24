@@ -31,7 +31,7 @@ class PackProductService extends iPhoenixService{
             $result['is_update'] = false;
             $result['is_create'] = true;
         }
-
+        $result['packProduct']['formAttributes'] = self::formAttributes();
         $result['packProduct_empty'] = $get_empty_packProduct['packProduct'];
         $get_empty_packProduct_error = PackProductService::getEmptyPackProductError();
         $result['packProduct_error'] = $get_empty_packProduct_error['packProduct_error'];
@@ -124,7 +124,9 @@ class PackProductService extends iPhoenixService{
         
         $packProduct = PackProductService::beforeSave($packProduct);
         if ($packProduct->validate()) {
-            $packProduct->save();
+            if(isset($data['_is_save']) && $data['_is_save']){
+                $packProduct->save();
+            }
             $result['success'] = true;
             $result['id'] = $packProduct->id;
             $new_packProduct = self::getPackProductById(array('id' => $packProduct->id));
@@ -152,7 +154,9 @@ class PackProductService extends iPhoenixService{
         $packProduct->attributes = $data;
         $packProduct = PackProductService::beforeSave($packProduct);
         if ($packProduct->validate()) {
-            $packProduct->save();
+            $packProduct->save();if(isset($data['_is_save']) && $data['_is_save']){
+                $packProduct->save();
+            }
             $result['success'] = true;
             $packProduct_array = PackProductService::getPackProductById(array('id' => $packProduct->id));
             $get_empty_packProduct_error = PackProductService::getEmptyPackProductError();
@@ -201,11 +205,11 @@ class PackProductService extends iPhoenixService{
         }
         
         if(isset($packProduct->date) && !is_int($packProduct->date)){
-            $packProduct->date = strtotime($packProduct->date);
+            $packProduct->date = strtotime($packProduct->date) ? strtotime($packProduct->date) : 0;
         }
         
         if(isset($packProduct->plant_manager_date) && !is_int($packProduct->plant_manager_date)){
-            $packProduct->plant_manager_date = strtotime($packProduct->plant_manager_date);
+            $packProduct->plant_manager_date = strtotime($packProduct->plant_manager_date) ? strtotime($packProduct->plant_manager_date) : 0;
         }
         return $packProduct;
     }
@@ -234,6 +238,9 @@ class PackProductService extends iPhoenixService{
             $result['date'] = date('Y-m-d', $result['date']);
             //                }
         }
+        else{
+            $result['date'] = null;
+        }
         
         if (isset($result['plant_manager_date']) && $result['plant_manager_date']) {
             //                if(is_integer($packProduct['date'])){
@@ -242,6 +249,15 @@ class PackProductService extends iPhoenixService{
             //                }
         }
         $result['tmp_file_ids'] = $packProduct->tmp_file_ids;
+        $result['formAttributes'] = self::formAttributes();
         return $result;
     }
+    
+    public static function formAttributes(){
+        return ['date', 'customer_id', 'begin_sample_weight', 'pack_use', 'net_weight', 'density', 
+            'length_pack', 'long_heart_temp', 'cross_heart_temp', 'dose_volume',
+            'rev_dose', 'auger_speed', 'pack_per_minute', 'amount_left',
+            'carton_use', 'amoutn_per_carton', 'weight_carton', 'pack_per_carton', 
+            'customer_request_spec', 'pack_net_weight', 'note', 'plant_manager', 'plant_manager_date'];
+    }  
 }

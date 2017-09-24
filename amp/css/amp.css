@@ -707,3 +707,11 @@ header .logo span{
     width: 20px;
     display: inline-block;
 }
+
+.btn-warning{
+    border-color: rgba(255, 255, 255, 0);
+}
+
+.alert-warning{
+    background-color: #f39c12 !important;
+}

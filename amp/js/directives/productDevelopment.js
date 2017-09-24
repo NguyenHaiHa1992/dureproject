@@ -13,10 +13,8 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
     controller: ['$scope', '$http', '$rootScope', 'BASE_URL', '$state' ,'$stateParams', function ($scope, $http, $rootScope, BASE_URL, $state, $stateParams){
         $scope.root = $rootScope;
         $scope.init_loaded = false;
-        console.log("DEBUG : init ProductDevelopment");
 
         $scope.createInit = function () {
-            console.log("Vao createInit");
             var post_information = {};
             if (jQuery.type($rootScope.view_detail_project_id) !== "undefined" && $rootScope.view_detail_customer_id !== '') {
                 post_information = {id: $rootScope.view_detail_customer_id};
@@ -30,14 +28,14 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                         if (data.success) {
                             // $scope.productDevelopment = data.productDevelopment;
                             $scope.productDevelopment_empty = data.productDevelopment_empty;
-                            $scope.productDevelopmentError = data.productDevelopment_error;
+                            // $scope.productDevelopmentError = data.productDevelopment_error;
                             $scope.productDevelopmentError_empty = data.productDevelopment_error_empty;
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
-                            $scope.scopeSetData(data.productDevelopment);
+                            $scope.scopeSetData($scope.productDevelopment, data.productDevelopment);
+                            $scope.scopeSetData($scope.productDevelopmentError, data.productDevelopment_error);
                             if($scope.update){
-                                console.log("DEBUG : on getProductProjectById");
                                 $scope.getProductProjectById();
                             }
                         } else {
@@ -50,8 +48,6 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
         };
 
         $scope.createInit();
-
-        console.log("DEBUG : end init productDevelopment");
 
         $scope.getProductProjectById = function () {
             $http.post(BASE_URL + '/productDevelopment/getProductByProjectId', {id: $stateParams.id})
@@ -71,19 +67,15 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
         };
         
         $scope.showHideOther = function($model ,compare){
-            console.log('DEBUG : function showHideOther');
             if ($model == compare) {
                 $model = "";
             }
-            console.log('DEBUG : end debug function showHideOther');
         };
         $scope.scopeSetData = function($obj,data){
             if(typeof data !== 'object'){
-                console.log(1);
                 return;
             }
             else{
-                console.log(2);
                 for(var dataKey in data){
                     if(!data.hasOwnProperty(dataKey)) continue;
                         $obj[dataKey] = data[dataKey];

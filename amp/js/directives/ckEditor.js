@@ -45,7 +45,7 @@
                     ck.on('change', updateModel);
                     ck.on('key', updateModel);
                     ck.on('dataReady', updateModel);
-                }, 1000);
+                }, 1300);
             }
         };
     }]);

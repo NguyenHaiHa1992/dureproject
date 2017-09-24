@@ -34,9 +34,12 @@
             </div>
             <div class="col-md-12 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header">
+                    <div class="box-header" ng-class="{'alert-warning': project.isFullInfo === false}">
                         <h3 class="box-title">Project Details</h3>
                         <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning" ng-show="project.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
                             <button type="button" class="btn btn-box-tool box-first" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>
                         </div>
@@ -46,13 +49,13 @@
                             <!-- general form elements -->
                             <!-- form start -->
                             <form role="form">
-                                <div class="row form-group" ng-class="{'has-error': project_error.date.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Date <span class="required">*</span></label>
+                                        <label>Brand/Product</label>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="project.date" type="text" class="form-control datepicker" placeholder="date">
-                                        <span class="control-label" for="inputError" ng-show="project_error.date.length != 0" ng-repeat="error in project_error.date">
+                                    <div class="    col-md-9">
+                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
+                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -105,13 +108,13 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.date.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Brand/Product</label>
+                                        <label>Date</label>
                                     </div>
-                                    <div class="    col-md-9">
-                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
-                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
+                                    <div class="col-md-9">
+                                        <input ng-model="project.date" type="text" class="form-control datepicker" placeholder="date">
+                                        <span class="control-label" for="inputError" ng-show="project_error.date.length != 0" ng-repeat="error in project_error.date">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -207,7 +210,7 @@
                         <div class="col-md-6">
                             <div class="row form-group" ng-class="{'has-error': project_error.note.length != 0}">
                                 <div class="col-md-3 text-right">
-                                    <label>Note<span class="required">*</span></label>
+                                    <label>Note</label>
                                 </div>
                                 <div class="col-md-9">
                                     <textarea ck-editor ng-model="project.note" type="text" class="form-control" placeholder="note"></textarea>
@@ -225,15 +228,18 @@
             <!-- Start Sales -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" >
-                    <div class="box-header sub-box-title">
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': sale.isFullInfo === false}">
                         <h3 class="box-title">Sales</h3>
                         <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning" ng-show="sale.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                         <sale sale="sale" ng-if="sale" sale-error="sale_error"
+                         <sale sale="sale" sale-error="sale_error"
                                ng-if="sale && sale_error && typeof(project.service) !== 'undefined'"
                                project-service="project.service"></sale> 
                     </div>
@@ -244,9 +250,12 @@
             <!--  Start Product Development -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header sub-box-title">
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': productDevelopment.isFullInfo === false}">
                         <h3 class="box-title">Product Development</h3>
                         <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning"ng-show="productDevelopment.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
                         </div>
                     </div>
@@ -262,9 +271,12 @@
             <!--  Start Package and Production -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header sub-box-title">
-                        <h3 class="box-title">PACKAGING TEST/ PRODUCTION</h3>
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': packProduct.isFullInfo === false}">
+                        <h3 class="box-title">Packaging Test/ Product</h3>
                         <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning" ng-show="packProduct.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
                         </div>
                     </div>
@@ -279,9 +291,12 @@
             <!--  Start QA -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header sub-box-title">
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': qa.isFullInfo === false}">
                         <h3 class="box-title">Q/A</h3>
                         <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning"ng-show="qa.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i></button>
                         </div>
                     </div>
@@ -297,9 +312,12 @@
             <!-- Start APPROVALS -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" >
-                    <div class="box-header sub-box-title">
-                        <h3 class="box-title">APPROVALS</h3>
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': productApproval.isFullInfo === false}">
+                        <h3 class="box-title">Approvals</h3>
                         <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning"ng-show="productApproval.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>
                         </div>
@@ -316,7 +334,7 @@
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" >
                     <div class="box-header sub-box-title">
-                        <h3 class="box-title">HISTORY</h3>
+                        <h3 class="box-title">History</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
                             </button>

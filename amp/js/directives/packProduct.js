@@ -26,8 +26,6 @@ angular.module('app').directive('packProduct',[ '$http', '$state', 'BASE_URL', '
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
                             $scope.scopeSetData($scope.packProduct ,data.packProduct);
-                            console.log('$scope.packProductError');
-                            console.log($scope.packProductError);
                             $scope.scopeSetData($scope.packProductError , data.packProduct_error);
                             if($scope.update){
                                 $scope.getPackProductByProjectId();
