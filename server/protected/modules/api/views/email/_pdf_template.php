@@ -19,7 +19,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td colspan="2" align="CENTER">
-                                                            <img style="width: 200px" src="/home/pmasset/public_html/server/data/images/logo.png"/>
+                                                            <img style="width: 400px" src="/amp/images/pdf_logo.png"/>
                                                         </td>
                                                     </tr>
                                                     <tr>
