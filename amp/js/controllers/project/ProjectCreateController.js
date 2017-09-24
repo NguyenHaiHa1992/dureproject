@@ -95,20 +95,38 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 if(data.project.project_error){
                     $scope.project_error= data.project.project_error;    
                 }
+                else{
+                    $scope.emptyError('project_error');
+                }
                 if(data.productDevelopment.productDevelopment_error){
                     $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;    
+                }
+                else{
+                    $scope.emptyError('productDevelopment_error');
                 }
                 if(data.qa.qa_error){
                     $scope.qa_error = data.qa.qa_error;    
                 }
+                else{
+                    $scope.emptyError('qa_error');
+                }
                 if(data.packProduct.packProduct_error){
                     $scope.packProduct_error = data.packProduct.packProduct_error;    
+                }
+                else{
+                    $scope.emptyError('packProduct_error');
                 }
                 if(data.sale.sale_error){
                     $scope.sale_error = data.sale.sale_error;    
                 }
+                else{
+                    $scope.emptyError('sale_error');
+                }
                 if(data.productApproval.productApproval_error){
                     $scope.productApproval_error = data.productApproval.productApproval_error;    
+                }
+                else{
+                    $scope.emptyError('productApproval_error');
                 }
                 
             }
@@ -273,6 +291,16 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
             console.log('is full info');
             console.log($scope.isFullInfo);
         });
+
+        $scope.emptyError = function(objectKey){
+            if(typeof $scope[objectKey] !== 'object'){
+                return false;
+            }
+            for(var k in $scope[objectKey]){
+                if(!$scope[objectKey].hasOwnProperty(k)) continue;
+                $scope[objectKey][k] = [];
+            }
+        }
     
     // Jquery collapse
     jQuery("[data-widget='collapse']").click(function() {

@@ -20,7 +20,7 @@ angular.module('app').directive('qa',[ '$http', '$state', 'BASE_URL', '$rootScop
                         $scope.init_loaded = true;
                         if (data.success) {
                             $scope.qa_empty = data.qa_empty;
-                            $scope.qaError = data.qa_error;
+                            // $scope.qaError = data.qa_error;
                             $scope.qaError_empty = data.qaError_empty;
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;

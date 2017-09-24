@@ -33,8 +33,6 @@
                 </div>
             </div>
 
-
-
             <div class="col-md-12 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
                     <div class="box-header " ng-class="{'alert-warning': project.isFullInfo === false}">
@@ -53,13 +51,13 @@
                             <!-- general form elements -->
                             <!-- form start -->
                             <form role="form">
-                                <div class="row form-group" ng-class="{'has-error': project_error.date.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Date <span class="required">*</span></label>
+                                        <label>Brand/Product</label>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="project.date" type="text" class="form-control datepicker" placeholder="date">
-                                        <span class="control-label" for="inputError" ng-show="project_error.date.length != 0" ng-repeat="error in project_error.date">
+                                    <div class="    col-md-9">
+                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
+                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -112,13 +110,13 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.date.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Brand/Product</label>
+                                        <label>Date</label>
                                     </div>
-                                    <div class="    col-md-9">
-                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
-                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
+                                    <div class="col-md-9">
+                                        <input ng-model="project.date" type="text" class="form-control datepicker" placeholder="date">
+                                        <span class="control-label" for="inputError" ng-show="project_error.date.length != 0" ng-repeat="error in project_error.date">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -301,6 +299,48 @@
             </div>
             <!-- End Q/A-->
             
+            <!-- Begin Approvals -->
+            <div class="col-md-6 box-over">
+                <div class="box no-border collapsed-box" style="overflow: auto;">
+                    <div class="box-header sub-box-title" ng-class="{'alert-warning': productApproval.isFullInfo === false}">
+                        <h3 class="box-title">Approvals</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn-warning" ng-show="productApproval.isFullInfo === false">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body overhidden">
+                        <product-approval product-approval="productApproval" 
+                                    is-full-info="isFullInfo"
+                                    product-approval-error="productApproval_error" 
+                                    ng-if="productApproval && is_update && typeof(isFullInfo) !== 'undefined' && productApproval_error" update="true"></product-approval>
+                    </div>
+                </div>
+            </div>
+            <!-- End Approvals-->
+
+            <!-- Begin History -->
+            <div class="col-md-6 box-over">
+                <div class="box no-border collapsed-box" style="overflow: auto;">
+                    <div class="box-header sub-box-title">
+                        <h3 class="box-title">History</h3>
+                        <div class="box-tools pull-right">
+<!--                            <button type="button" class="btn btn-box-tool btn-warning">
+                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
+                            </button>-->
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body overhidden">
+                    </div>
+                </div>
+            </div>
+            <!-- End History-->
+
             <!-- Begin Notes -->
             <div class="col-md-6 box-over">
                 <div class="box no-border collapsed-box" style="overflow: auto;">
@@ -327,48 +367,6 @@
                 </div>
             </div>
             <!-- End Notes-->
-            
-            <!-- Begin Approvals -->
-            <div class="col-md-6 box-over">
-                <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header sub-box-title" ng-class="{'alert-warning': productApproval.isFullInfo === false}">
-                        <h3 class="box-title">Approvals</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool btn-warning" ng-show="productApproval.isFullInfo === false">
-                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="box-body overhidden">
-                        <product-approval product-approval="productApproval" 
-                                    is-full-info="isFullInfo"
-                                    product-approval-error="productApproval_error" 
-                                    ng-if="productApproval && is_update && typeof(isFullInfo) !== 'undefined' && productApproval_error" update="true"></product-approval>
-                    </div>
-                </div>
-            </div>
-            <!-- End Approvals-->
-            
-            <!-- Begin History -->
-            <div class="col-md-6 box-over">
-                <div class="box no-border collapsed-box" style="overflow: auto;">
-                    <div class="box-header sub-box-title">
-                        <h3 class="box-title">History</h3>
-                        <div class="box-tools pull-right">
-<!--                            <button type="button" class="btn btn-box-tool btn-warning">
-                                <i class="fa fa-warning-triangle" aria-hidden="true"></i>
-                            </button>-->
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus box-title"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="box-body overhidden">
-                    </div>
-                </div>
-            </div>
-            <!-- End History-->
             
             <!-- Photo and documents-->
             <div class="col-md-6 box-over">

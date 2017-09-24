@@ -28,12 +28,13 @@ angular.module('app').directive('productDevelopment',[ '$http', '$state', 'BASE_
                         if (data.success) {
                             // $scope.productDevelopment = data.productDevelopment;
                             $scope.productDevelopment_empty = data.productDevelopment_empty;
-                            $scope.productDevelopmentError = data.productDevelopment_error;
+                            // $scope.productDevelopmentError = data.productDevelopment_error;
                             $scope.productDevelopmentError_empty = data.productDevelopment_error_empty;
                             $scope.libYesNo = [{'id': '1', 'name': 'Yes'}, {'id': '0', 'name': 'No'}];
                             $scope.is_update = data.is_update;
                             $scope.is_create = data.is_create;
                             $scope.scopeSetData($scope.productDevelopment, data.productDevelopment);
+                            $scope.scopeSetData($scope.productDevelopmentError, data.productDevelopment_error);
                             if($scope.update){
                                 $scope.getProductProjectById();
                             }

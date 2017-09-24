@@ -49,13 +49,13 @@
                             <!-- general form elements -->
                             <!-- form start -->
                             <form role="form">
-                                <div class="row form-group" ng-class="{'has-error': project_error.date.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Date <span class="required">*</span></label>
+                                        <label>Brand/Product</label>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input ng-model="project.date" type="text" class="form-control datepicker" placeholder="date">
-                                        <span class="control-label" for="inputError" ng-show="project_error.date.length != 0" ng-repeat="error in project_error.date">
+                                    <div class="    col-md-9">
+                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
+                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -108,13 +108,13 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group" ng-class="{'has-error': project_error.project_name.length != 0}">
+                                <div class="row form-group" ng-class="{'has-error': project_error.date.length != 0}">
                                     <div class="col-md-3 text-right">
-                                        <label>Brand/Product</label>
+                                        <label>Date</label>
                                     </div>
-                                    <div class="    col-md-9">
-                                        <input ng-model="project.project_name" type="text" class="form-control" placeholder="project number">
-                                        <span class="control-label" for="inputError" ng-show="project_error.project_name.length != 0" ng-repeat="error in project_error.project_name">
+                                    <div class="col-md-9">
+                                        <input ng-model="project.date" type="text" class="form-control datepicker" placeholder="date">
+                                        <span class="control-label" for="inputError" ng-show="project_error.date.length != 0" ng-repeat="error in project_error.date">
                                             <i class="fa fa-times-circle-o"></i> Error: {{error}}
                                         </span>
                                     </div>
@@ -210,7 +210,7 @@
                         <div class="col-md-6">
                             <div class="row form-group" ng-class="{'has-error': project_error.note.length != 0}">
                                 <div class="col-md-3 text-right">
-                                    <label>Note<span class="required">*</span></label>
+                                    <label>Note</label>
                                 </div>
                                 <div class="col-md-9">
                                     <textarea ck-editor ng-model="project.note" type="text" class="form-control" placeholder="note"></textarea>
@@ -239,7 +239,7 @@
                         </div>
                     </div>
                     <div class="box-body overhidden">
-                         <sale sale="sale" ng-if="sale" sale-error="sale_error"
+                         <sale sale="sale" sale-error="sale_error"
                                ng-if="sale && sale_error && typeof(project.service) !== 'undefined'"
                                project-service="project.service"></sale> 
                     </div>
