@@ -304,7 +304,7 @@ class ProjectController extends Controller {
         }
     }
 
-    public static function actionExportPdf($project_id) {
+    public function actionExportPdf($project_id) {
         // Project Info
         $project = Project::model()->findByAttributes(["id" => $project_id, "in_trash" => 0]);
 
