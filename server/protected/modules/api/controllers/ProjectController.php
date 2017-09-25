@@ -332,6 +332,8 @@ class ProjectController extends Controller {
         }
 
         $pdf_file = $check_file;
+        
+        $projectService = $project->service;
 
         // Create content
         $projectContent = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
@@ -346,6 +348,7 @@ class ProjectController extends Controller {
                             '/protected/modules/api/views/email/_sale_pdf.php',
                 array(
                     'sale' => $sale,
+                    'projectService' => $projectService,
                 )
                 ,true , true);
         
@@ -353,6 +356,7 @@ class ProjectController extends Controller {
                             '/protected/modules/api/views/email/_productDev_pdf.php',
                 array(
                     'productDev' => $productDev,
+                    'projectService' => $projectService,
                 )
                 ,true , true);
         $qaContent = "";
@@ -362,15 +366,16 @@ class ProjectController extends Controller {
                             '/protected/modules/api/views/email/_qa_pdf.php',
                 array(
                     'qa' => $qa,
+                    'projectService' => $projectService,
                 )
                 ,true , true);
         
-//        $productApprContent = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
-//                            '/protected/modules/api/views/email/_productAppr_pdf.php',
-//                array(
-//                    'productAppr' => $productAppr,
-//                )
-//                ,true , true);
+        $productApprContent = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
+                            '/protected/modules/api/views/email/_productAppr_pdf.php',
+                array(
+                    'productAppr' => $productAppr,
+                )
+                ,true , true);
         
         $css = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
                             '/protected/modules/api/views/email/style.php');
@@ -380,8 +385,8 @@ class ProjectController extends Controller {
         $detail_pdf = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . '/protected/modules/api/views/email/_pdf_template.php', array(
             'content' => $content,
                 ), true, true);
-        echo $detail_pdf;
-        exit;
+//        echo $detail_pdf;
+//        exit;
         iPhoenixUrl::exportPdfFromHTML($detail_pdf, $pdf_file, 'portrait');
 
         echo json_encode([

@@ -19,7 +19,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td colspan="2" align="CENTER">
-                                                            <img style="width: 400px" src="/amp/images/pdf_logo.png"/>
+                                                            <img style="width: 400px" src="http://dev.dureproject.com/amp/images/pdf_logo.png"/>
                                                         </td>
                                                     </tr>
                                                     <tr>

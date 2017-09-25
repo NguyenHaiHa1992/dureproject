@@ -235,15 +235,22 @@ class Sale extends CActiveRecord
 		);
 	}
 
-	// public static function getLabelByType($type){
- //                $listTypeProduct = self::getTypeOfProduct();
- //                foreach($listTypeProduct as $idx => $ele){
- //                    if($ele['id'] == $type){
- //                        return $ele['name'];
- //                    }
- //                }
- //                return 'Other';
-	// }
+	 public static function getLabelByType($type, $id){
+                $listType = self::getTypeProductInfo();
+                
+                 switch ($type) {
+                     case "product_info" :  $listType = self::getTypeProductInfo();break;
+                     case "of_packing" :  $listType = self::getTypeOfPacking();break;
+                     case "pack_plain" : $listType = self::getPackPlain();break;
+                     case "pack_customer" : $listType = self:: getPackCustomer();break;
+                 }
+                 foreach($listType as $idx => $ele){
+                     if($ele['id'] == $id){
+                         return $ele['name'];
+                     }
+                 }
+                 return 'Other';
+	 }
 
 	public static function getTypeOfPacking(){
 		return array(
