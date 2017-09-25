@@ -1,19 +1,20 @@
-<div class="col-md-12">
-    <div class="box-header">
-        <h3 class="box-title">Product Development</h3>
-    </div>
-</div>
 
 <?php
-if(!$productDev) {
-    return "";
-}
-
-$tmpFileIds = $productDev->tmp_file_ids;
+$tmpFileIds = isset($productDev->tmp_file_ids) ? $productDev->tmp_file_ids : 0;
 $documentsTmp = FileService::getFilesByIds(['ids' => $tmpFileIds]);
 $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isset($documentsTmp['files'])
         ? $documentsTmp['files'] : array();
 ?>
+
+<table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="project_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td style="color:#FAFAFA;border: none;font-size: x-large;font-weight: bold;text-align: center;display: block;padding: 10px;position: relative;background: #4d4d4f;text-transform: uppercase;">
+                Product Development
+            </td>
+        </tr>
+    </tbody>
+</table>
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="project_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
