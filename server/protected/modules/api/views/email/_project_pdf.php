@@ -9,11 +9,15 @@ $customer = Customer::model()->findByPk($project->customer_id);
 $customerName = $customer ? $customer->ship_address : "";
 ?>
 
-<div class="col-md-12">
-    <div class="box-header">
-        <h3 class="box-title">Project Details</h3>
-    </div>
-</div>
+<table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="project_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td style="color:#FAFAFA;border: none;font-size: x-large;font-weight: bold;text-align: center;display: block;padding: 10px;position: relative;background: #4d4d4f;text-transform: uppercase;">
+            Project Details
+            </td>
+        </tr>
+    </tbody>
+</table>
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="project_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
@@ -22,30 +26,18 @@ $customerName = $customer ? $customer->ship_address : "";
             <td style="width: 30%"><b>Primary Contact</b></td>
             <td style="width: 20%"><?= $project->primary_contact;?></td>
         </tr>
-<!--        <tr>
-            <td><b>Primary Contact</b></td>
-            <td><?= $project->primary_contact;?></td>
-        </tr>-->
         <tr>
             <td><b>Company</b></td>
             <td><?= $customerName;?></td>
             <td><b>Project#</b></td>
             <td><?= $project->project_number;?></td>
         </tr>
-<!--        <tr>
-            <td><b>Project#</b></td>
-            <td><?= $project->project_number;?></td>
-        </tr>-->
         <tr>
             <td><b>Brand/Product</b></td>
             <td><?=$project->project_name?></td>
             <td><b>Volumn</b></td>
             <td><?= $project->volume;?></td>
         </tr>
-<!--        <tr>
-            <td><b>Price Point</b></td>
-            <td><?= $project->price_point;?></td>
-        </tr>-->
         <tr>
             <td><b>Price Point</b></td>
             <td><?= $project->price_point;?></td>

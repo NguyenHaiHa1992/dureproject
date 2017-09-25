@@ -1,31 +1,36 @@
-
-<div class="col-md-12">
-    <div class="box-header">
-        <h3 class="box-title">Approvals</h3>
-    </div>
-</div>
 <?php
-if(!$productAppr) {
-    return "";
-}
-
-$tmpFileIds = $productAppr->tmp_file_ids;
+$tmpFileIds = isset($productAppr->tmp_file_ids) ? $productAppr->tmp_file_ids : 0;
 $documentsTmp = FileService::getFilesByIds(['ids' => $tmpFileIds]);
 $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isset($documentsTmp['files'])
         ? $documentsTmp['files'] : array();
 ?>
+
+<table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="project_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td style="color:#FAFAFA;border: none;font-size: x-large;font-weight: bold;text-align: center;display: block;padding: 10px;position: relative;background: #4d4d4f;text-transform: uppercase;">
+                Approvals
+            </td>
+        </tr>
+    </tbody>
+</table>
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="project_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
             <td style="width: 30%"><b>Status</b></td>
-            <td style="width: 20%"><?= $productAppr->status ? "Product Approved" : "Product Not Approved"?></td>
+            <td style="width: 20%"><?= isset($productAppr->status) ? ($productAppr->status ? "Product Approved" : "Product Not Approved") : ""?></td>
         </tr>
-        
         <tr>
             <td style="width: 30%"><b>President</b></td>
-            <td style="width: 20%"><?= date("d-M-Y" , $productAppr->president_date)?></td>
-            <td style="width: 30%">QA Supervisor</td>
-            <td style="width: 20%"><?= date("d-M-Y" ,$productAppr->qa_supevisor_date)?></td>
+            <td style="width: 20%"><?= isset($productAppr->president)? $productAppr->president :""?></td>
+            <td style="width: 30%">Date</td>
+            <td style="width: 20%"><?= isset($productAppr->president_date) ? date("d-M-Y" , $productAppr->president_date) : ""?></td>
+        </tr>
+        <tr>
+            <td style="width: 30%"><b>QA Supervisor</b></td>
+            <td style="width: 20%"><?= isset($productAppr->qa_supervisor) ? $productAppr->qa_supervisor : "";?></td>
+            <td style="width: 30%">Date</td>
+            <td style="width: 20%"><?= isset($productAppr->qa_supevisor_date) ? date("d-M-Y" ,$productAppr->qa_supevisor_date):""?></td>
         </tr>
     </tbody>
 </table>
@@ -77,7 +82,7 @@ Notes
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
-            <td><?= $productAppr->note ?></td>
+            <td><?= isset($productAppr->note) ? $productAppr->note : ""?></td>
         </tr>
     </tbody>
 </table>

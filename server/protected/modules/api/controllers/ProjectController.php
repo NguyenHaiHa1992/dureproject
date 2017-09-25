@@ -320,7 +320,9 @@ class ProjectController extends Controller {
         // Note
         // product Approval
         $productAppr = ProductApproval::model()->findByAttributes(["project_id" => $project_id, "in_trash" => 0]);
-
+        
+        // pack Product 
+        $packProduct = PackProduction::model()->findByAttributes(["project_id" => $project_id, "in_trash" => 0]);
         // photo and document
 
         $pdf_file = 'EXPORT_' . date('Ymd', $project->created_time) . '_' . $project->id;
@@ -370,6 +372,14 @@ class ProjectController extends Controller {
                 )
                 ,true , true);
         
+        $packProductContent = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
+                            '/protected/modules/api/views/email/_packProduct_pdf.php',
+                array(
+                    'packProduct' => $packProduct,
+                    'projectService' => $projectService,
+                )
+                ,true, true);
+        
         $productApprContent = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
                             '/protected/modules/api/views/email/_productAppr_pdf.php',
                 array(
@@ -379,7 +389,7 @@ class ProjectController extends Controller {
         
         $css = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
                             '/protected/modules/api/views/email/style.php');
-        $content = $projectContent . "</br>" . $saleContent . "</br>" . $productDevContent . "</br>" . $qaContent . "</br>" . $productApprContent."<br/>" . $css;
+        $content = $projectContent . "<br />" . $saleContent . "<br />" . $productDevContent . "<br />" . $qaContent . "<br />" . $packProductContent . "<br />" . $productApprContent."<br />" . $css;
         
         // Create pdf
         $detail_pdf = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . '/protected/modules/api/views/email/_pdf_template.php', array(
