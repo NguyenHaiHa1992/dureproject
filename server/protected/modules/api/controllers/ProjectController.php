@@ -509,5 +509,4 @@ class ProjectController extends Controller {
             'result' => $result
         ]);
     }
->>>>>>> 9f5ce7cbd96a9f9e331eb0cc1abc392db601fe6d
 }
