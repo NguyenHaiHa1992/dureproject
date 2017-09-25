@@ -178,7 +178,7 @@ angular.module('app').directive('fileUploader',[ '$rootScope', '$http', '$state'
                 }
             })
             .error(function (data, status, headers, config) {
-                $state.go('404');
+//                $state.go('404');
             });
       };
 

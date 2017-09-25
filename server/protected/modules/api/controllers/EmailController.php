@@ -32,6 +32,7 @@ class EmailController extends Controller {
     }
 
     public function actionSend() {
+        set_time_limit(0);
         $data = EmailService::data();
         $check_result = true;
         $error_message = array();
@@ -50,118 +51,15 @@ class EmailController extends Controller {
                     $cc_emails[] = $email['text'];
                 }
             }
-
+            $email_to_array = explode(',', $email['to']);
+            $email_to = array();
+            foreach($email_to_array as $email_to_array_item){
+                $email_to[] = trim($email_to_array_item);
+            }
             switch ($data['type']) {
-                case 'order':
-                    $option = isset($data['option']) ? $data['option'] : "";
-                    $purchase_order = PurchaseOrder::model()->findByPk($data['id']);
-
-                    if (isset($purchase_order)) {
-                        if (isset($purchase_order->client)) {
-                            // Get client info
-                            $client = $purchase_order->client;
-
-                            // Create detail PO html
-                            $criteria = new CDbCriteria();
-                            $criteria->compare('purchase_order_id', $purchase_order->id);
-                            $list_po_detail = PurchaseOrderDetail::model()->findAll($criteria);
-
-                            $criteria = new CDbCriteria();
-                            $criteria->compare('purchase_order_id', $purchase_order->id);
-                            $list_po_items = PurchaseOrderItem::model()->findAll($criteria);
-
-                            $detail = $this->renderPartial('_purchase_oder_detail_template', array(
-                                'purchase_order' => $purchase_order,
-                                'list_po_detail' => $list_po_detail,
-                                'list_po_items' => $list_po_items,
-                                'option' => $option
-                                    ), true, true);
-
-                            // Create html
-                            $html = $this->renderPartial('_email_template', array(
-                                'header' => $purchase_order->po_code . ' - Request Order',
-                                'name' => $client->name,
-                                'email' => $client->email,
-                                'address' => $client->address1,
-                                'phone' => $client->phone,
-                                'subject' => $email_subject,
-                                'po_code' => $purchase_order->po_code,
-                                'content' => '<div style="padding:5px"><p>' . nl2br($email_content) . '</p></div><div style="padding: 5px;">' . $detail . "</div>",
-                                'link' => Yii::app()->createAbsoluteUrl('api/site/orderReply', array(
-                                    'id' => $purchase_order->id,
-                                    'key' => sha1($purchase_order->id . '_accept_' . Yii::app()->params['default_salt']),
-                                    'action' => 'accept'
-                                )),
-                                'decline_link' => Yii::app()->createAbsoluteUrl('api/site/orderReply', array(
-                                    'id' => $purchase_order->id,
-                                    'key' => sha1($purchase_order->id . '_decline_' . Yii::app()->params['default_salt']),
-                                    'action' => 'decline'
-                                )),
-                                    ), true);
-
-                            // Create attachment pdf
-                            // Check whether file exists
-                            $po_code = preg_replace('/\s+/', '_', $purchase_order->po_code);
-                            $po_file = $po_code . '_Order' . ucfirst($option);
-                            $check_file = $po_file;
-                            $i = 1;
-                            while (file_exists(Yii::getPathOfAlias('webroot') . '/data/pdf/' . $check_file . '.pdf')) {
-                                $check_file = $po_file . '_' . $i;
-                                $i++;
-                            }
-
-                            $po_file = $check_file;
-
-                            $detail_pdf = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . '/protected/modules/api/views/email/_purchase_order_pdf_template.php', array(
-                                'purchase_order' => $purchase_order,
-                                'list_po_detail' => $list_po_detail,
-                                'list_po_items' => $list_po_items,
-                                'option' => $option
-                                    ), true, true);
-                            iPhoenixUrl::exportPdfFromHTML($detail_pdf, $po_file, 'landscape');
-
-                            // Send email
-                            $email_to_send = new YiiMailMessage ();
-                            $email_to_send->setTo($email_address);
-                            foreach ($cc_emails as $c_e) {
-                                $email_to_send->addCC($c_e);
-                            }
-                            $email_to_send->from = $email_from;
-                            $email_to_send->setSubject($email_subject);
-                            $email_to_send->setBody($html, 'text/html');
-                            $swiftAttachment = Swift_Attachment::fromPath(Yii::getPathOfAlias('webroot') . '/data/pdf/' . $po_file . '.pdf');
-                            $email_to_send->attach($swiftAttachment);
-
-                            if (Yii::app()->mail->send($email_to_send)) {
-                                $check_result = true;
-
-                                // Save history of order
-                                $history_email_version = '';
-                                if (isset($email['version']) && $email['version'] == 'short') {
-                                    $history_email_version = ' | Short Version';
-                                }
-
-                                if ($option == 'revise') {
-                                    History::trackOthers($purchase_order, 'Send Revised Order' . $history_email_version);
-                                } else {
-                                    History::trackOthers($purchase_order, 'Send Order' . $history_email_version);
-                                }
-                            } else {
-                                $check_result = false;
-                                $error_message[] = 'Can not send email to ' . $client->name . '(' . $client->email . ')';
-                            }
-                        } else {
-                            $check_result = false;
-                            $error_message[] = 'Can not find client of this Order!';
-                        }
-                    }
-
-                    break;
-
                 case 'document':
                     // Send email
                     $email_to_send = new YiiMailMessage ();
-                    $email_to = explode(',', $email['to']);
                     $email_to_send->setTo($email_to);
                     foreach ($cc_emails as $c_e) {
                         $email_to_send->addCC($c_e);

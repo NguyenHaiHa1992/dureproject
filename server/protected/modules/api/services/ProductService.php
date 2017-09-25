@@ -178,11 +178,14 @@ class ProductService extends iPhoenixService {
         if ($productDevelopment->validate()) {
             if(isset($data['_is_save']) && $data['_is_save']){
                 $productDevelopment->save();
+                $result['id'] = $productDevelopment->id;
+                $new_productDevelopment = self::getProductDevelopmentById(array('id' => $productDevelopment->id));
+                $result['productDevelopment'] = $new_productDevelopment['productDevelopment'];
+            }
+            else{
+                $result['productDevelopment'] = $data;
             }
             $result['success'] = true;
-            $result['id'] = $productDevelopment->id;
-            $new_productDevelopment = self::getProductDevelopmentById(array('id' => $productDevelopment->id));
-            $result['productDevelopment'] = $new_productDevelopment['productDevelopment'];
         } else {
             $empty_productDevelopment_error = ProductService::getEmptyProductDevelopmentError();
             $result['productDevelopment_error'] = $empty_productDevelopment_error['productDevelopment_error'];

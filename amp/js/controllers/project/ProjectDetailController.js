@@ -3,11 +3,13 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         $scope.root = $rootScope;
         $scope.init_loaded = false;
         $scope.productDevelopment = {};
+        $scope.productDevelopment_error = {};
         $scope.qa = {};
         $scope.qa_error = {};
         $scope.packProduct = {};
         $scope.packProduct_error = {};
         $scope.sale = {};
+        $scope.sale_error = {};
         $scope.productApproval = {};
         $scope.productApproval_error = {};
         $scope.isFullInfo = true;
@@ -49,6 +51,9 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                     $scope.project = data.project;
                     $scope.project_code = $scope.project.project_code;
                     $scope.project_error = data.project_error;
+//                    if(data.project.in_trash){
+//                        $state.go('404');
+//                    }
                 }
                 else {
                     $state.go('404');

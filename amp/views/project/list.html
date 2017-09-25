@@ -29,7 +29,7 @@
                             <div role="form">
                                 <div class="row form-group" style="min-height: 40px; margin-bottom: 0;">
                                     <div class="col-xs-2">
-                                        <input ng-model="search_project.primary_contact" type="text" class="form-control" placeholder="search primary contact..." ng-enter="search()">
+                                        <input ng-model="search_project.project_name" type="text" class="form-control" placeholder="search project name..." ng-enter="search()">
                                     </div>
 <!--                                    <div class="col-xs-2">
                                         <select class="form-control" ng-model="search_project.language" ng-options="item.id as item.name for item in customers" ng-enter="search()" placeholder="search language...">
@@ -54,6 +54,12 @@
                                 <div class="row form-group" style="min-height: 20px; margin-bottom: 0;">
                                     <div class="col-xs-6">
                                         <a ng-show="root.is_superadmin" ui-sref="project-create" class="btn btn-danger pull-right">Add new</a> 
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="btn-group pull-right"> 
+                                            <button type="button" class="btn btn-danger" ng-click="exportExcel()"><i class="fa fa-file-excel-o"></i> Excel</button> 
+                                            <button type="button" class="btn btn-success" ng-click="exportPdf()"><i class="fa fa-file-pdf-o"></i> Pdf</button> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +99,7 @@
                                   <tbody role="alert" aria-live="polite" aria-relevant="all">
                                       <tr class="even" ng-repeat="project in projects">
                                           <td>{{$index + 1}}</td>
-                                          <td class=" sorting_1">{{project.primary_contact}}</td>
+                                          <td class=" sorting_1"><a ui-sref="project-detail({'id':project.id})">{{project.project_name}}</a></td>
                                           <!--<td class=" ">{{project.customer_id}}</td>-->
                                           <td class=" ">{{project.project_number}}</td>
                                           <td class=" ">{{project.volume}}</td>
@@ -158,3 +164,51 @@
         </div><!-- /.row -->
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+<div class="modal" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{email_title}}</h4>
+            </div>
+            <div class="modal-body overhidden">
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>From</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.from" disabled="" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>To</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.to" />
+                        <span class="small">emails separated by comma</span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label>Subject</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" ng-model="email.subject" />
+                    </div>
+                </div>
+                <hr />
+                <label>Message</label>
+                <textarea class="form-control" ng-model="email.content" style="height: 200px" ></textarea>
+                <hr />
+                <a target="_blank" title="attachment" href="{{document.absolute_url}}" class="email_attachment" ng-repeat="document in email.documents">
+                    <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+                    {{document.filename}}.{{document.extension}}</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="sendEmail()">Send Email</button>
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>

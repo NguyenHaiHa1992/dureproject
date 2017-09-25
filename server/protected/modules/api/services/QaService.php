@@ -117,11 +117,15 @@ class QaService extends iPhoenixService{
         if ($qa->validate()) {
             if(isset($data['_is_save']) && $data['_is_save']){
                 $qa->save();
+                $result['id'] = $qa->id;
+                $new_qa = self::getQaById(array('id' => $qa->id));
+                $result['qa'] = $new_qa['qa'];
+            }
+            else{
+                $result['qa'] = $data;
             }
             $result['success'] = true;
-            $result['id'] = $qa->id;
-            $new_qa = self::getQaById(array('id' => $qa->id));
-            $result['qa'] = $new_qa['qa'];
+            
         } else {
             $empty_qa_error = QaService::getEmptyQaError();
             $result['qa_error'] = $empty_qa_error['qa_error'];

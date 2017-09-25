@@ -92,6 +92,12 @@ function($scope, $timeout, $http, $location, $rootScope, BASE_URL, $state){
                 $state.go('project-detail', {id: data.project.id});
             }
             else{
+                swal({
+                    title: '',
+                    text: 'Project create failed!',
+                    type: 'error',
+                    html: true
+                });
                 if(data.project.project_error){
                     $scope.project_error= data.project.project_error;    
                 }
