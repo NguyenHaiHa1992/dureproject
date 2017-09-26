@@ -18,7 +18,7 @@ $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isse
     <tbody>
         <tr>
             <td style="width: 30%"><b>Status</b></td>
-            <td style="width: 20%"><?= isset($productAppr->status) ? ($productAppr->status ? "Product Approved" : "Product Not Approved") : ""?></td>
+            <td style="width: 20%"><?= (isset($productAppr->status) && $productAppr != null) ? ($productAppr->status ? "Product Approved" : "Product Not Approved") : ""?></td>
         </tr>
         <tr>
             <td style="width: 30%"><b>President</b></td>
@@ -59,6 +59,7 @@ Photos and documents
                             ? $document['restricted_label'] : "";
             $documentCategory = isset($document['cat_name']) ? $document['cat_name'] : "";
             $documentSize = isset($document['filesize_label']) ? $document['filesize_label'] : "";
+            $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
             <td><?= $documentName ?></td>

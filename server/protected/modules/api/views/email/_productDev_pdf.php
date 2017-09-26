@@ -19,70 +19,59 @@ $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isse
     <tbody>
         <tr>
             <td style="width: 30%"><b>Specification sheet/nutritionals for product matching</b></td>
-            <td style="width: 20%"><?= $productDev->spec_for_product ? "Yes" : "No"?></td>
+            <td style="width: 20%"><?= (isset($productDev) && $productDev != null) ? ($productDev->spec_for_product ? "Yes" : "No") : "" ?></td>
             <td style="width: 30%"><b>Has the Customer submitted a product formula?</b></td>
-            <td style="width: 20%"><?= $productDev->customer_submit_product ? "Yes" : "No";?></td>
+            <td style="width: 20%"><?= (isset($productDev->customer_submit_product) && $productDev->customer_submit_product != null) ? ($productDev->customer_submit_product ? "Yes" : "No") : "";?></td>
         </tr>
         
         <tr>
             <td style="width: 30%"><b>Has the Customer provided a control sample?</b></td>
-            <td style="width: 20%"><?= $productDev->customer_provide_control ? "Yes" : "No";?></td>
+            <td style="width: 20%"><?= (isset($productDev->customer_provide_control) && $productDev->customer_provide_control != null) ? ($productDev->customer_provide_control ? "Yes" : "No") : "";?></td>
             <td style="width: 30%"><b>Physical specifications of product i.e, density, flowability etc.</b></td>
-            <td style="width: 20%"><?= $productDev->physical_spec_product ?></td>
+            <td style="width: 20%"><?= isset($productDev->physical_spec_product) ? $productDev->physical_spec_product : ""?></td>
         </tr>
         
         
         <tr>
             <td style="width: 30%"><b>Does this Customer require any special claims? Non-GMO, vegan, allergen free, organic etc.</b></td>
-            <td style="width: 20%"><?= $productDev->customer_require_spec ? "Yes" : "No" ?></td>
-            <?php if($productDev->customer_require_spec) : ?>
-                <td style="width: 30%"></td>
-                <td style="width: 20%"><?= $productDev->customer_require_spec_other?></td>
-            <?php endif;?>
-        </tr>
-        
-        <tr>
+            <td style="width: 20%">
+                <?=(isset($productDev->customer_require_spec) && $productDev->customer_require_spec != null) ? ($productDev->customer_require_spec ? "Yes" : "No")
+                    .($productDev->customer_require_spec ? "<br />" .$productDev->customer_require_spec_other : "") : "" ?>
+                </td>
             <td style="width: 30%"><b>Any special handling instructions? ex. Dry clean before due to allergen etc.</b></td>
-            <td style="width: 20%"><?= $productDev->spec_handing_instruction ? "Yes" : "No" ?></td>
-            <?php if($productDev->spec_handing_instruction) : ?>
-                <td style="width: 30%"></td>
-                <td style="width: 20%"><?= $productDev->spec_handing_instruction_other?></td>
-             <?php endif;?>
+            <td style="width: 20%">
+                <?=(isset($productDev->spec_handing_instruction) && $productDev->spec_handing_instruction != null) ? ($productDev->spec_handing_instruction ? "Yes" : "No")
+                    .($productDev->spec_handing_instruction ? "<br />" .$productDev->spec_handing_instruction_other : "") : "" ?>
+            </td>
         </tr>
-       
             
         <tr>
             <td style="width: 30%"><b>Are there any special ingredients required?</b></td>
-            <td style="width: 20%"><?= $productDev->spec_ingredients_require ? "Yes" : "No" ?></td>
-            <?php if($productDev->spec_ingredients_require) : ?>
-                <td style="width: 30%"></td>
-                <td style="width: 20%"><?= $productDev->spec_ingredients_require_other?></td>
-            <?php endif;?>
+            <td style="width: 20%">
+                <?=(isset($productDev->spec_ingredients_require) && $productDev->spec_ingredients_require != null) ? ($productDev->spec_ingredients_require ? "Yes" : "No")
+                    .($productDev->spec_ingredients_require ? "<br />" .$productDev->spec_ingredients_require_other : "") : "" ?>
+            </td>
+            <td style="width: 30%"><b>What allergens does this product contain?</b></td>
+            <td style="width: 20%"><?= isset($productDev->allergent_product) ? $productDev->allergent_product : ""?></td>
         </tr>
             
         <tr>
-            <td style="width: 30%"><b>What allergens does this product contain?</b></td>
-            <td style="width: 20%"><?= $productDev->allergent_product ?></td>
             <td style="width: 30%"><b>Approved Customer Formula Code</b></td>
-            <td style="width: 20%"><?= $productDev->approve_customer_formula_code ? "Yes" : "No" ?></td>
-        </tr>
-        
-        <tr>
+            <td style="width: 20%"><?= (isset($productDev->approve_customer_formula_code) && $productDev->approve_customer_formula_code != null) ? ($productDev->approve_customer_formula_code ? "Yes" : "No") : ""?></td>
+
             <td style="width: 30%"><b>Are there any known Risks or hazards associated with the ingredients (including adulteration)</b></td>
-            <td style="width: 20%"><?= $productDev->risk_or_hazard_ingredient ? "Yes" : "No" ?></td>
-            <?php if($productDev->risk_or_hazard_ingredient) : ?>
-                <td style="width: 30%"></td>
-                <td style="width: 20%"><?= $productDev->risk_or_hazard_ingredient_other?></td>
-            <?php endif;?>
+            <td style="width: 20%">
+                <?=(isset($productDev->risk_or_hazard_ingredient) && $productDev->risk_or_hazard_ingredient != null) ? ($productDev->risk_or_hazard_ingredient ? "Yes" : "No")
+                    .($productDev->risk_or_hazard_ingredient ? "<br />" .$productDev->risk_or_hazard_ingredient_other : "") : "" ?>
+            </td>
         </tr>
         
         <tr>
             <td style="width: 30%"><b>Is additional testing required?</b></td>
-            <td style="width: 20%"><?= $productDev->additional_test_require ? "Yes" : "No" ?></td>
-            <?php if($productDev->additional_test_require) : ?>
-                <td style="width: 30%"></td>
-                <td style="width: 20%"><?= $productDev->additional_test_require_other?></td>
-            <?php endif;?>
+            <td style="width: 20%">
+                <?=(isset($productDev->additional_test_require) && $productDev->additional_test_require != null) ? ($productDev->additional_test_require ? "Yes" : "No")
+                    .($productDev->additional_test_require ? "<br />" .$productDev->additional_test_require_other : "") : "" ?>
+            </td>
         </tr>
        
     </tbody>
@@ -112,6 +101,7 @@ Photos and documents
                             ? $document['restricted_label'] : "";
             $documentCategory = isset($document['cat_name']) ? $document['cat_name'] : "";
             $documentSize = isset($document['filesize_label']) ? $document['filesize_label'] : "";
+            $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
             <td><?= $documentName ?></td>

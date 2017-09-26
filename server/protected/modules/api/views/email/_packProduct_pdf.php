@@ -165,6 +165,7 @@ Photos and documents
                             ? $document['restricted_label'] : "";
             $documentCategory = isset($document['cat_name']) ? $document['cat_name'] : "";
             $documentSize = isset($document['filesize_label']) ? $document['filesize_label'] : "";
+            $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
             <td><?= $documentName ?></td>

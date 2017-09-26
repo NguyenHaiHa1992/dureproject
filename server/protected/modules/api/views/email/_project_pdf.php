@@ -48,7 +48,7 @@ $customerName = $customer ? $customer->ship_address : "";
             <td><b>Services Required</b></td>
             <td><?= $project->service == 'type_other' ? $project->other_service : Project::getLabelByType($project->service);?></td>
             <td><b>Product Match</b></td>
-            <td><?= $project->product_match ? "Yes" : "No";?></td>
+            <td><?= (isset($project->product_match) && $project->product_match != null) ? ($project->product_match ? "Yes" : "No") : "";?></td>
         </tr>
     </tbody>
 </table>
@@ -59,6 +59,7 @@ Photos and documents
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
+            <th>Thumbnail</th>
             <th>Name</th>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
@@ -77,8 +78,10 @@ Photos and documents
                             ? $document['restricted_label'] : "";
             $documentCategory = isset($document['cat_name']) ? $document['cat_name'] : "";
             $documentSize = isset($document['filesize_label']) ? $document['filesize_label'] : "";
+            $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
+            <td><img src="$thumbnail" height="40px;" /></td>
             <td><?= $documentName ?></td>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){

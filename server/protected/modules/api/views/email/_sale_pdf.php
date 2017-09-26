@@ -33,7 +33,7 @@ $PackCustomer  = "pack_customer";
     <tbody>
         <tr>
             <td style="width: 30%"><b>Has a product sample been submitted to Product Development</b></td>
-            <td style="width: 20%"><?= isset($sale->product_sample_product) ?($sale->product_sample_product ? "Yes" : "No") : "";?></td>
+            <td style="width: 20%"><?= (isset($sale->product_sample_product) && $sale->product_sample_product != null) ? ($sale->product_sample_product ? "Yes" : "No") : "";?></td>
             <td style="width: 30%"><b>If so, has information (ie. nutritionals, product specs) been provided to product development</b></td>
             <td style="width: 20%"><?= isset($sale->product_infor_provide_product) ? Sale::getLabelByType($TypeProductInfo, $sale->product_infor_provide_product) : ""?></td>
         </tr>
@@ -42,7 +42,7 @@ $PackCustomer  = "pack_customer";
             <td style="width: 30%"><b>Has a sample been submitted for a packaging test or has a pack test been performed?</b></td>
             <td style="width: 20%"><?= isset($sale->product_sample_submit_pack) ? Sale::getLabelByType($TypeProductInfo, $sale->product_sample_submit_pack): "";?></td>
             <td style="width: 30%"><b>If so, has a COA been submitted?</b></td>
-            <td style="width: 70%"><?=isset($sale->product_coa_submit) ? Sale::getLabelByType($TypeProductInfo, $sale->product_coa_submit) : ""?></td>
+            <td style="width: 20%"><?= isset($sale->product_coa_submit) ? Sale::getLabelByType($TypeProductInfo, $sale->product_coa_submit) : ""?></td>
         </tr>
         
         <tr>
@@ -142,14 +142,14 @@ $PackCustomer  = "pack_customer";
             <td style="width: 30%"><b>Who is providing the shippers? Customer or Dure.</b></td>
             <td style="width: 20%"><?= isset($sale->pack_provide_shipper) ? Sale::getLabelByType($PackCustomer,$sale->pack_provide_shipper) : ""?></td>
             <td style="width: 30%"><b>Is the Customer aware of our Shipping and Receiving Policy?</b></td>
-            <td style="width: 20%"><?= isset($sale->pack_customer_aware) ?( $sale->pack_customer_aware ? "Yes" : "No") : ""?></td>
+            <td style="width: 20%"><?= (isset($sale->pack_customer_aware) && $sale->pack_customer_aware) ? ( $sale->pack_customer_aware ? "Yes" : "No") : ""?></td>
         </tr>
             
         <tr>
             <td style="width: 30%"><b>Are there any Special Shipping requirements?</b></td>
-            <td style="width: 20%"><?= isset($sale->pack_spec_ship) ? ($sale->pack_spec_ship ? "Yes" : "No") : ""?></td>
+            <td style="width: 20%"><?= (isset($sale->pack_spec_ship) && $sale->pack_spec_ship) ? ($sale->pack_spec_ship ? "Yes" : "No") : ""?></td>
             <td style="width: 30%"><b>Has the Customer requested a specific pallet configuration or amount of shippers per pallet?</b></td>
-            <td style="width: 20%"><?= isset($sale->pack_customer_spec_pallet) ? ($sale->pack_customer_spec_pallet ? "Yes" : "No") : ""?></td>
+            <td style="width: 20%"><?= (isset($sale->pack_customer_spec_pallet) && $sale->pack_customer_spec_pallet) ? ($sale->pack_customer_spec_pallet ? "Yes" : "No") : ""?></td>
         </tr>
     </tbody>
 </table>
@@ -178,6 +178,7 @@ Photos and documents
                             ? $document['restricted_label'] : "";
             $documentCategory = isset($document['cat_name']) ? $document['cat_name'] : "";
             $documentSize = isset($document['filesize_label']) ? $document['filesize_label'] : "";
+            $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
             <td><?= $documentName ?></td>
