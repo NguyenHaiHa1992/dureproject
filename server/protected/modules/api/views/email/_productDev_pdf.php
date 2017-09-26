@@ -72,6 +72,8 @@ $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isse
                 <?=(isset($productDev->additional_test_require) && $productDev->additional_test_require != null) ? ($productDev->additional_test_require ? "Yes" : "No")
                     .($productDev->additional_test_require ? "<br />" .$productDev->additional_test_require_other : "") : "" ?>
             </td>
+            <td style="width: 30%"></td>
+            <td style="width: 20%"></td>
         </tr>
        
     </tbody>
@@ -83,6 +85,7 @@ Photos and documents
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
+            <th>Thumbnail</th>
             <th>Name</th>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
@@ -104,6 +107,7 @@ Photos and documents
             $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
+            <td><img src="<?=DOMAIN_NAME . '/' .$thumbnail?>" height="40px;" /></td>
             <td><?= $documentName ?></td>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){

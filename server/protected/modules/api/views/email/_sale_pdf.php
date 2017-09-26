@@ -55,6 +55,8 @@ $PackCustomer  = "pack_customer";
         <tr>
             <td style="width: 30%"><b>Is the product Kosher?</b></td>
             <td style="width: 20%"><?= isset($sale->product_product_kosher) ? Sale::getLabelByType($TypeProductInfo,$sale->product_product_kosher) : ""?></td>
+            <td style="width: 30%"></td>
+            <td style="width: 20%"></td>
         </tr>
     </tbody>
 </table>
@@ -94,6 +96,8 @@ $PackCustomer  = "pack_customer";
         <tr>
             <td style="width: 30%"><b>Does this product have special claims? Non-GMO, vegan, allergen free, organic etc.</b></td>
             <td style="width: 20%"><?= isset($sale->product_product_spec_claim) ? $sale->product_product_spec_claim : ""?></td>
+            <td style="width: 30%"></td>
+            <td style="width: 20%"></td>
         </tr>
         
         <?php if($projectService  == "ser_pre_blend"):?>
@@ -160,6 +164,7 @@ Photos and documents
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
+            <th>Thumbnail</th>
             <th>Name</th>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
@@ -181,6 +186,7 @@ Photos and documents
             $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
+            <td><img src="<?=DOMAIN_NAME . '/' .$thumbnail?>" height="40px;" /></td>
             <td><?= $documentName ?></td>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){

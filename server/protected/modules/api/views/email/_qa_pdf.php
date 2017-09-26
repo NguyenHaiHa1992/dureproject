@@ -143,6 +143,8 @@ $documents = isset($documentsTmp['success']) && $documentsTmp['success'] && isse
         <tr>
             <td style="width: 30%"><b>Is this product NSF certified for sports?</b></td>
             <td style="width: 20%"><?= (isset($qa->product_nsf_for_sport) && $qa->product_nsf_for_sport != null) ? ($qa->product_nsf_for_sport ? "Yes" : "No") :"" ?></td>
+            <td style="width: 30%"></td>
+            <td style="width: 20%"></td>
         </tr>
     </tbody>
 </table>
@@ -153,6 +155,7 @@ Photos and documents
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
+            <th>Thumbnail</th>
             <th>Name</th>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
@@ -174,6 +177,7 @@ Photos and documents
             $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
+            <td><img src="<?=DOMAIN_NAME . '/' .$thumbnail?>" height="40px;" /></td>
             <td><?= $documentName ?></td>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){

@@ -143,7 +143,8 @@ class ProductApprovalService extends iPhoenixService {
 
     public static function update($data) {
         $result = array();
-        $productApproval = ProductApproval::model()->findByPk((int) $data['id']);
+        $id = isset($data['id']) ? (int)$data['id'] : 0;
+        $productApproval = ProductApproval::model()->findByPk($id);
         if(!$productApproval){
             $productApproval = new ProductApproval();
         }

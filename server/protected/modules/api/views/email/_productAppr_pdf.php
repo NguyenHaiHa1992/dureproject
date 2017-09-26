@@ -41,6 +41,7 @@ Photos and documents
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
+            <th>Thumbnail</th>
             <th>Name</th>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
@@ -62,6 +63,7 @@ Photos and documents
             $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
+            <td><img src="<?=DOMAIN_NAME . '/' .$thumbnail?>" height="40px;" /></td>
             <td><?= $documentName ?></td>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){

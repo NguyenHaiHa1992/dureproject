@@ -103,7 +103,9 @@ $customerName = $customer ? $customer->ship_address : "";
         
          <tr>
             <td style="width: 30%"><b>Weight of carton (including carton)</b></td>
-            <td style="width: 20%"><?= isset($packProduct->weight_carton)? $packProduct->weight_carton :""?></td>            
+            <td style="width: 20%"><?= isset($packProduct->weight_carton)? $packProduct->weight_carton :""?></td>      
+            <td style="width: 30%"></td>
+            <td style="width: 20%"></td>      
         </tr>
         
     </tbody>
@@ -138,6 +140,8 @@ $customerName = $customer ? $customer->ship_address : "";
         <tr>
             <td style="width: 30%"><b>Package net weight</b></td>
             <td style="width: 20%"><?= isset($packProduct->pack_net_weight)? $packProduct->pack_net_weight :""?></td>
+            <td style="width: 30%"></td>
+            <td style="width: 20%"></td>
         </tr>
     </tbody>
 </table>
@@ -147,6 +151,7 @@ Photos and documents
 <table style="font-family:Arial, Helvetica,san-serif;font-size:10pt" class="store_detail_table" border="1" cellpadding="5" cellspacing="0" width="100%">
     <tbody>
         <tr>
+            <th>Thumnail</th>
             <th>Name</th>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
@@ -168,6 +173,7 @@ Photos and documents
             $thumbnail = isset($document['thumbnail']) ? $document['thumbnail'] : "";
         ?>
         <tr>
+            <td><img src="<?=DOMAIN_NAME . '/' .$thumbnail?>" height="40px;" /></td>
             <td><?= $documentName ?></td>
             <?php
             if(Yii::app()->user->checkAccess('Super Admin')){
