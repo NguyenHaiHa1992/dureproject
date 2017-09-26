@@ -55,13 +55,28 @@ class ProjectService extends iPhoenixService {
             }
         }
         $criteria->order = $data['sort_attribute'] . ' ' . $data['sort_type'];
-        $criteria->limit = $data['limitnum'];
-        $criteria->offset = $data['limitstart'];
+//        $criteria->limit = $data['limitnum'];
+//        $criteria->offset = $data['limitstart'];
         
         $criteria->compare('in_trash', 0);
+        
+        $dataProvider = new CActiveDataProvider('Project', array(
+            'criteria' => $criteria,
+//            'countCriteria' => array(
+//                'condition' => 'status=1',
+//            ),
+            'pagination' => array(
+                'pageSize' => $data['limitnum'],
+                'currentPage' => (int)($data['limitstart'] / $data['limitnum'])
+            ),
+        ));
+        $projects = $dataProvider->getData();
+        $total = $dataProvider->totalItemCount;
 
-        $projects = Project::model()->findAll($criteria);
-        $total = count($projects);
+
+
+//        $projects = Project::model()->findAll($criteria);
+//        $total = count($projects);
 
         if ($projects != null) {
             $result['success'] = true;
@@ -139,7 +154,7 @@ class ProjectService extends iPhoenixService {
     public static function create($data) {
         $result = array();
         $project = null;
-        if(isset($data['id']) && $data['id']){
+        if(isset($data['id']) && $data['id'] && !isset($data['export'])){
             $project = Project::model()->findByPk((int)$data['id']);
         }
         if(!$project){
@@ -147,9 +162,9 @@ class ProjectService extends iPhoenixService {
         }
 
         $project->attributes = $data;
-        // if(!is_integer($project->date)){
-        //     $project->date = strtotime($project->date);
-        // }
+        if(isset($data['export'])){
+            $project->in_trash = 1;
+        }
         $project = ProjectService::beforeSave($project);
         if ($project->validate()) {
             $project->save();

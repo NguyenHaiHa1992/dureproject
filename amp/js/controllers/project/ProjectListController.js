@@ -85,6 +85,8 @@ angular.module('app').controller('ProjectListController', ['$scope', '$timeout',
                     $scope.pages = [];
                     for (var p = 0; p < Math.ceil(data.totalresults / $scope.itemsByPage); p++)
                         $scope.pages.push(p + 1);
+                    console.log('$scope.pages');
+                    console.log($scope.pages);
                     $scope.projects = [];
                     $scope.projects = data.projects;
                     

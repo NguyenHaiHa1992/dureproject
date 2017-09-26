@@ -77,7 +77,11 @@ class ProjectController extends Controller {
         $dataPackProduct = $data['packProduct'];
         $dataSale = $data['sale'];
         $dataProductAppr = $data['productApproval'];
-
+        if(isset($_GET['export'])){
+            $dataProject['export'] = $_GET['export'];
+            $dataProductDev['project_id'] = $dataQa['project_id'] = $dataPackProduct['project_id'] = 
+                   $dataSale['project_id'] = $dataProductAppr['project_id'] =  null;
+        }
         $transaction = Yii::app()->db->beginTransaction();
         $result = ['sucess' => $success, 'message' => ""];
         try {
@@ -388,7 +392,7 @@ class ProjectController extends Controller {
                 ,true , true);
         
         $css = Yii::app()->controller->renderFile(Yii::getPathOfAlias('webroot') . 
-                            '/protected/modules/api/views/email/style.php');
+                            '/protected/modules/api/views/email/style.php', true, true);
         $content = $projectContent . "<br />" . $saleContent . "<br />" . $productDevContent . "<br />" . $qaContent . "<br />" . $packProductContent . "<br />" . $productApprContent."<br />" . $css;
         
         // Create pdf

@@ -55,8 +55,8 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
                 console.log('get sale by project di');
                 console.log(data);
                 if (data.success) {
-                    $scope.saleError = data.sale_error;
                     $scope.scopeSetData($scope.sale ,data.sale);
+                    $scope.scopeSetData($scope.saleError ,data.sale_error);
                 }
                 else {
 //                    $state.go('404');
@@ -88,6 +88,11 @@ angular.module('app').directive('sale',[ '$http', '$state', 'BASE_URL', '$rootSc
         jQuery('.datepicker').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
+        });
+        
+        $scope.$watch('saleError', function(){
+            console.log('sale error change');
+            console.log($scope.saleError);
         });
     }],
     link: function(scope, iElement, iAttrs){

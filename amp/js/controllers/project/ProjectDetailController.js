@@ -109,24 +109,24 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
                             $scope.has_error_project = $scope.checkErrorObject($scope.project_error);
                         }
                         if(data.productDevelopment.productDevelopment_error){
-                            $scope.productDevelopmentError = data.productDevelopment.productDevelopment_error;
-                            $scope.has_error_productDevelopment = $scope.checkErrorObject($scope.productDevelopmentError);
+                            $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
+                            $scope.has_error_productDevelopment = $scope.checkErrorObject($scope.productDevelopment_error);
                         }
                         if(data.qa.qa_error){
-                            $scope.qaError = data.qa.qa_error;
-                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
+                            $scope.qa_error = data.qa.qa_error;
+                            $scope.has_error_qa = $scope.checkErrorObject($scope.qa_error);
                         }
                         if(data.packProduct.packProduct_error){
-                            $scope.packProductError = data.packProduct.packProduct_error;
-                            $scope.has_error_qa = $scope.checkErrorObject($scope.qaError);
+                            $scope.packProduct_error = data.packProduct.packProduct_error;
+                            $scope.has_error_qa = $scope.checkErrorObject($scope.qa_error);
                         }
                         if(data.sale.sale_error){
-                            $scope.saleError = data.sale.sale_error;
-                            $scope.has_error_sale = $scope.checkErrorObject($scope.saleError);
+                            $scope.sale_error = data.sale.sale_error;
+                            $scope.has_error_sale = $scope.checkErrorObject($scope.sale_error);
                         }
                         if(data.productApproval.productApproval_error){
-                            $scope.productApprovalError = data.productApproval.productApproval_error;
-                            $scope.has_error_product_approval = $scope.checkErrorObject($scope.productApproval);
+                            $scope.productApproval_error = data.productApproval.productApproval_error;
+                            $scope.has_error_product_approval = $scope.checkErrorObject($scope.productApproval_error);
                         }
                         
                     })
@@ -176,37 +176,66 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
         }
         // Export PDF and Email
         $scope.exportPdf = function(){
-            $http.get(BASE_URL + '/project/exportPdf?id=' + $scope.project.id)
-            .success(function (data) {
-                if (data.success) {
-                    swal({
-                        title: "project Detail exported",
-                        text: "<button class='email bg-green'><i class='fa fa-envelope'></i> Email it</button> <button class='download bg-blue'><i class='fa fa-download'></i> Download it</button>",
-                        type: "info",
-                        showConfirmButton: false,
-                        showCancelButton: true,
-                        closeOnCancel: true,
-                        html: true,
-                    });
-                    
-                    $('.sweet-alert .email').click(function(){
-                        var file = {
-                            'dirname': data.result.dirname,
-                            'absolute_url': data.result.file_absolute_url,
-                            'filename': data.result.file_name,
-                            'extension': data.result.extension,
-                        };
-                        $scope.emailFile(file);
-                        swal.close();
-                    });
+            //submit data
+            var information_post = {
+                'project' : $scope.project,
+                'productDevelopment' : $scope.productDevelopment,
+                'qa' : $scope.qa,
+                'packProduct' : $scope.packProduct,
+                'sale' : $scope.sale,
+                'productApproval' : $scope.productApproval
+            };
+            
+            $http.post(BASE_URL + '/project/create?export=export', information_post)
+            .success(function (dataCreate) {
+                if (dataCreate.success) {
+                    $("input").removeClass("ng-dirty");
+                    //export here
+                    $http.get(BASE_URL + '/project/exportPdf?project_id=' + dataCreate.project.id)
+                    .success(function (data) {
+                        if (data.success) {
+                            swal({
+                                title: "project Detail exported",
+                                text: "<button class='email bg-green'><i class='fa fa-envelope'></i> Email it</button> <button class='download bg-blue'><i class='fa fa-download'></i> Download it</button>",
+                                type: "info",
+                                showConfirmButton: false,
+                                showCancelButton: true,
+                                closeOnCancel: true,
+                                html: true,
+                            });
 
-                    $('.sweet-alert .download').click(function(){
-                        $window.open(data.result.file_url);
-                    }); 
+                            $('.sweet-alert .email').click(function(){
+                                var file = {
+                                    'dirname': data.result.dirname,
+                                    'absolute_url': data.result.file_absolute_url,
+                                    'filename': data.result.file_name,
+                                    'extension': data.result.extension,
+                                };
+                                $scope.emailFile(file);
+                                swal.close();
+                            });
+
+                            $('.sweet-alert .download').click(function(){
+                                $window.open(data.result.file_url);
+                            }); 
+                        }
+                        else {
+                            $state.go('404');
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        $state.go('404');
+                    });
                 }
                 else {
-                    $state.go('404');
+                    swal({
+                        title: '',
+                        text: 'Please fix some errors before export',
+                        type: 'error',
+                        html: true
+                    });
                 }
+                $scope.setDataError(dataCreate);
             })
             .error(function (data, status, headers, config) {
                 $state.go('404');
@@ -465,5 +494,32 @@ angular.module('app').controller('ProjectDetailController', ['$scope', '$timeout
             console.log('is full info');
             console.log($scope.isFullInfo);
         });
+        
+        $scope.setDataError = function(data){
+            if(data.project.project_error){
+                $scope.project_error = data.project.project_error;
+                $scope.has_error_project = $scope.checkErrorObject($scope.project_error);
+            }
+            if(data.productDevelopment.productDevelopment_error){
+                $scope.productDevelopment_error = data.productDevelopment.productDevelopment_error;
+                $scope.has_error_productDevelopment = $scope.checkErrorObject($scope.productDevelopment_error);
+            }
+            if(data.qa.qa_error){
+                $scope.qa_error = data.qa.qa_error;
+                $scope.has_error_qa = $scope.checkErrorObject($scope.qa_error);
+            }
+            if(data.packProduct.packProduct_error){
+                $scope.packProduct_error = data.packProduct.packProduct_error;
+                $scope.has_error_qa = $scope.checkErrorObject($scope.qa_error);
+            }
+            if(data.sale.sale_error){
+                $scope.sale_error = data.sale.sale_error;
+                $scope.has_error_sale = $scope.checkErrorObject($scope.sale_error);
+            }
+            if(data.productApproval.productApproval_error){
+                $scope.productApproval_error = data.productApproval.productApproval_error;
+                $scope.has_error_product_approval = $scope.checkErrorObject($scope.productApproval_error);
+            }
+        };
     }
 ]);
